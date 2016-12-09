@@ -14,7 +14,10 @@ class IEP:
             self.w = 1
         
     #returns the cardinality of the union of sets
-    def iep(self, X, sets, coords, function):
+    def iep(self, Data, function, level):
+        X = Data.X
+        sets = Data.levels[level]
+        coords = Data.boxes
         if self.w == 1:
             iep = 0
         else:
@@ -30,7 +33,7 @@ class IEP:
                 else:
                     print 'wrong symbol 0', fun[0]
                     exit()
-            return iep
+            return iep, function
         else:
             level_coords = []
             for i in sets:
@@ -88,4 +91,12 @@ class IEP:
                     queue.append((chain(base, [u]),
                                   filter(nbrs[u].__contains__,
                                          islice(cnbrs, i + 1, None))))
-            return iep
+            return iep, function
+            
+    def get_iep_levels(self, Data, functions):
+        iep_levels = []
+        for level in Data.levels:
+            iep, function = self.iep(Data, functions[level], level)
+            iep_levels.append(iep)
+        return iep_levels, functions
+        

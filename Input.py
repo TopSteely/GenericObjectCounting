@@ -4,6 +4,9 @@ import numpy as np
 class Input:
     def __init__(self, mode, category):
         self.category = category
+        training_numbers_tmp, self.test_numbers = self.get_training_numbers()
+        self.training_numbers, self.val_numbers = self.get_val_numbers()
+        self.category_train, self.category_val = self.get_category_imgs()
         if mode == 'grid':
             self.coord_path = 'bla'
             self.label_path = 'bla'
@@ -24,7 +27,37 @@ class Input:
             elif mode == 'dennis':
                 self.feature_path = 'bla'
         
-    
+    def get_category_imgs(self):
+        tr_images = []
+        te_images = []
+        for img in self.training_numbers:
+            y = self.get_label(img)
+            if y > 0:
+                tr_images.append(img)
+        for img in self.val_numbers:
+            y = self.get_label(img)
+            if y > 0:
+                te_images.append(img)
+        return tr_images, te_images
+                
+    def get_training_numbers():     
+        file = open('/var/scratch/tstahl/IO/test.txt')
+        test_imgs = []
+        train_imgs = []
+        for line in file:
+            test_imgs.append(int(line))
+        for i in range(1,9963):
+            if i not in test_imgs:
+                train_imgs.append(i)
+        return test_imgs, train_imgs
+        
+    def get_val_numbers(train_imgs):
+        file = open('/var/scratch/tstahl/IO/val.txt', 'r')
+        eval_images = []
+        for line in file:
+            im_nr = int(line)
+            eval_images.append(im_nr)
+        return [x for x in train_imgs if x not in eval_images], eval_images
     
     def get_coords(self, img_nr):
         if os.path.isfile(self.coord_path%(format(img_nr, "06d"))):
@@ -59,4 +92,3 @@ class Input:
         tmp = line.split()[0]
         label = float(tmp)
         return label
-        
