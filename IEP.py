@@ -19,7 +19,7 @@ class IEP:
         sets = Data.levels[level]
         coords = Data.boxes
         if np.all(self.w == 1):
-            iep = np.zeros(len(self.w))
+            iep = np.zeros(1000)
         else:
             iep = 0
         if len(sets) == 1:
