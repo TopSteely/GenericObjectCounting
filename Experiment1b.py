@@ -12,7 +12,7 @@ def main():
 #        exit()
     category = sys.argv[1]
 
-    tree_level_size = 5
+    tree_level_size = 3
     batch_size = 5
 
     #initialize
