@@ -11,6 +11,8 @@ class Data:
         self.tree_boxes = load.get_coords_tree(img_nr)
         self.tree_boxes = sort_boxes(self.tree_boxes)
         self.G, levels = create_tree_as_extracted(self.tree_boxes)
+        print len(self.G.nodes())
+        print self.G.edges()
         #prune tree to only have levels which fully cover the image, tested
         total_size = surface_area(self.tree_boxes, levels[0])
         for level in levels:
