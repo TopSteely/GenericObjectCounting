@@ -1,12 +1,12 @@
 from utils import create_tree, surface_area
-from Input import get_coords, get_features, get_label
+import Input
 
 class Data:
-    def __init__(self, Input_, img_nr, prune_tree_levels):
+    def __init__(self, load, img_nr, prune_tree_levels):
         self.img_nr = img_nr
-        self.boxes = Input_.get_coords(img_nr)
-        self.X = Input_.get_features(img_nr)
-        self.y = Input_.get_label(img_nr)
+        self.boxes = load.get_coords(img_nr)
+        self.X = load.get_features(img_nr)
+        self.y = load.get_label(img_nr)
         
         self.G, levels = create_tree(self.boxes)
         #prune tree to only have levels which fully cover the image, tested
