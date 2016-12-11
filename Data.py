@@ -7,8 +7,9 @@ class Data:
         self.boxes = load.get_coords(img_nr)
         self.X = load.get_features(img_nr)
         self.y = load.get_label(img_nr)
+        self.tree_boxes = load.get_coords_tree(img_nr)
         
-        self.G, levels = create_tree(self.boxes)
+        self.G, levels = create_tree(self.tree_boxes)
         #prune tree to only have levels which fully cover the image, tested
         total_size = surface_area(self.boxes, levels[0])
         for level in levels:

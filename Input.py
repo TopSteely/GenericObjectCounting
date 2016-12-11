@@ -22,6 +22,7 @@ class Input:
                 self.coord_path =  '/var/node436/local/tstahl/new_Resnet_features/2nd/coords/1-%s.csv'
                 self.label_path =  '/var/node436/local/tstahl/Coords_prop_windows/Labels/Labels/%s_%s_partial.txt'
                 self.feature_path = '/var/node436/local/tstahl/new_Resnet_features/2nd/1-%s.csv'
+                self.coord_tree_path = '/var/node436/local/tstahl/Coords_prop_windows/%s.txt'
             elif self.mode == 'dennis':
                 self.feature_path = 'bla'
         training_numbers_tmp, self.test_numbers = self.get_training_numbers()
@@ -65,18 +66,22 @@ class Input:
     def get_coords(self, img_nr):
         if os.path.isfile(self.coord_path%(format(img_nr, "06d"))):
             return np.loadtxt(self.coord_path%(format(img_nr, "06d")), delimiter=',')
-#                f = open(self.coord_path%(format(img_nr, "06d")), 'r')
-#        else:
-#            print 'warning, no ' + self.coord_path%(format(img_nr, "06d"))
-#            exit()
-#        boxes = []
-#        for line in f:
-#            tmp = line.split(',')
-#            coord = []
-#            for s in tmp:
-#                coord.append(float(s))
-#            boxes.append(coord)
-#        self.coords = boxes
+            
+            
+    def get_coords_tree(self, img_nr):
+        if os.path.isfile(self.coord_tree_path%(format(img_nr, "06d"))):
+            f = open(self.coord_tree_path%(format(img_nr, "06d")), 'r')
+        else:
+            print 'warning, no ' + self.coord_tree_path%(format(img_nr, "06d"))
+            exit()
+        boxes = []
+        for line in f:
+            tmp = line.split(',')
+            coord = []
+            for s in tmp:
+                coord.append(float(s))
+            boxes.append(coord)
+        return boxes
         
     def get_features(self, img_nr):
         if os.path.isfile(self.feature_path%(format(img_nr, "06d"))):
