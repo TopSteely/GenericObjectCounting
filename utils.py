@@ -79,49 +79,6 @@ def create_tree(boxes):
 
     return G, levels
 
-
-def create_tree_old(boxes):
-    G = nx.Graph()
-    levels = {}
-    levels[0] = [0]
-    G.add_node(0)
-    if len(boxes) != 1:
-        for box, i in zip(boxes[1:len(boxes)], range(1,len(boxes))):
-            print box,i
-            if (box[2]-box[0]) * (box[3]-box[1]) == 0: # some boxes have a surface area of 0 like (0,76,100,76)
-                continue
-            possible_parents = []
-            for box_, ii in zip(boxes, range(len(boxes))):
-                #print box, box_, get_overlap_ratio(box, box_), get_overlap_ratio(box, box_) == 1, box != box_
-                #print box_, ii, get_overlap_ratio(box, box_) == 1, np.any(box != box_)
-                if get_overlap_ratio(box, box_) == 1 and np.any(box != box_):
-                    possible_parents.append(ii)
-                    #print i, '-', ii
-            I = boxes[i]
-            put_here = []
-            for pp in possible_parents:
-                p_h = True
-                level = nx.shortest_path_length(G,0,pp)+1
-                if level in levels:
-                    for window in levels[level]:
-                        II = boxes[window]
-                        if get_overlap_ratio(I, II) == 1:
-                            p_h = False
-                    if p_h == True:
-                        put_here.append(pp)
-                else:
-                    put_here.append(pp)
-            parent = min(put_here)
-            level = nx.shortest_path_length(G,0,parent)+1
-            if level in levels:
-                if parent not in levels[level]:
-                    levels[level].append(i)
-                G.add_edge(i,parent)
-            else:
-                levels[level] = [i]
-                G.add_edge(i,parent)
-
-    return G, levels
     
 def find_children(sucs, parent):
     if parent < len(sucs):
