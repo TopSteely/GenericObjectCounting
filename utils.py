@@ -1,10 +1,26 @@
 import networkx as nx
-from get_intersection import get_intersection
 from collections import deque
 import itertools
 from itertools import chain, islice
 import get_overlap_ratio
 import numpy as np
+
+
+def bool_rect_intersect(A, B):
+    return not (B[0]>A[2] or B[2]<A[0] or B[3]<A[1] or B[1]>A[3])
+    
+
+def get_intersection(A, B):
+    in_ = bool_rect_intersect.bool_rect_intersect(A, B)
+    if not in_:
+        return []
+    else:
+        left = max(A[0], B[0]);
+        right = min(A[2], B[2]);
+        top = max(A[1], B[1]);
+        bottom = min(A[3], B[3]);
+        intersection = [left, top, right, bottom];
+        return intersection
 
 
 def create_tree(boxes):
