@@ -54,7 +54,7 @@ class Input:
             return test_imgs, train_imgs
         
     def get_val_numbers(self, train_imgs):
-        if mode == 'pascal':
+        if self.mode == 'pascal':
             file = open('/var/scratch/tstahl/IO/val.txt', 'r')
             eval_images = []
             for line in file:
