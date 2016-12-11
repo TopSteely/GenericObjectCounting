@@ -57,7 +57,7 @@ def create_tree(boxes):
             put_here = []
             for pp in possible_parents:
                 p_h = True
-                if nx.path.bidirectional_dijkstra(G,0,pp):
+                if nx.has_path(G,0,pp):
                     level = nx.shortest_path_length(G,0,pp)+1
                     if level in levels:
                         for window in levels[level]:
