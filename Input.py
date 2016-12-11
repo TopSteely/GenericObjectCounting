@@ -21,7 +21,7 @@ class Input:
             if self.mode == 'pascal':
                 self.coord_path =  '/var/node436/local/tstahl/new_Resnet_features/2nd/coords/1-%s.csv'
                 self.label_path =  '/var/node436/local/tstahl/Coords_prop_windows/Labels/Labels/%s_%s_partial.txt'
-                self.feature_path = '/var/node436/local/tstahl/new_Resnet_features/2nd/1-%s'
+                self.feature_path = '/var/node436/local/tstahl/new_Resnet_features/2nd/1-%s.csv'
             elif self.mode == 'dennis':
                 self.feature_path = 'bla'
         training_numbers_tmp, self.test_numbers = self.get_training_numbers()
