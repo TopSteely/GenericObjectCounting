@@ -66,7 +66,6 @@ class Input:
     def get_coords(self, img_nr):
         if os.path.isfile(self.coord_path%(format(img_nr, "06d"))):
             ret = np.loadtxt(self.coord_path%(format(img_nr, "06d")), delimiter=',')
-            print len(ret), type(ret[0])
             if isinstance(ret[0], np.float64):
                 return np.array([ret])
             else:

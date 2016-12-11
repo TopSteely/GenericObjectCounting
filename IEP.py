@@ -66,6 +66,7 @@ class IEP:
             # 3. cnbrs is a set of common neighbors of nodes in base.
             while queue:
                 base, cnbrs = map(list, queue.popleft())
+                print base
                 if len(base) > length:
                     length = len(base)
                 I = [0,0,1000,1000]

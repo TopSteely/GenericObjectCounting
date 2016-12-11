@@ -5,7 +5,6 @@ class Data:
     def __init__(self, load, img_nr, prune_tree_levels):
         self.img_nr = img_nr
         self.boxes = load.get_coords(img_nr)
-        print 'Lenboxes:', len(self.boxes)
         self.X = load.get_features(img_nr)
         self.y = load.get_label(img_nr)
         self.tree_boxes = load.get_coords_tree(img_nr)
@@ -33,20 +32,17 @@ class Data:
         
     def lookup_coords(self):
         #have to change level indexes because of rearranging in extraction
-        print self.boxes
         levels_corrected = {}
         for level in self.levels:
             levels_corrected[level] = []
             for idx in self.levels[level]:
                 coord = self.tree_boxes[idx]
-                print self.img_nr,'1', coord
                 new_idx = self.boxes.tolist().index(coord)
                 levels_corrected[level].append(new_idx)
         self.levels = levels_corrected
         for level in self.levels:
             for idx in self.levels[level]:
                 coord = self.boxes[idx]
-                print '2', coord
             
     def scale(self, scaler):
         return scaler.transform(self.X)
