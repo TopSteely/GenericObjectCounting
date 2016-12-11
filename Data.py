@@ -11,9 +11,9 @@ class Data:
         self.tree_boxes = sort_boxes(self.tree_boxes)
         self.G, levels = create_tree(self.tree_boxes)
         #prune tree to only have levels which fully cover the image, tested
-        total_size = surface_area(self.boxes, levels[0])
+        total_size = surface_area(self.tree_boxes, levels[0])
         for level in levels:
-            sa = surface_area(self.boxes, levels[level])
+            sa = surface_area(self.tree_boxes, levels[level])
             sa_co = sa/total_size
             if sa_co != 1.0:
                 self.G.remove_nodes_from(levels[level])

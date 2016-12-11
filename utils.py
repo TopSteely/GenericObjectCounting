@@ -60,7 +60,6 @@ def create_tree(boxes):
             for pp in possible_parents:
                 p_h = True
                 if nx.has_path(G,pp,pp):
-                    print 'has path?'
                     level = nx.shortest_path_length(G,0,pp)+1
                     if level in levels:
                         for window in levels[level]:
