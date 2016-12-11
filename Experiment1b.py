@@ -7,9 +7,9 @@ from sklearn.preprocessing import MinMaxScaler
 import math
 
 def main():
-    if len(sys.argv) != 2:
-        print 'wrong arguments - call with python Experiment1b.py <category>'
-        exit()
+#    if len(sys.argv) != 2:
+#        print 'wrong arguments - call with python Experiment1b.py <category>'
+#        exit()
     category = sys.argv[1]
 
     tree_level_size = 5
