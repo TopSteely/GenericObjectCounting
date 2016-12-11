@@ -35,19 +35,19 @@ class SGD:
         self.scaler = scaler
         
     def loss_max(self, img_data):
-        level_preds, _ = self.predictor.get_iep_levels(img_data, self.functions[img_data.img_nr])
+        level_preds, _ = self.predictor.get_iep_levels(img_data, [])
         return (np.max(level_preds) - img_data.y)**2 + self.alpha * np.dot(self.w,self.w)
         
     def loss_mean(self, img_data):
-        level_preds, _ = self.predictor.get_iep_levels(img_data, self.functions[img_data.img_nr])
+        level_preds, _ = self.predictor.get_iep_levels(img_data, [])
         return (np.mean(level_preds) - img_data.y)**2 + self.alpha * np.dot(self.w,self.w)
         
     def predict_mean(self, img_data):
-        level_preds, _ = self.predictor.get_iep_levels(img_data, self.functions[img_data.img_nr])
+        level_preds, _ = self.predictor.get_iep_levels(img_data, [])
         return (np.mean(level_preds) - img_data.y)
         
     def predict_max(self, img_data):
-        level_preds, _ = self.predictor.get_iep_levels(img_data, self.functions[img_data.img_nr])
+        level_preds, _ = self.predictor.get_iep_levels(img_data, [])
         return (np.max(level_preds) - img_data.y)
         
         
