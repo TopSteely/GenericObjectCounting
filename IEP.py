@@ -3,7 +3,7 @@ import networkx as nx
 from utils import get_set_intersection
 from collections import deque
 from itertools import chain, islice
-from get_intersection import get_intersection
+from utils import get_intersection
 import numpy as np
 
 class IEP:
