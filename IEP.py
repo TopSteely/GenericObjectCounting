@@ -23,7 +23,7 @@ class IEP:
         else:
             iep = np.zeros(len(self.w))
         if len(sets) == 1:
-            return np.dot(self.w,X[sets[0]])
+            return np.dot(self.w,X[sets[0]]), []
         elif function != []:
             for fun in function:
                 if '+' in fun[0]:
