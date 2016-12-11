@@ -94,7 +94,7 @@ def create_tree_old(boxes):
                 continue
             possible_parents = []
             for box_, ii in zip(boxes, range(len(boxes))):
-                if get_overlap_ratio.get_overlap_ratio(box, box_) == 1 and box != box_:
+                if get_overlap_ratio(box, box_) == 1 and box != box_:
                     possible_parents.append(ii)
                     #print i, '-', ii
             I = boxes[i]
@@ -105,7 +105,7 @@ def create_tree_old(boxes):
                 if level in levels:
                     for window in levels[level]:
                         II = boxes[window]
-                        if get_overlap_ratio.get_overlap_ratio(I, II) == 1:
+                        if get_overlap_ratio(I, II) == 1:
                             p_h = False
                     if p_h == True:
                         put_here.append(pp)
