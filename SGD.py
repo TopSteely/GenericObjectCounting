@@ -77,7 +77,6 @@ class SGD:
             img_data.scale(self.scaler)
             if img_nr in self.functions:
                 img_functions = self.functions[img_nr]
-                print img_functions
                 self.w_update += self.method(img_data, img_functions)
             else:
                 temp = {}
@@ -101,7 +100,7 @@ class SGD:
         
     def learn_max(self, img_data, functions):
         level_preds, functions = self.predictor.get_iep_levels(img_data, functions)
-        print level_preds
+        print 'preds: ', level_preds
         
         #print level_preds
         ind_max = level_preds.index(max(level_preds))
