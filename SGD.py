@@ -106,8 +106,8 @@ class SGD:
         #print level_preds
         ind_max = level_preds.index(max(level_preds))
         upd, _ = self.learner.iep(img_data, functions[ind_max], ind_max)
-        return (self.predict - img_data.y) * upd + self.alpha * self.w, functions
+        return (self.predict(img_data) - img_data.y) * upd + self.alpha * self.w, functions
         
     def learn_mean(self, img_data, functions):
         iep_levels, functions = self.learner.get_iep_levels(img_data, functions)
-        return (self.predict - img_data.y) * (np.array(iep_levels).sum() / len(iep_levels)) + self.alpha * self.w, functions
+        return (self.predict(img_data) - img_data.y) * (np.array(iep_levels).sum() / len(iep_levels)) + self.alpha * self.w, functions
