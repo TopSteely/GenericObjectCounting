@@ -1,4 +1,4 @@
-from utils import create_tree, surface_area, sort_boxes
+from utils import create_tree_old, surface_area, sort_boxes
 import Input
 
 class Data:
@@ -9,7 +9,7 @@ class Data:
         self.y = load.get_label(img_nr)
         self.tree_boxes = load.get_coords_tree(img_nr)
         self.tree_boxes = sort_boxes(self.tree_boxes)
-        self.G, levels = create_tree(self.tree_boxes)
+        self.G, levels = create_tree_old(self.tree_boxes)
         #prune tree to only have levels which fully cover the image, tested
         total_size = surface_area(self.tree_boxes, levels[0])
         for level in levels:
