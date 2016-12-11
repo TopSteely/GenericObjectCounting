@@ -32,6 +32,7 @@ class Data:
         
     def lookup_coords(self):
         #have to change level indexes because of rearranging in extraction
+        print self.boxes
         levels_corrected = {}
         for level in self.levels:
             levels_corrected[level] = []
