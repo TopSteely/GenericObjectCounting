@@ -40,24 +40,26 @@ class Input:
                 te_images.append(img)
         return tr_images, te_images
                 
-    def get_training_numbers():     
-        file = open('/var/scratch/tstahl/IO/test.txt')
-        test_imgs = []
-        train_imgs = []
-        for line in file:
-            test_imgs.append(int(line))
-        for i in range(1,9963):
-            if i not in test_imgs:
-                train_imgs.append(i)
-        return test_imgs, train_imgs
+    def get_training_numbers(self):     
+        if self.mode == 'pascal':
+            file = open('/var/scratch/tstahl/IO/test.txt')
+            test_imgs = []
+            train_imgs = []
+            for line in file:
+                test_imgs.append(int(line))
+            for i in range(1,9963):
+                if i not in test_imgs:
+                    train_imgs.append(i)
+            return test_imgs, train_imgs
         
-    def get_val_numbers(train_imgs):
-        file = open('/var/scratch/tstahl/IO/val.txt', 'r')
-        eval_images = []
-        for line in file:
-            im_nr = int(line)
-            eval_images.append(im_nr)
-        return [x for x in train_imgs if x not in eval_images], eval_images
+    def get_val_numbers(self, train_imgs):
+        if mode == 'pascal':
+            file = open('/var/scratch/tstahl/IO/val.txt', 'r')
+            eval_images = []
+            for line in file:
+                im_nr = int(line)
+                eval_images.append(im_nr)
+            return [x for x in train_imgs if x not in eval_images], eval_images
     
     def get_coords(self, img_nr):
         if os.path.isfile(self.coord_path%(format(img_nr, "06d"))):
