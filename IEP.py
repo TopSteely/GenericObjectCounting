@@ -18,7 +18,7 @@ class IEP:
         X = Data.X
         sets = Data.levels[level]
         coords = Data.boxes
-        if self.w == 1:
+        if np.all(self.w == 1):
             iep = 0
         else:
             iep = np.zeros(len(self.w))
