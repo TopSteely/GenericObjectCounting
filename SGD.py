@@ -14,7 +14,6 @@ class SGD:
         self.predictor = IEP.IEP(self.w, 'prediction')
         self.w_update = np.zeros(self.n_features)
         self.learner = IEP.IEP(1, 'learning')
-        self.predictor = None
         self.load = Input.Input('pascal', category)
         self.batch_size = batch_size
         self.samples_seen = 0
