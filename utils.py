@@ -290,6 +290,58 @@ def surface_area(boxes, boxes_level):
             
     return surface_area
     
+def surface_area_old(boxes, boxes_level):
+    if len(boxes_level) == 1:
+        I = boxes[boxes_level[0]][0]
+        return (I[3]-I[1])*(I[2]-I[0])
+    surface_area = 0
+    level_boxes = []
+    index = {}
+    nbrs = {}
+    for i in boxes_level:
+        level_boxes.append(boxes[i][0])
+        
+    combinations = list(itertools.combinations(boxes_level, 2)) 
+    G = nx.Graph()
+    
+    G.add_edges_from(combinations)
+    
+    for comb in combinations:
+        set_ = []
+        for c in comb:
+            set_.append(boxes[c][0])
+        I = get_set_intersection(set_)
+        if I == []:
+            G.remove_edges_from([comb])
+    
+    for u in G:
+        index[u] = len(index)
+        # Neighbors of u that appear after u in the iteration order of G.
+        nbrs[u] = {v for v in G[u] if v not in index}
+
+    queue = deque(([u], sorted(nbrs[u], key=index.__getitem__)) for u in G)
+    # Loop invariants:
+    # 1. len(base) is nondecreasing.
+    # 2. (base + cnbrs) is sorted with respect to the iteration order of G.
+    # 3. cnbrs is a set of common neighbors of nodes in base.
+    while queue:
+        base, cnbrs = map(list, queue.popleft())
+        I = [0,0,1000,1000]
+        for c in base:
+            I = get_intersection(boxes[c][0], I)
+        if len(base)%2==1:
+                surface_area += (I[3]-I[1])*(I[2]-I[0])
+        elif len(base)%2==0:
+            surface_area -= (I[3]-I[1])*(I[2]-I[0])
+                
+        for i, u in enumerate(cnbrs):
+            # Use generators to reduce memory consumption.
+            queue.append((chain(base, [u]),
+                          filter(nbrs[u].__contains__,
+                                 islice(cnbrs, i + 1, None)))) 
+            
+    return surface_area
+    
 def extract_coords(level_numbers, boxes):
     coords = []
     level_boxes = []

@@ -1,4 +1,4 @@
-from utils import create_tree_as_extracted, surface_area, sort_boxes
+from utils import create_tree_as_extracted, surface_area_old, sort_boxes
 import Input
 
 class Data:
@@ -14,9 +14,9 @@ class Data:
         print len(self.G.nodes())
         print self.G.edges()
         #prune tree to only have levels which fully cover the image, tested
-        total_size = surface_area(self.tree_boxes, levels[0])
+        total_size = surface_area_old(self.tree_boxes, levels[0])
         for level in levels:
-            sa = surface_area(self.tree_boxes, levels[level])
+            sa = surface_area_old(self.tree_boxes, levels[level])
             sa_co = sa/total_size
             if sa_co != 1.0:
                 self.G.remove_nodes_from(levels[level])
