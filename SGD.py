@@ -7,42 +7,74 @@ from sklearn.preprocessing import MinMaxScaler
 
 
 class SGD:
-    def __init__(self, mode, categoy, prune_tree_levels, batch_size, eta, gamma, alpha):
+    def __init__(self, mode, category, prune_tree_levels, batch_size, eta, gamma, alpha):
         self.prune_tree_levels = prune_tree_levels
         self.n_features = 1000
         self.w = 0.0001 * np.random.rand(self.n_features)
         self.w_update = np.zeros(self.n_features)
         self.learner = IEP.IEP(1, 'learning')
         self.predictor = None
-        self.Input = Input.Input('pascal', categoy)
+        self.load = Input.Input('pascal', category)
         self.batch_size = batch_size
         self.samples_seen = 0
         self.eta = eta
         self.eta0 = eta
         self.gamma = gamma
         self.alpha = alpha
-        self.scaler = MinMaxScaler()
         self.functions = []
         if mode == 'max':
             self.method = self.learn_max
             self.loss = self.loss_max
+            self.predict = self.predict_max
         elif mode == 'avg':
             self.method = self.learn_mean
             self.loss = self.loss_mean
+            self.predict = self.predict_mean
+            
+    def set_scaler(self, scaler):
+        self.scaler = scaler
         
-    def loss_max(self, img_data, functions):
-        level_preds = self.predictor.get_iep_levels(img_data, functions)
+    def loss_max(self, img_data):
+        level_preds = self.predictor.get_iep_levels(img_data, self.functions)
         return (np.max(level_preds) - img_data.y)**2 + self.alpha * np.dot(self.w,self.w)
         
-    def loss_mean(self, img_data, functions):
-        level_preds = self.predictor.get_iep_levels(img_data, functions)
+    def loss_mean(self, img_data):
+        level_preds = self.predictor.get_iep_levels(img_data, self.functions)
         return (np.mean(level_preds) - img_data.y)**2 + self.alpha * np.dot(self.w,self.w)
+        
+    def predict_mean(self, img_data):
+        level_preds = self.predictor.get_iep_levels(img_data, self.functions)
+        return (np.mean(level_preds) - img_data.y)
+        
+    def predict_max(self, img_data):
+        level_preds = self.predictor.get_iep_levels(img_data, self.functions)
+        return (np.max(level_preds) - img_data.y)
+        
+        
+    def evaluate(self):
+        squared_error = 0.0
+        error = 0.0
+        non_zero_error = 0.0
+        n_non_zero = 0.0
+        test_numbers = self.load.test_numbers
+        for img_nr in test_numbers:
+            img_data = Data.Data(self.load, img_nr)
+            img_data.scale(self.scaler)
+            img_loss = self.predict(img_data)
+            squared_error += img_loss ** 2
+            error += img_loss
+            if img_data.y > 0:
+                non_zero_error += img_loss ** 2
+                n_non_zero += 1
+        return squared_error/len(test_numbers), error / len(test_numbers), non_zero_error / n_non_zero
+        
         
         
     def learn(self):
-        training_data = self.Input.training_numbers
+        training_data = self.load.training_numbers
         for i_img_nr, img_nr in enumerate(training_data):
-            img_data = Data.Data(self.Input, img_nr)
+            img_data = Data.Data(self.load, img_nr)
+            img_data.scale(self.scaler)
             if img_nr in self.functions:
                 img_functions = self.functions[img_nr]
                 self.w_update += self.method(img_data, img_functions)

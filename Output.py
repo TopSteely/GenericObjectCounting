@@ -14,8 +14,8 @@ class Output:
         
         
         
-    def save(self, mse_level, ae_level, nn, num_per_image):
+    def save(self, mse_level, ae_level, nn):
         pickle.dump(mse_level, open( self.mse_path%(self.experiment, self.mode, self.category, self.prune_tree_levels), "wb" ))
         pickle.dump(ae_level, open( self.ae_path%(self.experiment, self.mode, self.category, self.prune_tree_levels), "wb" ))
         pickle.dump(nn, open( self.nn_path%(self.experiment, self.mode, self.category, self.prune_tree_levels), "wb" ))
-        pickle.dump(num_per_image, open( self.npe_path%(self.experiment, self.mode, self.category, self.prune_tree_levels), "wb" ))
+        #pickle.dump(num_per_image, open( self.npe_path%(self.experiment, self.mode, self.category, self.prune_tree_levels), "wb" ))
