@@ -15,6 +15,7 @@ def main():
     tree_level_size = 5
 
     #initialize
+    print 'initializing'
     sgd = SGD.SGD('max', category, 3, tree_level_size, math.pow(10,-4), 0.003, 1e-6)
     load = Input.Input('pascal',category)
     #learn scaler
@@ -26,12 +27,15 @@ def main():
     sgd.set_scaler(scaler)
         
     # learn SGD
+    print 'learning'
     for epoch in range(5):
         sgd.learn()
         
     # evaluate
+    print 'evaluating'
     mse,ae, mse_non_zero = sgd.evaluate()
     
     # plot/save
+    print 'saving'
     output = Output.Output('pascal_max', category, tree_level_size, '1b')
     output.save(mse, ae, mse_non_zero)
