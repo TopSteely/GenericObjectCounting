@@ -42,7 +42,7 @@ class IEP:
             overlaps = nx.Graph()
             
             for comb in combinations:
-                print comb
+                print list(comb)
                 set_ = []
                 for c in comb:
                     set_.append(coords[c])
