@@ -13,10 +13,11 @@ def main():
     category = sys.argv[1]
 
     tree_level_size = 5
+    batch_size = 5
 
     #initialize
     print 'initializing'
-    sgd = SGD.SGD('max', category, 3, tree_level_size, math.pow(10,-4), 0.003, 1e-6)
+    sgd = SGD.SGD('max', category, tree_level_size, batch_size, math.pow(10,-4), 0.003, 1e-6)
     load = Input.Input('pascal',category)
     output = Output.Output('pascal_max', category, tree_level_size, '1b')
     
