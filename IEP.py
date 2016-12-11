@@ -42,12 +42,13 @@ class IEP:
             overlaps = nx.Graph()
             
             for comb in combinations:
+                print comb
                 set_ = []
                 for c in comb:
                     set_.append(coords[c])
                 I = get_set_intersection(set_)
                 if I != []:
-                    overlaps.add_edge(comb)
+                    overlaps.add_edges_from(comb)
         
             length = 1
             index = {}
