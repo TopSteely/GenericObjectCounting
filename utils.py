@@ -58,6 +58,7 @@ def create_tree(boxes):
             I = boxes[i]
             put_here = []
             print possible_parents
+            print G.edges()
             for pp in possible_parents:
                 p_h = True
                 if nx.has_path(G,0,pp):
