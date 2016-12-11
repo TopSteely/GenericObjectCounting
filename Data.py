@@ -3,6 +3,7 @@ import Input
 
 class Data:
     def __init__(self, load, img_nr, prune_tree_levels):
+        print img_nr
         self.img_nr = img_nr
         self.boxes = load.get_coords(img_nr)
         self.X = load.get_features(img_nr)
@@ -27,6 +28,7 @@ class Data:
         #prune tree as well, for patches training
         for trash_level in levels_gone.values():
             self.G.remove_nodes_from(trash_level)
+        print G.edges()
             
     def scale(self, scaler):
         return scaler.transform(self.X)
