@@ -57,14 +57,15 @@ def create_tree(boxes):
             put_here = []
             for pp in possible_parents:
                 p_h = True
-                level = nx.shortest_path_length(G,0,pp)+1
-                if level in levels:
-                    for window in levels[level]:
-                        II = boxes[window]
-                        if get_overlap_ratio(I, II) == 1:
-                            p_h = False
-                    if p_h == True:
-                        put_here.append(pp)
+                if nx.path.bidirectional_dijkstra(G,0,pp):
+                    level = nx.shortest_path_length(G,0,pp)+1
+                    if level in levels:
+                        for window in levels[level]:
+                            II = boxes[window]
+                            if get_overlap_ratio(I, II) == 1:
+                                p_h = False
+                        if p_h == True:
+                            put_here.append(pp)
                 else:
                     put_here.append(pp)
             parent = min(put_here)
