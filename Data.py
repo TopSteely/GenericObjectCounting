@@ -38,7 +38,7 @@ class Data:
             levels_corrected[level] = []
             for idx in self.levels[level]:
                 coord = self.tree_boxes[idx]
-                print '1', coord
+                print self.img_nr,'1', coord
                 new_idx = self.boxes.tolist().index(coord)
                 levels_corrected[level].append(new_idx)
         self.levels = levels_corrected

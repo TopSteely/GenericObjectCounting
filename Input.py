@@ -65,7 +65,11 @@ class Input:
     
     def get_coords(self, img_nr):
         if os.path.isfile(self.coord_path%(format(img_nr, "06d"))):
-            return np.loadtxt(self.coord_path%(format(img_nr, "06d")), delimiter=',')
+            ret = np.loadtxt(self.coord_path%(format(img_nr, "06d")), delimiter=',')
+            if isinstance(ret[0], int):
+                return [ret]
+            else:
+                return ret
             
             
     def get_coords_tree(self, img_nr):
