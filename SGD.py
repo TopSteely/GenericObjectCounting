@@ -80,7 +80,8 @@ class SGD:
                 print img_functions
                 self.w_update += self.method(img_data, img_functions)
             else:
-                upd, fct = self.method(img_data, [])
+                temp = {}
+                upd, fct = self.method(img_data, temp)
                 self.w_update += upd
                 self.functions[img_nr] = fct
             
