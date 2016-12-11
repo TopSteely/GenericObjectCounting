@@ -48,7 +48,8 @@ class IEP:
                     set_.append(coords[c])
                 I = get_set_intersection(set_)
                 if I != []:
-                    overlaps.add_edges_from(list(comb))
+                    #overlaps.add_edge(comb[0],comb[1])
+                    overlaps.add_edges_from([comb])
         
             length = 1
             index = {}
