@@ -58,7 +58,7 @@ class SGD:
         n_non_zero = 0.0
         test_numbers = self.load.test_numbers
         for img_nr in test_numbers:
-            img_data = Data.Data(self.load, img_nr)
+            img_data = Data.Data(self.load, img_nr, self.prune_tree_levels)
             img_data.scale(self.scaler)
             img_loss = self.predict(img_data)
             squared_error += img_loss ** 2
@@ -73,7 +73,7 @@ class SGD:
     def learn(self):
         training_data = self.load.training_numbers
         for i_img_nr, img_nr in enumerate(training_data):
-            img_data = Data.Data(self.load, img_nr)
+            img_data = Data.Data(self.load, img_nr, self.prune_tree_levels)
             img_data.scale(self.scaler)
             if img_nr in self.functions:
                 img_functions = self.functions[img_nr]
