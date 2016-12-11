@@ -89,7 +89,11 @@ class Input:
         
     def get_features(self, img_nr):
         if os.path.isfile(self.feature_path%(format(img_nr, "06d"))):
-            return np.loadtxt(self.feature_path%(format(img_nr, "06d")), delimiter=',')
+            ret = np.loadtxt(self.feature_path%(format(img_nr, "06d")), delimiter=',')
+            if isinstance(ret[0], np.float64):
+                return np.array([ret])
+            else:
+                return ret
         else:
              print 'warning ' + self.feature_path%(format(img_nr, "06d")) + 'does not exist'
              exit()

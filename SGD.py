@@ -92,6 +92,7 @@ class SGD:
         
         
     def update(self):
+        print 'updating'
         self.w -= self.eta * self.w_update
         self.eta = self.eta * (1+self.eta0*self.gamma*self.samples_seen)**-1
         self.w_update = np.zeros(self.n_features)
@@ -105,7 +106,7 @@ class SGD:
         #print level_preds
         ind_max = level_preds.index(max(level_preds))
         upd, _ = self.learner.iep(img_data, functions[ind_max], ind_max)
-        return self.w * upd + self.alpha * self.w, functions
+        return upd + self.alpha * self.w, functions
         
     def learn_mean(self, img_data, functions):
         iep_levels, functions = self.learner.get_iep_levels(img_data, functions)
