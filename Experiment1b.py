@@ -40,3 +40,7 @@ def main():
     print 'saving'
     output = Output.Output('pascal_max', category, tree_level_size, '1b')
     output.save(mse, ae, mse_non_zero)
+    
+    
+if __name__ == "__main__":
+    main()
