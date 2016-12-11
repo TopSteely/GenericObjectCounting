@@ -18,6 +18,7 @@ class IEP:
         X = Data.X
         sets = Data.levels[level]
         coords = Data.boxes
+        print coords
         if np.all(self.w == 1):
             iep = 0
         else:
@@ -42,7 +43,6 @@ class IEP:
             overlaps = nx.Graph()
             
             for comb in combinations:
-                print list(comb)
                 set_ = []
                 for c in comb:
                     set_.append(coords[c])
@@ -67,6 +67,7 @@ class IEP:
             # 3. cnbrs is a set of common neighbors of nodes in base.
             while queue:
                 base, cnbrs = map(list, queue.popleft())
+                print base
                 if len(base) > length:
                     length = len(base)
                 I = [0,0,1000,1000]
