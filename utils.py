@@ -134,17 +134,13 @@ def find_root(pruned_boxes):
     new_index = unique_coords.tolist().index(pruned_boxes[0])
     return new_index
     
-def sort_boxes(boxes, preds, X_p, from_, to):
+def sort_boxes(boxes):
     sorted_boxes = []
-    sorted_preds = []
-    sorted_features = []
     decorated = [((box[3]-box[1])*(box[2]-box[0]), i) for i, box in enumerate(boxes)]
     decorated.sort()
     for box, i in reversed(decorated):
         sorted_boxes.append(boxes[i])
-        sorted_preds.append(preds[i])
-        sorted_features.append(X_p[i])
-    return sorted_boxes[from_:to], sorted_preds[from_:to], sorted_features[from_:to]
+    return sorted_boxes
     
 def get_set_intersection(set_):
     intersection = get_intersection(set_[0], set_[1])
