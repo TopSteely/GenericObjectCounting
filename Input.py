@@ -6,7 +6,7 @@ class Input:
         self.mode = mode
         self.category = category
         training_numbers_tmp, self.test_numbers = self.get_training_numbers()
-        self.training_numbers, self.val_numbers = self.get_val_numbers()
+        self.training_numbers, self.val_numbers = self.get_val_numbers(training_numbers_tmp)
         self.category_train, self.category_val = self.get_category_imgs()
         if mode == 'grid':
             self.coord_path = 'bla'
