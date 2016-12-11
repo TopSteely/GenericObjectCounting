@@ -8,24 +8,25 @@ class Input:
         training_numbers_tmp, self.test_numbers = self.get_training_numbers()
         self.training_numbers, self.val_numbers = self.get_val_numbers(training_numbers_tmp)
         self.category_train, self.category_val = self.get_category_imgs()
-        if mode == 'grid':
+        if self.mode == 'grid':
             self.coord_path = 'bla'
             self.label_path = 'bla'
             self.feature_path = 'bla'
-        elif mode == 'mscoco':
+        elif self.mode == 'mscoco':
             self.coord_path = 'bla'
             self.label_path = 'bla'
             self.feature_path = 'bla'
-        elif mode == 'trancos':
+        elif self.mode == 'trancos':
             self.coord_path = 'bla'
             self.label_path = 'bla'
             self.feature_path = 'bla'
         else:
-            if mode == 'pascal':
+            print self.mode
+            if self.mode == 'pascal':
                 self.coord_path =  '/var/node436/local/tstahl/new_Resnet_features/2nd/coords/1-%s.csv'
                 self.label_path =  '/var/node436/local/tstahl/Coords_prop_windows/Labels/Labels/%s_%s_partial.txt'
                 self.feature_path = '/var/node436/local/tstahl/new_Resnet_features/2nd/1-%s'
-            elif mode == 'dennis':
+            elif self.mode == 'dennis':
                 self.feature_path = 'bla'
         
     def get_category_imgs(self):
