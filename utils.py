@@ -57,8 +57,6 @@ def create_tree(boxes):
                     #print i, '-', ii
             I = boxes[i]
             put_here = []
-            print possible_parents
-            print G.edges()
             for pp in possible_parents:
                 p_h = True
                 if nx.has_path(G,pp,pp):
@@ -77,9 +75,7 @@ def create_tree(boxes):
                     print 'do we ever go here?'
                     put_here.append(pp)
             parent = min(put_here)
-            print put_here, parent
-            print G.add_edge(i,parent)
-            print G.edges()
+            G.add_edge(i,parent)
             level = nx.shortest_path_length(G,0,parent)+1
             if level in levels:
                 if parent not in levels[level]:
