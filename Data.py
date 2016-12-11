@@ -28,7 +28,7 @@ class Data:
         #prune tree as well, for patches training
         for trash_level in levels_gone.values():
             self.G.remove_nodes_from(trash_level)
-        print G.edges()
+        print self.G.edges()
             
     def scale(self, scaler):
         return scaler.transform(self.X)
