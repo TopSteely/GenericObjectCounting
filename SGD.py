@@ -21,7 +21,7 @@ class SGD:
         self.eta0 = eta
         self.gamma = gamma
         self.alpha = alpha
-        self.functions = []
+        self.functions = {}
         if mode == 'max':
             self.method = self.learn_max
             self.loss = self.loss_max
@@ -100,9 +100,9 @@ class SGD:
         
         
     def learn_max(self, img_data, functions):
-        print len(self.predictor.w)
         level_preds, functions = self.predictor.get_iep_levels(img_data, functions)
-        print len(level_preds)
+        print level_preds
+        
         #print level_preds
         ind_max = level_preds.index(max(level_preds))
         upd, _ = self.learner.iep(img_data, functions[ind_max], ind_max)
