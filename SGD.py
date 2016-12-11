@@ -49,6 +49,7 @@ class SGD:
     def predict_max(self, img_data):
         level_preds = self.predictor.get_iep_levels(img_data, self.functions)
         print len(level_preds[0])
+        print level_preds
         print np.max(level_preds)
         return (np.max(level_preds) - img_data.y)
         
