@@ -50,7 +50,7 @@ def create_tree(boxes):
             possible_parents = []
             for box_, ii in zip(boxes, range(len(boxes))):
                 #print box, box_, get_overlap_ratio(box, box_), get_overlap_ratio(box, box_) == 1, box != box_
-                print box_, ii, get_overlap_ratio(box, box_) == 1, np.all(box != box_)
+                #print box_, ii, get_overlap_ratio(box, box_) == 1, np.any(box != box_)
                 if get_overlap_ratio(box, box_) == 1 and np.all(box != box_):
                     possible_parents.append(ii)
                     #print i, '-', ii
