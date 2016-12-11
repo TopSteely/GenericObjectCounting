@@ -11,6 +11,7 @@ class SGD:
         self.prune_tree_levels = prune_tree_levels
         self.n_features = 1000
         self.w = 0.0001 * np.random.rand(self.n_features)
+        self.predictor = IEP.IEP(self.w, 'prediction')
         self.w_update = np.zeros(self.n_features)
         self.learner = IEP.IEP(1, 'learning')
         self.predictor = None
@@ -94,6 +95,7 @@ class SGD:
         self.w -= self.eta * self.w_update
         self.eta = self.eta * (1+self.eta0*self.gamma*self.samples_seen)**-1
         self.w_update = np.zeros(self.n_features)
+        self.predictor = IEP.IEP(self.w, 'prediction')
         
         
     def learn_max(self, img_data, functions):

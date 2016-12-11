@@ -38,14 +38,12 @@ def get_intersection(A, B):
         
         
 def create_tree(boxes):
-    print len(boxes)
     G = nx.Graph()
     levels = {}
     levels[0] = [0]
     G.add_node(0)
     if len(boxes) != 1:
         for box, i in zip(boxes[1:len(boxes)], range(1,len(boxes))):
-            print i
             if (box[2]-box[0]) * (box[3]-box[1]) == 0: # some boxes have a surface area of 0 like (0,76,100,76)
                 print box
                 print 'surface area of box == 0', i
