@@ -69,6 +69,7 @@ def create_tree(boxes):
                     put_here.append(pp)
             parent = min(put_here)
             G.add_edge(i,parent)
+            print G.edges()
             level = nx.shortest_path_length(G,0,parent)+1
             if level in levels:
                 if parent not in levels[level]:
