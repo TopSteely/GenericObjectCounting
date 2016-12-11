@@ -19,9 +19,9 @@ class IEP:
         sets = Data.levels[level]
         coords = Data.boxes
         if np.all(self.w == 1):
-            iep = 0
-        else:
             iep = np.zeros(len(self.w))
+        else:
+            iep = 0
         if len(sets) == 1:
             return np.dot(self.w,X[sets[0]]), []
         elif function != []:
