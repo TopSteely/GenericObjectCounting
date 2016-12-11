@@ -36,14 +36,13 @@ class Data:
         levels_corrected = {}
         for level in self.levels:
             levels_corrected[level] = []
+            print self.levels[level]
             for idx in self.levels[level]:
                 coord = self.tree_boxes[idx]
                 new_idx = self.boxes.tolist().index(coord)
+                print idx, coord, new_idx
                 levels_corrected[level].append(new_idx)
         self.levels = levels_corrected
-        for level in self.levels:
-            for idx in self.levels[level]:
-                coord = self.boxes[idx]
             
     def scale(self, scaler):
         return scaler.transform(self.X)
