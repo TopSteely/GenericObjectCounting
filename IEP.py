@@ -96,7 +96,7 @@ class IEP:
     def get_iep_levels(self, Data, functions):
         iep_levels = []
         for level in Data.levels:
-            iep, function = self.iep(Data, functions[level], level)
+            iep, function = self.iep(Data, [], level)
             iep_levels.append(iep)
         return iep_levels, functions
         
