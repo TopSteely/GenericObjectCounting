@@ -5,6 +5,7 @@ class Data:
     def __init__(self, load, img_nr, prune_tree_levels):
         self.img_nr = img_nr
         self.boxes = load.get_coords(img_nr)
+        print self.boxes
         self.X = load.get_features(img_nr)
         self.y = load.get_label(img_nr)
         self.tree_boxes = load.get_coords_tree(img_nr)

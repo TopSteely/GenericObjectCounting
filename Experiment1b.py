@@ -24,7 +24,7 @@ def main():
     #learn scaler
     scaler = MinMaxScaler()
     training_data = load.training_numbers
-    for i_img_nr, img_nr in enumerate(training_data[0:50]):
+    for i_img_nr, img_nr in enumerate(training_data[0:1]):
         img_data = Data.Data(load, img_nr, tree_level_size)
         scaler.partial_fit(img_data.X)
     sgd.set_scaler(scaler)
