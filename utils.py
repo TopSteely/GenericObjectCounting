@@ -292,14 +292,14 @@ def surface_area(boxes, boxes_level):
     
 def surface_area_old(boxes, boxes_level):
     if len(boxes_level) == 1:
-        I = boxes[boxes_level[0]][0]
+        I = boxes[boxes_level[0]]
         return (I[3]-I[1])*(I[2]-I[0])
     surface_area = 0
     level_boxes = []
     index = {}
     nbrs = {}
     for i in boxes_level:
-        level_boxes.append(boxes[i][0])
+        level_boxes.append(boxes[i])
         
     combinations = list(itertools.combinations(boxes_level, 2)) 
     G = nx.Graph()
@@ -309,7 +309,7 @@ def surface_area_old(boxes, boxes_level):
     for comb in combinations:
         set_ = []
         for c in comb:
-            set_.append(boxes[c][0])
+            set_.append(boxes[c])
         I = get_set_intersection(set_)
         if I == []:
             G.remove_edges_from([comb])
@@ -328,7 +328,7 @@ def surface_area_old(boxes, boxes_level):
         base, cnbrs = map(list, queue.popleft())
         I = [0,0,1000,1000]
         for c in base:
-            I = get_intersection(boxes[c][0], I)
+            I = get_intersection(boxes[c], I)
         if len(base)%2==1:
                 surface_area += (I[3]-I[1])*(I[2]-I[0])
         elif len(base)%2==0:
