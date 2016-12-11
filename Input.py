@@ -64,7 +64,7 @@ class Input:
     
     def get_coords(self, img_nr):
         if os.path.isfile(self.coord_path%(format(img_nr, "06d"))):
-            self.coords = np.loadtxt(self.coord_path%(format(img_nr, "06d")), delimiter=',')
+            return np.loadtxt(self.coord_path%(format(img_nr, "06d")), delimiter=',')
 #                f = open(self.coord_path%(format(img_nr, "06d")), 'r')
 #        else:
 #            print 'warning, no ' + self.coord_path%(format(img_nr, "06d"))
@@ -80,7 +80,7 @@ class Input:
         
     def get_features(self, img_nr):
         if os.path.isfile(self.feature_path%(format(img_nr, "06d"))):
-            self.features = np.loadtxt(self.feature_path%(format(img_nr, "06d")), delimiter=',')
+            return np.loadtxt(self.feature_path%(format(img_nr, "06d")), delimiter=',')
         else:
              print 'warning ' + self.feature_path%(format(img_nr, "06d")) + 'does not exist'
              exit()

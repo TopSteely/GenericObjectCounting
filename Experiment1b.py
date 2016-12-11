@@ -7,7 +7,6 @@ from sklearn.preprocessing import MinMaxScaler
 import math
 
 def main():
-    print 'starting', len(sys.argv), sys.argv[1]
     if len(sys.argv) != 2:
         print 'wrong arguments - call with python Experiment1b.py <category>'
         exit()
