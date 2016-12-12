@@ -23,7 +23,9 @@ class IEP:
         else:
             iep = 0
         if len(sets) == 1:
-            return np.dot(self.w,X[sets[0]]), []
+            if function == []:
+                function.append(['+',sets[0]])
+            return np.dot(self.w,X[sets[0]]), function
         elif function != []:
             for fun in function:
                 if '+' in fun[0]:
@@ -101,8 +103,7 @@ class IEP:
                 iep, function = self.iep(Data, functions[level], level)
             else:
                 iep, function = self.iep(Data, [], level)
-                if level > 0:
-                    functions[level] = function
+                functions[level] = function
             iep_levels.append(iep)
         return iep_levels, functions
         
