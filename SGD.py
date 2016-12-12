@@ -74,13 +74,13 @@ class SGD:
         
         
         
-    def learn(self, end):
+    def learn(self, end_):
         start = time.time()
         training_data = self.load.training_numbers
         end = time.time()
         print(end - start)
         start = time.time()
-        for i_img_nr, img_nr in enumerate(training_data[0:end]):
+        for i_img_nr, img_nr in enumerate(training_data[0:end_]):
             img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler)
             end = time.time()
             print(end - start)
