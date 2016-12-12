@@ -80,7 +80,8 @@ class SGD:
             img_data.scale(self.scaler)
             if img_nr in self.functions:
                 img_functions = self.functions[img_nr]
-                self.w_update += self.method(img_data, img_functions)
+                tmp = self.method(img_data, img_functions)
+                self.w_update += tmp[0]
             else:
                 temp = {}
                 upd, fct = self.method(img_data, temp)
