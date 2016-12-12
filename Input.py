@@ -92,15 +92,12 @@ class Input:
         if os.path.isfile(self.feature_path%(format(img_nr, "06d"))):
             #ret = np.loadtxt(self.feature_path%(format(img_nr, "06d")), delimiter=',')
             ret = pd.read_csv(self.feature_path%(format(img_nr, "06d")), header=None, delimiter=",").values
-            print len(ret)
-            if len(ret) == 0:
-                print pd.read_csv(self.feature_path%(format(img_nr, "06d")), delimiter=",")
-            ret = np.loadtxt(self.feature_path%(format(img_nr, "06d")), delimiter=',')
-            print len(ret)
-            if isinstance(ret[0], np.float64):
-                return np.array([ret])
-            else:
-                return ret
+            #ret = np.loadtxt(self.feature_path%(format(img_nr, "06d")), delimiter=',')
+            #print len(ret)
+            #if isinstance(ret[0], np.float64):
+            #    return np.array([ret])
+            #else:
+            return ret
         else:
              print 'warning ' + self.feature_path%(format(img_nr, "06d")) + 'does not exist'
              exit()
