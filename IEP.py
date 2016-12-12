@@ -103,6 +103,7 @@ class IEP:
                 iep, function = self.iep(Data, functions[level], level)
             else:
                 iep, function = self.iep(Data, [], level)
+                print len(functions), level
                 functions[level] = function
             iep_levels.append(iep)
         return iep_levels, functions
