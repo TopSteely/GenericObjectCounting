@@ -17,7 +17,7 @@ def main():
 
     #initialize
     print 'initializing'
-    sgd = SGD.SGD('max', category, tree_level_size, batch_size, math.pow(10,-5), 0.003, 1e-6)
+    sgd = SGD.SGD('max', category, tree_level_size, batch_size, math.pow(10,-3), 0.003, 1e-6)
     load = Input.Input('pascal',category)
     output = Output.Output('pascal_max', category, tree_level_size, '1b')
     
