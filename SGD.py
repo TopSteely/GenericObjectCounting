@@ -3,6 +3,7 @@ import Input
 import numpy as np
 import Data
 from sklearn.preprocessing import MinMaxScaler
+import time
 
 
 
@@ -74,10 +75,20 @@ class SGD:
         
         
     def learn(self, end):
+        start = time.time()
         training_data = self.load.training_numbers
+        end = time.time()
+        print(end - start)
+        start = time.time()
         for i_img_nr, img_nr in enumerate(training_data[0:end]):
             img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler)
+            end = time.time()
+            print(end - start)
+            start = time.time()
             img_data.scale(self.scaler)
+            end = time.time()
+            print(end - start)
+            start = time.time()
             if img_nr in self.functions:
                 img_functions = self.functions[img_nr]
                 self.w_update += self.method(img_data, img_functions)[0]
@@ -86,10 +97,15 @@ class SGD:
                 upd, fct = self.method(img_data, temp)
                 self.w_update += upd
                 self.functions[img_nr] = fct
+            end = time.time()
+            print(end - start)
+            start = time.time()
             self.samples_seen += 1
             
             if i_img_nr%self.batch_size == 0:
                 self.update()
+            end = time.time()
+            print(end - start)
         self.update()
         self.predictor = IEP.IEP(self.w, 'prediction')
         
