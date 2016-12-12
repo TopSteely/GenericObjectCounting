@@ -95,7 +95,7 @@ class SGD:
         
         
     def update(self):
-        print 'updating'
+        #print 'updating'
         self.w -= self.eta * self.w_update
         self.eta = self.eta * (1+self.eta0*self.gamma*self.samples_seen)**-1
         self.w_update = np.zeros(self.n_features)
@@ -104,7 +104,7 @@ class SGD:
         
     def learn_max(self, img_data, functions):
         level_preds, functions = self.predictor.get_iep_levels(img_data, functions)
-        print 'preds: ', level_preds
+        #print 'preds: ', level_preds
         
         #print level_preds
         ind_max = level_preds.index(max(level_preds))
