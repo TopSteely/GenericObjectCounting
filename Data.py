@@ -1,18 +1,28 @@
 from utils import create_tree_as_extracted, surface_area_old, sort_boxes
-import Input
+import time
 
 class Data:
     def __init__(self, load, img_nr, prune_tree_levels, scaler):
+        start = time.time()
         self.img_nr = img_nr
         self.boxes = load.get_coords(img_nr)
+        end = time.time()
+        print 'coords:', (end - start)
+        start = time.time()
         if scaler == None:
             self.X = load.get_features(img_nr)
         else:
             self.X = scaler.transform(load.get_features(img_nr))
+        end = time.time()
+        print 'feat:', (end - start)
+        start = time.time()
         self.y = load.get_label(img_nr)
         self.tree_boxes = load.get_coords_tree(img_nr)
         self.tree_boxes = sort_boxes(self.tree_boxes)
         self.G, levels = create_tree_as_extracted(self.tree_boxes)
+        end = time.time()
+        print 'tree:', (end - start)
+        start = time.time()
         #prune tree to only have levels which fully cover the image, tested
         total_size = surface_area_old(self.tree_boxes, levels[0])
         for level in levels:
@@ -30,7 +40,14 @@ class Data:
         #prune tree as well, for patches training
         for trash_level in levels_gone.values():
             self.G.remove_nodes_from(trash_level)
+            
+        end = time.time()
+        print 'prune:', (end - start)
+        start = time.time()
         self.lookup_coords()
+        end = time.time()
+        print 'lookup:', (end - start)
+        start = time.time()
         
         
     def lookup_coords(self):
