@@ -93,6 +93,10 @@ class Input:
             #ret = np.loadtxt(self.feature_path%(format(img_nr, "06d")), delimiter=',')
             ret = pd.read_csv(self.feature_path%(format(img_nr, "06d")), delimiter=",").values
             print len(ret)
+            if len(ret) == 0:
+                print pd.read_csv(self.feature_path%(format(img_nr, "06d")), delimiter=",")
+            ret = np.loadtxt(self.feature_path%(format(img_nr, "06d")), delimiter=',')
+            print len(ret)
             if isinstance(ret[0], np.float64):
                 return np.array([ret])
             else:
