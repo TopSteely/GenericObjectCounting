@@ -12,37 +12,37 @@ def main():
 #        exit()
     category = sys.argv[1]
 
-    tree_level_size = 3
-    batch_size = 1
+    batch_size = 5
 
-    #initialize
-    print 'initializing'
-    sgd = SGD.SGD('max', category, tree_level_size, batch_size, math.pow(10,-3), 0.003, 1e-6)
-    load = Input.Input('pascal',category)
-    output = Output.Output('pascal_max', category, tree_level_size, '1b')
-    
-    #learn scaler
-    scaler = MinMaxScaler()
-    training_data = load.training_numbers
-    for i_img_nr, img_nr in enumerate(training_data):
-        img_data = Data.Data(load, img_nr, tree_level_size, None)
-        scaler.partial_fit(img_data.X)
-    sgd.set_scaler(scaler)
+    for tree_level_size in range(1,6):
+        #initialize
+        print 'initializing'
+        sgd = SGD.SGD('max', category, tree_level_size, batch_size, math.pow(10,-3), 0.003, 1e-6)
+        load = Input.Input('pascal',category)
+        output = Output.Output('pascal_max', category, tree_level_size, '1b')
         
-    # learn SGD
-    print 'learning'
-    for epoch in range(5):
-        sgd.learn()
-        print sgd.evaluate('train')
+        #learn scaler
+        scaler = MinMaxScaler()
+        training_data = load.training_numbers
+        for i_img_nr, img_nr in enumerate(training_data):
+            img_data = Data.Data(load, img_nr, tree_level_size, None)
+            scaler.partial_fit(img_data.X)
+        sgd.set_scaler(scaler)
+            
+        # learn SGD
+        print 'learning'
+        for epoch in range(5):
+            sgd.learn()
+            print sgd.evaluate('train')
+            
+        # evaluate
+        print 'evaluating'
+        mse,ae, mse_non_zero = sgd.evaluate('test')
         
-    # evaluate
-    print 'evaluating'
-    mse,ae, mse_non_zero = sgd.evaluate('test')
-    
-    # plot/save
-    print 'saving'
-    
-    output.save(mse, ae, mse_non_zero, sgd)
+        # plot/save
+        print 'saving'
+        
+        output.save(mse, ae, mse_non_zero, sgd)
     
     
 if __name__ == "__main__":
