@@ -13,7 +13,7 @@ def main():
     category = sys.argv[1]
 
     tree_level_size = 3
-    batch_size = 5
+    batch_size = 1
 
     #initialize
     print 'initializing'
@@ -24,7 +24,7 @@ def main():
     #learn scaler
     scaler = MinMaxScaler()
     training_data = load.training_numbers
-    for i_img_nr, img_nr in enumerate(training_data[0:50]):
+    for i_img_nr, img_nr in enumerate(training_data[0:10]):
         img_data = Data.Data(load, img_nr, tree_level_size)
         scaler.partial_fit(img_data.X)
     sgd.set_scaler(scaler)
@@ -32,8 +32,8 @@ def main():
     # learn SGD
     print 'learning'
     for epoch in range(5):
-        sgd.learn(50)
-        print sgd.evaluate(50, 'train')
+        sgd.learn(10)
+        print sgd.evaluate(10, 'train')
         
     # evaluate
     print 'evaluating'

@@ -2,10 +2,13 @@ from utils import create_tree_as_extracted, surface_area_old, sort_boxes
 import Input
 
 class Data:
-    def __init__(self, load, img_nr, prune_tree_levels):
+    def __init__(self, load, img_nr, prune_tree_levels, scaler):
         self.img_nr = img_nr
         self.boxes = load.get_coords(img_nr)
-        self.X = load.get_features(img_nr)
+        if scaler == None:
+            self.X = load.get_features(img_nr)
+        else:
+            self.X = scaler.transform(load.get_features(img_nr))
         self.y = load.get_label(img_nr)
         self.tree_boxes = load.get_coords_tree(img_nr)
         self.tree_boxes = sort_boxes(self.tree_boxes)

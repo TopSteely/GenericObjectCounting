@@ -61,7 +61,7 @@ class SGD:
         elif mode == ' test':
             numbers = self.load.test_numbers
         for img_nr in numbers:
-            img_data = Data.Data(self.load, img_nr, self.prune_tree_levels)
+            img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler)
             img_data.scale(self.scaler)
             img_loss = self.predict(img_data)
             squared_error += img_loss ** 2
@@ -76,7 +76,7 @@ class SGD:
     def learn(self, end):
         training_data = self.load.training_numbers
         for i_img_nr, img_nr in enumerate(training_data[0:end]):
-            img_data = Data.Data(self.load, img_nr, self.prune_tree_levels)
+            img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler)
             img_data.scale(self.scaler)
             if img_nr in self.functions:
                 img_functions = self.functions[img_nr]
@@ -104,12 +104,12 @@ class SGD:
         
     def learn_max(self, img_data, functions):
         level_preds, functions = self.predictor.get_iep_levels(img_data, functions)
+        print 'sum W: ', np.sum(self.w)
         print 'preds: ', level_preds
         
         #print level_preds
         ind_max = level_preds.index(max(level_preds))
         upd, _ = self.learner.iep(img_data, functions[ind_max], ind_max)
-        print 'upd: ', len(upd)
         return (self.predict(img_data, functions[ind_max], ind_max) - img_data.y) * upd + self.alpha * self.w, functions
         
     def learn_mean(self, img_data, functions):
