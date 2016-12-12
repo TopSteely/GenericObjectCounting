@@ -91,7 +91,7 @@ class Input:
     def get_features(self, img_nr):
         if os.path.isfile(self.feature_path%(format(img_nr, "06d"))):
             #ret = np.loadtxt(self.feature_path%(format(img_nr, "06d")), delimiter=',')
-            ret = pd.read_csv(self.feature_path%(format(img_nr, "06d")), delimiter=",").values
+            ret = pd.read_csv(self.feature_path%(format(img_nr, "06d")), header=None, delimiter=",").values
             print len(ret)
             if len(ret) == 0:
                 print pd.read_csv(self.feature_path%(format(img_nr, "06d")), delimiter=",")
