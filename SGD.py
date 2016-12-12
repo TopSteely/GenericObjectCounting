@@ -60,7 +60,7 @@ class SGD:
             numbers = self.load.training_numbers
         elif mode == ' test':
             numbers = self.load.test_numbers
-        for img_nr in numbers:
+        for img_nr in numbers[0:end]:
             img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler)
             img_data.scale(self.scaler)
             img_loss = self.predict(img_data)
