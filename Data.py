@@ -31,13 +31,7 @@ class Data:
         for trash_level in levels_gone.values():
             self.G.remove_nodes_from(trash_level)
             
-        end = time.time()
-        print 'prune:', (end - start)
-        start = time.time()
         self.lookup_coords()
-        end = time.time()
-        print 'lookup:', (end - start)
-        start = time.time()
         
         
     def lookup_coords(self):
