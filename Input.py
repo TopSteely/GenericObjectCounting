@@ -1,5 +1,6 @@
 import os
 import numpy as np
+import pandas as pd
 
 class Input:
     def __init__(self, mode, category):
@@ -89,7 +90,8 @@ class Input:
         
     def get_features(self, img_nr):
         if os.path.isfile(self.feature_path%(format(img_nr, "06d"))):
-            ret = np.loadtxt(self.feature_path%(format(img_nr, "06d")), delimiter=',')
+            #ret = np.loadtxt(self.feature_path%(format(img_nr, "06d")), delimiter=',')
+            ret = pd.read_csv(self.feature_path%(format(img_nr, "06d")), delimiter=",").values
             if isinstance(ret[0], np.float64):
                 return np.array([ret])
             else:
