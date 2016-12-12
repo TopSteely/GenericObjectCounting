@@ -46,8 +46,8 @@ class SGD:
         level_preds, _ = self.predictor.get_iep_levels(img_data, [])
         return (np.mean(level_preds) - img_data.y)
         
-    def predict_max(self, img_data, function, ind_max):
-        level_preds, _ = self.predictor.iep(img_data, function, ind_max)
+    def predict_max(self, img_data):
+        level_preds, _ = self.predictor.get_iep_levels(img_data, [])
         return (np.max(level_preds) - img_data.y)
         
         
@@ -63,7 +63,7 @@ class SGD:
         for img_nr in numbers:
             img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler)
             img_data.scale(self.scaler)
-            img_loss = self.predict(img_data)
+            img_loss = self.predict(img_data, self)
             squared_error += img_loss ** 2
             error += img_loss
             if img_data.y > 0:
@@ -104,13 +104,12 @@ class SGD:
         
     def learn_max(self, img_data, functions):
         level_preds, functions = self.predictor.get_iep_levels(img_data, functions)
-        print 'sum W: ', np.sum(self.w)
         print 'preds: ', level_preds
         
         #print level_preds
         ind_max = level_preds.index(max(level_preds))
         upd, _ = self.learner.iep(img_data, functions[ind_max], ind_max)
-        return (self.predict(img_data, functions[ind_max], ind_max) - img_data.y) * upd + self.alpha * self.w, functions
+        return (self.predict(img_data) - img_data.y) * upd + self.alpha * self.w, functions
         
     def learn_mean(self, img_data, functions):
         iep_levels, functions = self.learner.get_iep_levels(img_data, functions)
