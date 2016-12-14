@@ -14,7 +14,7 @@ def main():
 
     batch_size = 5
 
-    for tree_level_size in range(1,6):
+    for tree_level_size in range(1,2):
         #initialize
         print 'initializing'
         sgd = SGD.SGD('max', category, tree_level_size, batch_size, math.pow(10,-3), 0.003, 1e-6)
@@ -32,8 +32,8 @@ def main():
         # learn SGD
         print 'learning'
         for epoch in range(5):
-            sgd.learn()
-            print sgd.evaluate('train')
+            sgd.learn(15)
+            print sgd.evaluate('train',15)
             
         # evaluate
         print 'evaluating'

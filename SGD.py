@@ -49,10 +49,11 @@ class SGD:
         
     def predict_max(self, img_data):
         level_preds, _ = self.predictor.get_iep_levels(img_data, {})
+        print np.max(level_preds), img_data.y
         return (np.max(level_preds) - img_data.y)
         
         
-    def evaluate(self, mode):
+    def evaluate(self, mode, to=-1):
         squared_error = 0.0
         error = 0.0
         non_zero_error = 0.0
@@ -61,7 +62,7 @@ class SGD:
             numbers = self.load.training_numbers
         elif mode == 'test':
             numbers = self.load.test_numbers
-        for img_nr in numbers:
+        for img_nr in numbers[:to]:
             img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler)
             img_data.scale(self.scaler)
             img_loss = self.predict(img_data)
@@ -74,9 +75,9 @@ class SGD:
         
         
         
-    def learn(self):
+    def learn(self, to=-1):
         training_data = self.load.training_numbers
-        for i_img_nr, img_nr in enumerate(training_data):
+        for i_img_nr, img_nr in enumerate(training_data[:to]):
             img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler)
             img_data.scale(self.scaler)
             if img_nr in self.functions:
