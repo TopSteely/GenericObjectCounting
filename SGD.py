@@ -110,7 +110,6 @@ class SGD:
         #print level_preds
         ind_max = level_preds.index(max(level_preds))
         upd, _ = self.learner.iep(img_data, [], ind_max)#functions[ind_max]
-        print 'loss: ', self.predict(img_data), img_data.y, self.predict(img_data) - img_data.y
         return (self.predict(img_data) - img_data.y) * upd + self.alpha * self.w, functions
         
     def learn_mean(self, img_data, functions):
