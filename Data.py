@@ -6,6 +6,7 @@ class Data:
         self.img_nr = img_nr
         self.boxes = load.get_coords(img_nr)
         self.X = load.get_features(img_nr)
+        print self.X[0:num_features]
         if num_features != 1000:
             features_temp = []
             for p in self.X:
@@ -13,6 +14,7 @@ class Data:
             self.X = np.array(features_temp)
         if scaler != None:
             self.X = scaler.transform(self.X)
+        print self.X[0:num_features]
         self.y = load.get_label(img_nr)
         self.tree_boxes = load.get_coords_tree(img_nr)
         self.tree_boxes = sort_boxes(self.tree_boxes)
