@@ -8,9 +8,9 @@ import time
 
 
 class SGD:
-    def __init__(self, mode, category, prune_tree_levels, batch_size, eta, gamma, alpha):
+    def __init__(self, mode, category, prune_tree_levels, batch_size, eta, gamma, alpha, num_features=1000):
         self.prune_tree_levels = prune_tree_levels
-        self.n_features = 1000
+        self.n_features = num_features
         self.w = 0.0001 * np.random.rand(self.n_features)
         self.predictor = IEP.IEP(self.w, 'prediction')
         self.w_update = np.zeros(self.n_features)
@@ -62,7 +62,7 @@ class SGD:
         elif mode == 'test':
             numbers = self.load.test_numbers
         for img_nr in numbers[:to]:
-            img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler)
+            img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
             img_data.scale(self.scaler)
             img_loss = self.predict(img_data)
             squared_error += img_loss ** 2
@@ -77,7 +77,7 @@ class SGD:
     def learn(self, to=-1):
         training_data = self.load.training_numbers
         for i_img_nr, img_nr in enumerate(training_data[:to]):
-            img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler)
+            img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
             img_data.scale(self.scaler)
             if img_nr in self.functions:
                 img_functions = self.functions[img_nr]
