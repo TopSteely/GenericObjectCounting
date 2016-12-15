@@ -91,12 +91,13 @@ class SGD:
             self.samples_seen += 1
             if (i_img_nr + 1)%self.batch_size == 0:
                 self.update()
-            print self.w
+            #print self.w
         self.update()
         self.predictor = IEP.IEP(self.w, 'prediction')
         
         
     def update(self):
+        print 'eta', self.eta
         self.w -= (self.eta * self.w_update)
         self.eta = self.eta * (1+self.eta0*self.gamma*self.samples_seen)**-1
         self.w_update = np.zeros(self.n_features)
