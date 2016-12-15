@@ -81,16 +81,19 @@ class SGD:
             img_data.scale(self.scaler)
             if img_nr in self.functions:
                 img_functions = self.functions[img_nr]
-                self.w_update += self.method(img_data, img_functions)[0]
+                upd,_ = self.method(img_data, img_functions)
+                self.w_update += upd
             else:
                 temp = {}
                 upd, fct = self.method(img_data, temp)
                 self.w_update += upd
                 self.functions[img_nr] = fct
+            print self.update
             self.samples_seen += 1
             
             if i_img_nr%self.batch_size == 0:
                 self.update()
+            print self.w
         self.update()
         self.predictor = IEP.IEP(self.w, 'prediction')
         
