@@ -92,7 +92,8 @@ class SGD:
             if (i_img_nr + 1)%self.batch_size == 0:
                 self.update()
             #print self.w
-        self.update()
+        if (i_img_nr + 1)%self.batch_size != 0:
+            self.update()
         self.predictor = IEP.IEP(self.w, 'prediction')
         
         
