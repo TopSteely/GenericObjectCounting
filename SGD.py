@@ -91,7 +91,7 @@ class SGD:
             print self.w_update
             self.samples_seen += 1
             
-            if i_img_nr%self.batch_size == 0:
+            if (i_img_nr + 1)%self.batch_size == 0:
                 self.update()
             print self.w
         self.update()
