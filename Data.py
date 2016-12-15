@@ -12,7 +12,7 @@ class Data:
                 features_temp.append(p[0:num_features])
             self.X = np.array(features_temp)
         if scaler != None:
-            self.X = scaler.transform(load.get_features(img_nr))
+            self.X = scaler.transform(self.X)
         self.y = load.get_label(img_nr)
         self.tree_boxes = load.get_coords_tree(img_nr)
         self.tree_boxes = sort_boxes(self.tree_boxes)
