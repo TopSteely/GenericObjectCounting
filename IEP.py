@@ -25,7 +25,6 @@ class IEP:
         if len(sets) == 1:
             if function == []:
                 function.append(['+',sets[0]])
-            print Data.img_nr, level, sets[0]
             return np.dot(self.w,X[sets[0]]), function
         elif function != []:
             for fun in function:
