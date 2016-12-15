@@ -90,7 +90,7 @@ class SGD:
                 self.functions[img_nr] = fct
             print self.w_update
             self.samples_seen += 1
-            
+            print (i_img_nr + 1)%self.batch_size
             if (i_img_nr + 1)%self.batch_size == 0:
                 self.update()
             print self.w
@@ -99,7 +99,7 @@ class SGD:
         
         
     def update(self):
-        #print 'updating'
+        print 'updating'
         self.w -= self.eta * self.w_update
         self.eta = self.eta * (1+self.eta0*self.gamma*self.samples_seen)**-1
         self.w_update = np.zeros(self.n_features)
