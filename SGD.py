@@ -88,7 +88,7 @@ class SGD:
                 upd, fct = self.method(img_data, temp)
                 self.w_update += upd
                 self.functions[img_nr] = fct
-            print self.update
+            print self.w_update
             self.samples_seen += 1
             
             if i_img_nr%self.batch_size == 0:
