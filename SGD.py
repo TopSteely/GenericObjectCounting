@@ -91,7 +91,7 @@ class SGD:
             self.samples_seen += 1
             if (i_img_nr + 1)%self.batch_size == 0:
                 self.update()
-            #print self.w
+            print self.w[0:8]
         if (i_img_nr + 1)%self.batch_size != 0:
             self.update()
         self.predictor = IEP.IEP(self.w, 'prediction')
@@ -111,7 +111,6 @@ class SGD:
         #print level_preds
         ind_max = level_preds.index(max(level_preds))
         upd, _ = self.learner.iep(img_data, [], ind_max)#functions[ind_max]
-        print self.predict(img_data) - img_data.y
         return (self.predict(img_data) - img_data.y) * upd + self.alpha * self.w, functions
         
     def learn_mean(self, img_data, functions):
