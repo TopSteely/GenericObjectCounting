@@ -24,7 +24,7 @@ def main():
         #learn scaler
         scaler = MinMaxScaler()
         training_data = load.training_numbers
-        for i_img_nr, img_nr in enumerate(training_data[0:2]):
+        for i_img_nr, img_nr in enumerate(training_data[0:20]):
             img_data = Data.Data(load, img_nr, tree_level_size, None)
             scaler.partial_fit(img_data.X)
         sgd.set_scaler(scaler)
@@ -32,8 +32,8 @@ def main():
         # learn SGD
         print 'learning'
         for epoch in range(25):
-            sgd.learn(2)
-            print sgd.evaluate('train',2)
+            sgd.learn(20)
+            print sgd.evaluate('train',20)
             
         # evaluate
         print 'evaluating'
