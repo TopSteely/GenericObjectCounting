@@ -2,13 +2,11 @@ from utils import create_tree_as_extracted, surface_area_old, sort_boxes
 import numpy as np
 
 class Data:
+    # something is wrong here, it looks like i get 5 patches instead of 5 features per patch!
     def __init__(self, load, img_nr, prune_tree_levels, scaler, num_features=1000):
-        print num_features
         self.img_nr = img_nr
         self.boxes = load.get_coords(img_nr)
         self.X = load.get_features(img_nr)
-        print img_nr, len(self.X)
-        print self.X[0:num_features]
         if num_features != 1000:
             features_temp = []
             for p in self.X:
@@ -16,7 +14,6 @@ class Data:
             self.X = np.array(features_temp)
         if scaler != None:
             self.X = scaler.transform(self.X)
-        print self.X[0:num_features]
         self.y = load.get_label(img_nr)
         self.tree_boxes = load.get_coords_tree(img_nr)
         self.tree_boxes = sort_boxes(self.tree_boxes)
