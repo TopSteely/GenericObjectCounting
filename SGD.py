@@ -97,7 +97,7 @@ class SGD:
         
         
     def update(self):
-        print self.w_update[0:8]
+        print self.w_update[0:8], self.eta
         self.w -= (self.eta * self.w_update)
         print self.w[0:8]
         self.eta = self.eta * (1+self.eta0*self.gamma*self.samples_seen)**-1
