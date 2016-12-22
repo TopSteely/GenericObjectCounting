@@ -25,7 +25,10 @@ class IEP:
         if len(sets) == 1:
             if function == []:
                 function.append(['+',sets[0]])
-            print 'root: ', sets[0], (X[sets[0]]==0).sum(), self.w.sum(), len(self.w)
+            if np.all(self.w == 1):
+                print 'root: ', sets[0], (X[sets[0]]==0).sum(), self.w, len(self.w)
+            else:
+                print 'root: ', sets[0], (X[sets[0]]==0).sum(), self.w.sum(), len(self.w)
             return np.dot(self.w,X[sets[0]]), function
         elif function != []:
             for fun in function:
