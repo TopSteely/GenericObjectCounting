@@ -58,10 +58,10 @@ class SGD:
         non_zero_error = 0.0
         n_non_zero = 0.0
         if mode == 'train':
-            numbers = self.load.training_numbers
+            numbers = self.load.training_numbers[:to]
         elif mode == 'test':
-            numbers = self.load.test_numbers
-        for img_nr in numbers[:to]:
+            numbers = self.load.test_numbers[:to]
+        for img_nr in numbers:
             img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
             img_loss = self.predict(img_data)
             squared_error += img_loss ** 2
