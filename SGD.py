@@ -11,7 +11,7 @@ class SGD:
     def __init__(self, mode, category, prune_tree_levels, batch_size, eta, gamma, alpha, num_features=1000):
         self.prune_tree_levels = prune_tree_levels
         self.n_features = num_features
-        self.w = 0.1 * np.random.rand(self.n_features)
+        self.w = np.zeros(self.n_features)#0.1 * np.random.rand(self.n_features)
         self.predictor = IEP.IEP(self.w, 'prediction')
         self.w_update = np.zeros(self.n_features)
         self.learner = IEP.IEP(1, 'learning')
