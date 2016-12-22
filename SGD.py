@@ -63,11 +63,12 @@ class SGD:
             numbers = self.load.test_numbers[:to]
         for img_nr in numbers:
             img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
-            img_loss = self.predict(img_data)
-            squared_error += img_loss ** 2
-            error += abs(img_loss)
+            img_loss = (self.predict(img_data) - img_data.y)**2
+            print 'preds: ',img_data.img_nr, self.predict(img_data), ' y: ', img_data.y
+            squared_error += img_loss
+            error += abs(self.predict(img_data) - img_data.y)
             if img_data.y > 0:
-                non_zero_error += img_loss ** 2
+                non_zero_error += img_loss
                 n_non_zero += 1
         return squared_error/len(numbers), error / len(numbers), non_zero_error / n_non_zero
         
@@ -103,7 +104,7 @@ class SGD:
         
     def learn_max(self, img_data, functions):
         level_preds, functions = self.predictor.get_iep_levels(img_data, functions)
-        print 'preds: ',img_data.img_nr, level_preds, ' y: ', img_data.y
+        #print 'preds: ',img_data.img_nr, level_preds, ' y: ', img_data.y
         
         #print level_preds
         ind_max = level_preds.index(max(level_preds))
