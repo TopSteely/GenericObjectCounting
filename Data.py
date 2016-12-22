@@ -49,6 +49,3 @@ class Data:
                 new_idx = self.boxes.tolist().index(coord)
                 levels_corrected[level].append(new_idx)
         self.levels = levels_corrected
-            
-    def scale(self, scaler):
-        return scaler.transform(self.X)
