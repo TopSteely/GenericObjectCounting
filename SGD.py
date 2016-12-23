@@ -89,10 +89,8 @@ class SGD:
                 self.w_update += upd
                 self.functions[img_nr] = fct
             self.samples_seen += 1
-            print img_data.y, len(img_data.X[img_data.levels[0][0]])
             to_fit = img_data.X[img_data.levels[0][0]].reshape(1, -1)
             self.sgd.partial_fit(to_fit,[img_data.y])
-            print 'fitted'
             if (i_img_nr + 1)%self.batch_size == 0:
                 self.update()
         if (i_img_nr + 1)%self.batch_size != 0:
