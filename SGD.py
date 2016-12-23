@@ -59,6 +59,7 @@ class SGD:
         error = 0.0
         non_zero_error = 0.0
         n_non_zero = 0.0
+        skl_error = 0.0
         if mode == 'train':
             numbers = self.load.training_numbers[:to]
         elif mode == 'test':
@@ -69,10 +70,11 @@ class SGD:
             print 'preds: ',img_data.img_nr, self.predict(img_data), ' y: ', img_data.y, ' sklearn: ', self.sgd.predict(img_data.X[img_data.levels[0][0]].reshape(1, -1))
             squared_error += img_loss
             error += abs(self.predict(img_data) - img_data.y)
+            skl_error += (self.sgd.predict(img_data.X[img_data.levels[0][0]].reshape(1, -1)) - img_data.y)**2
             if img_data.y > 0:
                 non_zero_error += img_loss
                 n_non_zero += 1
-        return squared_error/len(numbers), error / len(numbers), non_zero_error / n_non_zero, self.eta
+        return squared_error/len(numbers), skl_error/len(numbers)#error / len(numbers), non_zero_error / n_non_zero, self.eta
         
         
         
