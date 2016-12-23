@@ -65,7 +65,7 @@ class SGD:
         for img_nr in numbers:
             img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
             img_loss = (self.predict(img_data) - img_data.y)**2
-            print 'preds: ',img_data.img_nr, self.predict(img_data), ' y: ', img_data.y, ' sklearn: ', self.sgd.predict(img_data.X[img_data.levels[0][0]])
+            print 'preds: ',img_data.img_nr, self.predict(img_data), ' y: ', img_data.y, ' sklearn: ', self.sgd.predict(img_data.X[img_data.levels[0][0]].reshape(1, -1))
             squared_error += img_loss
             error += abs(self.predict(img_data) - img_data.y)
             if img_data.y > 0:
@@ -91,8 +91,7 @@ class SGD:
             self.samples_seen += 1
             print img_data.y, len(img_data.X[img_data.levels[0][0]])
             to_fit = img_data.X[img_data.levels[0][0]].reshape(1, -1)
-            print to_fit[0][0], len(to_fit[0])
-            self.sgd.partial_fit(to_fit[0],[img_data.y])
+            self.sgd.partial_fit(to_fit,[img_data.y])
             print 'fitted'
             if (i_img_nr + 1)%self.batch_size == 0:
                 self.update()
