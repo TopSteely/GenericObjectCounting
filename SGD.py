@@ -24,7 +24,7 @@ class SGD:
         self.gamma = gamma
         self.alpha = alpha
         self.functions = {}
-        self.sgd = SGDRegressor(eta0=eta, learning_rate='invscaling', shuffle=True)
+        self.sgd = SGDRegressor(eta0=eta, learning_rate='invscaling', shuffle=True, average=True, alpha=alpha)
         if mode == 'max':
             self.method = self.learn_max
             self.loss = self.loss_max
@@ -67,7 +67,7 @@ class SGD:
         for img_nr in numbers:
             img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
             img_loss = (self.predict(img_data) - img_data.y)**2
-            print 'preds: ',img_data.img_nr, self.predict(img_data), ' y: ', img_data.y, ' sklearn: ', self.sgd.predict(img_data.X[img_data.levels[0][0]].reshape(1, -1))
+            #print 'preds: ',img_data.img_nr, self.predict(img_data), ' y: ', img_data.y, ' sklearn: ', self.sgd.predict(img_data.X[img_data.levels[0][0]].reshape(1, -1))
             squared_error += img_loss
             error += abs(self.predict(img_data) - img_data.y)
             skl_error += (self.sgd.predict(img_data.X[img_data.levels[0][0]].reshape(1, -1)) - img_data.y)**2

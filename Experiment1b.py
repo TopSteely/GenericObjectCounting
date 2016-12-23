@@ -34,9 +34,13 @@ def main():
             
         # learn SGD
         print 'learning'
-        for epoch in range(55):
-            sgd.learn(7)
-            print sgd.evaluate('train',7)
+        for al_i in [math.pow(10,-3),math.pow(10,-4),math.pow(10,-5),math.pow(10,-6)]:
+            for eta_i in [math.pow(10,2),math.pow(10,0),math.pow(10,-2),math.pow(10,-6)]:
+                sgd = SGD.SGD('max', category, tree_level_size, batch_size, eta_i, 0.003, al_i)
+                sgd.set_scaler(scaler)
+                for epoch in range(15):
+                    sgd.learn(7)
+                    print sgd.evaluate('train',7)
             
         # evaluate
         print 'evaluating'
