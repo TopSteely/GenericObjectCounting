@@ -17,7 +17,7 @@ def main():
     for tree_level_size in range(1,2):
         #initialize
         print 'initializing'
-        sgd = SGD.SGD('max', category, tree_level_size, batch_size, math.pow(10,-9), 0.003, math.pow(10,-5))
+        sgd = SGD.SGD('max', category, tree_level_size, batch_size, math.pow(10,-3), 0.003, math.pow(10,-5))
         load = Input.Input('pascal',category)
         output = Output.Output('pascal_max', category, tree_level_size, '1b')
         
@@ -29,7 +29,7 @@ def main():
         for i_img_nr, img_nr in enumerate(training_data[0:5]):
             img_data = Data.Data(load, img_nr, tree_level_size, None)
             scaler.partial_fit(img_data.X)
-        sgd.set_scaler(None)
+        sgd.set_scaler(scaler)
             
         # learn SGD
         print 'learning'
