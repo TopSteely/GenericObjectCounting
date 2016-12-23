@@ -35,8 +35,8 @@ def main():
         # learn SGD
         print 'learning'
         for epoch in range(55):
-            sgd.learn(25)
-            print sgd.evaluate('train',25)
+            sgd.learn(7)
+            print sgd.evaluate('train',7)
             
         # evaluate
         print 'evaluating'
