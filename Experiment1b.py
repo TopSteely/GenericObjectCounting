@@ -26,7 +26,7 @@ def main():
         #learn scaler
         scaler = StandardScaler()
         training_data = load.training_numbers
-        for i_img_nr, img_nr in enumerate(training_data[0:25]):
+        for i_img_nr, img_nr in enumerate(training_data[0:7]):
             img_data = Data.Data(load, img_nr, tree_level_size, None)
             print 'root ', img_data.levels[0][0]
             scaler.partial_fit(img_data.X[img_data.levels[0][0]])
