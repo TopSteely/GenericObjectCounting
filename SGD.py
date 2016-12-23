@@ -9,6 +9,7 @@ from sklearn.linear_model import SGDRegressor
 
 class SGD:
     def __init__(self, mode, category, prune_tree_levels, batch_size, eta, gamma, alpha, num_features=1000):
+        print 'init SGD'
         self.prune_tree_levels = prune_tree_levels
         self.n_features = num_features
         self.w = np.zeros(self.n_features)#0.1 * np.random.rand(self.n_features)
@@ -23,7 +24,7 @@ class SGD:
         self.gamma = gamma
         self.alpha = alpha
         self.functions = {}
-        self.sgd = SGDRegressor(eta0=eta)
+        self.sgd = SGDRegressor(eta0=eta, learning_rate='invscaling', shuffle=True)
         if mode == 'max':
             self.method = self.learn_max
             self.loss = self.loss_max
