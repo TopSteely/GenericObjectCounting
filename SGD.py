@@ -2,7 +2,7 @@ import IEP
 import Input
 import numpy as np
 import Data
-from sklearn.preprocessing import MinMaxScaler
+#from sklearn.preprocessing import MinMaxScaler
 from sklearn.linear_model import SGDRegressor
 
 

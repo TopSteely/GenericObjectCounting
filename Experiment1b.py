@@ -3,7 +3,7 @@ import Input
 import Output
 import Data
 import SGD
-from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import StandardScaler
 import math
 
 def main():
@@ -24,7 +24,7 @@ def main():
         print 'debugging, plot loss, compare it to scikit, !'
         
         #learn scaler
-        scaler = MinMaxScaler()
+        scaler = StandardScaler()
         training_data = load.training_numbers
         for i_img_nr, img_nr in enumerate(training_data[0:5]):
             img_data = Data.Data(load, img_nr, tree_level_size, None)
