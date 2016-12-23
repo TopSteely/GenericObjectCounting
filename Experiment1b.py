@@ -21,7 +21,7 @@ def main():
         load = Input.Input('pascal',category)
         output = Output.Output('pascal_max', category, tree_level_size, '1b')
         
-        print 'debugging, no scaler, plot loss!'
+        print 'debugging, plot loss, compare it to scikit, !'
         
         #learn scaler
         scaler = MinMaxScaler()

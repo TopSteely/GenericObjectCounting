@@ -3,7 +3,7 @@ import Input
 import numpy as np
 import Data
 from sklearn.preprocessing import MinMaxScaler
-import time
+from sklearn.linear_model import SGDRegressor
 
 
 
@@ -23,6 +23,7 @@ class SGD:
         self.gamma = gamma
         self.alpha = alpha
         self.functions = {}
+        self.sgd = SGDRegressor(eta0=eta)
         if mode == 'max':
             self.method = self.learn_max
             self.loss = self.loss_max
@@ -64,7 +65,7 @@ class SGD:
         for img_nr in numbers:
             img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
             img_loss = (self.predict(img_data) - img_data.y)**2
-            print 'preds: ',img_data.img_nr, self.predict(img_data), ' y: ', img_data.y
+            print 'preds: ',img_data.img_nr, self.predict(img_data), ' y: ', img_data.y, ' sklearn: ', self.sgd.predict(img_data.X[img_data.levels[0]])
             squared_error += img_loss
             error += abs(self.predict(img_data) - img_data.y)
             if img_data.y > 0:
@@ -88,11 +89,11 @@ class SGD:
                 self.w_update += upd
                 self.functions[img_nr] = fct
             self.samples_seen += 1
+            self.sgd.partial_fit(img_data.X[img_data.levels[0]],img_data.y)
             if (i_img_nr + 1)%self.batch_size == 0:
                 self.update()
         if (i_img_nr + 1)%self.batch_size != 0:
             self.update()
-        self.predictor = IEP.IEP(self.w, 'prediction')
         
         
     def update(self):
