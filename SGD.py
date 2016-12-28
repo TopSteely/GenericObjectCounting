@@ -22,6 +22,7 @@ class SGD:
         self.samples_seen = 0
         self.eta = eta
         self.eta0 = eta
+        print 'etas: ', self.eta, self.eta0
         self.gamma = gamma
         self.alpha = alpha
         self.functions = {}
@@ -104,10 +105,13 @@ class SGD:
         
         
     def update(self):
+        a_temp_eta = self.eta
+        
         self.w -= (self.eta * self.w_update)
         self.eta = self.eta * (1+self.eta0*self.gamma*self.samples_seen)**-1
         self.w_update = np.zeros(self.n_features)
         self.predictor = IEP.IEP(self.w, 'prediction')
+        print 'updating eta: ', a_temp_eta, ' -> ', self.eta
         
         
     def learn_max(self, img_data, functions):

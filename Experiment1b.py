@@ -38,7 +38,7 @@ def main():
         print 'learning'
         for al_i in [math.pow(10,-3),math.pow(10,-4),math.pow(10,-5),math.pow(10,-6)]:
             for eta_i in [math.pow(10,2),math.pow(10,0),math.pow(10,-2),math.pow(10,-6)]:
-                sgd = SGD.SGD('max', category, tree_level_size, batch_size, eta_i, 0.003, al_i)
+                sgd = SGD.SGD('max', category, tree_level_size, batch_size, eta_i, 0.0003, al_i)
                 sgd.set_scaler(scaler)
                 print al_i, eta_i
                 for epoch in range(15):
