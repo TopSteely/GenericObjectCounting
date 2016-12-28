@@ -6,6 +6,7 @@ import SGD
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import SGDRegressor
 import math
+import numpy as np
 
 def main():
 #    if len(sys.argv) != 2:
@@ -50,14 +51,14 @@ def main():
                 for i_img_nr, img_nr in enumerate(training_data[0:7]):
                     img_data = Data.Data(load, img_nr, tree_level_size, scaler)
                     print len(img_data.X), len(img_data.y)
-                    sgd_fut_data.extend(img_data.X)
-                    sgd_fut_y.extend(img_data.y)
+                    sgd_fut_data.append(img_data.X[img_data.levels[0][0]])
+                    sgd_fut_y.append(img_data.y)
                 sgd_fut.fit(sgd_fut_data, sgd_fut_y)
                 sgd_fat_data = []
                 sgd_fat_y = []
                 for i_img_nr, img_nr in enumerate(test_numbers_d[0:7]):
                     img_data = Data.Data(load, img_nr, tree_level_size, scaler)
-                    sgd_fat_data.append(img_data.X)
+                    sgd_fat_data.append(img_data.X[img_data.levels[0][0]])
                     sgd_fat_y.append(img_data.y)
                 sgd_a_error = ((sgd_fut.predict(sgd_fat_data) - np.array(sgd_fat_y))**2).sum()
                 print 'scikit GD error: ', sgd_a_error
