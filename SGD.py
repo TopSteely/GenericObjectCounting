@@ -75,7 +75,7 @@ class SGD:
             if img_data.y > 0:
                 non_zero_error += img_loss
                 n_non_zero += 1
-        return squared_error/len(numbers), skl_error/len(numbers)#error / len(numbers), non_zero_error / n_non_zero, self.eta
+        return squared_error/len(numbers), skl_error/len(numbers), self.eta #error / len(numbers), non_zero_error / n_non_zero, self.eta
         
         
         
