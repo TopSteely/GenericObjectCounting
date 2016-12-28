@@ -50,7 +50,6 @@ def main():
                 sgd_fut_y = []
                 for i_img_nr, img_nr in enumerate(training_data[0:7]):
                     img_data = Data.Data(load, img_nr, tree_level_size, scaler)
-                    print len(img_data.X), len(img_data.y)
                     sgd_fut_data.append(img_data.X[img_data.levels[0][0]])
                     sgd_fut_y.append(img_data.y)
                 sgd_fut.fit(sgd_fut_data, sgd_fut_y)
