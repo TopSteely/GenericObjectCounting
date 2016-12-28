@@ -2,6 +2,7 @@ import IEP
 import Input
 import numpy as np
 import Data
+import random
 #from sklearn.preprocessing import MinMaxScaler
 from sklearn.linear_model import SGDRegressor
 
@@ -80,7 +81,9 @@ class SGD:
         
     def learn(self, to=-1):
         training_data = self.load.training_numbers
-        for i_img_nr, img_nr in enumerate(training_data[:to]):
+        subset = training_data[:to]
+        random.shuffle(subset)
+        for i_img_nr, img_nr in enumerate(subset):
             img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
             if img_nr in self.functions:
                 img_functions = self.functions[img_nr]

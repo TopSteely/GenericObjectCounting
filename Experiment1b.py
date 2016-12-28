@@ -38,18 +38,19 @@ def main():
             for eta_i in [math.pow(10,2),math.pow(10,0),math.pow(10,-2),math.pow(10,-6)]:
                 sgd = SGD.SGD('max', category, tree_level_size, batch_size, eta_i, 0.003, al_i)
                 sgd.set_scaler(scaler)
+                print al_i, eta_i
                 for epoch in range(15):
                     sgd.learn(7)
                     print sgd.evaluate('train',7)
             
         # evaluate
         print 'evaluating'
-        mse,ae, mse_non_zero = sgd.evaluate('test')
+        #mse,ae, mse_non_zero = sgd.evaluate('test')
         
         # plot/save
         print 'saving'
         
-        output.save(mse, ae, mse_non_zero, sgd)
+        #output.save(mse, ae, mse_non_zero, sgd)
     
     
 if __name__ == "__main__":
