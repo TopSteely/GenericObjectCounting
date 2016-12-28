@@ -18,7 +18,7 @@ def main():
     for tree_level_size in range(1,2):
         #initialize
         print 'initializing'
-        sgd = SGD.SGD('max', category, tree_level_size, batch_size, math.pow(10,-4), 0.003, math.pow(10,-5))
+        #sgd = SGD.SGD('max', category, tree_level_size, batch_size, math.pow(10,-4), 0.003, math.pow(10,-5))
         load = Input.Input('pascal',category)
         output = Output.Output('pascal_max', category, tree_level_size, '1b')
         
@@ -32,12 +32,12 @@ def main():
             img_data = Data.Data(load, img_nr, tree_level_size, None)
             print 'root ', img_data.levels[0][0]
             scaler.partial_fit(img_data.X[img_data.levels[0][0]])
-        sgd.set_scaler(scaler)
+        #sgd.set_scaler(scaler)
             
         # learn SGD
         print 'learning'
-        for al_i in [math.pow(10,-3),math.pow(10,-4),math.pow(10,-5),math.pow(10,-6)]:
-            for eta_i in [math.pow(10,2),math.pow(10,0),math.pow(10,-2),math.pow(10,-6)]:
+        for eta_i in [math.pow(10,-3),math.pow(10,-4),math.pow(10,-5),math.pow(10,-6)]:
+            for al_i in [math.pow(10,2),math.pow(10,0),math.pow(10,-2),math.pow(10,-6)]:
                 sgd = SGD.SGD('max', category, tree_level_size, batch_size, eta_i, 0.0003, al_i)
                 sgd.set_scaler(scaler)
                 print al_i, eta_i
