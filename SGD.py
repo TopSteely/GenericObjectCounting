@@ -55,12 +55,16 @@ class SGD:
         return np.max(level_preds)
         
         
-    def evaluate(self, mode, to=-1):
+    def evaluate(self, mode, to=-1, debug=False):
         squared_error = 0.0
         error = 0.0
         non_zero_error = 0.0
         n_non_zero = 0.0
         skl_error = 0.0
+        if debug:
+            preds_d = []
+            y_d = []
+            preds_skl = []
         if mode == 'train':
             numbers = self.load.training_numbers[:to]
         elif mode == 'test':
@@ -75,6 +79,12 @@ class SGD:
             if img_data.y > 0:
                 non_zero_error += img_loss
                 n_non_zero += 1
+            if debug:
+                preds_d.append(self.predict(img_data))
+                y_d.append(img_data.y)
+                preds_skl.append(self.sgd.predict(img_data.X[img_data.levels[0][0]].reshape(1, -1)))
+        if debug:
+            return preds_d, preds_skl, y_d
         return squared_error/len(numbers), skl_error/len(numbers), self.eta #error / len(numbers), non_zero_error / n_non_zero, self.eta
         
         

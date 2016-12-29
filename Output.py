@@ -1,4 +1,7 @@
+import matplotlib
+matplotlib.use('agg')
 import pickle
+import matplotlib.pyplot as plt
 
 class Output:
     def __init__(self, mode, category, prune_tree_levels, experiment):
@@ -11,6 +14,7 @@ class Output:
         self.nn_path = "/home/tstahl/plot/%s_%s_nn_%s_%s.p"
         self.npe_path = "/home/tstahl/plot/%s_%s_npe_%s_%s.p"
         self.model_path = "/var/node436/local/tstahl/models/%s_%s_%s_%s.p"
+        self.plot_path = "/var/node436/local/tstahl/plos/%s.png"
         
         
         
@@ -20,3 +24,21 @@ class Output:
         pickle.dump(nn, open( self.nn_path%(self.experiment, self.mode, self.category, self.prune_tree_levels), "wb" ))
         pickle.dump(sgd.w, open( self.model_path%(self.experiment, self.mode, self.category, self.prune_tree_levels), "wb" ))
         #pickle.dump(num_per_image, open( self.npe_path%(self.experiment, self.mode, self.category, self.prune_tree_levels), "wb" ))
+        
+    def plot_preds(self, preds, preds_skl, y):
+        sorted_preds = []
+        sorted_preds_skl = []
+        sorted_y = []
+        decorated = [(y_i, i) for i, y_i in enumerate(y)]
+        decorated.sort()
+        for y_i, i in reversed(decorated):
+            sorted_preds.append(preds[i])
+            sorted_preds_skl.append(preds_skl[i])
+            sorted_y.append(y_i)
+        plt.figure()
+        plt.plot(range(len(preds)), preds, 'rx')
+        plt.plot(range(len(preds)), preds_skl, 'gD')
+        plt.plot(range(len(preds)), y, 'yo')
+        plt.ylabel('y')
+        plt.savefig(self.plot_path%(self.mode))        
+        
