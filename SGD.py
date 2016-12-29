@@ -9,7 +9,7 @@ from sklearn.linear_model import SGDRegressor
 
 
 class SGD:
-    def __init__(self, mode, category, prune_tree_levels, batch_size, eta, gamma, alpha, num_features=1000):
+    def __init__(self, dataset, mode, category, prune_tree_levels, batch_size, eta, gamma, alpha, num_features=1000):
         print 'init SGD'
         self.prune_tree_levels = prune_tree_levels
         self.n_features = num_features
@@ -17,7 +17,7 @@ class SGD:
         self.predictor = IEP.IEP(self.w, 'prediction')
         self.w_update = np.zeros(self.n_features)
         self.learner = IEP.IEP(1, 'learning')
-        self.load = Input.Input('pascal', category)
+        self.load = Input.Input(dataset, category)
         self.batch_size = batch_size
         self.samples_seen = 0
         self.eta = eta

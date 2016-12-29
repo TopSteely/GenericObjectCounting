@@ -25,7 +25,12 @@ class Input:
                 self.feature_path = '/var/node436/local/tstahl/new_Resnet_features/2nd/1-%s.csv'
                 self.coord_tree_path = '/var/node436/local/tstahl/Coords_prop_windows/%s.txt'
             elif self.mode == 'dennis':
-                self.feature_path = 'bla'
+                self.coord_path =  '/var/node436/local/tstahl/Coords_prop_windows/%s.txt'
+                self.coord_tree_path = '/var/node436/local/tstahl/Coords_prop_windows/%s.txt'
+                self.label_path =  '/var/node436/local/tstahl/Coords_prop_windows/Labels/Labels/%s_%s_partial.txt'
+                self.feature_path = '/var/node436/local/tstahl/Features_prop_windows/SS_Boxes/%s.txt'
+                self.intersection_feature_path = '/var/node436/local/tstahl/Features_prop_windows/Features_upper/sheep_%s_fully_cover_tree.txt'
+                self.intersection_coords_path = '/var/node436/local/tstahl/Features_prop_windows/upper_levels/sheep_%s_fully_cover_tree.txt'
         training_numbers_tmp, self.test_numbers = self.get_training_numbers()
         self.training_numbers, self.val_numbers = self.get_val_numbers(training_numbers_tmp)
         self.category_train, self.category_val = self.get_category_imgs()

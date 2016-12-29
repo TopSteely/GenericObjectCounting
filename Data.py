@@ -2,7 +2,6 @@ from utils import create_tree_as_extracted, surface_area_old, sort_boxes
 import numpy as np
 
 class Data:
-    # something is wrong here, it looks like i get 5 patches instead of 5 features per patch!
     def __init__(self, load, img_nr, prune_tree_levels, scaler, num_features=1000):
         self.img_nr = img_nr
         self.boxes = load.get_coords(img_nr)
@@ -35,8 +34,8 @@ class Data:
         #prune tree as well, for patches training
         for trash_level in levels_gone.values():
             self.G.remove_nodes_from(trash_level)
-            
-        self.lookup_coords()
+        if load.mode == 'pascal':
+            self.lookup_coords()
         
         
     def lookup_coords(self):
