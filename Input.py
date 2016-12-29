@@ -49,7 +49,7 @@ class Input:
         return tr_images, te_images
                 
     def get_training_numbers(self):     
-        if self.mode == 'pascal':
+        if self.mode == 'pascal' or self.mode == 'dennis':
             file = open('/var/scratch/tstahl/IO/test.txt')
             test_imgs = []
             train_imgs = []
@@ -61,7 +61,7 @@ class Input:
             return test_imgs, train_imgs
         
     def get_val_numbers(self, train_imgs):
-        if self.mode == 'pascal':
+        if self.mode == 'pascal' or self.mode == 'dennis':
             file = open('/var/scratch/tstahl/IO/val.txt', 'r')
             eval_images = []
             for line in file:
