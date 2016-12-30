@@ -25,7 +25,7 @@ class Output:
         pickle.dump(sgd.w, open( self.model_path%(self.experiment, self.mode, self.category, self.prune_tree_levels), "wb" ))
         #pickle.dump(num_per_image, open( self.npe_path%(self.experiment, self.mode, self.category, self.prune_tree_levels), "wb" ))
         
-    def plot_preds(self, preds, preds_skl, y):
+    def plot_preds(self, preds, preds_skl, y, alpha):
         sorted_preds = []
         sorted_preds_skl = []
         sorted_y = []
@@ -43,5 +43,6 @@ class Output:
         plt.ylim([-1,2])
         plt.xlim([-1,7])
         plt.legend(loc='upper center')
+        plt.title('%s'%(alpha))
         plt.savefig(self.plot_path%(self.mode))        
         

@@ -42,7 +42,7 @@ def main():
         # learn SGD
         print 'learning'
         for eta_i in [math.pow(10,-4)]:#,math.pow(10,-5)
-            for al_i in [math.pow(10,1)]:#,math.pow(10,0),math.pow(10,-1),math.pow(10,-2)
+            for al_i in [math.pow(10,1),math.pow(10,-1),math.pow(10,-5)]:#,math.pow(10,0),math.pow(10,-1),math.pow(10,-2)
                 for gamma_i in [math.pow(10,-5)]:#,math.pow(10,-4),math.pow(10,-3),math.pow(10,-2)
                     sgd_pascal = SGD.SGD('pascal', 'max', category, tree_level_size, batch_size, eta_i, gamma_i, al_i)
                     sgd_dennis = SGD.SGD('dennis', 'max', category, tree_level_size, batch_size, eta_i, gamma_i, al_i, 4096)
@@ -54,8 +54,8 @@ def main():
                         sgd_dennis.learn(7)
                     preds_d_p, preds_skl_p, y_d_p = sgd_pascal.evaluate('train',7, True)
                     preds_d_d, preds_skl_d, y_d_d = sgd_dennis.evaluate('train',7, True)
-                    output_pascal.plot_preds(preds_d_p, preds_skl_p, y_d_p)
-                    output_dennis.plot_preds(preds_d_d, preds_skl_d, y_d_d)
+                    output_pascal.plot_preds(preds_d_p, preds_skl_p, y_d_p, al_i)
+                    output_dennis.plot_preds(preds_d_d, preds_skl_d, y_d_d, al_i)
 #                    sgd_fut = SGDRegressor(eta0=eta_i, learning_rate='invscaling', shuffle=True, average=True, alpha=al_i, n_iter=15)
 #                    sgd_fut_data = []
 #                    sgd_fut_y = []
