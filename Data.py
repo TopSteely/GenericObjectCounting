@@ -36,7 +36,11 @@ class Data:
             self.G.remove_nodes_from(trash_level)
             
         print self.img_nr
+        debug_tmp = []
         print self.G.nodes()
+        for n in self.G.nodes():
+            debug_tmp.append(self.boxes[n])
+        print debug_tmp
         print self.levels
         if load.mode == 'pascal':
             self.lookup_coords()
