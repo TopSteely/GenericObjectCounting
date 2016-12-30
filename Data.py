@@ -36,7 +36,13 @@ class Data:
             self.G.remove_nodes_from(trash_level)
         if load.mode == 'pascal':
             self.lookup_coords()
-        
+        elif load.mode == 'dennis':
+            intersection_coords = load.get_intersection_coords()
+            intersection_features = load.get_intersection_features()
+            if scaler != None:
+                intersection_features = scaler.transform(intersection_features)
+            self.boxes.append(intersection_coords)
+            self.X.append(intersection_features)
         
     def lookup_coords(self):
         #have to change level indexes because of rearranging in extraction

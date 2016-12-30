@@ -35,6 +35,31 @@ class Input:
         self.training_numbers, self.val_numbers = self.get_val_numbers(training_numbers_tmp)
         self.category_train, self.category_val = self.get_category_imgs()
         
+    def get_intersection_features(self, img_nr):
+        assert self.mode == 'dennis'
+        features = []
+        f = open(self.intersection_feature_path%(format(img_nr, "06d")), 'r')
+        for i,line in enumerate(f):
+            str_ = line.rstrip('\n').split(',')  
+            ff = []
+            for s in str_:
+               ff.append(float(s))
+            features.append(ff)
+        return features
+        
+    def get_intersection_coords(self, img_nr):
+        assert self.mode == 'dennis'
+        coords = []
+        f_c = open(self.intersection_coords_path%(format(img_nr, "06d")), 'r')
+        for i,line in enumerate(f_c):
+            str_ = line.rstrip('\n').split(',')
+            cc = []
+            for s in str_:
+               cc.append(float(s))
+            coords.append(cc)
+        return coords
+        
+        
     def get_category_imgs(self):
         tr_images = []
         te_images = []
