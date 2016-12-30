@@ -37,8 +37,8 @@ class Data:
         if load.mode == 'pascal':
             self.lookup_coords()
         elif load.mode == 'dennis':
-            intersection_coords = load.get_intersection_coords()
-            intersection_features = load.get_intersection_features()
+            intersection_coords = load.get_intersection_coords(img_nr)
+            intersection_features = load.get_intersection_features(img_nr)
             if scaler != None:
                 intersection_features = scaler.transform(intersection_features)
             self.boxes.append(intersection_coords)
