@@ -34,6 +34,10 @@ class Data:
         #prune tree as well, for patches training
         for trash_level in levels_gone.values():
             self.G.remove_nodes_from(trash_level)
+            
+        print self.img_nr
+        print self.G.nodes()
+        print self.levels
         if load.mode == 'pascal':
             self.lookup_coords()
         elif load.mode == 'dennis':
