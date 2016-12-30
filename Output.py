@@ -14,7 +14,7 @@ class Output:
         self.nn_path = "/home/tstahl/plot/%s_%s_nn_%s_%s.p"
         self.npe_path = "/home/tstahl/plot/%s_%s_npe_%s_%s.p"
         self.model_path = "/var/node436/local/tstahl/models/%s_%s_%s_%s.p"
-        self.plot_path = "/var/node436/local/tstahl/plos/%s.png"
+        self.plot_path = "/var/node436/local/tstahl/plos/%s_%s.png"
         
         
         
@@ -44,5 +44,5 @@ class Output:
         plt.xlim([-1,7])
         plt.legend(loc='upper center')
         plt.title('%s'%(alpha))
-        plt.savefig(self.plot_path%(self.mode))        
+        plt.savefig(self.plot_path%(self.mode,alpha))        
         
