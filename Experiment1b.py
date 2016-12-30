@@ -50,10 +50,10 @@ def main():
                     sgd_dennis.set_scaler(scaler_dennis)
                     print al_i, eta_i, gamma_i
                     for epoch in range(15):
-                        sgd_pascal.learn(5)
-                        sgd_dennis.learn(5)
-                    preds_d_p, preds_skl_p, y_d_p = sgd_pascal.evaluate('train',5, True)
-                    preds_d_d, preds_skl_d, y_d_d = sgd_dennis.evaluate('train',5, True)
+                        sgd_pascal.learn(2)
+                        sgd_dennis.learn(2)
+                    preds_d_p, preds_skl_p, y_d_p = sgd_pascal.evaluate('train',2, True)
+                    preds_d_d, preds_skl_d, y_d_d = sgd_dennis.evaluate('train',2, True)
                     output_pascal.plot_preds(preds_d_p, preds_skl_p, y_d_p, al_i)
                     output_dennis.plot_preds(preds_d_d, preds_skl_d, y_d_d, al_i)
 #                    sgd_fut = SGDRegressor(eta0=eta_i, learning_rate='invscaling', shuffle=True, average=True, alpha=al_i, n_iter=15)
