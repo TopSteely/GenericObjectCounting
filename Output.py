@@ -65,5 +65,10 @@ class Output:
     
         plt.savefig(self.plot_path%(img_nr,'rects'))
         plt.clf()
+        f,ax = plt.subplots(3)
+        ax[0].imshow(im[rects[0][1]:rects[0][3], rects[0][0]:rects[0][2]])
+        ax[1].imshow(im[rects[1][1]:rects[1][3], rects[1][0]:rects[1][2]])
+        ax[2].imshow(im[rects[2][1]:rects[2][3], rects[2][0]:rects[2][2]])
+        plt.savefig(self.plot_path%(img_nr,'sub_rects'))
         
         
