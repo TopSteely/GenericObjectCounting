@@ -47,7 +47,7 @@ class Data:
         elif load.mode == 'dennis':
             intersection_coords = load.get_intersection_coords(img_nr)
             intersection_features = load.get_intersection_features(img_nr)
-            if scaler != None:
+            if scaler != None and len(intersection_features) > 0:
                 intersection_features = scaler.transform(intersection_features)
             assert len(intersection_coords) == len(intersection_features)
             if len(intersection_coords) > 0:
