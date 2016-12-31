@@ -95,7 +95,6 @@ class Input:
             return [x for x in train_imgs if x not in eval_images], eval_images
     
     def get_coords(self, img_nr):
-        print self.coord_path%(format(img_nr, "06d"))
         if os.path.isfile(self.coord_path%(format(img_nr, "06d"))):
             ret = np.loadtxt(self.coord_path%(format(img_nr, "06d")), delimiter=',')
             if isinstance(ret[0], np.float64):
