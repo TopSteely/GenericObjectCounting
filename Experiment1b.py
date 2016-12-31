@@ -39,6 +39,8 @@ def main():
             scaler_dennis.partial_fit(img_data.X)
             #output_dennis.plot_level_boxes(img_data.debug_tmp, img_data.img_nr)
         #sgd.set_scaler(scaler)
+        output_dennis.dump_scaler(scaler_dennis)
+        exit()
             
         # learn SGD
         print 'learning'

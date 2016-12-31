@@ -1,6 +1,7 @@
 import os
 import numpy as np
 import pandas as pd
+import pickle
 
 class Input:
     def __init__(self, mode, category):
@@ -31,6 +32,7 @@ class Input:
                 self.feature_path = '/var/node436/local/tstahl/Features_prop_windows/SS_Boxes/%s.txt'
                 self.intersection_feature_path = '/var/node436/local/tstahl/Features_prop_windows/Features_upper/sheep_%s_fully_cover_tree.txt'
                 self.intersection_coords_path = '/var/node436/local/tstahl/Features_prop_windows/upper_levels/sheep_%s_fully_cover_tree.txt'
+                self.scaler_path = '/var/node436/local/tstahl/models/scaler_dennis.p'
         training_numbers_tmp, self.test_numbers = self.get_training_numbers()
         self.training_numbers, self.val_numbers = self.get_val_numbers(training_numbers_tmp)
         self.category_train, self.category_val = self.get_category_imgs()
@@ -46,6 +48,11 @@ class Input:
                ff.append(float(s))
             features.append(ff)
         return features
+        
+    def get_scaler(self):
+         with open(self.scaler_path, 'rb') as handle:
+            scaler = pickle.load(handle)
+         return scaler
         
     def get_intersection_coords(self, img_nr):
         assert self.mode == 'dennis'

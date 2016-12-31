@@ -21,6 +21,10 @@ class Output:
         self.model_path = "/var/node436/local/tstahl/models/%s_%s_%s_%s.p"
         self.plot_path = "/var/node436/local/tstahl/plos/%s_%s.png"
         self.image_path = "/var/node436/local/tstahl/Images/%s.jpg"
+        self.scaler_path = '/var/node436/local/tstahl/models/scaler_dennis.p'
+        
+    def dump_scaler(self, scaler):
+        pickle.dump(scaler, open(self.scaler_path, "wb"))
         
         
         
