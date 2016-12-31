@@ -49,7 +49,9 @@ class Data:
             intersection_features = load.get_intersection_features(img_nr)
             if scaler != None:
                 intersection_features = scaler.transform(intersection_features)
+            print len(self.boxes), len(intersection_coords)
             self.boxes = np.append(self.boxes, intersection_coords, axis=0)
+            print len(self.boxes)
             self.X = np.append(self.X, intersection_features, axis=0)
         
     def lookup_coords(self):

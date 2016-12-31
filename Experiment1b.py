@@ -32,7 +32,7 @@ def main():
         scaler_dennis = StandardScaler()
         training_data = load_pascal.training_numbers
         test_numbers_d = load_pascal.test_numbers
-        for i_img_nr, img_nr in enumerate(training_data[0:5]):
+        for i_img_nr, img_nr in enumerate(training_data[0:1]):
             img_data = Data.Data(load_pascal, img_nr, tree_level_size, None)
             scaler_pascal.partial_fit(img_data.X)
             img_data = Data.Data(load_dennis, img_nr, tree_level_size, None)
@@ -50,8 +50,8 @@ def main():
                     sgd_dennis.set_scaler(scaler_dennis)
                     print al_i, eta_i, gamma_i
                     for epoch in range(15):
-                        sgd_pascal.learn(2)
-                        sgd_dennis.learn(2)
+                        sgd_pascal.learn(1)
+                        sgd_dennis.learn(1)
                     preds_d_p, preds_skl_p, y_d_p = sgd_pascal.evaluate('train',2, True)
                     preds_d_d, preds_skl_d, y_d_d = sgd_dennis.evaluate('train',2, True)
                     output_pascal.plot_preds(preds_d_p, preds_skl_p, y_d_p, al_i)
