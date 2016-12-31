@@ -37,6 +37,7 @@ def main():
             scaler_pascal.partial_fit(img_data.X)
             img_data = Data.Data(load_dennis, img_nr, tree_level_size, None)
             scaler_dennis.partial_fit(img_data.X)
+            output_dennis.plot_level_boxes(img_data.debug_tmp, img_data.img_nr)
         #sgd.set_scaler(scaler)
             
         # learn SGD

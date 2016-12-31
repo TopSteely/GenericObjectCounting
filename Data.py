@@ -22,6 +22,7 @@ class Data:
         for level in levels:
             sa = surface_area_old(self.tree_boxes, levels[level])
             sa_co = sa/total_size
+            print level, sa_co
             if sa_co != 1.0:
                 self.G.remove_nodes_from(levels[level])
             else:
@@ -36,11 +37,11 @@ class Data:
             self.G.remove_nodes_from(trash_level)
             
         print self.img_nr
-        debug_tmp = []
+        self.debug_tmp = []
         print self.G.nodes()
         for n in self.G.nodes():
-            debug_tmp.append(self.boxes[n])
-        print debug_tmp
+            self.debug_tmp.append(self.boxes[n])
+        print self.debug_tmp
         print self.levels
         if load.mode == 'pascal':
             self.lookup_coords()

@@ -2,6 +2,8 @@ import matplotlib
 matplotlib.use('agg')
 import pickle
 import matplotlib.pyplot as plt
+from scipy.misc import imread
+from matplotlib.patches import Rectangle
 
 class Output:
     def __init__(self, mode, category, prune_tree_levels, experiment):
@@ -15,6 +17,7 @@ class Output:
         self.npe_path = "/home/tstahl/plot/%s_%s_npe_%s_%s.p"
         self.model_path = "/var/node436/local/tstahl/models/%s_%s_%s_%s.p"
         self.plot_path = "/var/node436/local/tstahl/plos/%s_%s.png"
+        self.image_path = "/var/node436/local/tstahl/Images/%s.jpg"
         
         
         
@@ -40,9 +43,23 @@ class Output:
         plt.plot(range(len(preds)), preds_skl, 'gD', label='sklearn')
         plt.plot(range(len(preds)), y, 'y*',label='target')
         plt.ylabel('y')
-        plt.ylim([-1,2])
-        plt.xlim([-1,7])
+        plt.ylim([-1,len(preds)+1])
+        plt.xlim([-1,len(preds)+1])
         plt.legend(loc='upper center')
         plt.title('%s'%(alpha))
-        plt.savefig(self.plot_path%(self.mode,alpha))        
+        plt.savefig(self.plot_path%(self.mode,alpha))     
+        
+    def plot_level_boxes(self, rects, img_nr):
+        im = imread(self.image_path%(format(img_nr, "06d")))
+        plt.imshow(im)
+        plt.axis('off')
+        ax = plt.gca()
+        for rect in rects:
+        #ax.add_patch(Rectangle((int(coord[0]), int(coord[1])), int(coord[2] - coord[0]), int(coord[3] - coord[1]), edgecolor='black', facecolor='none'))
+            ax.add_patch(Rectangle((int(rect[0]), int(rect[1])), int(rect[2] - rect[0]), int(rect[3] - rect[1]), facecolor='none'))
+        
+    
+        plt.savefig(self.plot_path%(img_nr,'rects'))
+        plt.clf()
+        
         
