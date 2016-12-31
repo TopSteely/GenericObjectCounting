@@ -79,6 +79,7 @@ class IEP:
                     if I != []:
                        I = get_intersection(coords[c], I)
                 if I != [] and I[1] != I[3] and I[0]!=I[2]:
+                      print len(coords), type(coords)
                       if I in coords.tolist():
                          ind = coords.tolist().index(I)
                          if ind >= len(X):
