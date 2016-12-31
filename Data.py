@@ -43,7 +43,7 @@ class Data:
         self.debug_tmp = []
         print self.G.nodes()
         for n in self.G.nodes():
-            self.debug_tmp.append(self.boxes[n])
+            self.debug_tmp.append(self.tree_boxes[n])
         print self.debug_tmp
         print self.levels
         if load.mode == 'pascal':
@@ -64,5 +64,6 @@ class Data:
             for idx in self.levels[level]:
                 coord = self.tree_boxes[idx]
                 new_idx = self.boxes.tolist().index(coord)
+                print coord, idx, new_idx
                 levels_corrected[level].append(new_idx)
         self.levels = levels_corrected
