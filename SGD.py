@@ -85,7 +85,7 @@ class SGD:
                 preds_skl.append(self.sgd.predict(img_data.X[img_data.levels[0][0]].reshape(1, -1)))
         if debug:
             return preds_d, preds_skl, y_d
-        return squared_error/len(numbers), skl_error/len(numbers), self.eta #error / len(numbers), non_zero_error / n_non_zero, self.eta
+        return squared_error/len(numbers), error / len(numbers), non_zero_error / n_non_zero#skl_error/len(numbers),, self.eta
         
         
         

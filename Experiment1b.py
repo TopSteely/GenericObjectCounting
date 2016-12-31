@@ -52,7 +52,7 @@ def main():
                     print al_i, eta_i, gamma_i
                     for epoch in range(15):
                         #sgd_pascal.learn(1)
-                        sgd_dennis.learn(8)
+                        sgd_dennis.learn()
                     #preds_d_p, preds_skl_p, y_d_p = sgd_pascal.evaluate('train',2, True)
                     preds_d_d, preds_skl_d, y_d_d = sgd_dennis.evaluate('train',8, True)
                     #output_pascal.plot_preds(preds_d_p, preds_skl_p, y_d_p, al_i)
@@ -78,12 +78,12 @@ def main():
             
         # evaluate
         print 'evaluating'
-        #mse,ae, mse_non_zero = sgd.evaluate('test')
+        mse,ae, mse_non_zero = sgd.evaluate('test')
         
         # plot/save
         print 'saving'
         
-        #output.save(mse, ae, mse_non_zero, sgd)
+        output_dennis.save(mse, ae, mse_non_zero, sgd)
     
     
 if __name__ == "__main__":
