@@ -55,8 +55,6 @@ class Data:
                 intersection_features = scaler.transform(intersection_features)
             self.boxes = np.append(self.boxes, intersection_coords, axis=0)
             self.X = np.append(self.X, intersection_features, axis=0)
-            for b_c in self.boxes:
-                print b_c
         
     def lookup_coords(self):
         #have to change level indexes because of rearranging in extraction
