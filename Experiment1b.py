@@ -32,12 +32,12 @@ def main():
         scaler_dennis = StandardScaler()
         training_data = load_pascal.training_numbers
         test_numbers_d = load_pascal.test_numbers
-        for i_img_nr, img_nr in enumerate(training_data[0:1]):
+        for i_img_nr, img_nr in enumerate(training_data[0:8]):
             img_data = Data.Data(load_pascal, img_nr, tree_level_size, None)
             scaler_pascal.partial_fit(img_data.X)
             img_data = Data.Data(load_dennis, img_nr, tree_level_size, None)
             scaler_dennis.partial_fit(img_data.X)
-            output_dennis.plot_level_boxes(img_data.debug_tmp, img_data.img_nr)
+            #output_dennis.plot_level_boxes(img_data.debug_tmp, img_data.img_nr)
         #sgd.set_scaler(scaler)
             
         # learn SGD
@@ -51,12 +51,12 @@ def main():
                     sgd_dennis.set_scaler(scaler_dennis)
                     print al_i, eta_i, gamma_i
                     for epoch in range(15):
-                        sgd_pascal.learn(1)
-                        sgd_dennis.learn(1)
-                    preds_d_p, preds_skl_p, y_d_p = sgd_pascal.evaluate('train',2, True)
-                    preds_d_d, preds_skl_d, y_d_d = sgd_dennis.evaluate('train',2, True)
-                    output_pascal.plot_preds(preds_d_p, preds_skl_p, y_d_p, al_i)
-                    output_dennis.plot_preds(preds_d_d, preds_skl_d, y_d_d, al_i)
+                        #sgd_pascal.learn(1)
+                        sgd_dennis.learn(8)
+                    #preds_d_p, preds_skl_p, y_d_p = sgd_pascal.evaluate('train',2, True)
+                    preds_d_d, preds_skl_d, y_d_d = sgd_dennis.evaluate('train',8, True)
+                    #output_pascal.plot_preds(preds_d_p, preds_skl_p, y_d_p, al_i)
+                    #output_dennis.plot_preds(preds_d_d, preds_skl_d, y_d_d, al_i)
 #                    sgd_fut = SGDRegressor(eta0=eta_i, learning_rate='invscaling', shuffle=True, average=True, alpha=al_i, n_iter=15)
 #                    sgd_fut_data = []
 #                    sgd_fut_y = []

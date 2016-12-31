@@ -19,6 +19,7 @@ class Data:
         if load.mode == 'pascal':
             self.G, levels = create_tree_as_extracted(self.tree_boxes)
         elif load.mode == 'dennis':
+            print len(self.tree_boxes), len(self.boxes)
             self.boxes = self.tree_boxes
             self.G, levels = create_tree(self.tree_boxes)
         #prune tree to only have levels which fully cover the image, tested
@@ -39,13 +40,9 @@ class Data:
         for trash_level in levels_gone.values():
             self.G.remove_nodes_from(trash_level)
             
-        print self.img_nr
         self.debug_tmp = []
-        print self.G.nodes()
         for n in self.G.nodes():
             self.debug_tmp.append(self.tree_boxes[n])
-        print self.debug_tmp
-        print self.levels
         if load.mode == 'pascal':
             self.lookup_coords()
         elif load.mode == 'dennis':
@@ -53,9 +50,7 @@ class Data:
             intersection_features = load.get_intersection_features(img_nr)
             if scaler != None:
                 intersection_features = scaler.transform(intersection_features)
-            print self.boxes[0:4]
             self.boxes = np.append(self.boxes, intersection_coords, axis=0)
-            print self.boxes[0:4]
             self.X = np.append(self.X, intersection_features, axis=0)
         
     def lookup_coords(self):
