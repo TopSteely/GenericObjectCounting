@@ -56,7 +56,7 @@ class Output:
         ax = plt.gca()
         for rect in rects:
         #ax.add_patch(Rectangle((int(coord[0]), int(coord[1])), int(coord[2] - coord[0]), int(coord[3] - coord[1]), edgecolor='black', facecolor='none'))
-            ax.add_patch(Rectangle((int(rect[0]), int(rect[1])), int(rect[2] - rect[0]), int(rect[3] - rect[1]), facecolor='none'))
+            ax.add_patch(Rectangle((int(rect[0]), int(rect[1])), int(rect[2] - rect[0]), int(rect[3] - rect[1])))
         
     
         plt.savefig(self.plot_path%(img_nr,'rects'))
