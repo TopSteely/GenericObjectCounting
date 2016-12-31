@@ -40,6 +40,7 @@ class Data:
             self.G.remove_nodes_from(trash_level)
             
         self.debug_tmp = []
+        print type(self.boxes)
         for n in self.G.nodes():
             self.debug_tmp.append(self.tree_boxes[n])
         if load.mode == 'pascal':
@@ -51,8 +52,12 @@ class Data:
                 intersection_features = scaler.transform(intersection_features)
             assert len(intersection_coords) == len(intersection_features)
             if len(intersection_coords) > 0:
+                print 'adding intersections'
                 self.boxes = np.append(self.boxes, intersection_coords, axis=0)
                 self.X = np.append(self.X, intersection_features, axis=0)
+            #else:
+                #self.boxes = np.array(self.boxes)
+        print type(self.boxes)
         
     def lookup_coords(self):
         #have to change level indexes because of rearranging in extraction
