@@ -28,19 +28,12 @@ def main():
         print 'debugging, plot loss, compare it to scikit, !'
         
         #learn scaler
-        scaler_pascal = StandardScaler()
-        scaler_dennis = StandardScaler()
+        #scaler_pascal = StandardScaler()
         training_data = load_pascal.training_numbers
         test_numbers_d = load_pascal.test_numbers
-        for i_img_nr, img_nr in enumerate(training_data):
-            #img_data = Data.Data(load_pascal, img_nr, tree_level_size, None)
-            #scaler_pascal.partial_fit(img_data.X)
-            img_data = Data.Data(load_dennis, img_nr, tree_level_size, None)
-            scaler_dennis.partial_fit(img_data.X)
+        scaler_dennis = load_dennis.get_scaler()
             #output_dennis.plot_level_boxes(img_data.debug_tmp, img_data.img_nr)
         #sgd.set_scaler(scaler)
-        output_dennis.dump_scaler(scaler_dennis)
-        exit()
             
         # learn SGD
         print 'learning'
