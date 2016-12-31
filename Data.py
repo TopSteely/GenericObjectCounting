@@ -6,6 +6,7 @@ class Data:
         self.img_nr = img_nr
         self.boxes = load.get_coords(img_nr)
         self.X = load.get_features(img_nr)
+        self.num_features = num_features
         if num_features != 1000:
             features_temp = []
             for p in self.X:
