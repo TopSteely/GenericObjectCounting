@@ -32,9 +32,9 @@ def main():
         scaler_dennis = StandardScaler()
         training_data = load_pascal.training_numbers
         test_numbers_d = load_pascal.test_numbers
-        for i_img_nr, img_nr in enumerate(training_data[0:8]):
-            img_data = Data.Data(load_pascal, img_nr, tree_level_size, None)
-            scaler_pascal.partial_fit(img_data.X)
+        for i_img_nr, img_nr in enumerate(training_data):
+            #img_data = Data.Data(load_pascal, img_nr, tree_level_size, None)
+            #scaler_pascal.partial_fit(img_data.X)
             img_data = Data.Data(load_dennis, img_nr, tree_level_size, None)
             scaler_dennis.partial_fit(img_data.X)
             #output_dennis.plot_level_boxes(img_data.debug_tmp, img_data.img_nr)
@@ -45,9 +45,9 @@ def main():
         for eta_i in [math.pow(10,-4)]:#,math.pow(10,-5)
             for al_i in [math.pow(10,-1)]:#,math.pow(10,0),math.pow(10,-1),math.pow(10,-2)
                 for gamma_i in [math.pow(10,-5)]:#,math.pow(10,-4),math.pow(10,-3),math.pow(10,-2)
-                    sgd_pascal = SGD.SGD('pascal', 'max', category, tree_level_size, batch_size, eta_i, gamma_i, al_i)
+                    #sgd_pascal = SGD.SGD('pascal', 'max', category, tree_level_size, batch_size, eta_i, gamma_i, al_i)
                     sgd_dennis = SGD.SGD('dennis', 'max', category, tree_level_size, batch_size, eta_i, gamma_i, al_i, 4096)
-                    sgd_pascal.set_scaler(scaler_pascal)
+                    #sgd_pascal.set_scaler(scaler_pascal)
                     sgd_dennis.set_scaler(scaler_dennis)
                     print al_i, eta_i, gamma_i
                     for epoch in range(15):
