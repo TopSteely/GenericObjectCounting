@@ -25,7 +25,6 @@ class Data:
         for level in levels:
             sa = surface_area_old(self.tree_boxes, levels[level])
             sa_co = sa/total_size
-            print level, sa_co
             if sa_co != 1.0:
                 self.G.remove_nodes_from(levels[level])
             else:
@@ -53,7 +52,9 @@ class Data:
             intersection_features = load.get_intersection_features(img_nr)
             if scaler != None:
                 intersection_features = scaler.transform(intersection_features)
+            print self.boxes[0:4]
             self.boxes = np.append(self.boxes, intersection_coords, axis=0)
+            print self.boxes[0:4]
             self.X = np.append(self.X, intersection_features, axis=0)
         
     def lookup_coords(self):
@@ -64,6 +65,5 @@ class Data:
             for idx in self.levels[level]:
                 coord = self.tree_boxes[idx]
                 new_idx = self.boxes.tolist().index(coord)
-                print coord, idx, new_idx
                 levels_corrected[level].append(new_idx)
         self.levels = levels_corrected
