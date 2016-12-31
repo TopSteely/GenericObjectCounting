@@ -4,6 +4,9 @@ import pickle
 import matplotlib.pyplot as plt
 from scipy.misc import imread
 from matplotlib.patches import Rectangle
+import numpy as np
+import pylab as pl
+
 
 class Output:
     def __init__(self, mode, category, prune_tree_levels, experiment):
@@ -50,13 +53,16 @@ class Output:
         plt.savefig(self.plot_path%(self.mode,alpha))     
         
     def plot_level_boxes(self, rects, img_nr):
+        vs = np.random.randn(len(rects))
+        normal = pl.normalize(vs.min(), vs.max())
+        colors = pl.cm.jet(normal(vs))
         im = imread(self.image_path%(format(img_nr, "06d")))
         plt.imshow(im)
         plt.axis('off')
         ax = plt.gca()
-        for rect in rects:
+        for rect,c in zip(rects,colors):
         #ax.add_patch(Rectangle((int(coord[0]), int(coord[1])), int(coord[2] - coord[0]), int(coord[3] - coord[1]), edgecolor='black', facecolor='none'))
-            ax.add_patch(Rectangle((int(rect[0]), int(rect[1])), int(rect[2] - rect[0]), int(rect[3] - rect[1])))
+            ax.add_patch(Rectangle((int(rect[0]), int(rect[1])), int(rect[2] - rect[0]), int(rect[3] - rect[1]), edgecolor=c, facecolor='none'))
         
     
         plt.savefig(self.plot_path%(img_nr,'rects'))
