@@ -22,10 +22,18 @@ class Output:
         self.plot_path = "/var/node436/local/tstahl/plos/%s_%s.png"
         self.image_path = "/var/node436/local/tstahl/Images/%s.jpg"
         self.scaler_path = '/var/node436/local/tstahl/models/scaler_dennis.p'
+        self.scaler_category_path = '/var/node436/local/tstahl/models/scaler_%s_dennis.p'%(category)
+        self.classifier_path = '/var/node436/local/tstahl/models/classifier_%s.p'%(category)
         
     def dump_scaler(self, scaler):
         pickle.dump(scaler, open(self.scaler_path, "wb"))
         
+    def dump_scaler_category(self, scaler):
+        pickle.dump(scaler, open(self.scaler_category_path, "wb"))
+        
+        
+    def dump_classifier(self, classifier):
+        pickle.dump(classifier, open(self.classifier_path, "wb"))
         
         
     def save(self, mse_level, ae_level, nn, sgd):

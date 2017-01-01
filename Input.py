@@ -33,6 +33,7 @@ class Input:
                 self.intersection_feature_path = '/var/node436/local/tstahl/Features_prop_windows/Features_upper/sheep_%s_fully_cover_tree.txt'
                 self.intersection_coords_path = '/var/node436/local/tstahl/Features_prop_windows/upper_levels/sheep_%s_fully_cover_tree.txt'
                 self.scaler_path = '/var/node436/local/tstahl/models/scaler_dennis.p'
+                self.classifier_path = '/var/node436/local/tstahl/models/classifier_%s.p'%(category)
         training_numbers_tmp, self.test_numbers = self.get_training_numbers()
         self.training_numbers, self.val_numbers = self.get_val_numbers(training_numbers_tmp)
         self.category_train, self.category_val = self.get_category_imgs()
@@ -53,6 +54,12 @@ class Input:
          with open(self.scaler_path, 'rb') as handle:
             scaler = pickle.load(handle)
          return scaler
+         
+    def get_classifier(self):
+         with open(self.classifier_path, 'rb') as handle:
+            classifier = pickle.load(handle)
+         return classifier
+         
         
     def get_intersection_coords(self, img_nr):
         assert self.mode == 'dennis'
@@ -91,6 +98,7 @@ class Input:
                 if i not in test_imgs:
                     train_imgs.append(i)
             return test_imgs, train_imgs
+        
         
     def get_val_numbers(self, train_imgs):
         if self.mode == 'pascal' or self.mode == 'dennis':

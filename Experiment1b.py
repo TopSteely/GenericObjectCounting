@@ -7,6 +7,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import SGDRegressor
 import math
 import numpy as np
+from sklearn.svm import SVC
 
 def main():
 #    if len(sys.argv) != 2:
@@ -20,19 +21,25 @@ def main():
         #initialize
         print 'initializing'
         #sgd = SGD.SGD('max', category, tree_level_size, batch_size, math.pow(10,-4), 0.003, math.pow(10,-5))
-        load_pascal = Input.Input('pascal',category)
+        #load_pascal = Input.Input('pascal',category)
         load_dennis = Input.Input('dennis',category)
-        output_pascal = Output.Output('pascal_max', category, tree_level_size, '1b')
+        #output_pascal = Output.Output('pascal_max', category, tree_level_size, '1b')
         output_dennis = Output.Output('dennis_max', category, tree_level_size, '1b')
         
         print 'debugging, plot loss, compare it to scikit, !'
         
         #learn scaler
         #scaler_pascal = StandardScaler()
-        training_data = load_pascal.training_numbers
-        test_numbers_d = load_pascal.test_numbers
-        scaler_dennis = load_dennis.get_scaler()
-            #output_dennis.plot_level_boxes(img_data.debug_tmp, img_data.img_nr)
+        training_data = load_dennis.category_train
+        test_numbers_d = load_dennis.test_numbers
+        scaler_category = StandardScaler()
+        print len(training_data)
+        for i_img_nr, img_nr in enumerate(training_data):
+             img_data = Data.Data(load_dennis, img_nr, tree_level_size, None)
+             scaler_category.partial_fit(img_data.X[0])
+        output_dennis.dump_scaler_category(scaler_category)
+        exit()
+        #scaler_dennis = load_dennis.get_scaler()
         #sgd.set_scaler(scaler)
             
         # learn SGD
@@ -45,11 +52,11 @@ def main():
                     #sgd_pascal.set_scaler(scaler_pascal)
                     sgd_dennis.set_scaler(scaler_dennis)
                     print al_i, eta_i, gamma_i
-                    for epoch in range(15):
+                    for epoch in range(1):
                         #sgd_pascal.learn(1)
-                        sgd_dennis.learn()
+                        sgd_dennis.learn('categories')
                     #preds_d_p, preds_skl_p, y_d_p = sgd_pascal.evaluate('train',2, True)
-                    preds_d_d, preds_skl_d, y_d_d = sgd_dennis.evaluate('train',8, True)
+                    preds_d_d, preds_skl_d, y_d_d = sgd_dennis.evaluate('train',88, True)
                     #output_pascal.plot_preds(preds_d_p, preds_skl_p, y_d_p, al_i)
                     #output_dennis.plot_preds(preds_d_d, preds_skl_d, y_d_d, al_i)
 #                    sgd_fut = SGDRegressor(eta0=eta_i, learning_rate='invscaling', shuffle=True, average=True, alpha=al_i, n_iter=15)
@@ -73,7 +80,7 @@ def main():
             
         # evaluate
         print 'evaluating'
-        mse,ae, mse_non_zero = sgd.evaluate('test')
+        mse,ae, mse_non_zero = sgd_dennis.evaluate('test')
         
         # plot/save
         print 'saving'

@@ -89,8 +89,11 @@ class SGD:
         
         
         
-    def learn(self, to=-1):
-        training_data = self.load.training_numbers
+    def learn(self, instances='all', to=-1):
+        if instances=='all':
+            training_data = self.load.training_numbers
+        else:
+            training_data = self.load.category_train
         subset = training_data[:to]
         random.shuffle(subset)
         for i_img_nr, img_nr in enumerate(subset):
