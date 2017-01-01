@@ -33,6 +33,7 @@ class Input:
                 self.intersection_feature_path = '/var/node436/local/tstahl/Features_prop_windows/Features_upper/sheep_%s_fully_cover_tree.txt'
                 self.intersection_coords_path = '/var/node436/local/tstahl/Features_prop_windows/upper_levels/sheep_%s_fully_cover_tree.txt'
                 self.scaler_path = '/var/node436/local/tstahl/models/scaler_dennis.p'
+                self.scaler_category_path = '/var/node436/local/tstahl/models/scaler_%s_dennis.p'%(category)
                 self.classifier_path = '/var/node436/local/tstahl/models/classifier_%s.p'%(category)
         training_numbers_tmp, self.test_numbers = self.get_training_numbers()
         self.training_numbers, self.val_numbers = self.get_val_numbers(training_numbers_tmp)
@@ -52,6 +53,11 @@ class Input:
         
     def get_scaler(self):
          with open(self.scaler_path, 'rb') as handle:
+            scaler = pickle.load(handle)
+         return scaler
+         
+    def get_scaler_category(self):
+         with open(self.scaler_category_path, 'rb') as handle:
             scaler = pickle.load(handle)
          return scaler
          

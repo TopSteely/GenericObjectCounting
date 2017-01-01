@@ -36,7 +36,7 @@ def main():
         print len(training_data)
         for i_img_nr, img_nr in enumerate(training_data):
              img_data = Data.Data(load_dennis, img_nr, tree_level_size, None)
-             scaler_category.partial_fit(img_data.X[0])
+             scaler_category.partial_fit(img_data.X)
         output_dennis.dump_scaler_category(scaler_category)
         exit()
         #scaler_dennis = load_dennis.get_scaler()
