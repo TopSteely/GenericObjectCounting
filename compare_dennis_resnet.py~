@@ -40,14 +40,15 @@ def main():
 		     img_data = Data.Data(load_dennis, img_nr, 10, None)
 		     scaler_category.partial_fit(img_data.X)
 		output_dennis.dump_scaler_category(scaler_category)
+		scaler_dennis = scaler_category
 	if scaler_pascal==[]:
 		print "learning scaler pascal"
 		scaler_category = StandardScaler()
 		print len(training_data)
 		for i_img_nr, img_nr in enumerate(training_data):
-		     img_data = Data.Data(load_dennis, img_nr, 10, None)
+		     img_data = Data.Data(load_pascal, img_nr, 10, None)
 		     scaler_category.partial_fit(img_data.X)
-		output_dennis.dump_scaler_category(scaler_category)
+		output_pascal.dump_scaler_category(scaler_category)
 		scaler_pascal = scaler_category
             
         # learn SGD
