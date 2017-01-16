@@ -86,8 +86,8 @@ class Output:
 
     def plot_features_variance(self, var1, var2):
 	f,ax = plt.subplots(2)
-        ax[0].plot(var1)
-        ax[1].plot(var2)
+        ax[0].plot(var1, "rx")
+        ax[1].plot(var2, "bo")
         plt.savefig(self.feat_var_path)
         
         

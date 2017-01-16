@@ -35,7 +35,8 @@ def main():
 	     img_data = Data.Data(load_pascal, img_nr, 10, None)
              X2.append(img_data.X[img_data.levels[0]])
 
-        
+        print len(np.var(X1)), len(np.var(X2))
+        print np.sum(np.var(X1)), np.sum(np.var(X2))
         output_dennis.plot_features_variance(np.var(X1), np.var(X2))
     
     

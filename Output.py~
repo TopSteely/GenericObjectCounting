@@ -24,7 +24,7 @@ class Output:
         self.scaler_path = '/var/node436/local/tstahl/models/scaler_dennis.p'
         self.scaler_category_path = '/var/node436/local/tstahl/models/scaler_%s_dennis.p'%(category)
         self.classifier_path = '/var/node436/local/tstahl/models/classifier_%s.p'%(category)
-	self.feat_var_path = '/var/node436/local/tstahl/plos/feat_var.p'
+	self.feat_var_path = '/var/node436/local/tstahl/plos/feat_var.png'
         
     def dump_scaler(self, scaler):
         pickle.dump(scaler, open(self.scaler_path, "wb"))
