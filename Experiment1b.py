@@ -32,7 +32,7 @@ def main():
         #learn scaler
         #scaler_pascal = StandardScaler()
         training_data = load_dennis.category_train
-        test_numbers_d = load_dennis.test_
+        test_numbers_d = load_dennis.test_numbers
 	scaler_dennis = load_dennis.get_scaler_category()
 	if scaler_dennis==[]:
 		print "learning scaler"
