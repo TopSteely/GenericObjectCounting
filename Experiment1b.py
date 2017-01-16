@@ -19,7 +19,7 @@ def main():
 
     for tree_level_size in range(1,4):
         #initialize
-        print 'initializing'
+        print 'initializing', tree_level_size
 	#todo: visualize change of features per windows/full image
         #sgd = SGD.SGD('max', category, tree_level_size, batch_size, math.pow(10,-4), 0.003, math.pow(10,-5))
         #load_pascal = Input.Input('pascal',category)
@@ -82,6 +82,7 @@ def main():
         # evaluate
         print 'evaluating'
         mse,ae, mse_non_zero = sgd_dennis.evaluate('test',60)
+	print mse,ae, mse_non_zero
         
         # plot/save
         print 'saving'
