@@ -64,8 +64,8 @@ def main():
                     for epoch in range(5):
                         sgd_pascal.learn('categories',10)
                         sgd_dennis.learn('categories',10)
-			print sgd_dennis.evaluate('train',10,True)
-			print sgd_pascal.evaluate('train',10,True)
+			print sgd_dennis.evaluate('train',10)
+			print sgd_pascal.evaluate('train',10)
                     preds_d_p, preds_skl_p, y_d_p = sgd_pascal.evaluate('train',10, True)
                     preds_d_d, preds_skl_d, y_d_d = sgd_dennis.evaluate('train',10, True)
                     output_pascal.plot_preds(preds_d_p, preds_skl_p, y_d_p, al_i)
