@@ -68,8 +68,8 @@ def main():
 			print sgd_pascal.evaluate('train',10)
                     preds_d_p, preds_skl_p, y_d_p = sgd_pascal.evaluate('train',10, True)
                     preds_d_d, preds_skl_d, y_d_d = sgd_dennis.evaluate('train',10, True)
-                    output_pascal.plot_preds(preds_d_p, preds_skl_p, y_d_p, al_i)
-                    output_dennis.plot_preds(preds_d_d, preds_skl_d, y_d_d, al_i)
+                    output_pascal.plot_preds(preds_d_p, preds_skl_p, y_d_p, eta_i)
+                    output_dennis.plot_preds(preds_d_d, preds_skl_d, y_d_d, eta_i)
 #                    sgd_fut = SGDRegressor(eta0=eta_i, learning_rate='invscaling', shuffle=True, average=True, alpha=al_i, n_iter=15)
 #                    sgd_fut_data = []
 #                    sgd_fut_y = []
