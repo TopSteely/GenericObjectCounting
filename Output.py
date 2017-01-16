@@ -66,6 +66,7 @@ class Output:
         plt.xlim([-1,len(preds)+1])
         plt.legend(loc='upper center')
         plt.title('%s'%(alpha))
+	print self.plot_path%(self.mode,alpha)
         plt.savefig(self.plot_path%(self.mode,alpha))     
         
     def plot_level_boxes(self, rects, img_nr):
