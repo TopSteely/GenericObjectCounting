@@ -32,7 +32,7 @@ class IEP:
 	    if isinstance(sets[0], np.float64)
 	   	print sets[0]
 	    else:
-		print "Len:", len(sets[0])
+		print "Len: ", len(sets[0])
             return np.dot(self.w,X[sets[0]]), function
         elif function != []:
             for fun in function:

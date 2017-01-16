@@ -29,7 +29,7 @@ class IEP:
 #                print 'root: ', sets[0], (X[sets[0]]==0).sum(), self.w
 #            else:
 #                print 'root: ', sets[0], (X[sets[0]]==0).sum(), self.w.sum(), len(self.w)
-	    if isinstance(sets[0], np.float64)
+	    if isinstance(sets[0], np.float64):
 	   	print sets[0]
 	    else:
 		print "Len: ", len(sets[0])
