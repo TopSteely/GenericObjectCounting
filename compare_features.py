@@ -31,16 +31,9 @@ def main():
 	X2 = []
 	for img_nr in training_data[0:10]:
 	     img_data = Data.Data(load_dennis, img_nr, 10, None)
-	     print len(img_data.X[0])
              X1.append(img_data.X[0])
 	     img_data = Data.Data(load_pascal, img_nr, 10, None)
- 	     print img_data.levels[0]
-	     print len(img_data.X[img_data.levels[0]])
              X2.append(img_data.X[img_data.levels[0][0]])
-
-	print len(X1), len(X2)
-        print len(np.var(X1, axis=0)), len(np.var(X2, axis=0))
-        print np.sum(np.var(X1, axis=0)), np.sum(np.var(X2, axis=0))
         output_dennis.plot_features_variance(np.var(X1, axis=0), np.var(X2, axis=0))
     
     
