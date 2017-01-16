@@ -17,7 +17,7 @@ def main():
 
     batch_size = 1
 
-    for tree_level_size in range(1,4):
+    for tree_level_size in range(1,3):
         #initialize
         print 'initializing', tree_level_size
 	#todo: visualize change of features per windows/full image
@@ -53,10 +53,10 @@ def main():
                     #sgd_pascal.set_scaler(scaler_pascal)
                     sgd_dennis.set_scaler(scaler_dennis)
                     print al_i, eta_i, gamma_i
-                    for epoch in range(1):
+                    for epoch in range(3):
                         #sgd_pascal.learn(1)
-                        sgd_dennis.learn('categories',5)
-		    sgd_dennis.evaluate('train',5)
+                        sgd_dennis.learn('categories',3)
+			print sgd_dennis.evaluate('train',3)
                     #preds_d_p, preds_skl_p, y_d_p = sgd_pascal.evaluate('train',2, True)
                     #preds_d_d, preds_skl_d, y_d_d = sgd_dennis.evaluate('train',50, True)
                     #output_pascal.plot_preds(preds_d_p, preds_skl_p, y_d_p, al_i)
@@ -82,7 +82,7 @@ def main():
             
         # evaluate
         print 'evaluating'
-        mse,ae, mse_non_zero = sgd_dennis.evaluate('val',5)
+        mse,ae, mse_non_zero = sgd_dennis.evaluate('val',3)
 	print mse,ae, mse_non_zero
         
         # plot/save
