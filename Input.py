@@ -25,7 +25,7 @@ class Input:
                 self.label_path =  '/var/node436/local/tstahl/Coords_prop_windows/Labels/Labels/%s_%s_partial.txt'
                 self.feature_path = '/var/node436/local/tstahl/new_Resnet_features/2nd/1-%s.csv'
                 self.coord_tree_path = '/var/node436/local/tstahl/Coords_prop_windows/%s.txt'
-		self.scaler_category_path = '/var/node436/local/tstahl/models/scaler_%s_resnet.p'%(category)
+		self.scaler_category_path = '/var/node436/local/tstahl/models/scaler_%s_pascal.p'%(category)
             elif self.mode == 'dennis':
                 self.coord_path =  '/var/node436/local/tstahl/Coords_prop_windows/%s.txt'
                 self.coord_tree_path = '/var/node436/local/tstahl/Coords_prop_windows/%s.txt'
