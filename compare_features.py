@@ -38,7 +38,7 @@ def main():
 	     print len(img_data.X[img_data.levels[0]])
              X2.append(img_data.X[img_data.levels[0]])
 
-	prit len(X1), len(X2)
+	print len(X1), len(X2)
         print len(np.var(X1, axis=0)), len(np.var(X2, axis=0))
         print np.sum(np.var(X1, axis=0)), np.sum(np.var(X2, axis=0))
         output_dennis.plot_features_variance(np.var(X1, axis=0), np.var(X2, axis=0))
