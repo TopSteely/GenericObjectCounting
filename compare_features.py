@@ -17,7 +17,7 @@ def main():
 
     batch_size = 1
 
-    for tree_level_size in range(1,5):
+    for tree_level_size in range(1,2):
         #initialize
         print 'initializing', tree_level_size
 	#todo: visualize change of features per windows/full image
@@ -33,7 +33,7 @@ def main():
         test_numbers_d = load_dennis.test_numbers
 	X1 = []
 	X2 = []
-	for i_img_nr, img_nr in enumerate(training_data):
+	for img_nr in training_data[0:10]:
 	     img_data = Data.Data(load_dennis, img_nr, 10, None)
              X1.append(img_data.X[0])
 	     img_data = Data.Data(load_pascal, img_nr, 10, None)
