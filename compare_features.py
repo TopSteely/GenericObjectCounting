@@ -18,16 +18,12 @@ def main():
     batch_size = 1
 
     for tree_level_size in range(1,2):
-        #initialize
-        print 'initializing', tree_level_size
-	#todo: visualize change of features per windows/full image
-        #sgd = SGD.SGD('max', category, tree_level_size, batch_size, math.pow(10,-4), 0.003, math.pow(10,-5))
         load_pascal = Input.Input('pascal',category)
         load_dennis = Input.Input('dennis',category)
         output_pascal = Output.Output('pascal_max', category, tree_level_size, '1b')
         output_dennis = Output.Output('dennis_max', category, tree_level_size, '1b')
         
-        print 'debugging, plot loss, compare it to scikit, !'
+        print 'plotting variance of features!'
         
         training_data = load_dennis.category_train
         test_numbers_d = load_dennis.test_numbers
