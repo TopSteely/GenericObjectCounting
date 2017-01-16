@@ -85,6 +85,7 @@ class Output:
         plt.savefig(self.plot_path%(img_nr,'sub_rects'))
 
     def plot_features_variance(self, var1, var2):
+	f,ax = plt.subplots(2)
         ax[0].plot(var1)
         ax[1].plot(var2)
         plt.savefig(self.feat_var_path)
