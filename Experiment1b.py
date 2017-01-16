@@ -35,6 +35,7 @@ def main():
         test_numbers_d = load_dennis.test_
 	scaler_dennis = load_dennis.get_scaler_category()
 	if scaler_dennis==[]:
+		print "learning scaler"
 		scaler_category = StandardScaler()
 		print len(training_data)
 		for i_img_nr, img_nr in enumerate(training_data):
