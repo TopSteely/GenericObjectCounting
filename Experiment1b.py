@@ -41,10 +41,11 @@ def main():
 		     img_data = Data.Data(load_dennis, img_nr, 10, None)
 		     scaler_category.partial_fit(img_data.X)
 		output_dennis.dump_scaler_category(scaler_category)
+		scaler_dennis = scaler_category
             
         # learn SGD
         print 'learning'
-        for eta_i in [math.pow(10,-4),math.pow(10,-5)]:
+        for eta_i in [math.pow(10,-5),math.pow(10,-6)]:
 	    print eta_i
             for al_i in [math.pow(10,-1)]:#,math.pow(10,0),math.pow(10,-1),math.pow(10,-2)
                 for gamma_i in [math.pow(10,-5)]:#,math.pow(10,-4),math.pow(10,-3),math.pow(10,-2)
