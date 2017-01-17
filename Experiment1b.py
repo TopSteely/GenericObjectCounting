@@ -46,6 +46,8 @@ def main():
         # learn SGD
         print 'learning'
         for eta_i in [math.pow(10,-4),math.pow(10,-5)]:
+	    training_loss = []
+	    validation_loss = []
 	    print eta_i
             for al_i in [math.pow(10,-1)]:#,math.pow(10,0),math.pow(10,-1),math.pow(10,-2)
                 for gamma_i in [math.pow(10,-5)]:#,math.pow(10,-4),math.pow(10,-3),math.pow(10,-2)
@@ -55,9 +57,11 @@ def main():
                     sgd_dennis.set_scaler(scaler_dennis)
                     print al_i, eta_i, gamma_i
                     for epoch in range(8):
-                        sgd_dennis.learn('categories')
-			print sgd_dennis.evaluate('train')
-			print sgd_dennis.evaluate('val')
+                        sgd_dennis.learn('categories', 50)
+			t1,_,_ = sgd_dennis.evaluate('train', 50)
+			t2,_,_ = sgd_dennis.evaluate('val', 50)
+			training_loss.append(t1)
+			validation_loss.append(t2)
                     #preds_d_p, preds_skl_p, y_d_p = sgd_pascal.evaluate('train',2, True)
                     #preds_d_d, preds_skl_d, y_d_d = sgd_dennis.evaluate('train',50, True)
                     #output_pascal.plot_preds(preds_d_p, preds_skl_p, y_d_p, al_i)
@@ -79,7 +83,7 @@ def main():
 #                    sgd_a_error = ((sgd_fut.predict(sgd_fat_data) - np.array(sgd_fat_y))**2)#.sum()
 #                    print 'scikit GD error: ', sgd_fut.predict(sgd_fat_data), sgd_a_error, np.array(sgd_fat_y)
                     
-                
+            output_dennis.plot_train_val_loss(training_loss, validation_loss, eta)
             
 	    # evaluate
 	    print 'evaluating'
