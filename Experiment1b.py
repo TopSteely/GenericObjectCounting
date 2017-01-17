@@ -56,10 +56,11 @@ def main():
                     #sgd_pascal.set_scaler(scaler_pascal)
                     sgd_dennis.set_scaler(scaler_dennis)
                     print al_i, eta_i, gamma_i
-                    for epoch in range(8):
-                        sgd_dennis.learn('categories', 50)
-			t1,_,_ = sgd_dennis.evaluate('train', 50)
-			t2,_,_ = sgd_dennis.evaluate('val', 50)
+                    for epoch in range(5):
+			print epoch
+                        sgd_dennis.learn('categories', 20)
+			t1,_,_ = sgd_dennis.evaluate('train', 20)
+			t2,_,_ = sgd_dennis.evaluate('val', 20)
 			training_loss.append(t1)
 			validation_loss.append(t2)
                     #preds_d_p, preds_skl_p, y_d_p = sgd_pascal.evaluate('train',2, True)
