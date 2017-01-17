@@ -34,7 +34,7 @@ def main():
              X1.append(img_data.X[0])
 	     img_data = Data.Data(load_pascal, img_nr, 10, None)
              X2.append(img_data.X[img_data.levels[0][0]])
-        output_dennis.plot_features_variance(np.var(X1, axis=0), np.var(X2, axis=0))
+        output_dennis.plot_features_variance(np.mean(X1, axis=0), np.mean(X2, axis=0))
     
     
 if __name__ == "__main__":
