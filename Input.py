@@ -54,13 +54,15 @@ class Input:
 #        return features
 
     def get_intersection_features(self, img_nr):
-	print os.stat(self.intersection_feature_path%(format(img_nr, "06d"))).st_size
-	if os.path.isfile(self.intersection_feature_path%(format(img_nr, "06d"))):
-            ret = pd.read_csv(self.intersection_feature_path%(format(img_nr, "06d")), header=None, delimiter=",").values
-            return ret
-        else:
-             print 'warning ' + self.intersection_feature_path%(format(img_nr, "06d")) + 'does not exist'
-             exit()   
+	if os.stat(self.intersection_feature_path%(format(img_nr, "06d"))).st_size > 0:
+		if os.path.isfile(self.intersection_feature_path%(format(img_nr, "06d"))):
+		    ret = pd.read_csv(self.intersection_feature_path%(format(img_nr, "06d")), header=None, delimiter=",").values
+		    return ret
+		else:
+		     print 'warning ' + self.intersection_feature_path%(format(img_nr, "06d")) + 'does not exist'
+		     exit()   
+	else:
+		return []
     
     def get_scaler(self):
          with open(self.scaler_path, 'rb') as handle:
