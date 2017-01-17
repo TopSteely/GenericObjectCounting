@@ -17,7 +17,7 @@ def main():
 
     batch_size = 1
 
-    for tree_level_size in range(1,6):
+    for tree_level_size in range(1,4):
         #initialize
         print 'initializing', tree_level_size
         #sgd = SGD.SGD('max', category, tree_level_size, batch_size, math.pow(10,-4), 0.003, math.pow(10,-5))
@@ -45,7 +45,7 @@ def main():
             
         # learn SGD
         print 'learning'
-        for eta_i in [math.pow(10,-5),math.pow(10,-6)]:
+        for eta_i in [math.pow(10,-3),math.pow(10,-4),math.pow(10,-5)]:
 	    print eta_i
             for al_i in [math.pow(10,-1)]:#,math.pow(10,0),math.pow(10,-1),math.pow(10,-2)
                 for gamma_i in [math.pow(10,-5)]:#,math.pow(10,-4),math.pow(10,-3),math.pow(10,-2)
@@ -54,9 +54,10 @@ def main():
                     #sgd_pascal.set_scaler(scaler_pascal)
                     sgd_dennis.set_scaler(scaler_dennis)
                     print al_i, eta_i, gamma_i
-                    for epoch in range(5):
+                    for epoch in range(8):
                         sgd_dennis.learn('categories')
-			#print sgd_dennis.evaluate('train')
+			print sgd_dennis.evaluate('train')
+			print sgd_dennis.evaluate('val')
                     #preds_d_p, preds_skl_p, y_d_p = sgd_pascal.evaluate('train',2, True)
                     #preds_d_d, preds_skl_d, y_d_d = sgd_dennis.evaluate('train',50, True)
                     #output_pascal.plot_preds(preds_d_p, preds_skl_p, y_d_p, al_i)
