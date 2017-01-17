@@ -6,6 +6,7 @@ import random
 import time
 #from sklearn.preprocessing import MinMaxScaler
 from sklearn.linear_model import SGDRegressor
+import math
 
 
 
@@ -41,11 +42,11 @@ class SGD:
         
     def loss_max(self, img_data):
         level_preds, _ = self.predictor.get_iep_levels(img_data, [])
-        return (np.max(level_preds) - img_data.y)**2 + self.alpha * np.dot(self.w,self.w)
+        return (np.max(level_preds) - img_data.y)**2 + self.alpha * math.sqrt(np.dot(self.w,self.w))
         
     def loss_mean(self, img_data):
         level_preds, _ = self.predictor.get_iep_levels(img_data, [])
-        return (np.mean(level_preds) - img_data.y)**2 + self.alpha * np.dot(self.w,self.w)
+        return (np.mean(level_preds) - img_data.y)**2 + self.alpha * math.sqrt(np.dot(self.w,self.w))
         
     def predict_mean(self, img_data):
         level_preds, _ = self.predictor.get_iep_levels(img_data, [])
@@ -93,8 +94,20 @@ class SGD:
         return squared_error/len(numbers), error / len(numbers), non_zero_error / n_non_zero#skl_error/len(numbers),, self.eta
         
         
+    def loss_all(self):
+	tra_loss_temp = 0.0
+	te_loss_temp = 0.0
+	for img_nr in self.load.category_train:
+            img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
+	    tra_loss_temp += self.loss(img_data)
+	for img_nr in self.load.category_val:
+            img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
+	    te_loss_temp += self.loss(img_data)
+	return tra_loss_temp/len(self.load.category_train), te_loss_temp/len(self.load.category_val)
         
     def learn(self, instances='all', to=-1):
+	train_losses = []
+	test_losses = []
         if instances=='all':
             training_data = self.load.training_numbers
         else:
@@ -118,8 +131,15 @@ class SGD:
             self.sgd.partial_fit(to_fit,[img_data.y])
             if (i_img_nr + 1)%self.batch_size == 0:
                 self.update()
+		tr_loss, te_loss = self.loss_all()
+		train_losses.append(tr_loss)
+		test_losses.append(te_loss)
         if (i_img_nr + 1)%self.batch_size != 0:
             self.update()
+	    tr_loss, te_loss = self.loss_all()
+    	    train_losses.append(tr_loss)
+	    test_losses.append(te_loss)
+	return train_losses, test_losses
         
         
     def update(self):
@@ -136,8 +156,8 @@ class SGD:
         #print level_preds
         ind_max = level_preds.index(max(level_preds))
         upd, _ = self.learner.iep(img_data, [], ind_max)#functions[ind_max]
-        return 2 * (self.predict(img_data) - img_data.y) * upd + self.alpha * self.w, functions
+        return 2 * (self.predict(img_data) - img_data.y) * upd + 2 * self.alpha * self.w, functions
         
     def learn_mean(self, img_data, functions):
         iep_levels, functions = self.learner.get_iep_levels(img_data, functions)
-        return 2 * (self.predict(img_data) - img_data.y) * (np.array(iep_levels).sum() / len(iep_levels)) + self.alpha * self.w, functions
+        return 2 * (self.predict(img_data) - img_data.y) * (np.array(iep_levels).sum() / len(iep_levels)) + 2 * self.alpha * self.w, functions

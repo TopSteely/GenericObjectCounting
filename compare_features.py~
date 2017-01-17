@@ -34,11 +34,13 @@ def main():
 	for img_nr in training_data[0:10]:
 	     img_data = Data.Data(load_dennis, img_nr, 10, None)
              X1.append(img_data.X[0])
-	     scaler1.partial_fit(img_data.X[0])
+	     #scaler1.partial_fit(img_data.X[0])
 	     img_data = Data.Data(load_pascal, img_nr, 10, None)
              X2.append(img_data.X[img_data.levels[0][0]])
-	     scaler2.partial_fit(img_data.X[img_data.levels[0][0]])
-        output_dennis.plot_features_variance(np.mean(X1, axis=0), np.mean(X2, axis=0))
+	     #scaler2.partial_fit(img_data.X[img_data.levels[0][0]])
+	scaler1.fit(X1)
+	scaler2.fit(X2)
+        output_dennis.plot_features_variance(np.mean(scaledX1, axis=0), np.mean(scaledX2, axis=0))
     
     
 if __name__ == "__main__":
