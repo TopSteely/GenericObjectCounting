@@ -59,10 +59,7 @@ def main():
                     print al_i, eta_i, gamma_i
                     for epoch in range(5):
 			print epoch
-			start = time.time()
                         sgd_dennis.learn('categories', 20)
-			print (time.time() - start)
-			start = time.time()
 			t1,_,_ = sgd_dennis.evaluate('train', 20)
 			t2,_,_ = sgd_dennis.evaluate('val', 20)
 			training_loss.append(t1)
