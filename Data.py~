@@ -3,8 +3,8 @@ import numpy as np
 
 class Data:
     def __init__(self, load, img_nr, prune_tree_levels, scaler, num_features=1000):
+        start = time.time()
         self.img_nr = img_nr
-        print img_nr
         self.boxes = load.get_coords(img_nr)
         self.X = load.get_features(img_nr)
         self.num_features = num_features
@@ -16,9 +16,13 @@ class Data:
         if scaler != None:
             self.X = scaler.transform(self.X)
         self.y = load.get_label(img_nr)
+        print (time.time() - start)
+        start = time.time()
         self.tree_boxes = load.get_coords_tree(img_nr)
         self.tree_boxes = sort_boxes(self.tree_boxes)
         self.G, levels = create_tree_as_extracted(self.tree_boxes)
+        print (time.time() - start)
+        start = time.time()
         if load.mode == 'dennis':
             self.boxes = self.tree_boxes
         #prune tree to only have levels which fully cover the image, tested

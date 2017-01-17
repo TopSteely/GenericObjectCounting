@@ -3,6 +3,7 @@ import numpy as np
 
 class Data:
     def __init__(self, load, img_nr, prune_tree_levels, scaler, num_features=1000):
+        start = time.time()
         self.img_nr = img_nr
         self.boxes = load.get_coords(img_nr)
         self.X = load.get_features(img_nr)
@@ -15,9 +16,13 @@ class Data:
         if scaler != None:
             self.X = scaler.transform(self.X)
         self.y = load.get_label(img_nr)
+        print (time.time() - start)
+        start = time.time()
         self.tree_boxes = load.get_coords_tree(img_nr)
         self.tree_boxes = sort_boxes(self.tree_boxes)
         self.G, levels = create_tree_as_extracted(self.tree_boxes)
+        print (time.time() - start)
+        start = time.time()
         if load.mode == 'dennis':
             self.boxes = self.tree_boxes
         #prune tree to only have levels which fully cover the image, tested
@@ -37,6 +42,7 @@ class Data:
         #prune tree as well, for patches training
         for trash_level in levels_gone.values():
             self.G.remove_nodes_from(trash_level)
+
             
         self.debug_tmp = []
         for n in self.G.nodes():
@@ -54,6 +60,8 @@ class Data:
                 self.X = np.append(self.X, intersection_features, axis=0)
             else:
                 self.boxes = np.array(self.boxes)
+        print (time.time() - start)
+        start = time.time()
         
     def lookup_coords(self):
         #have to change level indexes because of rearranging in extraction

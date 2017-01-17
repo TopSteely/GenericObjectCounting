@@ -104,8 +104,6 @@ class SGD:
         for i_img_nr, img_nr in enumerate(subset):
 	    start = time.time()
             img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
-	    print (time.time() - start)
-	    start = time.time()
             if img_nr in self.functions:
                 img_functions = self.functions[img_nr]
                 upd,_ = self.method(img_data, img_functions)
@@ -115,13 +113,9 @@ class SGD:
                 upd, fct = self.method(img_data, temp)
                 self.w_update += upd
                 self.functions[img_nr] = fct
-	    print (time.time() - start)
-	    start = time.time()
             self.samples_seen += 1
             to_fit = img_data.X[img_data.levels[0][0]].reshape(1, -1)
             self.sgd.partial_fit(to_fit,[img_data.y])
-	    print (time.time() - start)
-	    start = time.time()
             if (i_img_nr + 1)%self.batch_size == 0:
                 self.update()
         if (i_img_nr + 1)%self.batch_size != 0:
