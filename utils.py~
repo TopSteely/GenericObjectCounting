@@ -94,7 +94,6 @@ def create_tree_as_extracted(boxes):
                 continue
             possible_parents = []
             for box_, ii in zip(boxes, range(len(boxes))):
-		print get_overlap_ratio(box, box_), box != box_
                 if get_overlap_ratio(box, box_) == 1 and box != box_:
                     possible_parents.append(ii)
                     #print i, '-', ii
