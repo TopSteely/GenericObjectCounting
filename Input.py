@@ -54,6 +54,7 @@ class Input:
 #        return features
 
     def get_intersection_features(self, img_nr):
+	print os.stat(self.intersection_feature_path%(format(img_nr, "06d"))).st_size
 	if os.path.isfile(self.intersection_feature_path%(format(img_nr, "06d"))):
             ret = pd.read_csv(self.intersection_feature_path%(format(img_nr, "06d")), header=None, delimiter=",").values
             return ret
