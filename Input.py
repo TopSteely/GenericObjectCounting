@@ -40,18 +40,27 @@ class Input:
         self.training_numbers, self.val_numbers = self.get_val_numbers(training_numbers_tmp)
         self.category_train, self.category_val = self.get_category_imgs()
         
-    def get_intersection_features(self, img_nr):
-        assert self.mode == 'dennis'
-        features = []
-        f = open(self.intersection_feature_path%(format(img_nr, "06d")), 'r')
-        for i,line in enumerate(f):
-            str_ = line.rstrip('\n').split(',')  
-            ff = []
-            for s in str_:
-               ff.append(float(s))
-            features.append(ff)
-        return features
-        
+	#old
+#    def get_intersection_features(self, img_nr):
+#        assert self.mode == 'dennis'
+#        features = []
+#        f = open(self.intersection_feature_path%(format(img_nr, "06d")), 'r')
+#        for i,line in enumerate(f):
+#            str_ = line.rstrip('\n').split(',')  
+#            ff = []
+#            for s in str_:
+#               ff.append(float(s))
+#            features.append(ff)
+#        return features
+
+def get_intersection_features(self, img_nr):
+	if os.path.isfile(self.intersection_feature_path%(format(img_nr, "06d"))):
+            ret = pd.read_csv(self.intersection_feature_path%(format(img_nr, "06d")), header=None, delimiter=",").values
+            return ret
+        else:
+             print 'warning ' + self.intersection_feature_path%(format(img_nr, "06d")) + 'does not exist'
+             exit()   
+    
     def get_scaler(self):
          with open(self.scaler_path, 'rb') as handle:
             scaler = pickle.load(handle)
@@ -126,22 +135,31 @@ class Input:
                 return np.array([ret])
             else:
                 return ret
-            
-            
+
     def get_coords_tree(self, img_nr):
         if os.path.isfile(self.coord_tree_path%(format(img_nr, "06d"))):
-            f = open(self.coord_tree_path%(format(img_nr, "06d")), 'r')
-        else:
-            print 'warning, no ' + self.coord_tree_path%(format(img_nr, "06d"))
-            exit()
-        boxes = []
-        for line in f:
-            tmp = line.split(',')
-            coord = []
-            for s in tmp:
-                coord.append(float(s))
-            boxes.append(coord)
-        return boxes
+            ret = np.loadtxt(self.coord_tree_path%(format(img_nr, "06d")), delimiter=',')
+            if isinstance(ret[0], np.float64):
+                return np.array([ret])
+            else:
+                return ret
+            
+      
+	#old      
+#    def get_coords_tree(self, img_nr):
+#        if os.path.isfile(self.coord_tree_path%(format(img_nr, "06d"))):
+#            f = open(self.coord_tree_path%(format(img_nr, "06d")), 'r')
+#        else:
+#            print 'warning, no ' + self.coord_tree_path%(format(img_nr, "06d"))
+#            exit()
+#        boxes = []
+#        for line in f:
+#            tmp = line.split(',')
+#            coord = []
+#            for s in tmp:
+#                coord.append(float(s))
+#            boxes.append(coord)
+#        return boxes
         
     def get_features(self, img_nr):
         if os.path.isfile(self.feature_path%(format(img_nr, "06d"))):
