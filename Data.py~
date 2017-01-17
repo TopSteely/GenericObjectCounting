@@ -42,6 +42,7 @@ class Data:
         #prune tree as well, for patches training
         for trash_level in levels_gone.values():
             self.G.remove_nodes_from(trash_level)
+
             
         self.debug_tmp = []
         for n in self.G.nodes():
@@ -59,6 +60,8 @@ class Data:
                 self.X = np.append(self.X, intersection_features, axis=0)
             else:
                 self.boxes = np.array(self.boxes)
+        print (time.time() - start)
+        start = time.time()
         
     def lookup_coords(self):
         #have to change level indexes because of rearranging in extraction
