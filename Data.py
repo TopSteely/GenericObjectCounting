@@ -4,6 +4,7 @@ import time
 
 class Data:
     def __init__(self, load, img_nr, prune_tree_levels, scaler, num_features=1000):
+	print img_nr
         start = time.time()
         self.img_nr = img_nr
         self.boxes = load.get_coords(img_nr)

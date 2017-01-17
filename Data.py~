@@ -22,7 +22,8 @@ class Data:
         self.tree_boxes = load.get_coords_tree(img_nr)
 	print len(self.tree_boxes), len(self.tree_boxes[0])
         self.tree_boxes = sort_boxes(self.tree_boxes)
-        self.G, levels = create_tree_as_extracted(self.tree_boxes)
+        #self.G, levels = create_tree_as_extracted(self.tree_boxes)
+	self.G, levels = create_tree(self.tree_boxes)
         print "tree", (time.time() - start)
         start = time.time()
         if load.mode == 'dennis':
