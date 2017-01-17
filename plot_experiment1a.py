@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import math
 
 classes = [
-    "person",
+    #"person",
     "bird", "cat", "cow", "dog", "horse", "sheep",
     "aeroplane", "bicycle", "boat", "bus", "car", "motorbike", "train",
     "bottle", "chair", "diningtable", "pottedplant", "sofa", "tvmonitor"
@@ -26,4 +26,4 @@ for eta in [math.pow(10,-5),math.pow(10,-6)]:
 		depths.append(error_tmp/len(classes))
 	plt.plot(depths, '-rx', label=eta)
 plt.legend()
-plt.savefig("/home/tstahl/plot/Experiment1a.png")
+plt.savefig("/var/node436/local/tstahl/plos/Experiment1a.png")
