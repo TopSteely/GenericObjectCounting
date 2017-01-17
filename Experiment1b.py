@@ -8,6 +8,7 @@ from sklearn.linear_model import SGDRegressor
 import math
 import numpy as np
 from sklearn.svm import SVC
+import time
 
 def main():
 #    if len(sys.argv) != 2:
@@ -58,9 +59,15 @@ def main():
                     print al_i, eta_i, gamma_i
                     for epoch in range(5):
 			print epoch
+			start = time.time()
                         sgd_dennis.learn('categories', 20)
+			print (time.time() - start)
+			start = time.time()
 			t1,_,_ = sgd_dennis.evaluate('train', 20)
+			print (time.time() - start)
+			start = time.time()
 			t2,_,_ = sgd_dennis.evaluate('val', 20)
+			print (time.time() - start)
 			training_loss.append(t1)
 			validation_loss.append(t2)
                     #preds_d_p, preds_skl_p, y_d_p = sgd_pascal.evaluate('train',2, True)

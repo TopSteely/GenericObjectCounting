@@ -28,6 +28,7 @@ class Output:
 		self.scaler_category_path = '/var/node436/local/tstahl/models/scaler_%s_pascal.p'%(category)
         self.classifier_path = '/var/node436/local/tstahl/models/classifier_%s.p'%(category)
 	self.feat_var_path = '/var/node436/local/tstahl/plos/feat_var.png'
+	self.loss_path = '/var/node436/local/tstahl/plos/loss_%s_%s_%s'
         
     def dump_scaler(self, scaler):
         pickle.dump(scaler, open(self.scaler_path, "wb"))
@@ -93,5 +94,12 @@ class Output:
         ax[0].plot(var1, "rx")
         ax[1].plot(var2, "bo")
         plt.savefig(self.feat_var_path)
+
+    def plot_train_val_loss(self, train, val, eta):
+	plt.clf()
+	plt.plot(train, '-rx', label="training")
+	plt.plot(val, '-bo', label="validation")
+	plt.legend()
+	plt.savefig(self.loss_path%(self.experiment,self.prune_tree_levels,eta))
         
         

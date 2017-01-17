@@ -8,6 +8,7 @@ from sklearn.linear_model import SGDRegressor
 import math
 import numpy as np
 from sklearn.svm import SVC
+import time
 
 def main():
 #    if len(sys.argv) != 2:
@@ -17,7 +18,7 @@ def main():
 
     batch_size = 1
 
-    for tree_level_size in range(1,6):
+    for tree_level_size in range(1,4):
         #initialize
         print 'initializing', tree_level_size
         #sgd = SGD.SGD('max', category, tree_level_size, batch_size, math.pow(10,-4), 0.003, math.pow(10,-5))
@@ -45,7 +46,9 @@ def main():
             
         # learn SGD
         print 'learning'
-        for eta_i in [math.pow(10,-5)]:
+        for eta_i in [math.pow(10,-4),math.pow(10,-5)]:
+	    training_loss = []
+	    validation_loss = []
 	    print eta_i
             for al_i in [math.pow(10,-1)]:#,math.pow(10,0),math.pow(10,-1),math.pow(10,-2)
                 for gamma_i in [math.pow(10,-5)]:#,math.pow(10,-4),math.pow(10,-3),math.pow(10,-2)
@@ -55,8 +58,15 @@ def main():
                     sgd_dennis.set_scaler(scaler_dennis)
                     print al_i, eta_i, gamma_i
                     for epoch in range(5):
-                        sgd_dennis.learn('categories')
-			#print sgd_dennis.evaluate('train')
+			print epoch
+			start = time.time()
+                        sgd_dennis.learn('categories', 20)
+			print (time.time() - start)
+			start = time.time()
+			t1,_,_ = sgd_dennis.evaluate('train', 20)
+			t2,_,_ = sgd_dennis.evaluate('val', 20)
+			training_loss.append(t1)
+			validation_loss.append(t2)
                     #preds_d_p, preds_skl_p, y_d_p = sgd_pascal.evaluate('train',2, True)
                     #preds_d_d, preds_skl_d, y_d_d = sgd_dennis.evaluate('train',50, True)
                     #output_pascal.plot_preds(preds_d_p, preds_skl_p, y_d_p, al_i)
@@ -78,7 +88,7 @@ def main():
 #                    sgd_a_error = ((sgd_fut.predict(sgd_fat_data) - np.array(sgd_fat_y))**2)#.sum()
 #                    print 'scikit GD error: ', sgd_fut.predict(sgd_fat_data), sgd_a_error, np.array(sgd_fat_y)
                     
-                
+            output_dennis.plot_train_val_loss(training_loss, validation_loss, eta)
             
 	    # evaluate
 	    print 'evaluating'

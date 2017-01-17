@@ -28,6 +28,7 @@ class Output:
 		self.scaler_category_path = '/var/node436/local/tstahl/models/scaler_%s_pascal.p'%(category)
         self.classifier_path = '/var/node436/local/tstahl/models/classifier_%s.p'%(category)
 	self.feat_var_path = '/var/node436/local/tstahl/plos/feat_var.png'
+	self.loss_path = '/var/node436/local/tstahl/plos/loss_%s_%s_%s'
         
     def dump_scaler(self, scaler):
         pickle.dump(scaler, open(self.scaler_path, "wb"))
@@ -44,7 +45,7 @@ class Output:
         pickle.dump(mse_level, open( self.mse_path%(self.experiment, self.mode, self.category, self.prune_tree_levels, eta0), "wb" ))
         pickle.dump(ae_level, open( self.ae_path%(self.experiment, self.mode, self.category, self.prune_tree_levels, eta0), "wb" ))
         pickle.dump(nn, open( self.nn_path%(self.experiment, self.mode, self.category, self.prune_tree_levels, eta0), "wb" ))
-        pickle.dump(sgd.w, open( self.model_path%(self.experiment, self.mode, self.category, self.prune_tree_levels), "wb" ))
+        pickle.dump(sgd.w, open( self.model_path%(self.experiment, self.mode, self.category, self.prune_tree_levels, eta0), "wb" ))
         #pickle.dump(num_per_image, open( self.npe_path%(self.experiment, self.mode, self.category, self.prune_tree_levels), "wb" ))
         
     def plot_preds(self, preds, preds_skl, y, alpha):
@@ -93,5 +94,12 @@ class Output:
         ax[0].plot(var1, "rx")
         ax[1].plot(var2, "bo")
         plt.savefig(self.feat_var_path)
+
+    def plot_train_val_loss(self, train, val, eta):
+	plt.clf()
+	plt.plot(train, '-rx', label="training")
+	plt.plot(val, '-bo', label="validation")
+	plt.legend()
+	plt.savefig(self.loss_path%(experiment,prune_tree_levels,eta))
         
         
