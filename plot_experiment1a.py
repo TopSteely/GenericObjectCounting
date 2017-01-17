@@ -24,6 +24,9 @@ for eta in [math.pow(10,-5),math.pow(10,-6)]:
 			    mse_tmp = pickle.load(handle)
 			error_tmp += mse_tmp
 		depths.append(error_tmp/len(classes))
-	plt.plot(depths, '-rx', label=eta)
+	if eta == math.pow(10,-5):
+		plt.plot(depths, '-rx', label=eta)
+	else:
+		plt.plot(depths, '-bx', label=eta)
 plt.legend()
 plt.savefig("/var/node436/local/tstahl/plos/Experiment1a.png")
