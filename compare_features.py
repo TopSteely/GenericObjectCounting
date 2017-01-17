@@ -38,10 +38,9 @@ def main():
 	     img_data = Data.Data(load_pascal, img_nr, 10, None)
              X2.append(img_data.X[img_data.levels[0][0]])
 	     #scaler2.partial_fit(img_data.X[img_data.levels[0][0]])
-	scaledX1 = scaler1.fit(X1)
-	scaledX1 = scaler2.fit(X2)
-	print len(scaledX1), len(scaledX2)
-        output_dennis.plot_features_variance(np.mean(scaledX1, axis=0), np.mean(scaledX2, axis=0))
+	scaler1.fit(X1)
+	scaler2.fit(X2)
+        output_dennis.plot_features_variance(np.mean(scaler1.transform(X1), axis=0), np.mean(scaler2.transform(X2), axis=0))
     
     
 if __name__ == "__main__":
