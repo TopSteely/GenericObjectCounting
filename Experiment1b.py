@@ -9,6 +9,7 @@ import math
 import numpy as np
 from sklearn.svm import SVC
 import time
+import random
 
 def main():
 #    if len(sys.argv) != 2:
@@ -39,7 +40,7 @@ def main():
 		data_to_scale = []
 		scaler_category = StandardScaler()
 		print len(training_data)
-		shuffle(training_data)
+		random.shuffle(training_data)
 		for img_nr in training_data[0:100]:
 		     img_data = Data.Data(load_dennis, img_nr, 10, None)
 		     data_to_scale.extend(img_data.X)

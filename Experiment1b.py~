@@ -39,8 +39,8 @@ def main():
 		data_to_scale = []
 		scaler_category = StandardScaler()
 		print len(training_data)
-		shuffle(training_data)
-		for i_img_nr, img_nr in enumerate(training_data):
+		random.shuffle(training_data)
+		for img_nr in training_data[0:100]:
 		     img_data = Data.Data(load_dennis, img_nr, 10, None)
 		     data_to_scale.extend(img_data.X)
 		scaler_category.fit(data_to_scale)

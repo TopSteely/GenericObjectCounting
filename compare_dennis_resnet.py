@@ -7,6 +7,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import SGDRegressor
 import math
 import numpy as np
+import random
 from sklearn.svm import SVC
 
 def main():
@@ -37,7 +38,7 @@ def main():
 		data_to_scale = []
 		scaler_category = StandardScaler()
 		print len(training_data)
-		shuffle(training_data)
+		random.shuffle(training_data)
 		for img_nr in training_data[0:100]:
 		     img_data = Data.Data(load_dennis, img_nr, 10, None)
 		     data_to_scale.extend(img_data.X)
@@ -50,6 +51,7 @@ def main():
 		data_to_scale = []
 		scaler_category = StandardScaler()
 		print len(training_data)
+		random.shuffle(training_data)
 		for img_nr in training_data[0:100]:
 		     img_data = Data.Data(load_pascal, img_nr, 10, None)
 		     data_to_scale.extend(img_data.X)
