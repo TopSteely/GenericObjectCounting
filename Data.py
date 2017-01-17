@@ -17,12 +17,12 @@ class Data:
         if scaler != None:
             self.X = scaler.transform(self.X)
         self.y = load.get_label(img_nr)
-        print (time.time() - start)
+        print "load", (time.time() - start)
         start = time.time()
         self.tree_boxes = load.get_coords_tree(img_nr)
         self.tree_boxes = sort_boxes(self.tree_boxes)
         self.G, levels = create_tree_as_extracted(self.tree_boxes)
-        print (time.time() - start)
+        print "tree", (time.time() - start)
         start = time.time()
         if load.mode == 'dennis':
             self.boxes = self.tree_boxes
@@ -61,8 +61,7 @@ class Data:
                 self.X = np.append(self.X, intersection_features, axis=0)
             else:
                 self.boxes = np.array(self.boxes)
-        print (time.time() - start)
-        start = time.time()
+        print "else", (time.time() - start)
         
     def lookup_coords(self):
         #have to change level indexes because of rearranging in extraction
