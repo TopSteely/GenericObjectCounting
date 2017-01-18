@@ -50,7 +50,7 @@ def main():
             
         # learn SGD
         print 'learning'
-        for eta_i in [math.pow(10,-4)]:
+        for eta_i in [math.pow(10,-5)]:
     	    training_loss = []
     	    validation_loss = []
     	    print eta_i
