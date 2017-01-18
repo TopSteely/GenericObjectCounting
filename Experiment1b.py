@@ -19,7 +19,7 @@ def main():
 
     batch_size = 5
 
-    for tree_level_size in range(1,3):
+    for tree_level_size in range(1,7):
         #initialize
         print 'initializing', tree_level_size
         #sgd = SGD.SGD('max', category, tree_level_size, batch_size, math.pow(10,-4), 0.003, math.pow(10,-5))
@@ -77,20 +77,13 @@ def main():
                         #preds_d_d, preds_skl_d, y_d_d = sgd_dennis.evaluate('train',50, True)
                         #output_pascal.plot_preds(preds_d_p, preds_skl_p, y_d_p, al_i)
                         #output_dennis.plot_preds(preds_d_d, preds_skl_d, y_d_d, al_i)
-                    #output_dennis.plot_train_val_loss(training_loss, validation_loss, eta_i)
-                t2,_,_ = sgd_dennis.evaluate('val')
-                print "Eval loss: ", al_i, t2
+                    output_dennis.plot_train_val_loss(training_loss, validation_loss, eta_i, al_i)
+                mse,ae, mse_non_zero = sgd_dennis.evaluate('val')
+                print "Eval loss: ", al_i, mse
+                # plot/save
+                print 'saving'
 
-            
-	    # evaluate
-	    print 'evaluating'
-	    mse,ae, mse_non_zero = sgd_dennis.evaluate('val')
-	    print mse,ae, mse_non_zero
-        
-        # plot/save
-        print 'saving'
-
-        output_dennis.save(mse, ae, mse_non_zero, sgd_dennis, eta_i)
+                output_dennis.save(mse, ae, mse_non_zero, sgd_dennis, eta_i, al_i)
     
     
 if __name__ == "__main__":

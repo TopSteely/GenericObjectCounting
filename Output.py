@@ -14,11 +14,11 @@ class Output:
         self.prune_tree_levels = prune_tree_levels
         self.mode = mode
         self.experiment = experiment
-        self.mse_path = "/home/tstahl/plot/%s_%s_mse_%s_%s_%s.p"
-        self.ae_path = "/home/tstahl/plot/%s_%s_ae_%s_%s_%s.p"
-        self.nn_path = "/home/tstahl/plot/%s_%s_nn_%s_%s_%s.p"
+        self.mse_path = "/home/tstahl/plot/%s_%s_mse_%s_%s_%s_%s.p"
+        self.ae_path = "/home/tstahl/plot/%s_%s_ae_%s_%s_%s_%s.p"
+        self.nn_path = "/home/tstahl/plot/%s_%s_nn_%s_%s_%s_%s.p"
         self.npe_path = "/home/tstahl/plot/%s_%s_npe_%s_%s.p"
-        self.model_path = "/var/node436/local/tstahl/models/%s_%s_%s_%s_%s.p"
+        self.model_path = "/var/node436/local/tstahl/models/%s_%s_%s_%s_%s_%s.p"
         self.plot_path = "/var/node436/local/tstahl/plos/%s_%s.png"
         self.image_path = "/var/node436/local/tstahl/Images/%s.jpg"
         self.scaler_path = '/var/node436/local/tstahl/models/scaler_dennis.p'
@@ -28,7 +28,7 @@ class Output:
 		self.scaler_category_path = '/var/node436/local/tstahl/models/scaler_%s_pascal.p'%(category)
         self.classifier_path = '/var/node436/local/tstahl/models/classifier_%s.p'%(category)
 	self.feat_var_path = '/var/node436/local/tstahl/plos/feat_var.png'
-	self.loss_path = '/var/node436/local/tstahl/plos/loss_%s_%s_%s_%s.png'
+	self.loss_path = '/var/node436/local/tstahl/plos/loss_%s_%s_%s_%s_%s.png'
         
     def dump_scaler(self, scaler):
         pickle.dump(scaler, open(self.scaler_path, "wb"))
@@ -41,11 +41,11 @@ class Output:
         pickle.dump(classifier, open(self.classifier_path, "wb"))
         
         
-    def save(self, mse_level, ae_level, nn, sgd, eta0):
-        pickle.dump(mse_level, open( self.mse_path%(self.experiment, self.mode, self.category, self.prune_tree_levels, eta0), "wb" ))
-        pickle.dump(ae_level, open( self.ae_path%(self.experiment, self.mode, self.category, self.prune_tree_levels, eta0), "wb" ))
-        pickle.dump(nn, open( self.nn_path%(self.experiment, self.mode, self.category, self.prune_tree_levels, eta0), "wb" ))
-        pickle.dump(sgd.w, open( self.model_path%(self.experiment, self.mode, self.category, self.prune_tree_levels, eta0), "wb" ))
+    def save(self, mse_level, ae_level, nn, sgd, eta0, alpha):
+        pickle.dump(mse_level, open( self.mse_path%(self.experiment, self.mode, self.category, self.prune_tree_levels, eta0, alpha), "wb" ))
+        pickle.dump(ae_level, open( self.ae_path%(self.experiment, self.mode, self.category, self.prune_tree_levels, eta0, alpha), "wb" ))
+        pickle.dump(nn, open( self.nn_path%(self.experiment, self.mode, self.category, self.prune_tree_levels, eta0, alpha), "wb" ))
+        pickle.dump(sgd.w, open( self.model_path%(self.experiment, self.mode, self.category, self.prune_tree_levels, eta0, alpha), "wb" ))
         #pickle.dump(num_per_image, open( self.npe_path%(self.experiment, self.mode, self.category, self.prune_tree_levels), "wb" ))
         
     def plot_preds(self, preds, preds_skl, y, alpha):
@@ -95,11 +95,11 @@ class Output:
         ax[1].plot(var2, "bo")
         plt.savefig(self.feat_var_path)
 
-    def plot_train_val_loss(self, train, val, eta):
+    def plot_train_val_loss(self, train, val, eta, alpha):
 	plt.clf()
 	plt.plot(train, '-rx', label="training")
 	plt.plot(val, '-bo', label="validation")
 	plt.legend()
-	plt.savefig(self.loss_path%(self.experiment,self.prune_tree_levels,eta,self.category))
+	plt.savefig(self.loss_path%(self.experiment,self.prune_tree_levels,eta,self.category, alpha))
         
         
