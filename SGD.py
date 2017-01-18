@@ -94,13 +94,13 @@ class SGD:
         return squared_error/len(numbers), error / len(numbers), non_zero_error / n_non_zero#skl_error/len(numbers),, self.eta
         
         
-    def loss_all(self):
+    def loss_all(self, to=-1):
 	tra_loss_temp = 0.0
 	te_loss_temp = 0.0
-	for img_nr in self.load.category_train:
+	for img_nr in self.load.category_train[0:to]:
             img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
 	    tra_loss_temp += self.loss(img_data)
-	for img_nr in self.load.category_val:
+	for img_nr in self.load.category_val[0:to]:
             img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
 	    te_loss_temp += self.loss(img_data)
 	return tra_loss_temp/len(self.load.category_train), te_loss_temp/len(self.load.category_val)
@@ -128,11 +128,12 @@ class SGD:
                 self.w_update += upd
                 self.functions[img_nr] = fct
             self.samples_seen += 1
-            to_fit = img_data.X[img_data.levels[0][0]].reshape(1, -1)
-            self.sgd.partial_fit(to_fit,[img_data.y])
+            if self.load.prune_tree_levels == 1:
+                to_fit = img_data.X[img_data.levels[0][0]].reshape(1, -1)
+                self.sgd.partial_fit(to_fit,[img_data.y])
             if (i_img_nr + 1)%self.batch_size == 0:
                 self.update()
-		tr_loss, te_loss = self.loss_all()
+		tr_loss, te_loss = self.loss_all(to)
 		train_losses.append(tr_loss)
 		test_losses.append(te_loss)
         if (i_img_nr + 1)%self.batch_size != 0:
