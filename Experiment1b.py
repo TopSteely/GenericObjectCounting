@@ -65,8 +65,8 @@ def main():
                         print epoch
                         tr_l, te_l = sgd_dennis.learn('categories', 20)
                         print tr_l, te_l
-                        training_loss.append(tr_l)
-                        validation_loss.append(te_l)
+                        training_loss.extend(tr_l)
+                        validation_loss.extend(te_l)
                         print training_loss
                         #print training_loss, validation_loss
                         #t1,_,_ = sgd_dennis.evaluate('train', 20)
