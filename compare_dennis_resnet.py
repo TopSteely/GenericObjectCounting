@@ -70,10 +70,13 @@ def main():
                     sgd_dennis.set_scaler(scaler_dennis)
                     print al_i, eta_i, gamma_i
                     for epoch in range(5):
+                        print epoch
                         sgd_pascal.learn('categories',10)
+                        print "pascal done"
                         sgd_dennis.learn('categories',10)
-			print sgd_dennis.evaluate('train',10)
-			print sgd_pascal.evaluate('train',10)
+                        print "dennis done"
+                    print sgd_dennis.evaluate('train',10)
+                    print sgd_pascal.evaluate('train',10)
                     preds_d_p, preds_skl_p, y_d_p = sgd_pascal.evaluate('train',10, True)
                     preds_d_d, preds_skl_d, y_d_d = sgd_dennis.evaluate('train',10, True)
                     output_pascal.plot_preds(preds_d_p, preds_skl_p, y_d_p, eta_i)
