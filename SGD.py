@@ -106,16 +106,17 @@ class SGD:
 	return tra_loss_temp/len(self.load.category_train), te_loss_temp/len(self.load.category_val)
         
     def learn(self, instances='all', to=-1):
-	train_losses = []
-	test_losses = []
+        train_losses = []
+        test_losses = []
         if instances=='all':
             training_data = self.load.training_numbers
         else:
             training_data = self.load.category_train
         subset = training_data[:to]
         random.shuffle(subset)
+        print len(subset)
         for i_img_nr, img_nr in enumerate(subset):
-	    start = time.time()
+            start = time.time()
             img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
             if img_nr in self.functions:
                 img_functions = self.functions[img_nr]
