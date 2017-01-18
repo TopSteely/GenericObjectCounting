@@ -19,7 +19,7 @@ def main():
 
     batch_size = 5
 
-    for tree_level_size in range(3,5):
+    for tree_level_size in range(2,3):
         #initialize
         print 'initializing', tree_level_size
         #sgd = SGD.SGD('max', category, tree_level_size, batch_size, math.pow(10,-4), 0.003, math.pow(10,-5))
@@ -67,6 +67,7 @@ def main():
                         print tr_l, te_l
                         training_loss.append(tr_l)
                         validation_loss.append(te_l)
+                        print training_loss
                         #print training_loss, validation_loss
                         #t1,_,_ = sgd_dennis.evaluate('train', 20)
                         #t2,_,_ = sgd_dennis.evaluate('val', 20)
