@@ -81,11 +81,11 @@ class SGD:
             #print 'preds: ',img_data.img_nr, self.predict(img_data), ' y: ', img_data.y, ' sklearn: ', self.sgd.predict(img_data.X[img_data.levels[0][0]].reshape(1, -1))
             squared_error += img_loss
             error += abs(self.predict(img_data) - img_data.y)
-            skl_error += (self.sgd.predict(img_data.X[img_data.levels[0][0]].reshape(1, -1)) - img_data.y)**2
             if img_data.y > 0:
                 non_zero_error += img_loss
                 n_non_zero += 1
             if debug:
+                skl_error += (self.sgd.predict(img_data.X[img_data.levels[0][0]].reshape(1, -1)) - img_data.y)**2
                 preds_d.append(self.predict(img_data))
                 y_d.append(img_data.y)
                 preds_skl.append(self.sgd.predict(img_data.X[img_data.levels[0][0]].reshape(1, -1)))
