@@ -50,10 +50,10 @@ def main():
             
         # learn SGD
         print 'learning'
-        for eta_i in [math.pow(10,-4),math.pow(10,-5)]:
-	    training_loss = []
-	    validation_loss = []
-	    print eta_i
+        for eta_i in [math.pow(10,-4)]:
+    	    training_loss = []
+    	    validation_loss = []
+    	    print eta_i
             for al_i in [math.pow(10,-1)]:#,math.pow(10,0),math.pow(10,-1),math.pow(10,-2)
                 for gamma_i in [math.pow(10,-5)]:#,math.pow(10,-4),math.pow(10,-3),math.pow(10,-2)
                     #sgd_pascal = SGD.SGD('pascal', 'max', category, tree_level_size, batch_size, eta_i, gamma_i, al_i)
@@ -62,30 +62,31 @@ def main():
                     sgd_dennis.set_scaler(scaler_dennis)
                     print al_i, eta_i, gamma_i
                     for epoch in range(5):
-			print epoch
+                        print epoch
                         tr_l, te_l = sgd_dennis.learn('categories', 20)
-			training_loss.append(tr_l)
-			validation_loss.append(te_l)
-			#print training_loss, validation_loss
-			#t1,_,_ = sgd_dennis.evaluate('train', 20)
-			#t2,_,_ = sgd_dennis.evaluate('val', 20)
-			#training_loss.append(t1)
-			#validation_loss.append(t2)
-            #preds_d_p, preds_skl_p, y_d_p = sgd_pascal.evaluate('train',2, True)
-            #preds_d_d, preds_skl_d, y_d_d = sgd_dennis.evaluate('train',50, True)
-            #output_pascal.plot_preds(preds_d_p, preds_skl_p, y_d_p, al_i)
-            #output_dennis.plot_preds(preds_d_d, preds_skl_d, y_d_d, al_i)
-            output_dennis.plot_train_val_loss(training_loss, validation_loss, eta_i)
+                        print tr_l, te_l
+                        training_loss.append(tr_l)
+                        validation_loss.append(te_l)
+                        #print training_loss, validation_loss
+                        #t1,_,_ = sgd_dennis.evaluate('train', 20)
+                        #t2,_,_ = sgd_dennis.evaluate('val', 20)
+                        #training_loss.append(t1)
+                        #validation_loss.append(t2)
+                        #preds_d_p, preds_skl_p, y_d_p = sgd_pascal.evaluate('train',2, True)
+                        #preds_d_d, preds_skl_d, y_d_d = sgd_dennis.evaluate('train',50, True)
+                        #output_pascal.plot_preds(preds_d_p, preds_skl_p, y_d_p, al_i)
+                        #output_dennis.plot_preds(preds_d_d, preds_skl_d, y_d_d, al_i)
+                    output_dennis.plot_train_val_loss(training_loss, validation_loss, eta_i)
             
 	    # evaluate
 	    print 'evaluating'
 	    mse,ae, mse_non_zero = sgd_dennis.evaluate('val')
 	    print mse,ae, mse_non_zero
         
-            # plot/save
-            print 'saving'
-        
-            output_dennis.save(mse, ae, mse_non_zero, sgd_dennis, eta_i)
+        # plot/save
+        print 'saving'
+
+        output_dennis.save(mse, ae, mse_non_zero, sgd_dennis, eta_i)
     
     
 if __name__ == "__main__":
