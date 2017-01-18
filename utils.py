@@ -23,7 +23,6 @@ def get_overlap_ratio(A, B):
         surface_A = (A[2]- A[0])*(A[3]-A[1]) + 0.0;
         return surface_intersection / surface_A
     
-
 def get_intersection(A, B):
     in_ = bool_rect_intersect(A, B)
     if not in_:
