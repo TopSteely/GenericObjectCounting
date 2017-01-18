@@ -17,7 +17,7 @@ def main():
 #        exit()
     category = sys.argv[1]
 
-    batch_size = 1
+    batch_size = 5
 
     for tree_level_size in range(2,3):
         #initialize
