@@ -63,7 +63,7 @@ def main():
                     print al_i, eta_i, gamma_i
                     for epoch in range(5):
                         print epoch
-                        tr_l, te_l = sgd_dennis.learn('categories')
+                        tr_l, te_l = sgd_dennis.learn('categories', 20)
                         print tr_l, te_l
                         training_loss.append(tr_l)
                         validation_loss.append(te_l)
