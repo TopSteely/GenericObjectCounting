@@ -19,7 +19,7 @@ def main():
 
     batch_size = 1
 
-    for tree_level_size in range(1,4):
+    for tree_level_size in range(2,3):
         #initialize
         print 'initializing', tree_level_size
         #sgd = SGD.SGD('max', category, tree_level_size, batch_size, math.pow(10,-4), 0.003, math.pow(10,-5))
@@ -66,32 +66,15 @@ def main():
                         tr_l, te_l = sgd_dennis.learn('categories', 20)
 			training_loss.append(tr_l)
 			validation_loss.append(te_l)
-			print training_loss, validation_loss
+			#print training_loss, validation_loss
 			#t1,_,_ = sgd_dennis.evaluate('train', 20)
 			#t2,_,_ = sgd_dennis.evaluate('val', 20)
 			#training_loss.append(t1)
 			#validation_loss.append(t2)
-                    #preds_d_p, preds_skl_p, y_d_p = sgd_pascal.evaluate('train',2, True)
-                    #preds_d_d, preds_skl_d, y_d_d = sgd_dennis.evaluate('train',50, True)
-                    #output_pascal.plot_preds(preds_d_p, preds_skl_p, y_d_p, al_i)
-                    #output_dennis.plot_preds(preds_d_d, preds_skl_d, y_d_d, al_i)
-#                    sgd_fut = SGDRegressor(eta0=eta_i, learning_rate='invscaling', shuffle=True, average=True, alpha=al_i, n_iter=15)
-#                    sgd_fut_data = []
-#                    sgd_fut_y = []
-#                    for i_img_nr, img_nr in enumerate(training_data[0:7]):
-#                        img_data = Data.Data(load_pascal, img_nr, tree_level_size, scaler_pascal)
-#                        sgd_fut_data.append(img_data.X[img_data.levels[0][0]])
-#                        sgd_fut_y.append(img_data.y)
-#                    sgd_fut.fit(sgd_fut_data, sgd_fut_y)
-#                    sgd_fat_data = []
-#                    sgd_fat_y = []
-#                    for i_img_nr, img_nr in enumerate(test_numbers_d[0:7]):
-#                        img_data = Data.Data(load_pascal, img_nr, tree_level_size, scaler_pascal)
-#                        sgd_fat_data.append(img_data.X[img_data.levels[0][0]])
-#                        sgd_fat_y.append(img_data.y)
-#                    sgd_a_error = ((sgd_fut.predict(sgd_fat_data) - np.array(sgd_fat_y))**2)#.sum()
-#                    print 'scikit GD error: ', sgd_fut.predict(sgd_fat_data), sgd_a_error, np.array(sgd_fat_y)
-                    
+            #preds_d_p, preds_skl_p, y_d_p = sgd_pascal.evaluate('train',2, True)
+            #preds_d_d, preds_skl_d, y_d_d = sgd_dennis.evaluate('train',50, True)
+            #output_pascal.plot_preds(preds_d_p, preds_skl_p, y_d_p, al_i)
+            #output_dennis.plot_preds(preds_d_d, preds_skl_d, y_d_d, al_i)
             output_dennis.plot_train_val_loss(training_loss, validation_loss, eta_i)
             
 	    # evaluate
