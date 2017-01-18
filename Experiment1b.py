@@ -54,7 +54,7 @@ def main():
     	    training_loss = []
     	    validation_loss = []
     	    print eta_i
-            for al_i in [math.pow(10,0),math.pow(10,-1),math.pow(10,-2),math.pow(10,-3),math.pow(10,-4)]:#,math.pow(10,-2)
+            for al_i in [math.pow(10,0),math.pow(10,-2),math.pow(10,-4)]:#,math.pow(10,-2)
                 for gamma_i in [math.pow(10,-5)]:#,math.pow(10,-4),math.pow(10,-3),math.pow(10,-2)
                     #sgd_pascal = SGD.SGD('pascal', 'max', category, tree_level_size, batch_size, eta_i, gamma_i, al_i)
                     sgd_dennis = SGD.SGD('dennis', 'max', category, tree_level_size, batch_size, eta_i, gamma_i, al_i, 4096)
