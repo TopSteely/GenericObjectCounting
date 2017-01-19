@@ -134,14 +134,14 @@ class SGD:
             if (i_img_nr + 1)%self.batch_size == 0:
                 self.update()
                 if debug:
-            		tr_loss, te_loss = self.loss_all(to)
-            		train_losses.append(tr_loss)
+                    tr_loss, te_loss = self.loss_all(to)
+                    train_losses.append(tr_loss)
                     test_losses.append(te_loss)
         if (i_img_nr + 1)%self.batch_size != 0:
             self.update()
             if debug:
                 tr_loss, te_loss = self.loss_all()
-        	    train_losses.append(tr_loss)
+                train_losses.append(tr_loss)
                 test_losses.append(te_loss)
     if debug:
 	   return train_losses, test_losses
