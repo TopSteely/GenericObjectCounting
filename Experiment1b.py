@@ -51,11 +51,11 @@ def main():
         # learn SGD
         print 'learning'
         for eta_i in [math.pow(10,-5)]:
-    	    training_loss = []
-    	    validation_loss = []
     	    print eta_i
             for al_i in [math.pow(10,0),math.pow(10,-2),math.pow(10,-4)]:#,math.pow(10,-2)
                 for gamma_i in [math.pow(10,-5)]:#,math.pow(10,-4),math.pow(10,-3),math.pow(10,-2)
+                    training_loss = []
+                    validation_loss = []
                     #sgd_pascal = SGD.SGD('pascal', 'max', category, tree_level_size, batch_size, eta_i, gamma_i, al_i)
                     sgd_dennis = SGD.SGD('dennis', 'max', category, tree_level_size, batch_size, eta_i, gamma_i, al_i, 4096)
                     #sgd_pascal.set_scaler(scaler_pascal)
@@ -63,10 +63,13 @@ def main():
                     print al_i, eta_i, gamma_i
                     for epoch in range(5):
                         #print epoch
-                        tr_l, te_l = sgd_dennis.learn('categories')
+                        #tr_l, te_l = sgd_dennis.learn('categories')
+                        sgd_dennis.learn('categories')
                         #print tr_l, te_l
-                        training_loss.extend(tr_l)
-                        validation_loss.extend(te_l)
+                        
+                        #training_loss.extend(tr_l)
+                        #validation_loss.extend(te_l)
+                        
                         #print training_loss
                         #print training_loss, validation_loss
                         #t1,_,_ = sgd_dennis.evaluate('train', 20)
@@ -77,7 +80,7 @@ def main():
                         #preds_d_d, preds_skl_d, y_d_d = sgd_dennis.evaluate('train',50, True)
                         #output_pascal.plot_preds(preds_d_p, preds_skl_p, y_d_p, al_i)
                         #output_dennis.plot_preds(preds_d_d, preds_skl_d, y_d_d, al_i)
-                    output_dennis.plot_train_val_loss(training_loss, validation_loss, eta_i, al_i)
+                    #output_dennis.plot_train_val_loss(training_loss, validation_loss, eta_i, al_i)
                 mse,ae, mse_non_zero = sgd_dennis.evaluate('val')
                 print "Eval loss: ", al_i, mse
                 # plot/save
