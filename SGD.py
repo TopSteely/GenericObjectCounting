@@ -143,8 +143,8 @@ class SGD:
                 tr_loss, te_loss = self.loss_all()
                 train_losses.append(tr_loss)
                 test_losses.append(te_loss)
-    if debug:
-	   return train_losses, test_losses
+        if debug:
+    	   return train_losses, test_losses
         
         
     def update(self):
