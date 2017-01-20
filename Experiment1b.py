@@ -17,9 +17,11 @@ def main():
 #        exit()
     category = sys.argv[1]
 
+    learn_mode = 'all'
+
     batch_size = 5
 
-    for tree_level_size in range(1,7):
+    for tree_level_size in range(3,7):
         #initialize
         print 'initializing', tree_level_size
         #sgd = SGD.SGD('max', category, tree_level_size, batch_size, math.pow(10,-4), 0.003, math.pow(10,-5))
@@ -32,25 +34,42 @@ def main():
         
         #learn scaler
         #scaler_pascal = StandardScaler()
-        training_data = load_dennis.category_train
-        test_numbers_d = load_dennis.test_numbers
-	scaler_dennis = load_dennis.get_scaler_category()
-	if scaler_dennis==[]:
-		print "learning scaler"
-		data_to_scale = []
-		scaler_category = StandardScaler()
-		print len(training_data)
-		random.shuffle(training_data)
-		for img_nr in training_data[0:100]:
-		     img_data = Data.Data(load_dennis, img_nr, 10, None)
-		     data_to_scale.extend(img_data.X)
-		scaler_category.fit(data_to_scale)
-		output_dennis.dump_scaler_category(scaler_category)
-		scaler_dennis = scaler_category
+        if learn_mode == 'all':
+            training_data = load_dennis.training_numbers
+            test_numbers_d = load_dennis.test_numbers
+            scaler_dennis = load_dennis.get_scaler()
+            if scaler_dennis==[]:
+                print "learning scaler"
+                data_to_scale = []
+                scaler = StandardScaler()
+                print len(training_data)
+                random.shuffle(training_data)
+                for img_nr in training_data[0:400]:
+                     img_data = Data.Data(load_dennis, img_nr, 10, None)
+                     data_to_scale.extend(img_data.X)
+                scaler.fit(data_to_scale)
+                output_dennis.dump_scaler(scaler)
+                scaler_dennis = scaler
+        else:
+            training_data = load_dennis.category_train
+            test_numbers_d = load_dennis.test_numbers
+            scaler_dennis = load_dennis.get_scaler_category()
+            if scaler_dennis==[]:
+            	print "learning scaler"
+            	data_to_scale = []
+            	scaler_category = StandardScaler()
+            	print len(training_data)
+            	random.shuffle(training_data)
+            	for img_nr in training_data[0:100]:
+            	     img_data = Data.Data(load_dennis, img_nr, 10, None)
+            	     data_to_scale.extend(img_data.X)
+            	scaler_category.fit(data_to_scale)
+            	output_dennis.dump_scaler_category(scaler_category)
+            	scaler_dennis = scaler_category
             
         # learn SGD
         print 'learning'
-        for eta_i in [math.pow(10,-5)]:
+        for eta_i in [math.pow(10,-6)]:
     	    print eta_i
             for al_i in [math.pow(10,0),math.pow(10,-2),math.pow(10,-4)]:#,math.pow(10,-2)
                 for gamma_i in [math.pow(10,-5)]:#,math.pow(10,-4),math.pow(10,-3),math.pow(10,-2)
@@ -61,10 +80,10 @@ def main():
                     #sgd_pascal.set_scaler(scaler_pascal)
                     sgd_dennis.set_scaler(scaler_dennis)
                     print al_i, eta_i, gamma_i
-                    for epoch in range(5):
+                    for epoch in range(10):
                         #print epoch
                         #tr_l, te_l = sgd_dennis.learn('categories')
-                        sgd_dennis.learn('categories')
+                        sgd_dennis.learn(learn_mode)
                         #print tr_l, te_l
                         
                         #training_loss.extend(tr_l)

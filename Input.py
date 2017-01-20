@@ -65,16 +65,19 @@ class Input:
 		return []
     
     def get_scaler(self):
-         with open(self.scaler_path, 'rb') as handle:
-            scaler = pickle.load(handle)
-         return scaler
+        if os.path.isfile(self.scaler_path):
+            with open(self.scaler_path, 'rb') as handle:
+                scaler = pickle.load(handle)
+                return scaler
+        else:
+            return []
          
     def get_scaler_category(self):
-	if os.path.isfile(self.scaler_category_path):
-		with open(self.scaler_category_path, 'rb') as handle:
-		    scaler = pickle.load(handle)
-	else:
-		scaler = []
+    	if os.path.isfile(self.scaler_category_path):
+    		with open(self.scaler_category_path, 'rb') as handle:
+    		    scaler = pickle.load(handle)
+    	else:
+    		scaler = []
         return scaler
          
     def get_classifier(self):
