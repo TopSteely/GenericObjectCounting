@@ -14,11 +14,11 @@ class Output:
         self.prune_tree_levels = prune_tree_levels
         self.mode = mode
         self.experiment = experiment
-        self.mse_path = "/home/tstahl/plot/%s_%s_mse_%s_%s_%s_%s.p"
-        self.ae_path = "/home/tstahl/plot/%s_%s_ae_%s_%s_%s_%s.p"
-        self.nn_path = "/home/tstahl/plot/%s_%s_nn_%s_%s_%s_%s.p"
+        self.mse_path = "/home/tstahl/plot/%s_%s_mse_%s_%s_%s_%s_%s.p"
+        self.ae_path = "/home/tstahl/plot/%s_%s_ae_%s_%s_%s_%s_%s.p"
+        self.nn_path = "/home/tstahl/plot/%s_%s_nn_%s_%s_%s_%s_%s.p"
         self.npe_path = "/home/tstahl/plot/%s_%s_npe_%s_%s.p"
-        self.model_path = "/var/node436/local/tstahl/models/%s_%s_%s_%s_%s_%s.p"
+        self.model_path = "/var/node436/local/tstahl/models/%s_%s_%s_%s_%s_%s_%s.p"
         self.plot_path = "/var/node436/local/tstahl/plos/%s_%s.png"
         self.image_path = "/var/node436/local/tstahl/Images/%s.jpg"
         self.scaler_path = '/var/node436/local/tstahl/models/scaler_dennis.p'
@@ -41,11 +41,11 @@ class Output:
         pickle.dump(classifier, open(self.classifier_path, "wb"))
         
         
-    def save(self, mse_level, ae_level, nn, sgd, eta0, alpha):
-        pickle.dump(mse_level, open( self.mse_path%(self.experiment, self.mode, self.category, self.prune_tree_levels, eta0, alpha), "wb" ))
-        pickle.dump(ae_level, open( self.ae_path%(self.experiment, self.mode, self.category, self.prune_tree_levels, eta0, alpha), "wb" ))
-        pickle.dump(nn, open( self.nn_path%(self.experiment, self.mode, self.category, self.prune_tree_levels, eta0, alpha), "wb" ))
-        pickle.dump(sgd.w, open( self.model_path%(self.experiment, self.mode, self.category, self.prune_tree_levels, eta0, alpha), "wb" ))
+    def save(self, mse_level, ae_level, nn, sgd, eta0, alpha, learn_mode):
+        pickle.dump(mse_level, open( self.mse_path%(self.experiment, self.mode, self.category, self.prune_tree_levels, eta0, alpha, learn_mode), "wb" ))
+        pickle.dump(ae_level, open( self.ae_path%(self.experiment, self.mode, self.category, self.prune_tree_levels, eta0, alpha, learn_mode), "wb" ))
+        pickle.dump(nn, open( self.nn_path%(self.experiment, self.mode, self.category, self.prune_tree_levels, eta0, alpha, learn_mode), "wb" ))
+        pickle.dump(sgd.w, open( self.model_path%(self.experiment, self.mode, self.category, self.prune_tree_levels, eta0, alpha, learn_mode), "wb" ))
         #pickle.dump(num_per_image, open( self.npe_path%(self.experiment, self.mode, self.category, self.prune_tree_levels), "wb" ))
         
     def plot_preds(self, preds, preds_skl, y, alpha):

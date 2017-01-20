@@ -105,7 +105,7 @@ def main():
                 # plot/save
                 print 'saving'
 
-                output_dennis.save(mse, ae, mse_non_zero, sgd_dennis, eta_i, al_i)
+                output_dennis.save(mse, ae, mse_non_zero, sgd_dennis, eta_i, al_i, learn_mode)
     
     
 if __name__ == "__main__":
