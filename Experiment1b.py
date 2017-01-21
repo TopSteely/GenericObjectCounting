@@ -100,7 +100,7 @@ def main():
                         #output_pascal.plot_preds(preds_d_p, preds_skl_p, y_d_p, al_i)
                         #output_dennis.plot_preds(preds_d_d, preds_skl_d, y_d_d, al_i)
                     #output_dennis.plot_train_val_loss(training_loss, validation_loss, eta_i, al_i)
-                mse,ae, mse_non_zero = sgd_dennis.evaluate('val')
+                mse,ae, mse_non_zero = sgd_dennis.evaluate('test')
                 print "Eval loss: ", al_i, mse
                 # plot/save
                 print 'saving'
