@@ -69,9 +69,9 @@ def main():
             
         # learn SGD
         print 'learning'
-        for eta_i in [math.pow(10,-5)]:
+        for eta_i in [math.pow(10,-4), math.pow(10,-5)]:
     	    print eta_i
-            for al_i in [math.pow(10,-4)]:#,math.pow(10,-2)
+            for al_i in [0]:#[math.pow(10,-4)]:#,math.pow(10,-2)
                 for gamma_i in [math.pow(10,-5)]:#,math.pow(10,-4),math.pow(10,-3),math.pow(10,-2)
                     training_loss = []
                     validation_loss = []
@@ -80,7 +80,7 @@ def main():
                     #sgd_pascal.set_scaler(scaler_pascal)
                     sgd_dennis.set_scaler(scaler_dennis)
                     print al_i, eta_i, gamma_i
-                    for epoch in range(3):
+                    for epoch in range(6):
                         #print epoch
                         #tr_l, te_l = sgd_dennis.learn('categories')
                         sgd_dennis.learn(learn_mode)
@@ -104,7 +104,7 @@ def main():
                     mse,ae, mse_non_zero = sgd_dennis.evaluate('test')
                 elif learn_mode == 'category':
                     mse,ae, mse_non_zero = sgd_dennis.evaluate('val')
-                print "Eval loss: ", al_i, mse
+                print "Eval loss: ", eta_i, al_i, mse
                 # plot/save
                 print 'saving'
 

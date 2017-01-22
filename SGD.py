@@ -36,6 +36,10 @@ class SGD:
             self.method = self.learn_mean
             self.loss = self.loss_mean
             self.predict = self.predict_mean
+        elif mode == 'meanmax':
+            self.method = self.learn_mean
+            self.loss = self.loss_mean
+            self.predict = self.predict_max
             
     def set_scaler(self, scaler):
         self.scaler = scaler
