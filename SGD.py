@@ -53,7 +53,7 @@ class SGD:
         return np.mean(level_preds)
         
     def predict_max(self, img_data):
-        level_preds, _ = self.predictor.get_iep_levels(img_data, {})
+        level_preds, _ = self.predictor.get_iep_levels(img_data, [])
         return np.max(level_preds)
         
         
@@ -72,7 +72,7 @@ class SGD:
         elif mode == 'test':
             numbers = self.load.test_numbers[:to]
         elif mode == 'val':
-                numbers = self.load.category_val[:to]
+            numbers = self.load.category_val[:to]
 
         for img_nr in numbers:
             img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
@@ -126,7 +126,7 @@ class SGD:
                 temp = {}
                 upd, fct = self.method(img_data, temp)
                 self.w_update += upd
-                self.functions[img_nr] = fct
+                #self.functions[img_nr] = fct
             self.samples_seen += 1
             if self.prune_tree_levels == 1:
                 to_fit = img_data.X[img_data.levels[0][0]].reshape(1, -1)
