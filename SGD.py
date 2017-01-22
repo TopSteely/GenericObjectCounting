@@ -164,7 +164,7 @@ class SGD:
         
     def learn_mean(self, img_data, functions):
         iep_levels, functions = self.learner.get_iep_levels(img_data, functions)
-        temp1 = 2 * (self.predict(img_data) - img_data.y) * (np.array(iep_levels).sum() / len(iep_levels))
+        temp1 = 2 * (self.predict(img_data) - img_data.y) * (np.sum(iep_levels,axis=1) / len(iep_levels))
         temp2 = 2 * self.alpha * self.w
         print len(temp1), len(temp2)
-        return 2 * (self.predict(img_data) - img_data.y) * (np.array(iep_levels).sum() / len(iep_levels)) + 2 * self.alpha * self.w, functions
+        return 2 * (self.predict(img_data) - img_data.y) * (np.sum(iep_levels,axis=1) / len(iep_levels)) + 2 * self.alpha * self.w, functions
