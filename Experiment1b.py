@@ -28,7 +28,7 @@ def main():
         #load_pascal = Input.Input('pascal',category)
         load_dennis = Input.Input('dennis',category)
         #output_pascal = Output.Output('pascal_max', category, tree_level_size, '1b')
-        output_dennis = Output.Output('dennis_mean', category, tree_level_size, '1b')
+        output_dennis = Output.Output('dennis_mean_max', category, tree_level_size, '1b')
         
         print 'debugging, plot loss, compare it to scikit, !'
         
@@ -76,7 +76,7 @@ def main():
                     training_loss = []
                     validation_loss = []
                     #sgd_pascal = SGD.SGD('pascal', 'max', category, tree_level_size, batch_size, eta_i, gamma_i, al_i)
-                    sgd_dennis = SGD.SGD('dennis', 'mean', category, tree_level_size, batch_size, eta_i, gamma_i, al_i, 4096)
+                    sgd_dennis = SGD.SGD('dennis', 'meanmax', category, tree_level_size, batch_size, eta_i, gamma_i, al_i, 4096)
                     #sgd_pascal.set_scaler(scaler_pascal)
                     sgd_dennis.set_scaler(scaler_dennis)
                     print al_i, eta_i, gamma_i
