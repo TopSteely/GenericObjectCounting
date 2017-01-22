@@ -71,7 +71,7 @@ def main():
         print 'learning'
         for eta_i in [math.pow(10,-5),math.pow(10,-6)]:
     	    print eta_i
-            for al_i in [math.pow(10,-6)]:#[math.pow(10,-4)]:#,math.pow(10,-2)
+            for al_i in [math.pow(10,-1),math.pow(10,-2)]:#[math.pow(10,-4)]:#,math.pow(10,-2)
                 for gamma_i in [math.pow(10,-5)]:#,math.pow(10,-4),math.pow(10,-3),math.pow(10,-2)
                     training_loss = []
                     validation_loss = []
