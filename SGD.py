@@ -114,7 +114,6 @@ class SGD:
             training_data = self.load.category_train
         subset = training_data[:to]
         random.shuffle(subset)
-        print len(subset)
         for i_img_nr, img_nr in enumerate(subset):
             start = time.time()
             img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
@@ -165,4 +164,7 @@ class SGD:
         
     def learn_mean(self, img_data, functions):
         iep_levels, functions = self.learner.get_iep_levels(img_data, functions)
+        temp1 = 2 * (self.predict(img_data) - img_data.y) * (np.array(iep_levels).sum() / len(iep_levels))
+        temp2 = 2 * self.alpha * self.w
+        print len(temp1), len(temp2)
         return 2 * (self.predict(img_data) - img_data.y) * (np.array(iep_levels).sum() / len(iep_levels)) + 2 * self.alpha * self.w, functions
