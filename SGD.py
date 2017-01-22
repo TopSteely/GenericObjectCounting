@@ -32,7 +32,7 @@ class SGD:
             self.method = self.learn_max
             self.loss = self.loss_max
             self.predict = self.predict_max
-        elif mode == 'avg':
+        elif mode == 'mean':
             self.method = self.learn_mean
             self.loss = self.loss_mean
             self.predict = self.predict_mean
