@@ -33,3 +33,7 @@ class DummyData():
 		#prune tree as well, for patches training
 		for trash_level in levels_gone.values():
 			self.G.remove_nodes_from(trash_level)
+
+		#appending intersections:
+		self.boxes.append([35, 0, 50, 100])
+		self.X.append([1, 1, 1, 1, 1])
