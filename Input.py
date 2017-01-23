@@ -37,9 +37,9 @@ class Input:
                 self.scaler_category_path = '/var/node436/local/tstahl/models/scaler_%s_dennis.p'%(category)
                 self.classifier_path = '/var/node436/local/tstahl/models/classifier_%s.p'%(category)
         training_numbers_tmp, self.test_numbers = self.get_training_numbers()
-        print len(training_numbers_tmp)
-        self.training_numbers, self.val_numbers = self.get_val_numbers(training_numbers_tmp)
-        print len(self.training_numbers), len(self.val_numbers)
+        print training_numbers_tmp[0:12]
+        self.training_numbers, self.val_numbers = self.get_val_numbers(training_numbers_tmp[0:12])
+        print self.training_numbers, self.val_numbers
         self.category_train, self.category_val = self.get_category_imgs()
         
 	#old
@@ -126,7 +126,6 @@ class Input:
                     train_imgs.append(i)
             return test_imgs, train_imgs
         
-        
     def get_val_numbers(self, train_imgs):
         if self.mode == 'pascal' or self.mode == 'dennis':
             file = open('/var/scratch/tstahl/IO/val.txt', 'r')
@@ -134,6 +133,8 @@ class Input:
             for line in file:
                 im_nr = int(line)
                 eval_images.append(im_nr)
+            print eval_images
+            print [x for x in train_imgs if x not in eval_images]
             return [x for x in train_imgs if x not in eval_images], eval_images
     
     def get_coords(self, img_nr):
