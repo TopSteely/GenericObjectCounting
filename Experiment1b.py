@@ -32,8 +32,6 @@ def main():
         #output_pascal = Output.Output('pascal_max', category, tree_level_size, '1b')
         output_dennis = Output.Output('dennis_%s'%(pred_mode), category, tree_level_size, '1b')
         
-        print 'debugging, plot loss, compare it to scikit, !'
-        
         #learn scaler
         #scaler_pascal = StandardScaler()
         if learn_mode == 'all':
@@ -70,10 +68,9 @@ def main():
             	scaler_dennis = scaler_category
             
         # learn SGD
-        print 'learning'
         for eta_i in [math.pow(10,-5)]:
     	    print eta_i
-            for al_i in [math.pow(10,-2)]:#[math.pow(10,-4)]:#,math.pow(10,-2)
+            for al_i in [0]:#[math.pow(10,-4)]:#,math.pow(10,-2)
                 for gamma_i in [math.pow(10,-5)]:#,math.pow(10,-4),math.pow(10,-3),math.pow(10,-2)
                     training_loss = []
                     validation_loss = []
@@ -82,7 +79,8 @@ def main():
                     #sgd_pascal.set_scaler(scaler_pascal)
                     sgd_dennis.set_scaler(scaler_dennis)
                     print al_i, eta_i, gamma_i
-                    for epoch in range(2):
+                    for epoch in range(4):
+                        print epoch
                         #print epoch
                         #tr_l, te_l = sgd_dennis.learn('categories')
                         sgd_dennis.learn(learn_mode)
@@ -107,9 +105,6 @@ def main():
                 elif learn_mode == 'category':
                     mse,ae, mse_non_zero = sgd_dennis.evaluate('val')
                 print "Eval loss: ", eta_i, al_i, mse
-                # plot/save
-                print 'saving'
-
                 output_dennis.save(mse, ae, mse_non_zero, sgd_dennis, eta_i, al_i, learn_mode)
     
     
