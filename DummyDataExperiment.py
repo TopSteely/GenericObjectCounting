@@ -14,3 +14,7 @@ import random
 def main():
 	print 'main'
 	img_data = DummyData.DummyData()
+
+
+if __name__ == "__main__":
+    main()
