@@ -185,7 +185,7 @@ class SGD:
 
 
     def learn_old(self, img_data, functions):
-        for level in Data.levels:
+        for level in img_data.levels:
             preds_level = self.predict_old(img_data, level)
             iep_level, _ = self.learner.iep(img_data, functions, level)
             self.w -= (self.eta * (2*(preds_level - img_data.y)*iep_level))
