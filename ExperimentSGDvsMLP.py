@@ -88,7 +88,8 @@ def main():
             sgd_sklearn= SGDRegressor(eta0=math.pow(10,-4), learning_rate='invscaling', n_iter = 4)
         
         
-            mlp.fit(mlp_data,mlp_y)
+            mlp1.fit(mlp_data,mlp_y)
+            mlp2.fit(mlp_data,mlp_y)
             sgd_sklearn.fit(scaler_dennis.transform(mlp_data),mlp_y)
 
         
