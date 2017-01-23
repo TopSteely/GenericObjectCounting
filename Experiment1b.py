@@ -36,7 +36,6 @@ def main():
         #scaler_pascal = StandardScaler()
         if learn_mode == 'all':
             training_data = load_dennis.training_numbers
-            test_numbers_d = load_dennis.test_numbers
             scaler_dennis = load_dennis.get_scaler()
             if scaler_dennis==[]:
                 print "learning scaler"
@@ -52,7 +51,6 @@ def main():
                 scaler_dennis = scaler
         else:
             training_data = load_dennis.category_train
-            test_numbers_d = load_dennis.test_numbers
             scaler_dennis = load_dennis.get_scaler_category()
             if scaler_dennis==[]:
             	print "learning scaler"
@@ -70,7 +68,7 @@ def main():
         # learn SGD
         for eta_i in [math.pow(10,-5)]:
     	    print eta_i
-            for al_i in [math.pow(10,-1)]:#[math.pow(10,-4)]:#,math.pow(10,-2)
+            for al_i in [math.pow(10,-5)]:#[math.pow(10,-4)]:#,math.pow(10,-2)
                 for gamma_i in [math.pow(10,-5)]:#,math.pow(10,-4),math.pow(10,-3),math.pow(10,-2)
                     training_loss = []
                     validation_loss = []
@@ -101,9 +99,9 @@ def main():
                         #output_dennis.plot_preds(preds_d_d, preds_skl_d, y_d_d, al_i)
                     #output_dennis.plot_train_val_loss(training_loss, validation_loss, eta_i, al_i)
                 if learn_mode == 'all':
-                    mse,ae, mse_non_zero = sgd_dennis.evaluate('test')
+                    mse,ae, mse_non_zero = sgd_dennis.evaluate('val_all')
                 elif learn_mode == 'category':
-                    mse,ae, mse_non_zero = sgd_dennis.evaluate('val')
+                    mse,ae, mse_non_zero = sgd_dennis.evaluate('val_cat')
                 print "Eval loss: ", eta_i, al_i, mse
                 output_dennis.save(mse, ae, mse_non_zero, sgd_dennis, eta_i, al_i, learn_mode)
     

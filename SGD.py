@@ -75,8 +75,10 @@ class SGD:
             numbers = self.load.category_train[:to]
         elif mode == 'test':
             numbers = self.load.test_numbers[:to]
-        elif mode == 'val':
+        elif mode == 'val_cat':
             numbers = self.load.category_val[:to]
+        elif mode == 'val_all':
+            numbers = self.load.val_numbers[:to]
 
         for img_nr in numbers:
             img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
