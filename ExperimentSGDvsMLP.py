@@ -81,11 +81,11 @@ def main():
                     #sgd_pascal.set_scaler(scaler_pascal)
                     sgd_dennis.set_scaler(scaler_dennis)
                     print al_i, eta_i, gamma_i
-                    for epoch in range(4):
-                        print epoch
+                    #for epoch in range(4):
+                    #    print epoch
                         #print epoch
                         #tr_l, te_l = sgd_dennis.learn('categories')
-                        sgd_dennis.learn(learn_mode)
+                    #    sgd_dennis.learn(learn_mode)
                         #print tr_l, te_l
                         
                         #training_loss.extend(tr_l)
