@@ -32,12 +32,12 @@ for class_ in classes:
 								mse_tmp = pickle.load(handle)
 							print 'test'
 							print mse_tmp, previous
-							if mse_tmp < previsous:
+							if mse_tmp < previous:
 								if tree_level_size == 2:
 									descending2.append(temp_sting)
 								elif tree_level_size == 3:
 									descending3.append(temp_sting)
-							previsous = mse_tmp
+							previous = mse_tmp
 							print descending2, descending3
 							raw_input()
 				else:
