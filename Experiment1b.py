@@ -19,7 +19,7 @@ def main():
 
     learn_mode = 'category'
 
-    pred_mode = 'mean'
+    pred_mode = 'max'
 
     batch_size = 5
 
@@ -68,7 +68,7 @@ def main():
             	scaler_dennis = scaler_category
             
         # learn SGD
-        for eta_i in [math.pow(10,-4)]:
+        for eta_i in [math.pow(10,-5)]:
     	    print eta_i
             for al_i in [math.pow(10,-1)]:#[math.pow(10,-4)]:#,math.pow(10,-2)
                 for gamma_i in [math.pow(10,-5)]:#,math.pow(10,-4),math.pow(10,-3),math.pow(10,-2)
