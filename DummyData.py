@@ -13,10 +13,11 @@ class DummyData():
 		self.tree_boxes = sort_boxes(self.tree_boxes)
 		self.G, levels = create_tree(self.tree_boxes)
 		#prune tree to only have levels which fully cover the image, tested
-		print self.G
+		print self.G.nodes()
 		print levels
 		total_size = surface_area_old(self.tree_boxes, levels[0])
 		for level in levels:
+			print level, levels[level]
 			sa = surface_area_old(self.tree_boxes, levels[level])
 			sa_co = sa/total_size
 			if sa_co != 1.0:
@@ -31,5 +32,5 @@ class DummyData():
 			#prune tree as well, for patches training
 			for trash_level in levels_gone.values():
 				self.G.remove_nodes_from(trash_level)
-		print self.G.nodes
+		print self.G.nodes()
 		print self.levels
