@@ -11,7 +11,8 @@ class DummyData():
 		self.num_features = 5
 		self.y = 4
 		self.tree_boxes, self.X = sort_boxes(self.tree_boxes, self.X)
-		self.boxes = seelf.tree_boxes
+		self.boxes = self.tree_boxes
+		assert(self.boxes==self.tree_boxes)
 		print self.tree_boxes, self.X
 		self.G, levels = create_tree(self.tree_boxes)
 		#prune tree to only have levels which fully cover the image, tested

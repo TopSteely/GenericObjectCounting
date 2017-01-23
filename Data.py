@@ -63,6 +63,7 @@ class Data:
                 self.X = np.append(self.X, intersection_features, axis=0)
             else:
                 self.boxes = np.array(self.boxes)
+            assert(self.boxes==self.tree_boxes)
         #print "else", (time.time() - start)
         
     def lookup_coords(self):
