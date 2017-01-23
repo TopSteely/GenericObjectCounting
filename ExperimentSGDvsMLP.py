@@ -76,8 +76,6 @@ def main():
                     validation_loss = []
                     mlp = MLPRegressor(verbose=False, hidden_layer_sizes=(250,250), learning_rate='invscaling', learning_rate_init=eta_i,  alpha=al_i, activation=act_i)
                     sgd_sklearn= SGDRegressor(eta0=eta_i, learning_rate='invscaling', n_iter = 4)
-                    #sgd_pascal.set_scaler(scaler_pascal)
-                    sgd_dennis.set_scaler(scaler_dennis)
                     print al_i, eta_i, gamma_i
                     mlp_data = []
                     mlp_y = []
