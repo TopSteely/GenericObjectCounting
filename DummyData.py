@@ -34,6 +34,7 @@ class DummyData():
 			self.G.remove_nodes_from(trash_level)
 
 		#appending intersections:
+		self.boxes = np.array(self.boxes)
 		print self.boxes.shape
 		print np.array([35, 0, 50, 100]).shape
 		self.boxes = np.append(self.boxes, [35, 0, 50, 100], axis=1)
