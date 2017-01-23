@@ -17,7 +17,7 @@ def main():
 #        exit()
     category = sys.argv[1]
 
-    learn_mode = 'category'
+    learn_mode = 'all'
 
     pred_mode = 'mean'
 
