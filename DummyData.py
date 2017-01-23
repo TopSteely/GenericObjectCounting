@@ -4,6 +4,7 @@ import time
 
 class DummyData():
 	def __init__(self):
+		prune_tree_levels = 5
 		self.boxes = [[0,0,100,100],[0,0,50,100],[40,0,100,100],[0,0,45,100],[35,0,100,100]]
 		self.tree_boxes = self.boxes
 		self.X = []
