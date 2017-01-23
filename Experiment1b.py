@@ -17,7 +17,9 @@ def main():
 #        exit()
     category = sys.argv[1]
 
-    learn_mode = 'category'
+    learn_mode = 'all'
+
+    pred_mode = 'mean'
 
     batch_size = 5
 
@@ -28,7 +30,7 @@ def main():
         #load_pascal = Input.Input('pascal',category)
         load_dennis = Input.Input('dennis',category)
         #output_pascal = Output.Output('pascal_max', category, tree_level_size, '1b')
-        output_dennis = Output.Output('dennis_mean', category, tree_level_size, '1b')
+        output_dennis = Output.Output('dennis_%s'%(pred_mode), category, tree_level_size, '1b')
         
         print 'debugging, plot loss, compare it to scikit, !'
         
@@ -71,16 +73,16 @@ def main():
         print 'learning'
         for eta_i in [math.pow(10,-5),math.pow(10,-6)]:
     	    print eta_i
-            for al_i in [math.pow(10,-1),math.pow(10,-2)]:#[math.pow(10,-4)]:#,math.pow(10,-2)
+            for al_i in [math.pow(10,-2),math.pow(10,-5)]:#[math.pow(10,-4)]:#,math.pow(10,-2)
                 for gamma_i in [math.pow(10,-5)]:#,math.pow(10,-4),math.pow(10,-3),math.pow(10,-2)
                     training_loss = []
                     validation_loss = []
                     #sgd_pascal = SGD.SGD('pascal', 'max', category, tree_level_size, batch_size, eta_i, gamma_i, al_i)
-                    sgd_dennis = SGD.SGD('dennis', 'mean', category, tree_level_size, batch_size, eta_i, gamma_i, al_i, 4096)
+                    sgd_dennis = SGD.SGD('dennis', pred_mode, category, tree_level_size, batch_size, eta_i, gamma_i, al_i, 4096)
                     #sgd_pascal.set_scaler(scaler_pascal)
                     sgd_dennis.set_scaler(scaler_dennis)
                     print al_i, eta_i, gamma_i
-                    for epoch in range(4):
+                    for epoch in range(1):
                         #print epoch
                         #tr_l, te_l = sgd_dennis.learn('categories')
                         sgd_dennis.learn(learn_mode)
