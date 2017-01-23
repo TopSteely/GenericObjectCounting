@@ -7,7 +7,7 @@ class DummyData():
 		prune_tree_levels = 5
 		self.boxes = [[0,0,100,100],[0,0,50,100],[40,0,100,100],[0,0,45,100],[35,0,100,100]]
 		self.tree_boxes = self.boxes
-		self.X = [[0,0,0,0,0],[1,1,1,1,1],[2,2,2,2,2],[3,3,3,3,3],[4,4,4,4,4]]
+		self.X = np.array([[0,0,0,0,0],[1,1,1,1,1],[2,2,2,2,2],[3,3,3,3,3],[4,4,4,4,4]])
 		self.num_features = 5
 		self.y = 4
 		self.tree_boxes, self.X = sort_boxes(self.tree_boxes, self.X)
