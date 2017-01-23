@@ -110,7 +110,7 @@ def main():
                         mlp_data.append(img_data.X[0])
                         mlp_y.append(img_data.y)
                     mlp.fit(mlp_data,mlp_y)
-                    sgd_sklearn.fit(mlp_data,mlp_y)
+                    sgd_sklearn.fit(scaler_dennis.transform(mlp_data),mlp_y)
 
                     mlp_data = []
                     mlp_y = []
@@ -120,7 +120,7 @@ def main():
                         mlp_y.append(img_data.y)
                         print im_nr, img_data.y
                     preds_mlp = mlp.predict(mlp_data)
-                    preds_sgd = sgd_sklearn.predict(mlp_data)
+                    preds_sgd = sgd_sklearn.predict(scaler_dennis.transform(mlp_data))
 
                     #print preds_mlp, preds_sgd, mlp_y
 
