@@ -21,14 +21,14 @@ for class_ in classes:
 	for eta in [math.pow(10,-5),math.pow(10,-6)]:
 		for alpha in [math.pow(10,0),math.pow(10,-1),math.pow(10,-2),math.pow(10,-3),math.pow(10,-4),math.pow(10,-5),math.pow(10,-6),0]:
 			for m_mode in ['max','mean']:
-				if os.path.isfile('/home/tstahl/plot/1b_dennis_%s_mse_%s_%s_%s.p'%(m_mode,class_,1,eta)):
+				if os.path.isfile('/home/tstahl/plot/1b_dennis_%s_mse_%s_%s_%s_%s_category.p'%(m_mode,class_,1,eta, alpha)):
 					print 'exists'
 					previous = 1000
 					for tree_level_size in range(1,4):
-						if os.path.isfile('/home/tstahl/plot/1b_dennis_%s_mse_%s_%s_%s.p'%(m_mode,class_,tree_level_size,eta)):
+						if os.path.isfile('/home/tstahl/plot/1b_dennis_%s_mse_%s_%s_%s_%s_category.p'%(m_mode,class_,tree_level_size,eta, alpha)):
 							temp_sting = '%s_%s_%s_%s'%(class_,m_mode,eta,alpha)
 							print temp_sting
-							with open('/home/tstahl/plot/1b_dennis_%s_mse_%s_%s_%s.p'%(m_mode,class_,tree_level_size,eta), 'rb') as handle:
+							with open('/home/tstahl/plot/1b_dennis_%s_mse_%s_%s_%s_%s_category.p'%(m_mode,class_,tree_level_size,eta,alpha), 'rb') as handle:
 								mse_tmp = pickle.load(handle)
 							print 'test'
 							print mse_tmp, previous
