@@ -83,9 +83,9 @@ def main():
             mlp_y_val.append(img_data.y)
         # learn SGD
         for al_i in [math.pow(10,-4), math.pow(10,-3),math.pow(10,-2)]:#[math.pow(10,-4)]:#,math.pow(10,-2)
-            mlp1 = MLPRegressor(verbose=False, hidden_layer_sizes=(250,250), learning_rate='invscaling', learning_rate_init=math.pow(10,-3),  alpha=al_i, activation='tanh')
-            mlp2 = MLPRegressor(verbose=False, hidden_layer_sizes=(500,500), learning_rate='invscaling', learning_rate_init=math.pow(10,-3),  alpha=al_i, activation='tanh')
-            mlp3 = MLPRegressor(verbose=False, hidden_layer_sizes=(1000,1000), learning_rate='invscaling', learning_rate_init=math.pow(10,-3),  alpha=al_i, activation='tanh')
+            mlp1 = MLPRegressor(verbose=False, hidden_layer_sizes=(350,350),tol=0.00001, learning_rate='invscaling', learning_rate_init=math.pow(10,-3),  alpha=al_i, activation='tanh')
+            mlp2 = MLPRegressor(verbose=False, hidden_layer_sizes=(500,500),tol=0.00001, learning_rate='invscaling', learning_rate_init=math.pow(10,-3),  alpha=al_i, activation='tanh')
+            mlp3 = MLPRegressor(verbose=False, hidden_layer_sizes=(650,650),tol=0.00001, learning_rate='invscaling', learning_rate_init=math.pow(10,-3),  alpha=al_i, activation='tanh')
             sgd_sklearn= SGDRegressor(eta0=math.pow(10,-4), learning_rate='invscaling', n_iter = 4)
         
         
