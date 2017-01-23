@@ -17,13 +17,13 @@ def main():
 #        exit()
     category = sys.argv[1]
 
-    learn_mode = 'all'
+    learn_mode = 'category'
 
     pred_mode = 'mean'
 
     batch_size = 5
 
-    for tree_level_size in range(1,5):
+    for tree_level_size in range(1,4):
         #initialize
         print 'initializing', tree_level_size
         #sgd = SGD.SGD('max', category, tree_level_size, batch_size, math.pow(10,-4), 0.003, math.pow(10,-5))
@@ -71,9 +71,9 @@ def main():
             
         # learn SGD
         print 'learning'
-        for eta_i in [math.pow(10,-5),math.pow(10,-6)]:
+        for eta_i in [math.pow(10,-5)]:
     	    print eta_i
-            for al_i in [math.pow(10,-2),math.pow(10,-5)]:#[math.pow(10,-4)]:#,math.pow(10,-2)
+            for al_i in [math.pow(10,-2)]:#[math.pow(10,-4)]:#,math.pow(10,-2)
                 for gamma_i in [math.pow(10,-5)]:#,math.pow(10,-4),math.pow(10,-3),math.pow(10,-2)
                     training_loss = []
                     validation_loss = []
@@ -82,7 +82,7 @@ def main():
                     #sgd_pascal.set_scaler(scaler_pascal)
                     sgd_dennis.set_scaler(scaler_dennis)
                     print al_i, eta_i, gamma_i
-                    for epoch in range(1):
+                    for epoch in range(2):
                         #print epoch
                         #tr_l, te_l = sgd_dennis.learn('categories')
                         sgd_dennis.learn(learn_mode)
