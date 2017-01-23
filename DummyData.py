@@ -10,7 +10,7 @@ class DummyData():
 		self.X = [[0,0,0,0,0],[1,1,1,1,1],[2,2,2,2,2],[3,3,3,3,3],[4,4,4,4,4]]
 		self.num_features = 5
 		self.y = 4
-		self.tree_boxes = sort_boxes(self.tree_boxes)
+		self.tree_boxes, self.X = sort_boxes(self.tree_boxes, self.X)
 		self.G, levels = create_tree(self.tree_boxes)
 		#prune tree to only have levels which fully cover the image, tested
 		total_size = surface_area_old(self.tree_boxes, levels[0])
