@@ -53,7 +53,7 @@ class Data:
         if load.mode == 'pascal':
             self.lookup_coords()
         elif load.mode == 'dennis':
-            print self.boxes, self.tree_boxes
+            print self.boxes[0:8], self.tree_boxes[0:8]
             assert(self.boxes==self.tree_boxes)
             intersection_coords = load.get_intersection_coords(img_nr)
             intersection_features = load.get_intersection_features(img_nr)
