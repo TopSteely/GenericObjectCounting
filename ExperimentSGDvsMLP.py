@@ -68,36 +68,39 @@ def main():
             	output_dennis.dump_scaler_category(scaler_category)
             	scaler_dennis = scaler_category
             
+        mlp_data = []
+        mlp_y = []
+        for img_nr in training_data:
+            img_data = Data.Data(load_dennis, img_nr, 10, None)
+            mlp_data.append(img_data.X[0])
+            mlp_y.append(img_data.y)
+
+        mlp_data_val = []
+        mlp_y_val = []
+        for img_nr in test_numbers_d:
+            img_data = Data.Data(load_dennis, img_nr, 10, None)
+            mlp_data_val.append(img_data.X[0])
+            mlp_y_val.append(img_data.y)
         # learn SGD
-        for eta_i in [math.pow(10,-3),math.pow(10,-4)]:
-            for al_i in [math.pow(10,-3),math.pow(10,-2), math.pow(10,-1)]:#[math.pow(10,-4)]:#,math.pow(10,-2)
-                for act_i in [ 'tanh', 'relu']:#'identity', 'logistic',
-                    training_loss = []
-                    validation_loss = []
-                    mlp = MLPRegressor(verbose=False, hidden_layer_sizes=(250,250), learning_rate='invscaling', learning_rate_init=eta_i,  alpha=al_i, activation=act_i)
-                    sgd_sklearn= SGDRegressor(eta0=eta_i, learning_rate='invscaling', n_iter = 4)
-                    mlp_data = []
-                    mlp_y = []
-                    for img_nr in training_data:
-                        img_data = Data.Data(load_dennis, img_nr, 10, None)
-                        mlp_data.append(img_data.X[0])
-                        mlp_y.append(img_data.y)
-                    mlp.fit(mlp_data,mlp_y)
-                    sgd_sklearn.fit(scaler_dennis.transform(mlp_data),mlp_y)
+        for al_i in [math.pow(10,-3),math.pow(10,-2), math.pow(10,-1)]:#[math.pow(10,-4)]:#,math.pow(10,-2)
+            mlp1 = MLPRegressor(verbose=False, hidden_layer_sizes=(250,250), learning_rate='invscaling', learning_rate_init=eta_i,  alpha=al_i, activation='tanh')
+            mlp2 = MLPRegressor(verbose=False, hidden_layer_sizes=(500,500), learning_rate='invscaling', learning_rate_init=eta_i,  alpha=al_i, activation='tanh')
+            sgd_sklearn= SGDRegressor(eta0=math.pow(10,-4), learning_rate='invscaling', n_iter = 4)
+        
+        
+            mlp.fit(mlp_data,mlp_y)
+            sgd_sklearn.fit(scaler_dennis.transform(mlp_data),mlp_y)
 
-                    mlp_data = []
-                    mlp_y = []
-                    for img_nr in test_numbers_d:
-                        img_data = Data.Data(load_dennis, img_nr, 10, None)
-                        mlp_data.append(img_data.X[0])
-                        mlp_y.append(img_data.y)
-                    preds_mlp = mlp.predict(mlp_data)
-                    preds_sgd = sgd_sklearn.predict(scaler_dennis.transform(mlp_data))
+        
+            preds_mlp1 = mlp1.predict(mlp_data_val)
+            preds_mlp1 = mlp2.predict(mlp_data_val)
+            preds_sgd = sgd_sklearn.predict(scaler_dennis.transform(mlp_data_val))
 
-                    #print preds_mlp, preds_sgd, mlp_y
+            #print preds_mlp, preds_sgd, mlp_y
 
-                    print 'Mlp: ', eta_i, al_i, act_i, np.sum(((preds_mlp-mlp_y)**2)/len(mlp_y))
-                    print 'SKL: ', eta_i, al_i, np.sum(((preds_sgd-mlp_y)**2)/len(mlp_y))
+            print 'Mlp1: ', eta_i, al_i, act_i, np.sum(((preds_mlp1-mlp_y_val)**2)/len(mlp_y_val))
+            print 'Mlp2: ', eta_i, al_i, act_i, np.sum(((preds_mlp2-mlp_y_val)**2)/len(mlp_y_val))
+            print 'SKL: ', eta_i, al_i, np.sum(((preds_sgd-mlp_y_val)**2)/len(mlp_y_val))
     
     
 if __name__ == "__main__":
