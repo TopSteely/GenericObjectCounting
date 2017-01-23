@@ -31,6 +31,3 @@ class DummyData():
 		#prune tree as well, for patches training
 		for trash_level in levels_gone.values():
 			self.G.remove_nodes_from(trash_level)
-		print self.G.nodes()
-		print self.levels
-		print self.tree_boxes
