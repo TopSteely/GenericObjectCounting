@@ -12,7 +12,6 @@ import time
 import random
 
 def main():
-	print 'main'
 	img_data = DummyData.DummyData()
 
 
