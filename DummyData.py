@@ -1,0 +1,32 @@
+from utils import create_tree_as_extracted, surface_area_old, sort_boxes, create_tree
+import numpy as np
+import time
+
+class DummyData():
+	self.img_nr = img_nr
+	self.boxes = [[0,0,100,100],[0,0,50,100],[40,0,100,100],[0,0,45,100],[35,0,100,100]]
+	self.X = []
+	self.num_features = 5
+	self.y = 4
+	self.G, levels = create_tree(self.tree_boxes)
+	#prune tree to only have levels which fully cover the image, tested
+	print self.G
+	print levels
+	total_size = surface_area_old(self.tree_boxes, levels[0])
+	for level in levels:
+		sa = surface_area_old(self.tree_boxes, levels[level])
+		sa_co = sa/total_size
+		if sa_co != 1.0:
+			self.G.remove_nodes_from(levels[level])
+		else:
+			nr_levels_covered = level
+		levels = {k: levels[k] for k in range(0,nr_levels_covered + 1)}
+		# prune levels, speedup + performance 
+		levels_tmp = {k:v for k,v in levels.iteritems() if k<prune_tree_levels}
+		levels_gone = {k:v for k,v in levels.iteritems() if k>=prune_tree_levels}
+		self.levels = levels_tmp
+		#prune tree as well, for patches training
+		for trash_level in levels_gone.values():
+			self.G.remove_nodes_from(trash_level)
+	print self.G.nodes
+	print self.levels
