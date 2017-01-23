@@ -78,14 +78,15 @@ def main():
                     #sgd_pascal = SGD.SGD('pascal', 'max', category, tree_level_size, batch_size, eta_i, gamma_i, al_i)
                     sgd_dennis = SGD.SGD('dennis', pred_mode, category, tree_level_size, batch_size, eta_i, gamma_i, al_i, 4096)
                     mlp = MLPRegressor(verbose=True, hidden_layer_sizes=(250,250), learning_rate='invscaling')
+                    sgd_sklearn= linear_model.SGDRegressor(eta0=eta_i, learning_rate='invscaling')
                     #sgd_pascal.set_scaler(scaler_pascal)
                     sgd_dennis.set_scaler(scaler_dennis)
                     print al_i, eta_i, gamma_i
-                    #for epoch in range(4):
+                    for epoch in range(4):
                     #    print epoch
                         #print epoch
                         #tr_l, te_l = sgd_dennis.learn('categories')
-                    #    sgd_dennis.learn(learn_mode)
+                        sgd_dennis.learn(learn_mode)
                         #print tr_l, te_l
                         
                         #training_loss.extend(tr_l)
@@ -109,6 +110,7 @@ def main():
                         mlp_data.append(img_data.X[0])
                         mlp_y.append(img_data.y)
                     mlp.fit(mlp_data,mlp_y)
+                    sgd_sklearn.fit(mlp_data,mlp_y)
 
                     mlp_data = []
                     mlp_y = []
@@ -116,9 +118,11 @@ def main():
                         img_data = Data.Data(load_dennis, img_nr, 10, None)
                         mlp_data.append(img_data.X[0])
                         mlp_y.append(img_data.y)
-                    preds = mlp.predict(mlp_data)
+                    preds_mlp = mlp.predict(mlp_data)
+                    preds_sgd = sgd_sklearn.predict(mlp_data)
 
-                    print 'Mlp: ', np.sum(((preds-nmp_y)**2)/len(mlp_y))
+                    print 'Mlp: ', np.sum(((preds_mlp-mlp_y)**2)/len(mlp_y))
+                    print 'SKL: ', np.sum(((preds_sgd-mlp_y)**2)/len(mlp_y))
 
                     if learn_mode == 'all':
                         mse,ae, mse_non_zero = sgd_dennis.evaluate('test')
