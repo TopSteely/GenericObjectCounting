@@ -37,7 +37,9 @@ class Input:
                 self.scaler_category_path = '/var/node436/local/tstahl/models/scaler_%s_dennis.p'%(category)
                 self.classifier_path = '/var/node436/local/tstahl/models/classifier_%s.p'%(category)
         training_numbers_tmp, self.test_numbers = self.get_training_numbers()
+        print len(training_numbers_tmp)
         self.training_numbers, self.val_numbers = self.get_val_numbers(training_numbers_tmp)
+        print len(self.training_numbers), len(self.val_numbers)
         self.category_train, self.category_val = self.get_category_imgs()
         
 	#old
