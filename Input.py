@@ -36,11 +36,11 @@ class Input:
                 self.scaler_path = '/var/node436/local/tstahl/models/scaler_dennis.p'
                 self.scaler_category_path = '/var/node436/local/tstahl/models/scaler_%s_dennis.p'%(category)
                 self.classifier_path = '/var/node436/local/tstahl/models/classifier_%s.p'%(category)
-        training_numbers_tmp, self.test_numbers = self.get_training_numbers()
+        self.test_numbers, training_numbers_tmp = self.get_training_numbers()
         print training_numbers_tmp[0:12]
         raw_input()
         self.training_numbers, self.val_numbers = self.get_val_numbers(training_numbers_tmp[0:12])
-        #print self.training_numbers, self.val_numbers
+        print len(self.training_numbers), len(self.val_numbers)
         self.category_train, self.category_val = self.get_category_imgs()
         
 	#old
