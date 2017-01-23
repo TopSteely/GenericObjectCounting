@@ -16,8 +16,10 @@ class DummyData():
 		print self.G.nodes()
 		print levels
 		total_size = surface_area_old(self.tree_boxes, levels[0])
+		print levels
 		for level in levels:
-			print level, levels[level]
+			print level, levels
+			print levels[level]
 			sa = surface_area_old(self.tree_boxes, levels[level])
 			sa_co = sa/total_size
 			if sa_co != 1.0:
