@@ -38,6 +38,7 @@ class Input:
                 self.classifier_path = '/var/node436/local/tstahl/models/classifier_%s.p'%(category)
         training_numbers_tmp, self.test_numbers = self.get_training_numbers()
         print training_numbers_tmp[0:12]
+        raw_input()
         self.training_numbers, self.val_numbers = self.get_val_numbers(training_numbers_tmp[0:12])
         print self.training_numbers, self.val_numbers
         self.category_train, self.category_val = self.get_category_imgs()
@@ -133,7 +134,7 @@ class Input:
             for line in file:
                 im_nr = int(line)
                 eval_images.append(im_nr)
-            print eval_images
+            print train_imgs
             print [x for x in train_imgs if x not in eval_images]
             return [x for x in train_imgs if x not in eval_images], eval_images
     
