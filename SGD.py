@@ -120,6 +120,7 @@ class SGD:
             training_data = self.load.category_train
         subset = training_data[:to]
         random.shuffle(subset)
+        print len(subset)
         for i_img_nr, img_nr in enumerate(subset):
             start = time.time()
             img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
