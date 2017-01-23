@@ -85,11 +85,13 @@ class IEP:
                              print 'index bigger than X'
                              exit()
                          if len(base)%2==1:
-                              iep += np.dot(self.w,X[ind])
-                              function.append(['+',ind])
+                            print '+', X[ind]
+                            iep += np.dot(self.w,X[ind])
+                            function.append(['+',ind])
                          elif len(base)%2==0:
-                             iep -=  np.dot(self.w,X[ind])
-                             function.append(['-',ind])
+                            print '-', X[ind]
+                            iep -=  np.dot(self.w,X[ind])
+                            function.append(['-',ind])
                       else:
                          print 'IEP: intersection not found', I
                          exit()
