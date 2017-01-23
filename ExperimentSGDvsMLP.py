@@ -18,7 +18,7 @@ def main():
 #        exit()
     category = sys.argv[1]
 
-    learn_mode = 'category'
+    learn_mode = 'all'
 
     pred_mode = 'mean'
 
@@ -37,7 +37,7 @@ def main():
         #scaler_pascal = StandardScaler()
         if learn_mode == 'all':
             training_data = load_dennis.training_numbers
-            test_numbers_d = load_dennis.test_numbers
+            test_numbers_d = load_dennis.val_numbers
             scaler_dennis = load_dennis.get_scaler()
             if scaler_dennis==[]:
                 print "learning scaler"
@@ -83,28 +83,28 @@ def main():
             mlp_y_val.append(img_data.y)
         # learn SGD
         for al_i in [math.pow(10,-4), math.pow(10,-3),math.pow(10,-2)]:#[math.pow(10,-4)]:#,math.pow(10,-2)
-            mlp1 = MLPRegressor(verbose=False, hidden_layer_sizes=(350,350),tol=0.00001, learning_rate='invscaling', learning_rate_init=math.pow(10,-3),  alpha=al_i, activation='tanh')
+            #mlp1 = MLPRegressor(verbose=False, hidden_layer_sizes=(350,350),tol=0.00001, learning_rate='invscaling', learning_rate_init=math.pow(10,-3),  alpha=al_i, activation='tanh')
             mlp2 = MLPRegressor(verbose=False, hidden_layer_sizes=(500,500),tol=0.00001, learning_rate='invscaling', learning_rate_init=math.pow(10,-3),  alpha=al_i, activation='tanh')
-            mlp3 = MLPRegressor(verbose=False, hidden_layer_sizes=(650,650),tol=0.00001, learning_rate='invscaling', learning_rate_init=math.pow(10,-3),  alpha=al_i, activation='tanh')
+            #mlp3 = MLPRegressor(verbose=False, hidden_layer_sizes=(650,650),tol=0.00001, learning_rate='invscaling', learning_rate_init=math.pow(10,-3),  alpha=al_i, activation='tanh')
             sgd_sklearn= SGDRegressor(eta0=math.pow(10,-4), learning_rate='invscaling', n_iter = 4)
         
         
-            mlp1.fit(mlp_data,mlp_y)
+            #mlp1.fit(mlp_data,mlp_y)
             mlp2.fit(mlp_data,mlp_y)
-            mlp3.fit(mlp_data,mlp_y)
+            #mlp3.fit(mlp_data,mlp_y)
             sgd_sklearn.fit(scaler_dennis.transform(mlp_data),mlp_y)
 
         
-            preds_mlp1 = mlp1.predict(mlp_data_val)
+            #preds_mlp1 = mlp1.predict(mlp_data_val)
             preds_mlp2 = mlp2.predict(mlp_data_val)
-            preds_mlp3 = mlp3.predict(mlp_data_val)
+            #preds_mlp3 = mlp3.predict(mlp_data_val)
             preds_sgd = sgd_sklearn.predict(scaler_dennis.transform(mlp_data_val))
 
             #print preds_mlp, preds_sgd, mlp_y
 
-            print 'Mlp1: ', al_i, np.sum(((preds_mlp1-mlp_y_val)**2)/len(mlp_y_val))
+            #print 'Mlp1: ', al_i, np.sum(((preds_mlp1-mlp_y_val)**2)/len(mlp_y_val))
             print 'Mlp2: ', al_i, np.sum(((preds_mlp2-mlp_y_val)**2)/len(mlp_y_val))
-            print 'Mlp3: ', al_i, np.sum(((preds_mlp3-mlp_y_val)**2)/len(mlp_y_val))
+            #print 'Mlp3: ', al_i, np.sum(((preds_mlp3-mlp_y_val)**2)/len(mlp_y_val))
             print 'SKL: ', al_i, np.sum(((preds_sgd-mlp_y_val)**2)/len(mlp_y_val))
     
     
