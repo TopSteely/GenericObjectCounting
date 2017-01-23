@@ -70,9 +70,8 @@ def main():
             
         # learn SGD
         for eta_i in [math.pow(10,-4),math.pow(10,-5),math.pow(10,-6)]:
-    	    print eta_i
             for al_i in [math.pow(10,-4),math.pow(10,-3),math.pow(10,-2)]:#[math.pow(10,-4)]:#,math.pow(10,-2)
-                for act_i in ['identity', 'logistic', 'tanh', 'relu']
+                for act_i in ['identity', 'logistic', 'tanh', 'relu']:
                     training_loss = []
                     validation_loss = []
                     mlp = MLPRegressor(verbose=False, hidden_layer_sizes=(250,250), learning_rate='invscaling', learning_rate_init=eta_i,  alpha=al_i, activation=act_i)
