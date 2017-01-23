@@ -81,7 +81,7 @@ def main():
                         print epoch
                         #print epoch
                         #tr_l, te_l = sgd_dennis.learn('categories')
-                        sgd_dennis.learn(learn_mode, 20)
+                        sgd_dennis.learn(learn_mode)
                         #print tr_l, te_l
                         
                         #training_loss.extend(tr_l)
@@ -101,7 +101,7 @@ def main():
                 if learn_mode == 'all':
                     mse,ae, mse_non_zero = sgd_dennis.evaluate('val_all')
                 elif learn_mode == 'category':
-                    mse,ae, mse_non_zero = sgd_dennis.evaluate('val_cat', 20)
+                    mse,ae, mse_non_zero = sgd_dennis.evaluate('val_cat')
                 print "Eval loss: ", eta_i, al_i, mse
                 output_dennis.save(mse, ae, mse_non_zero, sgd_dennis, eta_i, al_i, learn_mode)
     
