@@ -1,7 +1,7 @@
 import sys
 import Input
 import Output
-import Data
+import DummyData
 import SGD
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import SGDRegressor
@@ -12,4 +12,4 @@ import time
 import random
 
 def main():
-	img_data = Data.Data()
+	img_data = DummyData.DummyData()
