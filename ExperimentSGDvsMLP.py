@@ -82,7 +82,7 @@ def main():
                     #sgd_pascal.set_scaler(scaler_pascal)
                     sgd_dennis.set_scaler(scaler_dennis)
                     print al_i, eta_i, gamma_i
-                    for epoch in range(4):
+                    for epoch in range(1):
                     #    print epoch
                         #print epoch
                         #tr_l, te_l = sgd_dennis.learn('categories')
@@ -114,14 +114,14 @@ def main():
 
                     mlp_data = []
                     mlp_y = []
-                    for img_nr in test_numbers_d:
+                    for img_nr in test_numbers_d[0:5]:
                         img_data = Data.Data(load_dennis, img_nr, 10, None)
                         mlp_data.append(img_data.X[0])
                         mlp_y.append(img_data.y)
                     preds_mlp = mlp.predict(mlp_data)
                     preds_sgd = sgd_sklearn.predict(scaler_dennis.transform(mlp_data))
 
-                    #print preds_mlp, preds_sgd, mlp_y
+                    print preds_mlp, preds_sgd, mlp_y
 
                     print 'Mlp: ', np.sum(((preds_mlp-mlp_y)**2)/len(mlp_y))
                     print 'SKL: ', np.sum(((preds_sgd-mlp_y)**2)/len(mlp_y))
