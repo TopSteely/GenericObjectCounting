@@ -3,7 +3,6 @@ import numpy as np
 import time
 
 class DummyData():
-	self.img_nr = img_nr
 	self.boxes = [[0,0,100,100],[0,0,50,100],[40,0,100,100],[0,0,45,100],[35,0,100,100]]
 	self.X = []
 	self.num_features = 5
