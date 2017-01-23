@@ -29,11 +29,13 @@ for class_ in classes:
 							print temp_sting, tree_level_size
 							with open('/home/tstahl/plot/1b_dennis_%s_mse_%s_%s_%s_%s_category.p'%(m_mode,class_,tree_level_size,eta,alpha), 'rb') as handle:
 								mse_tmp = pickle.load(handle)
+							if tree_level_size == 1:
+								baseline = mse_tmp
 							print mse_tmp, previous
 							if mse_tmp < previous:
 								if tree_level_size == 2:
 									descending2.append(temp_sting)
-								elif tree_level_size == 3:
+								elif tree_level_size == 3 and previous < baseline:
 									descending3.append(temp_sting)
 							previous = mse_tmp
 							print descending2, descending3
