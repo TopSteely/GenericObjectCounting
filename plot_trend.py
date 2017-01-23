@@ -29,8 +29,9 @@ for class_ in classes:
 							temp_sting = '%s_%s_%s_%s'%(class_,m_mode,eta,alpha)
 							print temp_sting
 							with open('/home/tstahl/plot/1b_dennis_%s_mse_%s_%s_%s.p'%(m_mode,class_,tree_level_size,eta), 'rb') as handle:
+								mse_tmp = pickle.load(handle)
 								print 'test'
-						    	mse_tmp = pickle.load(handle)
+						    	
 						    	print mse_tmp, previous
 						    #if mse_tmp < previsous:
 						    #	if tree_level_size == 2:
@@ -48,6 +49,7 @@ print descending3
 exit()
 for eta in [math.pow(10,-5),math.pow(10,-6)]:
 	for alpha in [math.pow(10,0),math.pow(10,-1),math.pow(10,-2),math.pow(10,-3),math.pow(10,-4),math.pow(10,-5),math.pow(10,-6)]:
+
 		for tree_level_size in range(1,4):
 			print tree_level_size
 			depths = []
