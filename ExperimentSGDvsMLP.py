@@ -78,11 +78,11 @@ def main():
                     #sgd_pascal = SGD.SGD('pascal', 'max', category, tree_level_size, batch_size, eta_i, gamma_i, al_i)
                     sgd_dennis = SGD.SGD('dennis', pred_mode, category, tree_level_size, batch_size, eta_i, gamma_i, al_i, 4096)
                     mlp = MLPRegressor(verbose=True, hidden_layer_sizes=(250,250), learning_rate='invscaling', learning_rate_init=eta_i)
-                    sgd_sklearn= SGDRegressor(eta0=eta_i, learning_rate='invscaling', n_iter = 40)
+                    sgd_sklearn= SGDRegressor(eta0=eta_i, learning_rate='invscaling', n_iter = 4)
                     #sgd_pascal.set_scaler(scaler_pascal)
                     sgd_dennis.set_scaler(scaler_dennis)
                     print al_i, eta_i, gamma_i
-                    for epoch in range(10):
+                    for epoch in range(4):
                     #    print epoch
                         #print epoch
                         #tr_l, te_l = sgd_dennis.learn('categories')
