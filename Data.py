@@ -53,6 +53,7 @@ class Data:
         if load.mode == 'pascal':
             self.lookup_coords()
         elif load.mode == 'dennis':
+            assert(self.boxes==self.tree_boxes)
             intersection_coords = load.get_intersection_coords(img_nr)
             intersection_features = load.get_intersection_features(img_nr)
             if scaler != None and len(intersection_features) > 0:
@@ -63,8 +64,6 @@ class Data:
                 self.X = np.append(self.X, intersection_features, axis=0)
             else:
                 self.boxes = np.array(self.boxes)
-            assert(self.boxes==self.tree_boxes)
-        #print "else", (time.time() - start)
         
     def lookup_coords(self):
         #have to change level indexes because of rearranging in extraction
