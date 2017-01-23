@@ -36,4 +36,6 @@ class DummyData():
 		#appending intersections:
 		self.boxes = np.append(self.boxes, np.array([35, 0, 50, 100]).reshape(1,-1), axis=0)
 		self.X = np.append(self.X, np.array([1, 1, 1, 1, 1]).reshape(1,-1), axis=0)
+		self.boxes = np.append(self.boxes, np.array([40, 0, 45, 100]).reshape(1,-1), axis=0)
+		self.X = np.append(self.X, np.array([1, 1, 1, 1, 1]).reshape(1,-1), axis=0)
 		self.boxes = np.array(self.boxes)
