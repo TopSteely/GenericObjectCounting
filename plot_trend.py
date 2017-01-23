@@ -30,8 +30,8 @@ for class_ in classes:
 							print temp_sting
 							with open('/home/tstahl/plot/1b_dennis_%s_mse_%s_%s_%s.p'%(m_mode,class_,tree_level_size,eta), 'rb') as handle:
 								print 'test'
-						    #mse_tmp = pickle.load(handle)
-						    #print mse_tmp, previous
+						    	mse_tmp = pickle.load(handle)
+						    print mse_tmp, previous
 						    #if mse_tmp < previsous:
 						    #	if tree_level_size == 2:
 						    #		descending2.append(temp_sting)
