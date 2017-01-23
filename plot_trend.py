@@ -28,7 +28,7 @@ for class_ in classes:
 						if os.path.isfile('/home/tstahl/plot/1b_dennis_%s_mse_%s_%s_%s.p'%(m_mode,class_,tree_level_size,eta)):
 							temp_sting = '%s_%s_%s'%(class_,m_mode,eta,alpha)
 
-							with open(mse_path%(class_,tree_level_size,eta), 'rb') as handle:
+							with open('/home/tstahl/plot/1b_dennis_%s_mse_%s_%s_%s.p'%(m_mode,class_,tree_level_size,eta), 'rb') as handle:
 						    	mse_tmp = pickle.load(handle)
 						    print mse_tmp, previous
 						    if mse_tmp < previsous:
