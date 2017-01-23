@@ -11,11 +11,14 @@ class DummyData():
 		self.num_features = 5
 		self.y = 4
 		self.tree_boxes, self.X = sort_boxes(self.tree_boxes, self.X)
+		print self.X
 		self.G, levels = create_tree(self.tree_boxes)
 		#prune tree to only have levels which fully cover the image, tested
 		total_size = surface_area_old(self.tree_boxes, levels[0])
 		for level in levels:
 			print level, levels
+			for bb in levels[level]:
+				print self.X[bb]
 			sa = surface_area_old(self.tree_boxes, levels[level])
 			sa_co = sa/total_size
 			print sa_co
