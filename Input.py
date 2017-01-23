@@ -40,7 +40,7 @@ class Input:
         print training_numbers_tmp[0:12]
         raw_input()
         self.training_numbers, self.val_numbers = self.get_val_numbers(training_numbers_tmp[0:12])
-        print self.training_numbers, self.val_numbers
+        #print self.training_numbers, self.val_numbers
         self.category_train, self.category_val = self.get_category_imgs()
         
 	#old
@@ -135,7 +135,7 @@ class Input:
                 im_nr = int(line)
                 eval_images.append(im_nr)
             print train_imgs
-            print [x for x in train_imgs if x not in eval_images]
+            print [x for x in train_imgs]
             return [x for x in train_imgs if x not in eval_images], eval_images
     
     def get_coords(self, img_nr):
