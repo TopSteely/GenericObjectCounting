@@ -104,7 +104,7 @@ def main():
                     #output_dennis.plot_train_val_loss(training_loss, validation_loss, eta_i, al_i)
                     mlp_data = []
                     mlp_y = []
-                    for im_nr in training_data:
+                    for img_nr in training_data:
                         img_data = Data.Data(load_dennis, img_nr, 10, None)
                         mlp_data.append(img_data.X[0])
                         mlp_y.append(img_data.y)
