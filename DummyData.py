@@ -16,23 +16,22 @@ class DummyData():
 		print self.G.nodes()
 		print levels
 		total_size = surface_area_old(self.tree_boxes, levels[0])
-		print levels
 		for level in levels:
 			print level, levels
-			print levels[level]
 			sa = surface_area_old(self.tree_boxes, levels[level])
 			sa_co = sa/total_size
+			print sa_co
 			if sa_co != 1.0:
 				self.G.remove_nodes_from(levels[level])
 			else:
 				nr_levels_covered = level
-			levels = {k: levels[k] for k in range(0,nr_levels_covered + 1)}
-			# prune levels, speedup + performance 
-			levels_tmp = {k:v for k,v in levels.iteritems() if k<prune_tree_levels}
-			levels_gone = {k:v for k,v in levels.iteritems() if k>=prune_tree_levels}
-			self.levels = levels_tmp
-			#prune tree as well, for patches training
-			for trash_level in levels_gone.values():
-				self.G.remove_nodes_from(trash_level)
+		levels = {k: levels[k] for k in range(0,nr_levels_covered + 1)}
+		# prune levels, speedup + performance 
+		levels_tmp = {k:v for k,v in levels.iteritems() if k<prune_tree_levels}
+		levels_gone = {k:v for k,v in levels.iteritems() if k>=prune_tree_levels}
+		self.levels = levels_tmp
+		#prune tree as well, for patches training
+		for trash_level in levels_gone.values():
+			self.G.remove_nodes_from(trash_level)
 		print self.G.nodes()
 		print self.levels
