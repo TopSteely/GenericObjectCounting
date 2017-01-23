@@ -26,7 +26,7 @@ for class_ in classes:
 					for tree_level_size in range(1,4):
 						if os.path.isfile('/home/tstahl/plot/1b_dennis_%s_mse_%s_%s_%s_%s_category.p'%(m_mode,class_,tree_level_size,eta, alpha)):
 							temp_sting = '%s_%s_%s_%s'%(class_,m_mode,eta,alpha)
-							print temp_sting, tree_level_size
+							#print temp_sting, tree_level_size
 							with open('/home/tstahl/plot/1b_dennis_%s_mse_%s_%s_%s_%s_category.p'%(m_mode,class_,tree_level_size,eta,alpha), 'rb') as handle:
 								mse_tmp = pickle.load(handle)
 							if tree_level_size == 1:
@@ -38,8 +38,6 @@ for class_ in classes:
 								elif tree_level_size == 3 and previous < baseline:
 									descending3.append(temp_sting)
 							previous = mse_tmp
-							print descending2, descending3
-							raw_input()
 print descending2
 print descending3
 
