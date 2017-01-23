@@ -134,8 +134,11 @@ class Input:
             for line in file:
                 im_nr = int(line)
                 eval_images.append(im_nr)
-            print train_imgs
-            print [x for x in train_imgs]
+            print train_imgs, eval_images[0:12]
+            a = train_imgs
+            b = eval_images[0:12]
+            print [x for x in a if x not in b]
+            raw_input()
             return [x for x in train_imgs if x not in eval_images], eval_images
     
     def get_coords(self, img_nr):
