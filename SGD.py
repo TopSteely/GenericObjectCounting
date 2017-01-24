@@ -199,14 +199,14 @@ class SGD:
             self.w += (self.eta * ((preds_level - img_data.y) * -iep_level))#self.w -= (self.eta * (2*(preds_level - img_data.y)*iep_level))
             self.predictor = IEP.IEP(self.w, 'prediction')
 
-    def learn_really_old(self, img_data):
-        for level img_data.levels:
-            for f_ in self.w:
-                inner_prod += (f_ * x_node[f_])
-            dloss = (inner_prod - y_node)
-            preds_level = self.predict_old(img_data, level)
-            for i_f,f in enumerate(self.w):
-                w[f] += (self.eta * ((preds_level - img_data.y) * -iep_level[i_f]))
+    #def learn_really_old(self, img_data):
+        #for level in img_data.levels:
+        #    for f_ in self.w:
+        #        inner_prod += (f_ * x_node[f_])
+        #    dloss = (inner_prod - y_node)
+        #    preds_level = self.predict_old(img_data, level)
+        #    for i_f,f in enumerate(self.w):
+        #        w[f] += (self.eta * ((preds_level - img_data.y) * -iep_level[i_f]))
 
     def learn_ind(self, img_data):
         level_preds, _ = self.predict_ind(img_data)
