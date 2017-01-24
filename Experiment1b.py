@@ -105,7 +105,7 @@ def main():
                 mse,ae, mse_non_zero = sgd_dennis.evaluate('val_all')
             elif learn_mode == 'category':
                 mse,ae, mse_non_zero = sgd_dennis.evaluate('val_cat')
-            print "Eval loss: ", eta_i, al_i, mse
+            print "Eval loss: ", al_i, mse
             output_dennis.save(mse, ae, mse_non_zero, sgd_dennis, 'ind', al_i, learn_mode)
     print learn_mode, pred_mode, epochs
     
