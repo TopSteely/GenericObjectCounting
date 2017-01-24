@@ -20,8 +20,8 @@ colors_ = ['r','g','b']
 
 for eta in [math.pow(10,-5)]:
 	for alpha in [math.pow(10,-5)]:
-		for i_l,learn_mode in enumerate(['category','all']):
-			for i_m,meth in enumerate(['max','mean','old']):
+		for i_l,learn_mode in enumerate(['all']):#'category'
+			for i_m,meth in enumerate(['max','mean']):#,'old'
 				for tree_level_size in range(1,4):
 					print tree_level_size
 					depths = []
