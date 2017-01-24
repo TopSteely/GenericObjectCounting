@@ -212,6 +212,7 @@ class SGD:
         level_preds = self.predict_ind(img_data)
         iep_levels, _ = self.learner.get_iep_levels(img_data, [])
         print len(iep_levels), len(iep_levels[0])
+        print len(np.array(level_preds) - img_data.y), len(iep_levels)
         a = 2 * (np.array(level_preds) - img_data.y) * iep_levels
         b = 2 * self.alpha * self.w
         c = np.sum(a + b,axis=0)
