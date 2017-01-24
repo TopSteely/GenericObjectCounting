@@ -28,7 +28,7 @@ for eta in [math.pow(10,-5)]:
 					error_tmp = 0.0
 					for class_ in classes:
 						print class_
-						with open(mse_path%(meth,class_,tree_level_size,eta,alhpa,learn_mode), 'rb') as handle:
+						with open(mse_path%(meth,class_,tree_level_size,eta,alpha,learn_mode), 'rb') as handle:
 						    mse_tmp = pickle.load(handle)
 						error_tmp += mse_tmp
 					depths.append(error_tmp/len(classes))
