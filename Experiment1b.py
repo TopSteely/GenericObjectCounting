@@ -23,7 +23,7 @@ def main():
 
     batch_size = 5
 
-    for tree_level_size in range(2,4):
+    for tree_level_size in range(1,6):
         #initialize
         print 'initializing', tree_level_size
         #sgd = SGD.SGD('max', category, tree_level_size, batch_size, math.pow(10,-4), 0.003, math.pow(10,-5))
