@@ -9,7 +9,7 @@ classes = [
     #"person",
     "cow",  "horse", "sheep","bird",#"cat","dog"
         #"aeroplane","bicycle","boat","bus","car", "motorbike","train",
-     "diningtable", "pottedplant", "sofa", "tvmonitor"#"bottle", "chair",
+     "diningtable",  "sofa", "tvmonitor"#"bottle", "chair","pottedplant",
 ]
 
 #self.mode, self.category, self.prune_tree_levels, eta0, alpha, learn_mode)
