@@ -23,7 +23,7 @@ def main():
 
     batch_size = 5
 
-    epochs = 1
+    epochs = 3
 
     for tree_level_size in range(1,6):
         #initialize
@@ -73,7 +73,7 @@ def main():
                 training_loss = []
                 validation_loss = []
                 #sgd_pascal = SGD.SGD('pascal', 'max', category, tree_level_size, batch_size, eta_i, gamma_i, al_i)
-                if tree_level_size >= 3:
+                if tree_level_size >= 1:
                     sgd_dennis = SGD.SGD('dennis', pred_mode, category, tree_level_size, batch_size, math.pow(10,-6), gamma_i, al_i, 4096)
                 else:
                     sgd_dennis = SGD.SGD('dennis', pred_mode, category, tree_level_size, batch_size, math.pow(10,-5), gamma_i, al_i, 4096)
