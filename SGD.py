@@ -150,8 +150,6 @@ class SGD:
                     self.method(img_data, temp)
                 else:
                     upd, fct = self.method(img_data, temp)
-                    print upd[0:20]
-                    raw_input()
                     self.w_update += upd
                 #self.functions[img_nr] = fct
             self.samples_seen += 1
