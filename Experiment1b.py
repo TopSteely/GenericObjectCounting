@@ -19,7 +19,7 @@ def main():
 
     learn_mode = 'category'
 
-    pred_mode = 'ind'
+    pred_mode = 'max'
 
     batch_size = 5
 
@@ -77,7 +77,7 @@ def main():
                     #sgd_pascal.set_scaler(scaler_pascal)
                     sgd_dennis.set_scaler(scaler_dennis)
                     print al_i, eta_i, gamma_i
-                    for epoch in range(4):
+                    for epoch in range(1):
                         print epoch
                         #print epoch
                         #tr_l, te_l = sgd_dennis.learn('categories')
