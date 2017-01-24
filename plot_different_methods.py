@@ -34,4 +34,4 @@ for eta in [math.pow(10,-5)]:
 					depths.append(error_tmp/len(classes))
 				ax[i_l].plot(depths, '-%so'%(colors_[i_m]), label='%s_%s'%(learn_mode,meth))
 plt.legend()
-plt.savefig("/var/node436/local/tstahl/plos/Experiment1a.png")
+plt.savefig("/var/node436/local/tstahl/plos/Experimentcomp.png")
