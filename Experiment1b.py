@@ -19,7 +19,7 @@ def main():
 
     learn_mode = 'category'
 
-    pred_mode = 'ind'
+    pred_mode = 'max'
 
     batch_size = 5
 
