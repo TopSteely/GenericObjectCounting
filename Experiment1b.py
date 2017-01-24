@@ -19,9 +19,11 @@ def main():
 
     learn_mode = 'category'
 
-    pred_mode = 'max'
+    pred_mode = 'ind'
 
     batch_size = 5
+
+    epochs = 1
 
     for tree_level_size in range(1,6):
         #initialize
@@ -77,7 +79,7 @@ def main():
                     #sgd_pascal.set_scaler(scaler_pascal)
                     sgd_dennis.set_scaler(scaler_dennis)
                     print al_i, eta_i, gamma_i
-                    for epoch in range(1):
+                    for epoch in range(epochs):
                         print epoch
                         #print epoch
                         #tr_l, te_l = sgd_dennis.learn('categories')
@@ -104,7 +106,7 @@ def main():
                     mse,ae, mse_non_zero = sgd_dennis.evaluate('val_cat')
                 print "Eval loss: ", eta_i, al_i, mse
                 output_dennis.save(mse, ae, mse_non_zero, sgd_dennis, eta_i, al_i, learn_mode)
-    print learn_mode, pred_mode
+    print learn_mode, pred_mode, epochs
     
     
 if __name__ == "__main__":
