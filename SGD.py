@@ -208,7 +208,7 @@ class SGD:
         #    for i_f,f in enumerate(self.w):
         #        w[f] += (self.eta * ((preds_level - img_data.y) * -iep_level[i_f]))
 
-    def learn_ind(self, img_data):
+    def learn_ind(self, img_data, functions):
         level_preds, _ = self.predict_ind(img_data)
         iep_levels, _ = self.learner.get_iep_levels(img_data, [])
         a = 2 * (level_preds - img_data.y) * iep_levels
