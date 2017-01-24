@@ -55,11 +55,11 @@ class SGD:
         
     def loss_max(self, img_data):
         level_preds, _ = self.predictor.get_iep_levels(img_data, [])
-        return (np.max(level_preds) - img_data.y)**2 + self.alpha * math.sqrt(np.dot(self.w,self.w))
+        return np.min(np.array(level_preds) - img_data.y)**2 + self.alpha * math.sqrt(np.dot(self.w,self.w))
         
     def loss_mean(self, img_data):
         level_preds, _ = self.predictor.get_iep_levels(img_data, [])
-        return (np.mean(level_preds) - img_data.y)**2 + self.alpha * math.sqrt(np.dot(self.w,self.w))
+        return np.mean(np.array(level_preds) - img_data.y)**2 + self.alpha * math.sqrt(np.dot(self.w,self.w))
         
     def predict_mean(self, img_data):
         level_preds, _ = self.predictor.get_iep_levels(img_data, [])
@@ -189,7 +189,7 @@ class SGD:
         
     def learn_mean(self, img_data, functions):
         iep_levels, functions = self.learner.get_iep_levels(img_data, functions)
-        return 2 * (self.predict(img_data) - img_data.y) * (np.sum(iep_levels,axis=0) / len(iep_levels)) + 2 * self.alpha * self.w, functions
+        return 2 * np.sum((np.array(level_preds) - img_data.y).reshape(-1,1) * iep_levels/len(iep_levels) + 2 * self.alpha * self.w, axis=0), functions
 
 
     def learn_old(self, img_data, functions):

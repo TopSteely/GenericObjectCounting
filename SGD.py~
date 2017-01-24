@@ -13,6 +13,7 @@ import math
 class SGD:
     def __init__(self, dataset, mode, category, prune_tree_levels, batch_size, eta, gamma, alpha, num_features=1000):
         print 'init SGD'
+        self.version = mode
         self.prune_tree_levels = prune_tree_levels
         self.n_features = num_features
         self.w = np.zeros(self.n_features)#0.1 * np.random.rand(self.n_features)
@@ -32,29 +33,49 @@ class SGD:
             self.method = self.learn_max
             self.loss = self.loss_max
             self.predict = self.predict_max
-        elif mode == 'avg':
+        elif mode == 'mean':
             self.method = self.learn_mean
             self.loss = self.loss_mean
             self.predict = self.predict_mean
+        elif mode == 'meanmax':
+            self.method = self.learn_mean
+            self.loss = self.loss_mean
+            self.predict = self.predict_max
+        elif mode == 'old':
+            self.method = self.learn_old
+            #self.loss = self.loss_mean
+            self.predict = self.predict_max
+        elif mode == 'ind':
+            self.method = self.learn_ind
+            #self.loss = self.loss_mean
+            self.predict = self.predict_max
             
     def set_scaler(self, scaler):
         self.scaler = scaler
         
     def loss_max(self, img_data):
         level_preds, _ = self.predictor.get_iep_levels(img_data, [])
-        return (np.max(level_preds) - img_data.y)**2 + self.alpha * math.sqrt(np.dot(self.w,self.w))
+        return np.min(np.array(level_preds) - img_data.y)**2 + self.alpha * math.sqrt(np.dot(self.w,self.w))
         
     def loss_mean(self, img_data):
         level_preds, _ = self.predictor.get_iep_levels(img_data, [])
-        return (np.mean(level_preds) - img_data.y)**2 + self.alpha * math.sqrt(np.dot(self.w,self.w))
+        return np.mean(np.array(level_preds) - img_data.y)**2 + self.alpha * math.sqrt(np.dot(self.w,self.w))
         
     def predict_mean(self, img_data):
         level_preds, _ = self.predictor.get_iep_levels(img_data, [])
         return np.mean(level_preds)
         
     def predict_max(self, img_data):
-        level_preds, _ = self.predictor.get_iep_levels(img_data, {})
+        level_preds, _ = self.predictor.get_iep_levels(img_data, [])
         return np.max(level_preds)
+
+    def predict_old(self, img_data, level):
+        level_pred, _ = self.predictor.iep(img_data, [], level)
+        return level_pred
+
+    def predict_ind(self, img_data):
+        level_preds, _ = self.predictor.get_iep_levels(img_data, [])
+        return level_preds
         
         
     def evaluate(self, mode, to=-1, debug=False):
@@ -71,21 +92,23 @@ class SGD:
             numbers = self.load.category_train[:to]
         elif mode == 'test':
             numbers = self.load.test_numbers[:to]
-	elif mode == 'val':
+        elif mode == 'val_cat':
             numbers = self.load.category_val[:to]
+        elif mode == 'val_all':
+            numbers = self.load.val_numbers[:to]
 
         for img_nr in numbers:
             img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
-            img_loss = (self.predict(img_data) - img_data.y)**2
+            img_loss = (self.predict(img_data) - img_data.y) ** 2
 	    #print 'preds: ',img_data.img_nr, self.predict(img_data), ' y: ', img_data.y
             #print 'preds: ',img_data.img_nr, self.predict(img_data), ' y: ', img_data.y, ' sklearn: ', self.sgd.predict(img_data.X[img_data.levels[0][0]].reshape(1, -1))
             squared_error += img_loss
             error += abs(self.predict(img_data) - img_data.y)
-            skl_error += (self.sgd.predict(img_data.X[img_data.levels[0][0]].reshape(1, -1)) - img_data.y)**2
             if img_data.y > 0:
                 non_zero_error += img_loss
                 n_non_zero += 1
             if debug:
+                skl_error += (self.sgd.predict(img_data.X[img_data.levels[0][0]].reshape(1, -1)) - img_data.y)**2
                 preds_d.append(self.predict(img_data))
                 y_d.append(img_data.y)
                 preds_skl.append(self.sgd.predict(img_data.X[img_data.levels[0][0]].reshape(1, -1)))
@@ -94,20 +117,20 @@ class SGD:
         return squared_error/len(numbers), error / len(numbers), non_zero_error / n_non_zero#skl_error/len(numbers),, self.eta
         
         
-    def loss_all(self):
+    def loss_all(self, to=-1):
 	tra_loss_temp = 0.0
 	te_loss_temp = 0.0
-	for img_nr in self.load.category_train:
+	for img_nr in self.load.category_train[0:to]:
             img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
 	    tra_loss_temp += self.loss(img_data)
-	for img_nr in self.load.category_val:
+	for img_nr in self.load.category_val[0:to]:
             img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
 	    te_loss_temp += self.loss(img_data)
-	return tra_loss_temp, te_loss_temp
+	return tra_loss_temp/len(self.load.category_train), te_loss_temp/len(self.load.category_val)
         
-    def learn(self, instances='all', to=-1):
-	train_losses = []
-	test_losses = []
+    def learn(self, instances='all', to=-1, debug=False):
+        train_losses = []
+        test_losses = []
         if instances=='all':
             training_data = self.load.training_numbers
         else:
@@ -115,7 +138,7 @@ class SGD:
         subset = training_data[:to]
         random.shuffle(subset)
         for i_img_nr, img_nr in enumerate(subset):
-	    start = time.time()
+            start = time.time()
             img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
             if img_nr in self.functions:
                 img_functions = self.functions[img_nr]
@@ -123,31 +146,37 @@ class SGD:
                 self.w_update += upd
             else:
                 temp = {}
-                upd, fct = self.method(img_data, temp)
-                self.w_update += upd
-                self.functions[img_nr] = fct
+                if self.version == 'old':
+                    self.method(img_data, temp)
+                else:
+                    upd, fct = self.method(img_data, temp)
+                    self.w_update += upd
+                #self.functions[img_nr] = fct
             self.samples_seen += 1
-            to_fit = img_data.X[img_data.levels[0][0]].reshape(1, -1)
-            self.sgd.partial_fit(to_fit,[img_data.y])
+            if self.prune_tree_levels == 1:
+                to_fit = img_data.X[img_data.levels[0][0]].reshape(1, -1)
+                self.sgd.partial_fit(to_fit,[img_data.y])
             if (i_img_nr + 1)%self.batch_size == 0:
                 self.update()
-		tr_loss, te_loss = self.loss_all()
-		train_losses.append(tr_loss)
-		test_losses.append(te_loss)
+                if debug:
+                    tr_loss, te_loss = self.loss_all(to)
+                    train_losses.append(tr_loss)
+                    test_losses.append(te_loss)
         if (i_img_nr + 1)%self.batch_size != 0:
-            self.update()
-	    tr_loss, te_loss = self.loss_all()
-    	    train_losses.append(tr_loss)
-	    test_losses.append(te_loss)
-	return train_losses, test_losses
-        
+            if self.version!='old':
+                self.update()
+            if debug:
+                tr_loss, te_loss = self.loss_all()
+                train_losses.append(tr_loss)
+                test_losses.append(te_loss)
+        if debug:
+    	   return train_losses, test_losses
         
     def update(self):
         self.w -= (self.eta * self.w_update)
         self.eta = self.eta * (1+self.eta0*self.gamma*self.samples_seen)**-1
         self.w_update = np.zeros(self.n_features)
         self.predictor = IEP.IEP(self.w, 'prediction')
-        
         
     def learn_max(self, img_data, functions):
         level_preds, functions = self.predictor.get_iep_levels(img_data, functions)
@@ -160,4 +189,26 @@ class SGD:
         
     def learn_mean(self, img_data, functions):
         iep_levels, functions = self.learner.get_iep_levels(img_data, functions)
-        return 2 * (self.predict(img_data) - img_data.y) * (np.array(iep_levels).sum() / len(iep_levels)) + 2 * self.alpha * self.w, functions
+        return 2 * np.sum((np.array(level_preds) - img_data.y).reshape(-1,1) * iep_levels/len(iep_levels) + 2 * self.alpha * self.w, axis=0), functions
+
+
+    def learn_old(self, img_data, functions):
+        for level in img_data.levels:
+            preds_level = self.predict_old(img_data, level)
+            iep_level, _ = self.learner.iep(img_data, functions, level)
+            self.w += (self.eta * ((preds_level - img_data.y) * -iep_level))#self.w -= (self.eta * (2*(preds_level - img_data.y)*iep_level))
+            self.predictor = IEP.IEP(self.w, 'prediction')
+
+    #def learn_really_old(self, img_data):
+        #for level in img_data.levels:
+        #    for f_ in self.w:
+        #        inner_prod += (f_ * x_node[f_])
+        #    dloss = (inner_prod - y_node)
+        #    preds_level = self.predict_old(img_data, level)
+        #    for i_f,f in enumerate(self.w):
+        #        w[f] += (self.eta * ((preds_level - img_data.y) * -iep_level[i_f]))
+
+    def learn_ind(self, img_data, functions):
+        level_preds = self.predict_ind(img_data)
+        iep_levels, _ = self.learner.get_iep_levels(img_data, [])
+        return np.sum(2 * (np.array(level_preds) - img_data.y).reshape(-1,1) * iep_levels + 2 * self.alpha * self.w, axis=0), functions
