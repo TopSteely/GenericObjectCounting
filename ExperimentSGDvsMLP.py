@@ -88,11 +88,11 @@ def main():
                 for img_nr in test_numbers_d:
                     img_data = Data.Data(load_dennis, img_nr, 10, None)
                     mlp_error += ((mlp2.predict(np.array(img_data.X[0]).reshape(1, -1)-img_data.y)**2)
-                    sgd_error += ((sgd_sklearn.predict(scaler_dennis.transform(np.array(img_data.X[0]).reshape(1, -1))-img_data.y)**2)
+                    sgd_error += (sgd_sklearn.predict(scaler_dennis.transform(np.array(img_data.X[0]).reshape(1, -1))-img_data.y)**2)
 
                 print 'Mlp2: ', al_i, mlp_error/len(test_numbers_d)
                 print 'SKL: ', al_i, sgd_error/len(test_numbers_d)
-                
+
         else:
             mlp_data = []
             mlp_y = []
