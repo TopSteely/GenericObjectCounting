@@ -214,7 +214,7 @@ class SGD:
         print len(iep_levels), len(iep_levels[0])
         a = 2 * (np.array(level_preds) - img_data.y) * iep_levels
         b = 2 * self.alpha * self.w
-        c = a + b
+        c = np.sum(a + b,axis=0)
         print len(a),len(a[0])
         print len(b)
         print len(c), len(c[0])
