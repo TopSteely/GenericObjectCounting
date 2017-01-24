@@ -8,7 +8,7 @@ import os
 classes = [
     #"person",
     "cow",  "horse", "sheep","bird",#"cat","dog"
-    "aeroplane", "bicycle", "boat", "bus", "car", "motorbike", "train",
+    "bicycle", "boat", "bus", "car", "motorbike", "train",#"aeroplane",
     "bottle", "chair", "diningtable", "pottedplant", "sofa", "tvmonitor"
 ]
 
