@@ -215,8 +215,8 @@ class SGD:
         a = 2 * (np.array(level_preds) - img_data.y) * iep_levels
         b = 2 * self.alpha * self.w
         c = a + b
-        print len(a)
+        print len(a),len(a[0])
         print len(b)
-        print len(c)
+        print len(c), len(c[0])
         raw_input()
         return 2 * (np.array(level_preds) - img_data.y) * iep_levels + 2 * self.alpha * self.w, functions
