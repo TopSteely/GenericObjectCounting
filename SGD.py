@@ -210,7 +210,7 @@ class SGD:
 
     def learn_ind(self, img_data):
         level_preds, _ = self.predict_ind(img_data)
-        iep_levels, _ = self.learner.get_iep_levels(img_data, []])
+        iep_levels, _ = self.learner.get_iep_levels(img_data, [])
         a = 2 * (level_preds - img_data.y) * iep_levels
         b = 2 * self.alpha * self.w
         c = a + b
