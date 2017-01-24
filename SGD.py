@@ -49,6 +49,11 @@ class SGD:
             self.method = self.learn_ind
             #self.loss = self.loss_mean
             self.predict = self.predict_max
+        elif mode == 'multi':
+            self.method = self.learn_multi
+            #self.loss = self.loss_mean
+            self.predict = self.predict_mean
+	    self.w_multi = np.zeros(self.prune_tree_levels,self.n_features)
             
     def set_scaler(self, scaler):
         self.scaler = scaler
@@ -191,6 +196,16 @@ class SGD:
 	level_preds = self.predict_ind(img_data)
         iep_levels, functions = self.learner.get_iep_levels(img_data, functions)
         return 2 * np.sum((np.array(level_preds) - img_data.y).reshape(-1,1) * iep_levels/len(iep_levels) + 2 * self.alpha * self.w, axis=0), functions
+
+
+    def learn_multi(self, img_data, functions):
+	ret = []
+	for level in img_data.levels:
+		predictor = IEP.IEP(self.w_muli[level], 'prediction')
+		level_pred, _ = predictor.iep(img_data, [], level)
+	        iep_level, _ = self.learner.iep(img_data, functions, level)
+		ret.append(2 * (level_pred - img_data.y) * iep_level + 2 * self.alpha * self.w_muli[level])
+        return ret, functions
 
 
     def learn_old(self, img_data, functions):
