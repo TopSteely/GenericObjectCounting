@@ -211,11 +211,11 @@ class SGD:
     def learn_ind(self, img_data, functions):
         level_preds = self.predict_ind(img_data)
         iep_levels, _ = self.learner.get_iep_levels(img_data, [])
-        a = 2 * (level_preds - img_data.y) * iep_levels
+        a = 2 * (np.array(level_preds) - img_data.y) * iep_levels
         b = 2 * self.alpha * self.w
         c = a + b
         print len(a)
         print len(b)
         print len(c)
         raw_input()
-        return 2 * (level_preds - img_data.y) * iep_levels + 2 * self.alpha * self.w, functions
+        return 2 * (np.array(level_preds) - img_data.y) * iep_levels + 2 * self.alpha * self.w, functions
