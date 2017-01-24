@@ -17,9 +17,9 @@ def main():
 #        exit()
     category = sys.argv[1]
 
-    learn_mode = 'all'
+    learn_mode = 'category'
 
-    pred_mode = 'mean'
+    pred_mode = 'ind'
 
     batch_size = 5
 

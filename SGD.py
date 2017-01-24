@@ -45,6 +45,10 @@ class SGD:
             self.method = self.learn_old
             #self.loss = self.loss_mean
             self.predict = self.predict_max
+        elif mode == 'ind':
+            self.method = self.learn_ind
+            #self.loss = self.loss_mean
+            self.predict = self.predict_max
             
     def set_scaler(self, scaler):
         self.scaler = scaler
@@ -68,6 +72,10 @@ class SGD:
     def predict_old(self, img_data, level):
         level_pred, _ = self.predictor.iep(img_data, [], level)
         return level_pred
+
+    def predict_ind(self, img_data):
+        level_preds, _ = self.predictor.get_iep_levels(img_data, [])
+        return level_preds
         
         
     def evaluate(self, mode, to=-1, debug=False):
@@ -190,3 +198,24 @@ class SGD:
             iep_level, _ = self.learner.iep(img_data, functions, level)
             self.w += (self.eta * ((preds_level - img_data.y) * -iep_level))#self.w -= (self.eta * (2*(preds_level - img_data.y)*iep_level))
             self.predictor = IEP.IEP(self.w, 'prediction')
+
+    def learn_really_old(self, img_data):
+        for level img_data.levels:
+            for f_ in self.w:
+                inner_prod += (f_ * x_node[f_])
+            dloss = (inner_prod - y_node)
+            preds_level = self.predict_old(img_data, level)
+            for i_f,f in enumerate(self.w):
+                w[f] += (self.eta * ((preds_level - img_data.y) * -iep_level[i_f]))
+
+    def learn_ind(self, img_data):
+        level_preds, _ = self.predict_ind(img_data)
+        iep_levels, _ = self.learner.get_iep_levels(img_data, []])
+        a = 2 * (level_preds - img_data.y) * iep_levels
+        b = 2 * self.alpha * self.w
+        c = a + b
+        print len(a)
+        print len(b)
+        print len(c)
+        raw_input()
+        return 2 * (level_preds - img_data.y) * iep_levels + 2 * self.alpha * self.w, functions
