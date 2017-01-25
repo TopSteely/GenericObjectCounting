@@ -183,7 +183,7 @@ class SGD:
     	   return train_losses, test_losses
         
     def update(self):
-        if self.mode == 'multi':
+        if self.version == 'multi':
             self.w_multi -= (self.eta * self.w_update)
             self.w_update = np.zeros((self.prune_tree_levels,self.n_features))
         else:
