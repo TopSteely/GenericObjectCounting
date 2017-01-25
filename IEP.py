@@ -100,6 +100,8 @@ class IEP:
                     queue.append((chain(base, [u]),
                                   filter(nbrs[u].__contains__,
                                          islice(cnbrs, i + 1, None))))
+            if Data.y > 0:
+                print iep, level
             return iep, function
             
     def get_iep_levels(self, Data, functions):
