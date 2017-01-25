@@ -33,6 +33,7 @@ for img_nr in negative_data:
 	img_data = Data.Data(load_other, img_nr, 10, None)
 	one = np.random.rand(1,len(img_data.X))
 	two = np.random.rand(1,len(img_data.X))
+	print one
 	data_to_scale.extend(img_data.X[one])
 	data_to_scale.extend(img_data.X[two])
 	y.append(0)
