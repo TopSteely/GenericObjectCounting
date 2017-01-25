@@ -53,8 +53,8 @@ class SGD:
             self.method = self.learn_multi
             #self.loss = self.loss_mean
             self.predict = self.predict_mean
-            self.w_multi = np.zeros(self.prune_tree_levels,self.n_features)
-            self.w_update = np.zeros(self.prune_tree_levels,self.n_features)
+            self.w_multi = np.zeros((self.prune_tree_levels,self.n_features))
+            self.w_update = np.zeros((self.prune_tree_levels,self.n_features))
             
     def set_scaler(self, scaler):
         self.scaler = scaler
@@ -185,7 +185,7 @@ class SGD:
     def update(self):
         if self.mode == 'multi':
             self.w_multi -= (self.eta * self.w_update)
-            self.w_update = np.zeros(self.prune_tree_levels,self.n_features)
+            self.w_update = np.zeros((self.prune_tree_levels,self.n_features))
         else:
             self.w -= (self.eta * self.w_update)
             self.w_update = np.zeros(self.n_features)
