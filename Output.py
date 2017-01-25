@@ -107,8 +107,12 @@ class Output:
         plt.clf()
         f,ax = plt.subplots(self.prune_tree_levels+1)
         for lvl in range(self.prune_tree_levels+1):
-            plt.plot(train, '-rx', label="training")
-            plt.plot(val, '-bo', label="validation")
+            ax[lvl].plot(train[lvl], '-rx', label="training")
+            ax[lvl].plot(val[lvl], '-bo', label="validation")
+            if lvl == self.prune_tree_levels+1:
+                ax[lvl].title.set_text("Mean and final loss")
+            else:
+                ax[lvl].title.set_text("Loss for level %s"%(lvl))
         plt.legend()
         plt.savefig(self.loss_path%(self.experiment,self.prune_tree_levels,eta,self.category, alpha))
         

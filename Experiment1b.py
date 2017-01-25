@@ -27,7 +27,7 @@ def main():
 
     epochs = 4
 
-    subsamples = 5
+    subsamples = 10
 
     for tree_level_size in range(5,6):
         #initialize
@@ -74,8 +74,8 @@ def main():
         # learn SGD
         for al_i in [math.pow(10,-5)]:#[math.pow(10,-4)]:#,math.pow(10,-2)
             for gamma_i in [math.pow(10,-5)]:#,math.pow(10,-4),math.pow(10,-3),math.pow(10,-2)
-                training_loss = np.zeros(tree_level_size+1)
-                validation_loss = np.zeros(tree_level_size+1)
+                training_loss = np.array([], dtype=np.int64).reshape(self.prune_tree_levels+1,0)
+                validation_loss = np.array([], dtype=np.int64).reshape(self.prune_tree_levels+1,0)
                 #sgd_pascal = SGD.SGD('pascal', 'max', category, tree_level_size, batch_size, eta_i, gamma_i, al_i)
                 if tree_level_size >= 1:
                     sgd_dennis = SGD.SGD('dennis', pred_mode, category, tree_level_size, batch_size, math.pow(10,-6), gamma_i, al_i, 4096)
