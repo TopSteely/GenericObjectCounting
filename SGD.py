@@ -154,18 +154,15 @@ class SGD:
         for img_nr in self.load.category_train[0:to]:
             img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
             tra_loss_temp += self.loss_per_level(img_data)
-            a = self.loss_per_level(img_data)
-            b = tra_loss_temp + a
-            print b, tra_loss_temp
-            raw_input()
         for img_nr in self.load.category_val[0:to]:
             img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
             te_loss_temp += self.loss_per_level(img_data)
+        print tra_loss_temp, te_loss_temp
         return tra_loss_temp/len(self.load.category_train), te_loss_temp/len(self.load.category_val)
         
     def learn(self, instances='all', to=-1, debug=False):
-        train_losses = []
-        test_losses = []
+        train_losses = np.array([])
+        test_losses = np.array([])
         if instances=='all':
             training_data = self.load.training_numbers
         else:
@@ -195,8 +192,12 @@ class SGD:
                 self.update()
                 if debug:
                     tr_loss, te_loss = self.loss_per_level_all(to)
+                    print tr_loss,te_loss
                     #tr_loss, te_loss = self.loss_all(to)
-                    train_losses.append(tr_loss)
+                    #train_losses.append(tr_loss)
+                    np.hstack(train_losses,tr_loss)
+                    print train_losses
+                    raw_input()
                     test_losses.append(te_loss)
         if (i_img_nr + 1)%self.batch_size != 0:
             if self.version!='old':
