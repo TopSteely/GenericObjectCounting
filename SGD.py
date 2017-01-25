@@ -66,6 +66,10 @@ class SGD:
     def loss_mean(self, img_data):
         level_preds, _ = self.predictor.get_iep_levels(img_data, [])
         return np.mean(np.array(level_preds) - img_data.y)**2 + self.alpha * math.sqrt(np.dot(self.w,self.w))
+
+    def loss_per_level(self, img_data):
+        level_preds, _ = self.predictor.get_iep_levels(img_data, [])
+        return (np.array(level_preds) - img_data.y)**2 + self.alpha * math.sqrt(np.dot(self.w,self.w))
         
     def predict_mean(self, img_data):
         level_preds, _ = self.predictor.get_iep_levels(img_data, [])
@@ -133,19 +137,32 @@ class SGD:
         
         
     def loss_all(self, to=-1):
-	tra_loss_temp = 0.0
-	te_loss_temp = 0.0
-	for img_nr in self.load.category_train[0:to]:
-            img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
-	    tra_loss_temp += self.loss(img_data)
-	for img_nr in self.load.category_val[0:to]:
-            img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
-	    te_loss_temp += self.loss(img_data)
-	return tra_loss_temp/len(self.load.category_train), te_loss_temp/len(self.load.category_val)
+    tra_loss_temp = 0.0
+    te_loss_temp = 0.0
+    for img_nr in self.load.category_train[0:to]:
+        img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
+        tra_loss_temp += self.loss(img_data)
+    for img_nr in self.load.category_val[0:to]:
+        img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
+        te_loss_temp += self.loss(img_data)
+    return tra_loss_temp/len(self.load.category_train), te_loss_temp/len(self.load.category_val)
 
     #todo:
-    def loss_per_level(self, to=-1):
-        print 'bla'
+    def loss_per_level_all(self, to=-1):
+        tra_loss_temp = np.zeros(self.prune_tree_levels)
+        te_loss_temp = np.zeros(self.prune_tree_levels)
+        for img_nr in self.load.category_train[0:to]:
+            img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
+            #tra_loss_temp += self.loss_per_level(img_data)
+            a = self.loss_per_level(img_data)
+            print a
+            b = tra_loss_temp + a
+            print b
+            raw_input()
+        for img_nr in self.load.category_val[0:to]:
+            img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
+            te_loss_temp += self.loss_per_level(img_data)
+        return tra_loss_temp/len(self.load.category_train), te_loss_temp/len(self.load.category_val)
         
     def learn(self, instances='all', to=-1, debug=False):
         train_losses = []
