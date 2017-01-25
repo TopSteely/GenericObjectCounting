@@ -27,7 +27,7 @@ def main():
 
     epochs = 4
 
-    subsamples = 6
+    subsamples = 20
 
     for tree_level_size in range(3,6):
         #initialize
@@ -89,6 +89,8 @@ def main():
                     #tr_l, te_l = sgd_dennis.learn('categories')
                     if debug:
                         tr_l, te_l = sgd_dennis.learn(learn_mode, subsamples, debug)
+                        print tr_l, te_l
+                        raw_input()
                     else:
                         sgd_dennis.learn(learn_mode)
                     #print tr_l, te_l
