@@ -70,14 +70,16 @@ mlp3_error = 0.0
 mlp4_error = 0.0
 mlp5_error = 0.0
 for img_nr in test_d:
-	if os.path.isfile('/var/node436/local/tstahl/Features_groundtruth/Features_ground_truth/%s/%s.txt'%(class_,format(img_nr, "06d"))):
-		feat = pd.read_csv('/var/node436/local/tstahl/Features_groundtruth/Features_ground_truth/%s/%s.txt'%(class_,format(img_nr, "06d")), header=None, delimiter=",").values
-	sgd_error += np.sum((sgd.predict(scaler.transform(feat)) - np.ones(feat.shape[0]))**2)
-	mlp1_error += np.sum((mlp1.predict(scaler.transform(feat)) - np.ones(feat.shape[0]))**2)
-	mlp2_error += np.sum((mlp2.predict(scaler.transform(feat)) - np.ones(feat.shape[0]))**2)
-	mlp3_error += np.sum((mlp3.predict(scaler.transform(feat)) - np.ones(feat.shape[0]))**2)
-	mlp4_error += np.sum((mlp4.predict(scaler.transform(feat)) - np.ones(feat.shape[0]))**2)
-	mlp5_error += np.sum((mlp5.predict(scaler.transform(feat)) - np.ones(feat.shape[0]))**2)
+	if os.path.isfile('/var/node436/local/tstahl/GroundTruth/%s/%s.txt'%(class_,format(img_nr, "06d"))):
+			gr = pd.read_csv('/var/node436/local/tstahl/GroundTruth/%s/%s.txt'%(class_,format(img_nr, "06d")), header=None, delimiter=",").values
+		img_data = Data.Data(load_other, img_nr, 10, None)
+		for i_b,bbox in enumerate(img_data.boxes):
+			count = 0.0
+			for ground_truth in gr:
+				count += get_intersection_over_union(bbox, ground_truth)
+			y.append(count)
+
+			sgd_error += (sgd.predict(scaler.transform(img_data.X[i_b])) - count)**2
 
 div_by = len(test_d)
 print 'SGD: ', sgd_error/div_by

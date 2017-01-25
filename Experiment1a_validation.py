@@ -31,7 +31,8 @@ for img_nr in training_data:
 	if os.path.isfile('/var/node436/local/tstahl/Features_groundtruth/Features_ground_truth/%s/%s.txt'%(class_,format(img_nr, "06d"))):
 		feat = pd.read_csv('/var/node436/local/tstahl/Features_groundtruth/Features_ground_truth/%s/%s.txt'%(class_,format(img_nr, "06d")), header=None, delimiter=",").values
 	data_to_scale.extend(feat)
-	y.append(1)
+	for ff in range(feat.shape[0]):
+		y.append(1)
 for img_nr in negative_data:
 	img_data = Data.Data(load_other, img_nr, 10, None)
 	data_to_scale.append(img_data.X[randint(1,len(img_data.X)-1)])
