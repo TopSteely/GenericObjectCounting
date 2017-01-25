@@ -196,12 +196,9 @@ class SGD:
                     #tr_loss, te_loss = self.loss_all(to)
                     #train_losses.append(tr_loss)
                     #train_losses = np.concatenate((train_losses,tr_loss), axis=0)
-                    print train_losses.shape, tr_loss.shape
-                    tr_loss = tr_loss.reshape(-1,1)
-                    print train_losses.shape, tr_loss.shape
-                    train_losses1 = np.concatenate((train_losses,tr_loss), axis=1)
+                    train_losses = np.concatenate((train_losses,tr_loss.reshape(-1,1)), axis=1)
                     test_losses = np.concatenate((train_losses,te_loss.reshape(-1,1)), axis=1)
-                    print train_losses1
+                    print train_losses
                     #print train_losses
                     raw_input()
                     #test_losses.append(te_loss)
@@ -210,6 +207,7 @@ class SGD:
                 self.update()
             if debug:
                 tr_loss, te_loss = self.loss_all(to)
+                print train_losses.shape, tr_loss.shape
                 train_losses = np.concatenate((train_losses,tr_loss.reshape(-1,1)), axis=1)
                 test_losses = np.concatenate((train_losses,te_loss.reshape(-1,1)), axis=1)
                 print train_losses1
