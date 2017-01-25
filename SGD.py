@@ -82,8 +82,11 @@ class SGD:
         if self.version == 'multi':
             level_preds = []
             for lvl in range(self.prune_tree_levels):
-                predictor = IEP.IEP(self.w_multi[lvl], 'prediction')
-                level_pred, _ = predictor.iep(img_data, [], lvl)
+                if lvl >= len(img_data.levels):
+                    level_pred = level_preds[-1]
+                else:
+                    predictor = IEP.IEP(self.w_multi[lvl], 'prediction')
+                    level_pred, _ = predictor.iep(img_data, [], lvl)
                 level_preds.append(level_pred)
         else:
             level_preds, _ = self.predictor.get_iep_levels(img_data, [])
