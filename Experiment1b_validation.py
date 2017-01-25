@@ -22,7 +22,8 @@ def get_intersection_over_union(A, B):
         intersection = [left, top, right, bottom];
         surface_intersection = (intersection[2]-intersection[0])*(intersection[3]-intersection[1]);
         surface_A = (A[2]- A[0])*(A[3]-A[1]) + 0.0;
-        return surface_intersection / surface_A
+        surface_B = (B[2]- B[0])*(B[3]-B[1]) + 0.0;
+        return surface_intersection / (surface_A + surface_B - surface_intersection)
 
 
 class_ = sys.argv[1]
@@ -38,6 +39,7 @@ for img_nr in training_data:
 	if os.path.isfile('/var/node436/local/tstahl/GroundTruth/%s/%s.txt'%(class_,format(img_nr, "06d"))):
 		gr = pd.read_csv('/var/node436/local/tstahl/GroundTruth/%s/%s.txt'%(class_,format(img_nr, "06d")), header=None, delimiter=",").values
 	img_data = Data.Data(load_other, img_nr, 10, None)
+	data_to_scale.extend(img_data.X)
 	for bbox in img_data.boxes:
 		count = 0.0
 		for ground_truth in gr:
@@ -46,7 +48,7 @@ for img_nr in training_data:
 scaler.fit(data_to_scale)
 
 scaled = scaler.transform(data_to_scale)
-sgd = SGDRegressor(eta0=math.pow(10,-5), learning_rate='invscaling', shuffle=True, average=True, alpha=0.00001)
+sgd  = SGDRegressor(eta0=math.pow(10,-5), learning_rate='invscaling', shuffle=True, average=True, alpha=0.00001)
 mlp1 = MLPRegressor(verbose=False, hidden_layer_sizes=(2000,500), alpha=al_i, activation='tanh')#learning_rate_init=math.pow(10,-3), learning_rate='invscaling',tol=0.00001
 mlp2 = MLPRegressor(verbose=False, hidden_layer_sizes=(2000,1000), alpha=al_i, activation='tanh')#learning_rate_init=math.pow(10,-3), learning_rate='invscaling',tol=0.00001
 mlp3 = MLPRegressor(verbose=False, hidden_layer_sizes=(1000,500), alpha=al_i, activation='tanh')#learning_rate_init=math.pow(10,-3), learning_rate='invscaling',tol=0.00001

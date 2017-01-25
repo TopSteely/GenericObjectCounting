@@ -37,6 +37,7 @@ for img_nr in negative_data:
 	data_to_scale.append(img_data.X[randint(1,len(img_data.X)-1)])
 	data_to_scale.append(img_data.X[randint(1,len(img_data.X)-1)])
 	y.append(0)
+	y.append(0)
 print len(data_to_scale)
 scaler.fit(data_to_scale)
 
