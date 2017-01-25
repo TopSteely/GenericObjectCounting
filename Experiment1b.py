@@ -25,6 +25,8 @@ def main():
 
     epochs = 4
 
+    subsamples = 80
+
     for tree_level_size in range(1,6):
         #initialize
         print 'initializing', tree_level_size
@@ -83,7 +85,7 @@ def main():
                     print epoch
                     #print epoch
                     #tr_l, te_l = sgd_dennis.learn('categories')
-                    sgd_dennis.learn(learn_mode)
+                    sgd_dennis.learn(learn_mode, subsamples)
                     #print tr_l, te_l
                     
                     #training_loss.extend(tr_l)
@@ -101,11 +103,11 @@ def main():
                     #output_dennis.plot_preds(preds_d_d, preds_skl_d, y_d_d, al_i)
                 #output_dennis.plot_train_val_loss(training_loss, validation_loss, eta_i, al_i)
             if learn_mode == 'all':
-                mse,ae, mse_non_zero = sgd_dennis.evaluate('val_all')
+                mse,ae, mse_non_zero = sgd_dennis.evaluate('val_all', subsamples)
             elif learn_mode == 'category':
-                mse,ae, mse_non_zero = sgd_dennis.evaluate('val_cat')
+                mse,ae, mse_non_zero = sgd_dennis.evaluate('val_cat', subsamples)
             print "Eval loss: ", al_i, mse
-            output_dennis.save(mse, ae, mse_non_zero, sgd_dennis, 'ind', al_i, learn_mode)
+            #output_dennis.save(mse, ae, mse_non_zero, sgd_dennis, 'ind', al_i, learn_mode)
     print learn_mode, pred_mode, epochs
     
     
