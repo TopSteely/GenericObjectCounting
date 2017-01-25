@@ -30,14 +30,11 @@ for img_nr in training_data:
 	if os.path.isfile('/var/node436/local/tstahl/Features_groundtruth/Features_ground_truth/%s/%s.txt'%(class_,format(img_nr, "06d"))):
 		feat = pd.read_csv('/var/node436/local/tstahl/Features_groundtruth/Features_ground_truth/%s/%s.txt'%(class_,format(img_nr, "06d")), header=None, delimiter=",").values
 	data_to_scale.extend(feat)
-	print len(data_to_scale)
 	y.append(1)
 for img_nr in negative_data:
 	img_data = Data.Data(load_other, img_nr, 10, None)
-	print len(data_to_scale)
-	print len(img_data.X[randint(1,len(img_data.X))])
-	data_to_scale.append(img_data.X[randint(1,len(img_data.X))])
-	data_to_scale.append(img_data.X[randint(1,len(img_data.X))])
+	data_to_scale.append(img_data.X[randint(1,len(img_data.X)-1)])
+	data_to_scale.append(img_data.X[randint(1,len(img_data.X)-1)])
 	y.append(0)
 print len(data_to_scale)
 scaler.fit(data_to_scale)
@@ -76,7 +73,7 @@ for img_nr in test_d:
 
 for img_nr in other_test_d:
 	img_data = Data.Data(load_other1, img_nr, 10, None)
-	one = randint(1,len(img_data.X))
+	one = randint(1,len(img_data.X)-1)
 
 	sgd_error += sgd.predict(scaler.transform(img_data.X[one]))**2
 	mlp1_error += mlp1.predict(scaler.transform(img_data.X[one]))**2
