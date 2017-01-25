@@ -8,7 +8,7 @@ import sys
 
 class_ = sys.argv[1]
 
-load_dennis = Input.Input('dennis',category)
+load_dennis = Input.Input('dennis',class_)
 load_other = Input.Input('dennis','cat')
 training_data = load_dennis.category_train
 negative_data = load_other.category_train
