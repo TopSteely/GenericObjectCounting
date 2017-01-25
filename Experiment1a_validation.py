@@ -3,6 +3,7 @@ import os
 import numpy as np
 import pandas as pd
 from sklearn.linear_model import SGDRegressor
+from sklearn.preprocessing import StandardScaler
 import math
 import sys
 
