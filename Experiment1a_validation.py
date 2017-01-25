@@ -26,12 +26,7 @@ for img_nr in training_data:
 	#	gr = pd.read_csv('/var/node436/local/tstahl/GroundTruth/%s/%s.txt'%(class_,format(img_nr, "06d")), header=None, delimiter=",").values
 	if os.path.isfile('/var/node436/local/tstahl/Features_groundtruth/Features_ground_truth/%s/%s.txt'%(class_,format(img_nr, "06d"))):
 		feat = pd.read_csv('/var/node436/local/tstahl/Features_groundtruth/Features_ground_truth/%s/%s.txt'%(class_,format(img_nr, "06d")), header=None, delimiter=",").values
-	print feat
-	print feat.shape
-	print feat.shape[0]
-	raw_input()
 	data_to_scale.extend(feat)
-	print len(data_to_scale)
 	y.append(1)
 for img_nr in negative_data:
 	img_data = Data.Data(load_other, img_nr, 10, None)
@@ -49,6 +44,7 @@ mlp2 = MLPRegressor(verbose=False, hidden_layer_sizes=(2000,1000), alpha=al_i, a
 mlp3 = MLPRegressor(verbose=False, hidden_layer_sizes=(1000,500), alpha=al_i, activation='tanh')#learning_rate_init=math.pow(10,-3), learning_rate='invscaling',tol=0.00001
 mlp4 = MLPRegressor(verbose=False, hidden_layer_sizes=(2000,250), alpha=al_i, activation='tanh')#learning_rate_init=math.pow(10,-3), learning_rate='invscaling',tol=0.00001
 mlp5 = MLPRegressor(verbose=False, hidden_layer_sizes=(500,500), alpha=al_i, activation='tanh')#learning_rate_init=math.pow(10,-3), learning_rate='invscaling',tol=0.00001
+print 'fitting'
 sgd.fit(scaled,y)
 mlp1.fit(scaled,y)
 mlp2.fit(scaled,y)
@@ -56,7 +52,7 @@ mlp3.fit(scaled,y)
 mlp4.fit(scaled,y)
 mlp5.fit(scaled,y)
 
-
+print 'fitted'
 sgd_error = 0.0
 mlp1_error = 0.0
 mlp2_error = 0.0
