@@ -6,6 +6,7 @@ from sklearn.linear_model import SGDRegressor
 from sklearn.preprocessing import StandardScaler
 import math
 import sys
+import Data
 
 class_ = sys.argv[1]
 
