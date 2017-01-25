@@ -69,6 +69,7 @@ class SGD:
 
     def loss_per_level(self, img_data):
         level_preds, _ = self.predictor.get_iep_levels(img_data, [])
+        print level_preds
         return (np.array(level_preds) - img_data.y)**2 + self.alpha * math.sqrt(np.dot(self.w,self.w))
         
     def predict_mean(self, img_data):
