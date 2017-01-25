@@ -17,15 +17,17 @@ def main():
 #        exit()
     category = sys.argv[1]
 
-    learn_mode = 'all'
+    learn_mode = 'category'
 
     pred_mode = 'mean'
+
+    debug = True
 
     batch_size = 5
 
     epochs = 4
 
-    subsamples = 80
+    subsamples = 20
 
     for tree_level_size in range(1,6):
         #initialize
@@ -85,7 +87,10 @@ def main():
                     print epoch
                     #print epoch
                     #tr_l, te_l = sgd_dennis.learn('categories')
-                    sgd_dennis.learn(learn_mode)
+                    if debug:
+                        tr_l, te_l = sgd_dennis.learn(learn_mode, subsamples, debug)
+                    else:
+                        sgd_dennis.learn(learn_mode)
                     #print tr_l, te_l
                     
                     #training_loss.extend(tr_l)
