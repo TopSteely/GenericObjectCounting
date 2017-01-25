@@ -196,7 +196,7 @@ class SGD:
                     #tr_loss, te_loss = self.loss_all(to)
                     #train_losses.append(tr_loss)
                     train_losses = np.concatenate((train_losses,tr_loss), axis=0)
-                    train_losses1 = np.concatenate((train_losses,tr_loss(, axis=1)
+                    train_losses1 = np.concatenate((train_losses,tr_loss), axis=1)
                     print train_losses, train_losses1
                     raw_input()
                     test_losses.append(te_loss)
