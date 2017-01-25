@@ -18,7 +18,7 @@ training_data = load_dennis.category_train
 test_d = load_dennis.category_val
 
 negative_data = load_other.category_train
-load_other1 = Input.Input('dennis','car')
+load_other1 = Input.Input('dennis','bus')
 
 other_test_d = load_other1.category_val
 scaler = StandardScaler()
@@ -35,7 +35,6 @@ for img_nr in negative_data:
 	img_data = Data.Data(load_other, img_nr, 10, None)
 	one = np.random.rand(1,len(img_data.X))
 	two = np.random.rand(1,len(img_data.X))
-	print randint(1,len(img_data.X))
 	data_to_scale.extend(img_data.X[randint(1,len(img_data.X))])
 	data_to_scale.extend(img_data.X[randint(1,len(img_data.X))])
 	y.append(0)
