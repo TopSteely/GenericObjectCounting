@@ -209,7 +209,7 @@ class SGD:
             if self.version!='old':
                 self.update()
             if debug:
-                tr_loss, te_loss = self.loss_all()
+                tr_loss, te_loss = self.loss_all(to)
                 train_losses.append(tr_loss)
                 test_losses.append(te_loss)
         if debug:
