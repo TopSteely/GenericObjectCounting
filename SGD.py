@@ -160,7 +160,7 @@ class SGD:
         for img_nr in self.load.category_val[0:to]:
             img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
             te_loss_temp[0:self.prune_tree_levels] += self.loss_per_level(img_data)
-            te_loss_temp[self.prune_tree_levels] += self.loss_per_level(img_data)
+            te_loss_temp[self.prune_tree_levels] += self.loss(img_data)
         return tra_loss_temp/len(self.load.category_train), te_loss_temp/len(self.load.category_val)
         
     def learn(self, instances='all', to=-1, debug=False):
