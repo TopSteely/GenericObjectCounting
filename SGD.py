@@ -155,11 +155,11 @@ class SGD:
         #te_loss_mean_temp = 0.0
         for img_nr in self.load.category_train[0:to]:
             img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
-            #tra_loss_temp += self.loss_per_level(img_data)
+            tra_loss_temp[0:self.prune_tree_levels,:] += self.loss_per_level(img_data)
             tra_loss_temp[self.prune_tree_levels] += self.loss(img_data)
         for img_nr in self.load.category_val[0:to]:
             img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
-            te_loss_temp += self.loss_per_level(img_data)
+            te_loss_temp[0:self.prune_tree_levels,:] += self.loss_per_level(img_data)
             te_loss_temp[self.prune_tree_levels] += self.loss_per_level(img_data)
         return tra_loss_temp/len(self.load.category_train), te_loss_temp/len(self.load.category_val)
         
@@ -195,19 +195,13 @@ class SGD:
                 self.update()
                 if debug:
                     tr_loss, te_loss = self.loss_per_level_all(to)
-                    #tr_loss, te_loss = self.loss_all(to)
-                    #train_losses.append(tr_loss)
-                    #train_losses = np.concatenate((train_losses,tr_loss), axis=0)
                     train_losses = np.concatenate((train_losses,tr_loss.reshape(-1,1)), axis=1)
                     test_losses = np.concatenate((train_losses,te_loss.reshape(-1,1)), axis=1)
-                    #print train_losses
-                    #test_losses.append(te_loss)
         if (i_img_nr + 1)%self.batch_size != 0:
             if self.version!='old':
                 self.update()
             if debug:
                 tr_loss, te_loss = self.loss_per_level_all(to)
-                #tr_loss, te_loss = self.loss_all(to)
                 train_losses = np.concatenate((train_losses,tr_loss.reshape(-1,1)), axis=1)
                 test_losses = np.concatenate((train_losses,te_loss.reshape(-1,1)), axis=1)
         if debug:
