@@ -200,10 +200,11 @@ class SGD:
                     tr_loss = tr_loss.reshape(-1,1)
                     print train_losses.shape, tr_loss.shape
                     train_losses1 = np.concatenate((train_losses,tr_loss), axis=1)
+                    test_losses = np.concatenate((train_losses,te_loss.reshape(-1,1)), axis=1)
                     print train_losses1
                     #print train_losses
                     raw_input()
-                    test_losses.append(te_loss)
+                    #test_losses.append(te_loss)
         if (i_img_nr + 1)%self.batch_size != 0:
             if self.version!='old':
                 self.update()
