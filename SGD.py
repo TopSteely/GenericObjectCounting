@@ -202,19 +202,19 @@ class SGD:
         return 2 * (self.predict(img_data) - img_data.y) * upd + 2 * self.alpha * self.w, functions
         
     def learn_mean(self, img_data, functions):
-	level_preds = self.predict_ind(img_data)
+        level_preds = self.predict_ind(img_data)
         iep_levels, functions = self.learner.get_iep_levels(img_data, functions)
         return 2 * np.sum((np.array(level_preds) - img_data.y).reshape(-1,1) * iep_levels/len(iep_levels) + 2 * self.alpha * self.w, axis=0), functions
 
 
     def learn_multi(self, img_data, functions):
-    ret = []
-    for level in img_data.levels:
-        predictor = IEP.IEP(self.w_muli[level], 'prediction')
-        level_pred, _ = predictor.iep(img_data, [], level)
-        iep_level, _ = self.learner.iep(img_data, functions, level)
-        ret.append(2 * (level_pred - img_data.y) * iep_level + 2 * self.alpha * self.w_muli[level])
-    return ret, functions
+        ret = []
+        for level in img_data.levels:
+            predictor = IEP.IEP(self.w_muli[level], 'prediction')
+            level_pred, _ = predictor.iep(img_data, [], level)
+            iep_level, _ = self.learner.iep(img_data, functions, level)
+            ret.append(2 * (level_pred - img_data.y) * iep_level + 2 * self.alpha * self.w_muli[level])
+        return ret, functions
 
 
     def learn_old(self, img_data, functions):
