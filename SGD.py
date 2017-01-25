@@ -229,6 +229,7 @@ class SGD:
             iep_level, _ = self.learner.iep(img_data, functions, level)
             ret[level,:] = (2 * (level_pred - img_data.y) * iep_level + 2 * self.alpha * self.w_multi[level])
         print ret, len(ret)
+        raw_input()
         return ret, functions
 
 
