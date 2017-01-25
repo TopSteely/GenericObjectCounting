@@ -153,11 +153,10 @@ class SGD:
         te_loss_temp = np.zeros(self.prune_tree_levels)
         for img_nr in self.load.category_train[0:to]:
             img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
-            #tra_loss_temp += self.loss_per_level(img_data)
+            tra_loss_temp += self.loss_per_level(img_data)
             a = self.loss_per_level(img_data)
-            print a
             b = tra_loss_temp + a
-            print b
+            print b, tra_loss_temp
             raw_input()
         for img_nr in self.load.category_val[0:to]:
             img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
