@@ -90,16 +90,25 @@ class Output:
         plt.savefig(self.plot_path%(img_nr,'sub_rects'))
 
     def plot_features_variance(self, var1, var2):
-	f,ax = plt.subplots(2)
+        f,ax = plt.subplots(2)
         ax[0].plot(var1, "rx")
         ax[1].plot(var2, "bo")
         plt.savefig(self.feat_var_path)
 
-    def plot_train_val_loss(self, train, val, eta, alpha):
-	plt.clf()
-	plt.plot(train, '-rx', label="training")
-	plt.plot(val, '-bo', label="validation")
-	plt.legend()
-	plt.savefig(self.loss_path%(self.experiment,self.prune_tree_levels,eta,self.category, alpha))
+    def plot_train_val_loss_old(self, train, val, eta, alpha):
+        plt.clf()
+        plt.plot(train, '-rx', label="training")
+        plt.plot(val, '-bo', label="validation")
+        plt.legend()
+        plt.savefig(self.loss_path%(self.experiment,self.prune_tree_levels,eta,self.category, alpha))
         
+
+    def plot_train_val_loss(self, train, val, eta, alpha):
+        plt.clf()
+        f,ax = plt.subplots(self.prune_tree_levels+1)
+        for lvl in range(self.prune_tree_levels+1):
+            plt.plot(train, '-rx', label="training")
+            plt.plot(val, '-bo', label="validation")
+        plt.legend()
+        plt.savefig(self.loss_path%(self.experiment,self.prune_tree_levels,eta,self.category, alpha))
         

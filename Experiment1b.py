@@ -74,8 +74,8 @@ def main():
         # learn SGD
         for al_i in [math.pow(10,-5)]:#[math.pow(10,-4)]:#,math.pow(10,-2)
             for gamma_i in [math.pow(10,-5)]:#,math.pow(10,-4),math.pow(10,-3),math.pow(10,-2)
-                training_loss = []
-                validation_loss = []
+                training_loss = np.zeros(tree_level_size+1)
+                validation_loss = np.zeros(tree_level_size+1)
                 #sgd_pascal = SGD.SGD('pascal', 'max', category, tree_level_size, batch_size, eta_i, gamma_i, al_i)
                 if tree_level_size >= 1:
                     sgd_dennis = SGD.SGD('dennis', pred_mode, category, tree_level_size, batch_size, math.pow(10,-6), gamma_i, al_i, 4096)
@@ -90,8 +90,8 @@ def main():
                     if debug:
                         tr_l, te_l = sgd_dennis.learn(learn_mode, subsamples, debug)
                         print tr_l, te_l
-                        training_loss.extend(tr_l)
-                        validation_loss.extend(te_l)
+                        training_loss = np.concatenate((training_loss,tr_l), axis=1)#.reshape(-1,1)
+                        validation_loss = np.concatenate((validation_loss,te_l), axis=1)#.reshape(-1,1)
                         print training_loss, validation_loss
                         raw_input()
                     else:
