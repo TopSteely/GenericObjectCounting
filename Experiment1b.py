@@ -25,7 +25,7 @@ def main():
 
     batch_size = 5
 
-    epochs = 4
+    epochs = 2
 
     subsamples = 10
 
@@ -89,11 +89,8 @@ def main():
                     #tr_l, te_l = sgd_dennis.learn('categories')
                     if debug:
                         tr_l, te_l = sgd_dennis.learn(learn_mode, subsamples, debug)
-                        print tr_l, te_l
                         training_loss = np.concatenate((training_loss,tr_l), axis=1)#.reshape(-1,1)
                         validation_loss = np.concatenate((validation_loss,te_l), axis=1)#.reshape(-1,1)
-                        print training_loss, validation_loss
-                        raw_input()
                     else:
                         sgd_dennis.learn(learn_mode)
                     #print tr_l, te_l
@@ -112,7 +109,7 @@ def main():
                     #output_pascal.plot_preds(preds_d_p, preds_skl_p, y_d_p, al_i)
                     #output_dennis.plot_preds(preds_d_d, preds_skl_d, y_d_d, al_i)
                 if debug:
-                    output_dennis.plot_train_val_loss(training_loss, validation_loss, eta_i, al_i)
+                    output_dennis.plot_train_val_loss(training_loss, validation_loss, math.pow(10,-5), al_i)
             if learn_mode == 'all':
                 mse,ae, mse_non_zero = sgd_dennis.evaluate('val_all')
             elif learn_mode == 'category':
