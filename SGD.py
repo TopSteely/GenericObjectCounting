@@ -210,8 +210,9 @@ class SGD:
                 self.update()
             if debug:
                 tr_loss, te_loss = self.loss_all(to)
-                train_losses.append(tr_loss)
-                test_losses.append(te_loss)
+                train_losses = np.concatenate((train_losses,tr_loss.reshape(-1,1)), axis=1)
+                test_losses = np.concatenate((train_losses,te_loss.reshape(-1,1)), axis=1)
+                print train_losses1
         if debug:
     	   return train_losses, test_losses
         
