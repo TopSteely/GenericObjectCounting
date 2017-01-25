@@ -19,17 +19,17 @@ def main():
 
     learn_mode = 'category'
 
-    pred_mode = 'mean'
+    pred_mode = 'multi'
 
-    debug = False
+    debug = True
 
     batch_size = 5
 
-    epochs = 4
+    epochs = 2
 
     subsamples = 10
 
-    for tree_level_size in range(1,6):
+    for tree_level_size in range(5,6):
         #initialize
         print 'initializing', tree_level_size
         #sgd = SGD.SGD('max', category, tree_level_size, batch_size, math.pow(10,-4), 0.003, math.pow(10,-5))
@@ -77,10 +77,7 @@ def main():
                 training_loss = np.array([], dtype=np.int64).reshape(tree_level_size+1,0)
                 validation_loss = np.array([], dtype=np.int64).reshape(tree_level_size+1,0)
                 #sgd_pascal = SGD.SGD('pascal', 'max', category, tree_level_size, batch_size, eta_i, gamma_i, al_i)
-                if tree_level_size >= 1:
-                    sgd_dennis = SGD.SGD('dennis', pred_mode, category, tree_level_size, batch_size, math.pow(10,-6), gamma_i, al_i, 4096)
-                else:
-                    sgd_dennis = SGD.SGD('dennis', pred_mode, category, tree_level_size, batch_size, math.pow(10,-5), gamma_i, al_i, 4096)
+                sgd_dennis = SGD.SGD('dennis', pred_mode, category, tree_level_size, batch_size, math.pow(10,-5), gamma_i, al_i, 4096)
                 sgd_dennis.set_scaler(scaler_dennis)
                 print al_i, gamma_i
                 for epoch in range(epochs):

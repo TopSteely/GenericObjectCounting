@@ -28,7 +28,7 @@ class Output:
 		self.scaler_category_path = '/var/node436/local/tstahl/models/scaler_%s_pascal.p'%(category)
         self.classifier_path = '/var/node436/local/tstahl/models/classifier_%s.p'%(category)
 	self.feat_var_path = '/var/node436/local/tstahl/plos/feat_var.png'
-	self.loss_path = '/var/node436/local/tstahl/plos/loss_%s_%s_%s_%s_%s.png'
+	self.loss_path = '/var/node436/local/tstahl/plos/loss_%s_%s_%s_%s_%s_%s.png'
         
     def dump_scaler(self, scaler):
         pickle.dump(scaler, open(self.scaler_path, "wb"))
@@ -107,8 +107,8 @@ class Output:
         plt.clf()
         f,ax = plt.subplots(self.prune_tree_levels+1)
         for lvl in range(self.prune_tree_levels+1):
-            l1 = ax[lvl].plot(train[lvl], '-rx', label="training")
-            l2 = ax[lvl].plot(val[lvl], '-bo', label="validation")
+            ax[lvl].plot(train[lvl], '-rx', label="training")
+            ax[lvl].plot(val[lvl], '-bo', label="validation")
             ax[lvl].tick_params(
                 axis='x',          # changes apply to the x-axis
                 which='both',      # both major and minor ticks are affected
@@ -119,6 +119,6 @@ class Output:
                 ax[lvl].title.set_text("Mean and final loss")
             else:
                 ax[lvl].title.set_text("Loss for level %s"%(lvl))
-        f.legend((l1, l2), ('training','validation'), 'upper right')
-        plt.savefig(self.loss_path%(self.experiment,self.prune_tree_levels,eta,self.category, alpha))
+        plt.legend()
+        plt.savefig(self.loss_path%(self.experiment,self.prune_tree_levels,eta,self.category, alpha, self.mode))
         
