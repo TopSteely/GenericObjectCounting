@@ -166,7 +166,7 @@ class SGD:
                 upd,_ = self.method(img_data, img_functions)
                 self.w_update += upd
             else:
-                temp = {}
+                temp = []
                 if self.version == 'old':
                     self.method(img_data, temp)
                 else:
