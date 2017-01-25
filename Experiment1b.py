@@ -27,7 +27,7 @@ def main():
 
     epochs = 4
 
-    subsamples = 20
+    subsamples = 6
 
     for tree_level_size in range(3,6):
         #initialize

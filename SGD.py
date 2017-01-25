@@ -195,8 +195,9 @@ class SGD:
                     print tr_loss,te_loss
                     #tr_loss, te_loss = self.loss_all(to)
                     #train_losses.append(tr_loss)
-                    np.hstack(train_losses,tr_loss)
-                    print train_losses
+                    train_losses = np.concatenate((train_losses,tr_loss, axis=0))
+                    train_losses1 = np.concatenate((train_losses,tr_loss, axis=1))
+                    print train_losses, train_losses1
                     raw_input()
                     test_losses.append(te_loss)
         if (i_img_nr + 1)%self.batch_size != 0:
