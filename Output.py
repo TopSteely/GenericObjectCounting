@@ -107,12 +107,18 @@ class Output:
         plt.clf()
         f,ax = plt.subplots(self.prune_tree_levels+1)
         for lvl in range(self.prune_tree_levels+1):
-            ax[lvl].plot(train[lvl], '-rx', label="training")
-            ax[lvl].plot(val[lvl], '-bo', label="validation")
-            if lvl == self.prune_tree_levels+1:
+            l1 = ax[lvl].plot(train[lvl], '-rx', label="training")
+            l2 = ax[lvl].plot(val[lvl], '-bo', label="validation")
+            ax[lvl].tick_params(
+                axis='x',          # changes apply to the x-axis
+                which='both',      # both major and minor ticks are affected
+                bottom='off',      # ticks along the bottom edge are off
+                top='off',         # ticks along the top edge are off
+                labelbottom='off')
+            if lvl == self.prune_tree_levels:
                 ax[lvl].title.set_text("Mean and final loss")
             else:
                 ax[lvl].title.set_text("Loss for level %s"%(lvl))
-        plt.legend()
+        f.legend((l1, l2), ('training','validation'), 'upper right')
         plt.savefig(self.loss_path%(self.experiment,self.prune_tree_levels,eta,self.category, alpha))
         
