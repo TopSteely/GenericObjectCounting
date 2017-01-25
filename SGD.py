@@ -110,11 +110,13 @@ class SGD:
         return level_preds
 
     def predict_multi(self, img_data):
-        print 'predict multi'
         preds = []
         for level in range(self.prune_tree_levels):
-            predictor = IEP.IEP(self.w_multi[level], 'prediction')
-            level_pred, _ = predictor.iep(img_data, [], level)
+            if level >= len(img_data.levels):
+                level_pred = level_preds[-1]
+            else:
+                predictor = IEP.IEP(self.w_multi[level], 'prediction')
+                level_pred, _ = predictor.iep(img_data, [], level)
             preds.append(level_pred)
         return np.mean(preds)
         
@@ -257,6 +259,8 @@ class SGD:
     def learn_multi(self, img_data, functions):
         ret = np.zeros((self.prune_tree_levels,self.n_features))
         for level in range(self.prune_tree_levels):
+            if level >= len(img_data.levels):
+                continue
             predictor = IEP.IEP(self.w_multi[level], 'prediction')
             level_pred, _ = predictor.iep(img_data, [], level)
             iep_level, _ = self.learner.iep(img_data, functions, level)
