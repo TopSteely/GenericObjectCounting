@@ -70,11 +70,11 @@ def main():
             
         if learn_mode == 'all':
             for al_i in [math.pow(10,-4), math.pow(10,-3)]:
-                mlp1 = MLPRegressor(verbose=False, hidden_layer_sizes=(2000,500), alpha=al_i, activation='tanh')#learning_rate_init=math.pow(10,-3), learning_rate='invscaling',tol=0.00001
-                mlp2 = MLPRegressor(verbose=False, hidden_layer_sizes=(2000,1000), alpha=al_i, activation='tanh')#learning_rate_init=math.pow(10,-3), learning_rate='invscaling',tol=0.00001
-                mlp3 = MLPRegressor(verbose=False, hidden_layer_sizes=(1000,500), alpha=al_i, activation='tanh')#learning_rate_init=math.pow(10,-3), learning_rate='invscaling',tol=0.00001
-                mlp4 = MLPRegressor(verbose=False, hidden_layer_sizes=(2000,250), alpha=al_i, activation='tanh')#learning_rate_init=math.pow(10,-3), learning_rate='invscaling',tol=0.00001
-                mlp5 = MLPRegressor(verbose=False, hidden_layer_sizes=(500,500), alpha=al_i, activation='tanh')#learning_rate_init=math.pow(10,-3), learning_rate='invscaling',tol=0.00001
+                mlp1 = MLPRegressor(verbose=False, hidden_layer_sizes=(2000,500), alpha=al_i, activation='tanh',learning_rate_init=math.pow(10,-4))#learning_rate_init=math.pow(10,-3), learning_rate='invscaling',tol=0.00001
+                mlp2 = MLPRegressor(verbose=False, hidden_layer_sizes=(2000,1000), alpha=al_i, activation='tanh',learning_rate_init=math.pow(10,-4))#learning_rate_init=math.pow(10,-3), learning_rate='invscaling',tol=0.00001
+                mlp3 = MLPRegressor(verbose=False, hidden_layer_sizes=(1000,500), alpha=al_i, activation='tanh',learning_rate_init=math.pow(10,-4))#learning_rate_init=math.pow(10,-3), learning_rate='invscaling',tol=0.00001
+                mlp4 = MLPRegressor(verbose=False, hidden_layer_sizes=(2000,250), alpha=al_i, activation='tanh',learning_rate_init=math.pow(10,-4))#learning_rate_init=math.pow(10,-3), learning_rate='invscaling',tol=0.00001
+                mlp5 = MLPRegressor(verbose=False, hidden_layer_sizes=(500,500), alpha=al_i, activation='tanh',learning_rate_init=math.pow(10,-4))#learning_rate_init=math.pow(10,-3), learning_rate='invscaling',tol=0.00001
                 sgd_sklearn= SGDRegressor(eta0=math.pow(10,-4), learning_rate='invscaling', n_iter = 4)
                 for bi_x in range(5):
                     mlp_data = []
