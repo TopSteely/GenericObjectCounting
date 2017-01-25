@@ -116,7 +116,7 @@ class SGD:
         preds = []
         for level in range(self.prune_tree_levels):
             if level >= len(img_data.levels):
-                level_pred = level_preds[-1]
+                level_pred = preds[-1]
             else:
                 predictor = IEP.IEP(self.w_multi[level], 'prediction')
                 level_pred, _ = predictor.iep(img_data, [], level)
