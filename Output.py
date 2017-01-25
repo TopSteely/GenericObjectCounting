@@ -119,6 +119,6 @@ class Output:
                 ax[lvl].title.set_text("Mean and final loss")
             else:
                 ax[lvl].title.set_text("Loss for level %s"%(lvl))
-        plt.legend()
+        plt.legend('upper left')
         plt.savefig(self.loss_path%(self.experiment,self.prune_tree_levels,eta,self.category, alpha, self.mode))
         
