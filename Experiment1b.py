@@ -17,7 +17,7 @@ def main():
 #        exit()
     category = sys.argv[1]
 
-    learn_mode = 'category'
+    learn_mode = 'all'
 
     pred_mode = 'multi'
 
@@ -27,7 +27,7 @@ def main():
 
     subsamples = 80
 
-    for tree_level_size in range(3,6):
+    for tree_level_size in range(1,6):
         #initialize
         print 'initializing', tree_level_size
         #sgd = SGD.SGD('max', category, tree_level_size, batch_size, math.pow(10,-4), 0.003, math.pow(10,-5))
@@ -85,7 +85,7 @@ def main():
                     print epoch
                     #print epoch
                     #tr_l, te_l = sgd_dennis.learn('categories')
-                    sgd_dennis.learn(learn_mode, subsamples)
+                    sgd_dennis.learn(learn_mode)
                     #print tr_l, te_l
                     
                     #training_loss.extend(tr_l)
@@ -103,9 +103,9 @@ def main():
                     #output_dennis.plot_preds(preds_d_d, preds_skl_d, y_d_d, al_i)
                 #output_dennis.plot_train_val_loss(training_loss, validation_loss, eta_i, al_i)
             if learn_mode == 'all':
-                mse,ae, mse_non_zero = sgd_dennis.evaluate('val_all', subsamples)
+                mse,ae, mse_non_zero = sgd_dennis.evaluate('val_all')
             elif learn_mode == 'category':
-                mse,ae, mse_non_zero = sgd_dennis.evaluate('val_cat', subsamples)
+                mse,ae, mse_non_zero = sgd_dennis.evaluate('val_cat')
             print "Eval loss: ", al_i, mse
             #output_dennis.save(mse, ae, mse_non_zero, sgd_dennis, 'ind', al_i, learn_mode)
     print learn_mode, pred_mode, epochs
