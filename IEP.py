@@ -17,12 +17,13 @@ class IEP:
     def iep(self, Data, function, level):
         X = Data.X
         sets = Data.levels[level]
-        print sets
+        print sets, self.w, np.all(self.w == 1)
         coords = Data.boxes
         if np.all(self.w == 1):
             iep = np.zeros(Data.num_features)
         else:
             iep = 0
+        print iep
         if len(sets) == 1:
             print 'len==1'
             if function == []:
