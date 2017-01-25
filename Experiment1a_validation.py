@@ -7,6 +7,8 @@ from sklearn.preprocessing import StandardScaler
 import math
 import sys
 import Data
+from random import randint
+
 
 class_ = sys.argv[1]
 
@@ -33,9 +35,9 @@ for img_nr in negative_data:
 	img_data = Data.Data(load_other, img_nr, 10, None)
 	one = np.random.rand(1,len(img_data.X))
 	two = np.random.rand(1,len(img_data.X))
-	print one
-	data_to_scale.extend(img_data.X[one])
-	data_to_scale.extend(img_data.X[two])
+	print randint(1,len(img_data.X))
+	data_to_scale.extend(img_data.X[randint(1,len(img_data.X))])
+	data_to_scale.extend(img_data.X[randint(1,len(img_data.X))])
 	y.append(0)
 scaler.fit(data_to_scale)
 
