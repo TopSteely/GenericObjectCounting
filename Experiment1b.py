@@ -19,7 +19,7 @@ def main():
 
     learn_mode = 'all'
 
-    pred_mode = 'mean'
+    pred_mode = 'multi'
 
     batch_size = 5
 

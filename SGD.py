@@ -53,7 +53,8 @@ class SGD:
             self.method = self.learn_multi
             #self.loss = self.loss_mean
             self.predict = self.predict_mean
-	    self.w_multi = np.zeros(self.prune_tree_levels,self.n_features)
+            self.w_multi = np.zeros(self.prune_tree_levels,self.n_features)
+            self.w_update = np.zeros(self.prune_tree_levels,self.n_features)
             
     def set_scaler(self, scaler):
         self.scaler = scaler
@@ -132,6 +133,10 @@ class SGD:
             img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
 	    te_loss_temp += self.loss(img_data)
 	return tra_loss_temp/len(self.load.category_train), te_loss_temp/len(self.load.category_val)
+
+    #todo:
+    def loss_per_level(self, to=-1):
+        print 'bla'
         
     def learn(self, instances='all', to=-1, debug=False):
         train_losses = []
@@ -178,9 +183,13 @@ class SGD:
     	   return train_losses, test_losses
         
     def update(self):
-        self.w -= (self.eta * self.w_update)
+        if self.mode == 'multi':
+            self.w_multi -= (self.eta * self.w_update)
+            self.w_update = np.zeros(self.prune_tree_levels,self.n_features)
+        else:
+            self.w -= (self.eta * self.w_update)
+            self.w_update = np.zeros(self.n_features)
         self.eta = self.eta * (1+self.eta0*self.gamma*self.samples_seen)**-1
-        self.w_update = np.zeros(self.n_features)
         self.predictor = IEP.IEP(self.w, 'prediction')
         
     def learn_max(self, img_data, functions):
@@ -199,13 +208,13 @@ class SGD:
 
 
     def learn_multi(self, img_data, functions):
-	ret = []
-	for level in img_data.levels:
-		predictor = IEP.IEP(self.w_muli[level], 'prediction')
-		level_pred, _ = predictor.iep(img_data, [], level)
-	        iep_level, _ = self.learner.iep(img_data, functions, level)
-		ret.append(2 * (level_pred - img_data.y) * iep_level + 2 * self.alpha * self.w_muli[level])
-        return ret, functions
+    ret = []
+    for level in img_data.levels:
+        predictor = IEP.IEP(self.w_muli[level], 'prediction')
+        level_pred, _ = predictor.iep(img_data, [], level)
+        iep_level, _ = self.learner.iep(img_data, functions, level)
+        ret.append(2 * (level_pred - img_data.y) * iep_level + 2 * self.alpha * self.w_muli[level])
+    return ret, functions
 
 
     def learn_old(self, img_data, functions):
