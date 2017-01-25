@@ -196,14 +196,14 @@ class SGD:
                 if debug:
                     tr_loss, te_loss = self.loss_per_level_all(to)
                     train_losses = np.concatenate((train_losses,tr_loss.reshape(-1,1)), axis=1)
-                    test_losses = np.concatenate((train_losses,te_loss.reshape(-1,1)), axis=1)
+                    test_losses = np.concatenate((test_losses,te_loss.reshape(-1,1)), axis=1)
         if (i_img_nr + 1)%self.batch_size != 0:
             if self.version!='old':
                 self.update()
             if debug:
                 tr_loss, te_loss = self.loss_per_level_all(to)
                 train_losses = np.concatenate((train_losses,tr_loss.reshape(-1,1)), axis=1)
-                test_losses = np.concatenate((train_losses,te_loss.reshape(-1,1)), axis=1)
+                test_losses = np.concatenate((test_losses,te_loss.reshape(-1,1)), axis=1)
         if debug:
     	   return train_losses, test_losses
         
