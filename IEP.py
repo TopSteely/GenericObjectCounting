@@ -17,12 +17,14 @@ class IEP:
     def iep(self, Data, function, level):
         X = Data.X
         sets = Data.levels[level]
+        print sets
         coords = Data.boxes
         if np.all(self.w == 1):
             iep = np.zeros(Data.num_features)
         else:
             iep = 0
         if len(sets) == 1:
+            print 'len==1'
             if function == []:
                 function.append(['+',sets[0]])
 #            if np.all(self.w == 1):
@@ -31,6 +33,7 @@ class IEP:
 #                print 'root: ', sets[0], (X[sets[0]]==0).sum(), self.w.sum(), len(self.w)
             return np.dot(self.w,X[sets[0]]), function
         elif function != []:
+            print 'func exists'
             for fun in function:
                 if '+' in fun[0]:
                     iep += np.dot(self.w,X[fun[1]])
@@ -41,6 +44,7 @@ class IEP:
                     exit()
             return iep, function
         else:
+            print 'levels'
             level_coords = []
             for i in sets:
                 level_coords.append(coords[i])
@@ -102,6 +106,7 @@ class IEP:
                                          islice(cnbrs, i + 1, None))))
             if Data.y > 0:
                 print iep, level
+                raw_input()
             return iep, function
             
     def get_iep_levels(self, Data, functions):
