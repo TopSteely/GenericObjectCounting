@@ -33,8 +33,6 @@ for img_nr in training_data:
 	y.append(1)
 for img_nr in negative_data:
 	img_data = Data.Data(load_other, img_nr, 10, None)
-	one = np.random.rand(1,len(img_data.X))
-	two = np.random.rand(1,len(img_data.X))
 	data_to_scale.extend(img_data.X[randint(1,len(img_data.X))])
 	data_to_scale.extend(img_data.X[randint(1,len(img_data.X))])
 	y.append(0)
@@ -74,7 +72,7 @@ for img_nr in test_d:
 
 for img_nr in other_test_d:
 	img_data = Data.Data(load_other1, img_nr, 10, None)
-	one = np.random.rand(1,len(img_data.X))
+	one = randint(1,len(img_data.X))
 
 	sgd_error += sgd.predict(scaler.transform(img_data.X[one]))**2
 	mlp1_error += mlp1.predict(scaler.transform(img_data.X[one]))**2
