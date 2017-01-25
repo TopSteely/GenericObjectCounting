@@ -74,7 +74,7 @@ class SGD:
                 level_pred = level_preds[-1]
             else:
                 predictor = IEP.IEP(self.w_multi[lvl], 'prediction')
-                level_pred, _ = predictor.iep(img_data, [], level)
+                level_pred, _ = predictor.iep(img_data, [], lvl)
             level_preds.append(level_pred)
         return np.mean(np.array(level_preds) - img_data.y)**2 + self.alpha * math.sqrt(np.dot(self.w,self.w))
 
