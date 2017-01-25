@@ -70,7 +70,7 @@ class SGD:
     def loss_multi(self, img_data):
         level_preds = []
         for lvl in range(self.prune_tree_levels):
-            predictor = IEP.IEP(self.w_multi[level], 'prediction')
+            predictor = IEP.IEP(self.w_multi[lvl], 'prediction')
             level_pred, _ = predictor.iep(img_data, [], level)
             level_preds.append(level_pred)
         return np.mean(np.array(level_preds) - img_data.y)**2 + self.alpha * math.sqrt(np.dot(self.w,self.w))
@@ -79,7 +79,7 @@ class SGD:
         if self.version == 'multi':
             level_preds = []
             for lvl in range(self.prune_tree_levels):
-                predictor = IEP.IEP(self.w_multi[level], 'prediction')
+                predictor = IEP.IEP(self.w_multi[lvl], 'prediction')
                 level_pred, _ = predictor.iep(img_data, [], level)
                 level_preds.append(level_pred)
         else:
