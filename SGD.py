@@ -157,7 +157,6 @@ class SGD:
         for img_nr in self.load.category_val[0:to]:
             img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
             te_loss_temp += self.loss_per_level(img_data)
-        print tra_loss_temp, te_loss_temp
         return tra_loss_temp/len(self.load.category_train), te_loss_temp/len(self.load.category_val)
         
     def learn(self, instances='all', to=-1, debug=False):
@@ -206,7 +205,8 @@ class SGD:
             if self.version!='old':
                 self.update()
             if debug:
-                tr_loss, te_loss = self.loss_all(to)
+                tr_loss, te_loss = self.loss_per_level_all(to)
+                #tr_loss, te_loss = self.loss_all(to)
                 print train_losses.shape, tr_loss.shape
                 train_losses = np.concatenate((train_losses,tr_loss.reshape(-1,1)), axis=1)
                 test_losses = np.concatenate((train_losses,te_loss.reshape(-1,1)), axis=1)
