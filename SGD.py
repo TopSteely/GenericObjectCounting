@@ -213,7 +213,7 @@ class SGD:
             predictor = IEP.IEP(self.w_multi[level], 'prediction')
             level_pred, _ = predictor.iep(img_data, [], level)
             iep_level, _ = self.learner.iep(img_data, functions, level)
-            ret.append(2 * (level_pred - img_data.y) * iep_level + 2 * self.alpha * self.w_muli[level])
+            ret.append(2 * (level_pred - img_data.y) * iep_level + 2 * self.alpha * self.w_multi[level])
         return ret, functions
 
 
