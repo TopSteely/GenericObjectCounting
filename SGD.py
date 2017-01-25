@@ -210,7 +210,7 @@ class SGD:
                 print train_losses.shape, tr_loss.shape
                 train_losses = np.concatenate((train_losses,tr_loss.reshape(-1,1)), axis=1)
                 test_losses = np.concatenate((train_losses,te_loss.reshape(-1,1)), axis=1)
-                print train_losses1
+                print train_losses
         if debug:
     	   return train_losses, test_losses
         
