@@ -161,8 +161,8 @@ class SGD:
         return tra_loss_temp/len(self.load.category_train), te_loss_temp/len(self.load.category_val)
         
     def learn(self, instances='all', to=-1, debug=False):
-        train_losses = np.array([])
-        test_losses = np.array([])
+        train_losses = np.array([], dtype=np.int64).reshape(self.prune_tree_levels,0)
+        test_losses = np.array([], dtype=np.int64).reshape(self.prune_tree_levels,0)
         if instances=='all':
             training_data = self.load.training_numbers
         else:
