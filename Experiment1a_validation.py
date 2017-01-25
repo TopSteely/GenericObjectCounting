@@ -12,7 +12,12 @@ class_ = sys.argv[1]
 load_dennis = Input.Input('dennis',class_)
 load_other = Input.Input('dennis','cat')
 training_data = load_dennis.category_train
+test_d = load_dennis.category_val
+
 negative_data = load_other.category_train
+load_other1 = Input.Input('dennis','car')
+
+other_test_d = load_other1.category_val
 scaler = StandardScaler()
 data_to_scale = []
 y = []
@@ -26,9 +31,10 @@ for img_nr in training_data:
 	print feat.shape[0]
 	raw_input()
 	data_to_scale.extend(feat)
+	print len(data_to_scale)
 	y.append(1)
 for img_nr in negative_data:
-	img_data = Data.Data(load_dennis, img_nr, 10, None)
+	img_data = Data.Data(load_other, img_nr, 10, None)
 	one = np.random.rand(1,len(img_data.X))
 	two = np.random.rand(1,len(img_data.X))
 	data_to_scale.extend(img_data.X[one])
@@ -57,12 +63,31 @@ mlp2_error = 0.0
 mlp3_error = 0.0
 mlp4_error = 0.0
 mlp5_error = 0.0
-for img_nr in training_data:
+for img_nr in test_d:
 	if os.path.isfile('/var/node436/local/tstahl/Features_groundtruth/Features_ground_truth/%s/%s.txt'%(class_,format(img_nr, "06d"))):
 		feat = pd.read_csv('/var/node436/local/tstahl/Features_groundtruth/Features_ground_truth/%s/%s.txt'%(class_,format(img_nr, "06d")), header=None, delimiter=",").values
-	sgd_error += sgd.predict(scaler.transform(feat))
-	mlp1_error += mlp1.predict(scaler.transform(feat))
-	mlp2_error += mlp2.predict(scaler.transform(feat))
-	mlp3_error += mlp3.predict(scaler.transform(feat))
-	mlp4_error += mlp4.predict(scaler.transform(feat))
-	mlp5_error += mlp5.predict(scaler.transform(feat))
+	sgd_error += np.sum((sgd.predict(scaler.transform(feat)) - np.ones(feat.shape[0]))**2)
+	mlp1_error += np.sum((mlp1.predict(scaler.transform(feat)) - np.ones(feat.shape[0]))**2)
+	mlp2_error += np.sum((mlp2.predict(scaler.transform(feat)) - np.ones(feat.shape[0]))**2)
+	mlp3_error += np.sum((mlp3.predict(scaler.transform(feat)) - np.ones(feat.shape[0]))**2)
+	mlp4_error += np.sum((mlp4.predict(scaler.transform(feat)) - np.ones(feat.shape[0]))**2)
+	mlp5_error += np.sum((mlp5.predict(scaler.transform(feat)) - np.ones(feat.shape[0]))**2)
+
+for img_nr in other_test_d:
+	img_data = Data.Data(load_other1, img_nr, 10, None)
+	one = np.random.rand(1,len(img_data.X))
+
+	sgd_error += sgd.predict(scaler.transform(img_data.X[one]))**2
+	mlp1_error += mlp1.predict(scaler.transform(img_data.X[one]))**2
+	mlp2_error += mlp2.predict(scaler.transform(img_data.X[one]))**2
+	mlp3_error += mlp3.predict(scaler.transform(img_data.X[one]))**2
+	mlp4_error += mlp4.predict(scaler.transform(img_data.X[one]))**2
+	mlp5_error += mlp5.predict(scaler.transform(img_data.X[one]))**2
+
+div_by = len(test_d) + len(other_test_d)
+print 'SGD: ', sgd_error/div_by
+print 'MLP1: ', mlp1_error/div_by
+print 'MLP2: ', mlp2_error/div_by
+print 'MLP3: ', mlp3_error/div_by
+print 'MLP4: ', mlp4_error/div_by
+print 'MLP5: ', mlp5_error/div_by
