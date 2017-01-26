@@ -1,7 +1,6 @@
 from utils import create_tree_as_extracted, surface_area_old, sort_boxes, create_tree
 import numpy as np
 import time
-from scipy.misc import imread
 
 class BlobData():
 	def __init__(self, load, img_nr):

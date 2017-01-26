@@ -2,6 +2,7 @@ import os
 import numpy as np
 import pandas as pd
 import pickle
+from scipy.misc import imread
 
 class Input:
     def __init__(self, mode, category):
