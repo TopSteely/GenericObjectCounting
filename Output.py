@@ -61,7 +61,7 @@ class Output:
                     top='off',         # ticks along the top edge are off
                     labelbottom='off')
                 ax[lvl].title.set_text("Prediction level %s"%(lvl))
-            plt.legend('upper left')
+            #plt.legend('upper left')
         else:
             sorted_preds = []
             sorted_preds_skl = []

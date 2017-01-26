@@ -25,9 +25,9 @@ def main():
 
     batch_size = 5
 
-    epochs = 1
+    epochs = 4
 
-    subsamples = 10
+    subsamples = 100
 
     for tree_level_size in range(5,6):
         #initialize
