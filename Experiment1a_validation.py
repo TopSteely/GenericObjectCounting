@@ -43,14 +43,16 @@ print len(data_to_scale)
 scaler.fit(data_to_scale)
 
 scaled = scaler.transform(data_to_scale)
-sgd = SGDRegressor(eta0=math.pow(10,-5), learning_rate='invscaling', shuffle=True, average=True, alpha=0.00001)
+sgd1 = SGDRegressor(eta0=math.pow(10,-4), learning_rate='invscaling', shuffle=True, average=True)
+sgd2 = SGDRegressor(eta0=math.pow(10,-5), learning_rate='invscaling', shuffle=True, average=True)
 mlp1 = MLPRegressor(verbose=False, hidden_layer_sizes=(2000,500), activation='tanh')#learning_rate_init=math.pow(10,-3), learning_rate='invscaling',tol=0.00001
 mlp2 = MLPRegressor(verbose=False, hidden_layer_sizes=(2000,1000), activation='tanh')#learning_rate_init=math.pow(10,-3), learning_rate='invscaling',tol=0.00001
 mlp3 = MLPRegressor(verbose=False, hidden_layer_sizes=(1000,500), activation='tanh')#learning_rate_init=math.pow(10,-3), learning_rate='invscaling',tol=0.00001
 mlp4 = MLPRegressor(verbose=False, hidden_layer_sizes=(2000,250), activation='tanh')#learning_rate_init=math.pow(10,-3), learning_rate='invscaling',tol=0.00001
 mlp5 = MLPRegressor(verbose=False, hidden_layer_sizes=(500,500), activation='tanh')#learning_rate_init=math.pow(10,-3), learning_rate='invscaling',tol=0.00001
 print 'fitting'
-sgd.fit(scaled,y)
+sgd1.fit(scaled,y)
+sgd2.fit(scaled,y)
 mlp1.fit(scaled,y)
 mlp2.fit(scaled,y)
 mlp3.fit(scaled,y)
@@ -58,7 +60,8 @@ mlp4.fit(scaled,y)
 mlp5.fit(scaled,y)
 
 print 'fitted'
-correct_sgd = 0.0
+correct_sgd1 = 0.0
+correct_sgd2 = 0.0
 correct_mlp1 = 0.0
 correct_mlp2 = 0.0
 correct_mlp3 = 0.0
@@ -76,7 +79,8 @@ for img_nr in test_d:
 			#correct_mlp4 += 1 if abs(mlp4.predict(scaler.transform(feat[ff])) - 1) < 0.2 else 0
 			#correct_mlp5 += 1 if abs(mlp5.predict(scaler.transform(feat[ff])) - 1) < 0.2 else 0
 			#or
-			correct_sgd += 1 if (sgd.predict(scaler.transform(feat[ff]))) > 0.5 else 0
+			correct_sgd1 += 1 if (sgd1.predict(scaler.transform(feat[ff]))) > 0.5 else 0
+			correct_sgd2 += 1 if (sgd2.predict(scaler.transform(feat[ff]))) > 0.5 else 0
 			correct_mlp1 += 1 if (mlp1.predict(scaler.transform(feat[ff]))) > 0.5 else 0
 			correct_mlp2 += 1 if (mlp2.predict(scaler.transform(feat[ff]))) > 0.5 else 0
 			correct_mlp3 += 1 if (mlp3.predict(scaler.transform(feat[ff]))) > 0.5 else 0
@@ -88,7 +92,8 @@ for img_nr in other_test_d:
 	img_data = Data.Data(load_other1, img_nr, 10, None)
 	one = randint(1,len(img_data.X)-1)
 
-	correct_sgd += 1 if sgd.predict(scaler.transform(img_data.X[one]))  < 0.5 else 0
+	correct_sgd1 += 1 if sgd1.predict(scaler.transform(img_data.X[one]))  < 0.5 else 0
+	correct_sgd2 += 1 if sgd2.predict(scaler.transform(img_data.X[one]))  < 0.5 else 0
 	correct_mlp1 += 1 if mlp1.predict(scaler.transform(img_data.X[one])) < 0.5 else 0
 	correct_mlp2 += 1 if mlp2.predict(scaler.transform(img_data.X[one]))  < 0.5 else 0
 	correct_mlp3 += 1 if mlp3.predict(scaler.transform(img_data.X[one]))  < 0.5 else 0
@@ -97,7 +102,8 @@ for img_nr in other_test_d:
 	seen += 1
 
 #div_by = len(test_d) + len(other_test_d)
-print 'SGD: ', correct_sgd/seen
+print 'SGD1: ', correct_sgd1/seen
+print 'SGD2: ', correct_sgd2/seen
 print 'MLP1: ', correct_mlp1/seen
 print 'MLP2: ', correct_mlp2/seen
 print 'MLP3: ', correct_mlp3/seen
