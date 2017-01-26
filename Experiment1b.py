@@ -89,7 +89,7 @@ def main():
                         training_loss = np.concatenate((training_loss,tr_l), axis=1)#.reshape(-1,1)
                         validation_loss = np.concatenate((validation_loss,te_l), axis=1)#.reshape(-1,1)
                     else:
-                        sgd_dennis.learn(learn_mode, 20)
+                        sgd_dennis.learn(learn_mode)
                     #print tr_l, te_l
                     
                     #training_loss.extend(tr_l)
@@ -111,7 +111,7 @@ def main():
                 if learn_mode == 'all':
                     mse,ae, mse_non_zero = sgd_dennis.evaluate('val_all')
                 elif learn_mode == 'category':
-                    mse,ae, mse_non_zero = sgd_dennis.evaluate('val_cat', 5)
+                    mse,ae, mse_non_zero = sgd_dennis.evaluate('val_cat')
                 print "Eval loss: ", al_i, mse
             else:
                 if learn_mode == 'all':
