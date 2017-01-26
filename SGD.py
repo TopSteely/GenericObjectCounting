@@ -121,7 +121,7 @@ class SGD:
                 predictor = IEP.IEP(self.w_multi[level], 'prediction')
                 level_pred, _ = predictor.iep(img_data, [], level)
             preds.append(level_pred)
-        return preds #np.mean(preds)
+        return np.array(preds) #np.mean(preds)
         
         
     def evaluate(self, mode, to=-1, debug=False):
