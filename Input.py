@@ -235,12 +235,9 @@ class Input:
         #assert np.array_equal(im[:,:,0], im[:,:,1])
         #assert np.array_equal(im[:,:,1], im[:,:,2])
         #im = im[:,:,0]
-        #image 6 has to be inverted
+        im = 255 - im
         print im
-        print np.min(im)
         raw_input()
-        if img_nr == 6:
-            im = 255 - im
         #x = [x0, x1, x2]
         #x0 = average intensity value in the bounding box.
         #x1 = width of the boundig box
