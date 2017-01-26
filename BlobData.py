@@ -4,6 +4,7 @@ import time
 
 class BlobData():
 	def __init__(self, load, img_nr):
+		prune_tree_levels = 10
 		self.boxes = load.get_coords_blob(img_nr)
 		self.tree_boxes = self.boxes
 		self.X = load.get_features_blob(img_nr, self.boxes)
