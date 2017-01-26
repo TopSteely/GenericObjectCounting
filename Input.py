@@ -230,7 +230,7 @@ class Input:
         im = imread('/var/node436/local/tstahl/Dummy/%s.png'%(format(img_nr, "02d")))
         assert im[:,:,0] == im[:,:,1]
         assert im[:,:,1] == im[:,:,2]
-        im = [:,:,1]
+        im = im[:,:,0]
         #image 6 has to be inverted
         if img_nr == 6:
             im = 255 - im
