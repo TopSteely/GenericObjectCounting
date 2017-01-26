@@ -19,9 +19,9 @@ def main():
 
     learn_mode = 'category'
 
-    pred_mode = 'multi'
+    pred_mode = 'mean'
 
-    debug = True
+    debug = False
 
     batch_size = 5
 
@@ -113,6 +113,12 @@ def main():
                 elif learn_mode == 'category':
                     mse,ae, mse_non_zero = sgd_dennis.evaluate('val_cat')
                 print "Eval loss: ", al_i, mse
+            else:
+                if learn_mode == 'all':
+                    mse,ae, mse_non_zero = sgd_dennis.evaluate('train_all')
+                elif learn_mode == 'category':
+                    mse,ae, mse_non_zero = sgd_dennis.evaluate('train_cat')
+                print "Train loss: ", al_i, mse
             #output_dennis.save(mse, ae, mse_non_zero, sgd_dennis, 'ind', al_i, learn_mode)
     print learn_mode, pred_mode, epochs
     

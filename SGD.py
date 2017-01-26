@@ -121,16 +121,16 @@ class SGD:
                 predictor = IEP.IEP(self.w_multi[level], 'prediction')
                 level_pred, _ = predictor.iep(img_data, [], level)
             preds.append(level_pred)
-        return np.mean(preds)
+        return preds #np.mean(preds)
         
         
     def evaluate(self, mode, to=-1, debug=False):
         if self.version == 'multi':
-            squared_error = []
-            error = []
-            non_zero_error = []
-            n_non_zero = []
-            skl_error = []
+            squared_error = np.zeros(self.prune_tree_levels)
+            error = np.zeros(self.prune_tree_levels)
+            non_zero_error = np.zeros(self.prune_tree_levels)
+            n_non_zero = np.zeros(self.prune_tree_levels)
+            skl_error = np.zeros(self.prune_tree_levels)
         else:
             squared_error = 0.0
             error = 0.0
@@ -141,8 +141,10 @@ class SGD:
             preds_d = []
             y_d = []
             preds_skl = []
-        if mode == 'train':
+        if mode == 'train_cat':
             numbers = self.load.category_train[:to]
+        if mode == 'train_all':
+            numbers = self.load.training_numbers[:to]
         elif mode == 'test':
             numbers = self.load.test_numbers[:to]
         elif mode == 'val_cat':
@@ -181,7 +183,6 @@ class SGD:
             te_loss_temp += self.loss(img_data)
         return tra_loss_temp/len(self.load.category_train), te_loss_temp/len(self.load.category_val)
 
-    #todo:
     def loss_per_level_all(self, to=-1):
         tra_loss_temp = np.zeros(self.prune_tree_levels+1)
         te_loss_temp = np.zeros(self.prune_tree_levels+1)
