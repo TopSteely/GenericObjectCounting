@@ -132,7 +132,6 @@ class SGD:
             non_zero_error = np.zeros(self.prune_tree_levels)
             n_non_zero = np.zeros(self.prune_tree_levels)
             skl_error = np.zeros(self.prune_tree_levels)
-            preds_d = np.array([], dtype=np.int64).reshape(self.prune_tree_levels,0)
         else:
             squared_error = 0.0
             error = 0.0
@@ -140,7 +139,10 @@ class SGD:
             n_non_zero = 0.0
             skl_error = 0.0
         if debug:
-            preds_d = []
+            if self.version == 'multi':
+                preds_d = np.array([], dtype=np.int64).reshape(self.prune_tree_levels,0)
+            else:
+                preds_d = []
             y_d = []
             preds_skl = []
         if mode == 'train_cat':
@@ -168,11 +170,7 @@ class SGD:
                 #skl_error += (self.sgd.predict(img_data.X[img_data.levels[0][0]].reshape(1, -1)) - img_data.y)**2
                 if self.version == 'multi':
                     tmptmp = self.predict(img_data)
-                    print tmptmp.shape
-                    tmptmp.reshape(-1,1)
-                    print tmptmp.shape
-                    print preds_d.shape
-                    preds_d = np.concatenate((preds_d,tmptmp.reshape(-1,1)), axis=1)
+                    preds_d = np.concatenate((preds_d,self.predict(img_data).reshape(-1,1)), axis=1)
                 else:
                     preds_d.append(self.predict(img_data))
                 y_d.append(img_data.y)
