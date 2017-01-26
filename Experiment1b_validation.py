@@ -93,7 +93,8 @@ for img_nr in test_d[0:10]:
 				mlp5_error += (mlp5.predict(scaler.transform(img_data.X[i_b])) - count)**2
 
 div_by = len(test_d)
-print 'SGD: ', sgd_error/div_by
+print 'SGD1: ', sgd_error1/div_by
+print 'SGD2: ', sgd_error2/div_by
 print 'MLP1: ', mlp1_error/div_by
 print 'MLP2: ', mlp2_error/div_by
 print 'MLP3: ', mlp3_error/div_by
