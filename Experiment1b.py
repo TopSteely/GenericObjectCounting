@@ -111,7 +111,7 @@ def main():
                 if learn_mode == 'all':
                     mse,ae, mse_non_zero = sgd_dennis.evaluate('val_all')
                 elif learn_mode == 'category':
-                    mse,ae, mse_non_zero = sgd_dennis.evaluate('val_cat')
+                    mse,ae, mse_non_zero = sgd_dennis.evaluate('val_cat', 5)
                 print "Eval loss: ", al_i, mse
             else:
                 if learn_mode == 'all':
