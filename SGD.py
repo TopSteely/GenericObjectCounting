@@ -28,6 +28,7 @@ class SGD:
         self.gamma = gamma
         self.alpha = alpha
         self.functions = {}
+	self.scaler = None
         self.sgd = SGDRegressor(eta0=eta, learning_rate='invscaling', shuffle=True, average=True, alpha=alpha)
         if mode == 'max':
             self.method = self.learn_max
