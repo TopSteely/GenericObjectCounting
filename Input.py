@@ -229,6 +229,7 @@ class Input:
 
     def get_features_blob(self, img_nr):
         im = imread('/var/node436/local/tstahl/Dummy/%s.png'%(format(img_nr, "02d")))
+        print im.shape
         assert np.array_equal(im[:,:,0], im[:,:,1])
         assert np.array_equal(im[:,:,1], im[:,:,2])
         im = im[:,:,0]
