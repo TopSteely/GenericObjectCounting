@@ -125,11 +125,18 @@ class SGD:
         
         
     def evaluate(self, mode, to=-1, debug=False):
-        squared_error = 0.0
-        error = 0.0
-        non_zero_error = 0.0
-        n_non_zero = 0.0
-        skl_error = 0.0
+        if self.version == 'multi':
+            squared_error = []
+            error = []
+            non_zero_error = []
+            n_non_zero = []
+            skl_error = []
+        else:
+            squared_error = 0.0
+            error = 0.0
+            non_zero_error = 0.0
+            n_non_zero = 0.0
+            skl_error = 0.0
         if debug:
             preds_d = []
             y_d = []
