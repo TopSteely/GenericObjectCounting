@@ -48,14 +48,16 @@ for img_nr in training_data:
 scaler.fit(data_to_scale)
 
 scaled = scaler.transform(data_to_scale)
-sgd  = SGDRegressor(eta0=math.pow(10,-5), learning_rate='invscaling', shuffle=True, average=True, alpha=0.00001)
+sgd1  = SGDRegressor(eta0=math.pow(10,-5), learning_rate='invscaling', shuffle=True, average=True)
+sgd2  = SGDRegressor(eta0=math.pow(10,-4), learning_rate='invscaling', shuffle=True, average=True)
 mlp1 = MLPRegressor(verbose=False, hidden_layer_sizes=(2000,500), alpha=al_i, activation='tanh')#learning_rate_init=math.pow(10,-3), learning_rate='invscaling',tol=0.00001
 mlp2 = MLPRegressor(verbose=False, hidden_layer_sizes=(2000,1000), alpha=al_i, activation='tanh')#learning_rate_init=math.pow(10,-3), learning_rate='invscaling',tol=0.00001
 mlp3 = MLPRegressor(verbose=False, hidden_layer_sizes=(1000,500), alpha=al_i, activation='tanh')#learning_rate_init=math.pow(10,-3), learning_rate='invscaling',tol=0.00001
 mlp4 = MLPRegressor(verbose=False, hidden_layer_sizes=(2000,250), alpha=al_i, activation='tanh')#learning_rate_init=math.pow(10,-3), learning_rate='invscaling',tol=0.00001
 mlp5 = MLPRegressor(verbose=False, hidden_layer_sizes=(500,500), alpha=al_i, activation='tanh')#learning_rate_init=math.pow(10,-3), learning_rate='invscaling',tol=0.00001
 print 'fitting'
-sgd.fit(scaled,y)
+sgd1.fit(scaled,y)
+sgd2.fit(scaled,y)
 mlp1.fit(scaled,y)
 mlp2.fit(scaled,y)
 mlp3.fit(scaled,y)
@@ -63,7 +65,8 @@ mlp4.fit(scaled,y)
 mlp5.fit(scaled,y)
 
 print 'fitted'
-sgd_error = 0.0
+sgd_error1 = 0.0
+sgd_error2 = 0.0
 mlp1_error = 0.0
 mlp2_error = 0.0
 mlp3_error = 0.0
@@ -77,9 +80,14 @@ for img_nr in test_d:
 			count = 0.0
 			for ground_truth in gr:
 				count += get_intersection_over_union(bbox, ground_truth)
-			y.append(count)
 
-			sgd_error += (sgd.predict(scaler.transform(img_data.X[i_b])) - count)**2
+			sgd_error1 += (sgd1.predict(scaler.transform(img_data.X[i_b])) - count)**2
+			sgd_error2 += (sgd2.predict(scaler.transform(img_data.X[i_b])) - count)**2
+			mlp1_error += (mlp1.predict(scaler.transform(img_data.X[i_b])) - count)**2
+			mlp2_error += (mlp2.predict(scaler.transform(img_data.X[i_b])) - count)**2
+			mlp3_error += (mlp3.predict(scaler.transform(img_data.X[i_b])) - count)**2
+			mlp4_error += (mlp4.predict(scaler.transform(img_data.X[i_b])) - count)**2
+			mlp5_error += (mlp5.predict(scaler.transform(img_data.X[i_b])) - count)**2
 
 div_by = len(test_d)
 print 'SGD: ', sgd_error/div_by
