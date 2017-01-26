@@ -247,7 +247,7 @@ class Input:
         #x2 = height of the bounding box. 
         features = []
         for box in boxes:
-            cropped = img[box[1]:box[1]+box[3], box[0]:box[0]+box[2]]
+            cropped = im[box[1]:box[1]+box[3], box[0]:box[0]+box[2]]
             ff = []
             ff.append(np.sum(cropped))
             ff.append(box[3])
