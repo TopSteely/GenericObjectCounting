@@ -98,11 +98,11 @@ def main():
                 sgd_error = 0.0
                 for img_nr in test_numbers_d:
                     img_data = Data.Data(load_dennis, img_nr, 10, None)
-                    mlp_error1 += ((mlp1.predict(np.array(img_data.X[0]).reshape(1, -1))-img_data.y)**2)
-                    mlp_error2 += ((mlp2.predict(np.array(img_data.X[0]).reshape(1, -1))-img_data.y)**2)
-                    mlp_error3 += ((mlp3.predict(np.array(img_data.X[0]).reshape(1, -1))-img_data.y)**2)
-                    mlp_error4 += ((mlp4.predict(np.array(img_data.X[0]).reshape(1, -1))-img_data.y)**2)
-                    mlp_error5 += ((mlp5.predict(np.array(img_data.X[0]).reshape(1, -1))-img_data.y)**2)
+                    mlp_error1 += ((mlp1.predict(scaler_dennis.transform(np.array(img_data.X[0]).reshape(1, -1)))-img_data.y)**2)
+                    mlp_error2 += ((mlp2.predict(scaler_dennis.transform(np.array(img_data.X[0]).reshape(1, -1)))-img_data.y)**2)
+                    mlp_error3 += ((mlp3.predict(scaler_dennis.transform(np.array(img_data.X[0]).reshape(1, -1)))-img_data.y)**2)
+                    mlp_error4 += ((mlp4.predict(scaler_dennis.transform(np.array(img_data.X[0]).reshape(1, -1)))-img_data.y)**2)
+                    mlp_error5 += ((mlp5.predict(scaler_dennis.transform(np.array(img_data.X[0]).reshape(1, -1)))-img_data.y)**2)
                     sgd_error += ((sgd_sklearn.predict(scaler_dennis.transform(np.array(img_data.X[0]).reshape(1, -1)))-img_data.y)**2)
 
                 print 'Mlp1: ', al_i, mlp_error1/len(test_numbers_d)
