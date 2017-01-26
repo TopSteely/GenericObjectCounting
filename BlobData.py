@@ -8,7 +8,7 @@ class BlobData():
 		self.boxes = load.get_coords_blob(img_nr)
 		self.tree_boxes = self.boxes
 		self.X = load.get_features_blob(img_nr, self.boxes)
-		self.num_features = 3
+		self.num_features = 5
 		self.y = load.get_label_blob(img_nr)
 		self.tree_boxes, self.X = sort_boxes(self.tree_boxes, self.X)
 		self.boxes = self.tree_boxes
