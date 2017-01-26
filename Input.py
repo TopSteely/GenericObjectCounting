@@ -229,7 +229,7 @@ class Input:
         elif img_nr == 11:
             return 9
 
-    def get_features_blob(self, img_nr):
+    def get_features_blob(self, img_nr, boxes):
         im = imread('/var/node436/local/tstahl/Dummy/%s.png'%(format(img_nr, "02d")), mode='L')
         #im = cv2.imread('/var/node436/local/tstahl/Dummy/%s.png'%(format(img_nr, "02d")), 0)
         #assert np.array_equal(im[:,:,0], im[:,:,1])
@@ -237,6 +237,7 @@ class Input:
         #im = im[:,:,0]
         #image 6 has to be inverted
         print im
+        print np.min(im)
         raw_input()
         if img_nr == 6:
             im = 255 - im
@@ -245,7 +246,7 @@ class Input:
         #x1 = width of the boundig box
         #x2 = height of the bounding box. 
         features = []
-        for box in self.boxes:
+        for box in boxes:
             cropped = img[box[1]:box[1]+box[3], box[0]:box[0]+box[2]]
             ff = []
             ff.append(np.sum(cropped))

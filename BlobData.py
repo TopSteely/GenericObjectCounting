@@ -6,7 +6,7 @@ class BlobData():
 	def __init__(self, load, img_nr):
 		self.boxes = load.get_coords_blob(img_nr)
 		self.tree_boxes = self.boxes
-		self.X = load.get_features_blob(img_nr)
+		self.X = load.get_features_blob(img_nr, self.boxes)
 		self.num_features = 3
 		self.y = load.get_label_blob(img_nr)
 		self.tree_boxes, self.X = sort_boxes(self.tree_boxes, self.X)
