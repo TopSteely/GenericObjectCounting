@@ -3,6 +3,8 @@ import numpy as np
 import pandas as pd
 import pickle
 from scipy.misc import imread
+import cv2
+
 
 class Input:
     def __init__(self, mode, category):
@@ -229,7 +231,9 @@ class Input:
 
     def get_features_blob(self, img_nr):
         im = imread('/var/node436/local/tstahl/Dummy/%s.png'%(format(img_nr, "02d")))
+        im = cv2.imread('/var/node436/local/tstahl/Dummy/%s.png'%(format(img_nr, "02d")), 0)
         print im.shape
+        print max(im), min(im)
         assert np.array_equal(im[:,:,0], im[:,:,1])
         assert np.array_equal(im[:,:,1], im[:,:,2])
         im = im[:,:,0]
