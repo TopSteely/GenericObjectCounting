@@ -169,7 +169,10 @@ class SGD:
                 if self.version == 'multi':
                     tmptmp = self.predict(img_data)
                     print tmptmp.shape
-                    np.concatenate((preds_d,tmptmp.reshape(-1,1)), axis=1)
+                    tmptmp.reshape(-1,1)
+                    print tmptmp.shape
+                    print preds_d.shape
+                    preds_d = np.concatenate((preds_d,tmptmp.reshape(-1,1)), axis=1)
                 else:
                     preds_d.append(self.predict(img_data))
                 y_d.append(img_data.y)
