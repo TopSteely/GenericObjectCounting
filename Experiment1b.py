@@ -77,8 +77,8 @@ def main():
                 training_loss = np.array([], dtype=np.int64).reshape(tree_level_size+1,0)
                 validation_loss = np.array([], dtype=np.int64).reshape(tree_level_size+1,0)
                 #sgd_pascal = SGD.SGD('pascal', 'max', category, tree_level_size, batch_size, eta_i, gamma_i, al_i)
-                sgd_dennis = SGD.SGD('dennis', pred_mode, category, tree_level_size, batch_size, math.pow(10,-5), gamma_i, al_i, 4096)
-                sgd_dennis.set_scaler(scaler_dennis)
+                sgd_dennis = SGD.SGD('dennis', pred_mode, category, tree_level_size, batch_size, math.pow(10,-7), gamma_i, al_i, 4096)
+                #sgd_dennis.set_scaler(scaler_dennis)
                 print al_i, gamma_i
                 for epoch in range(epochs):
                     print epoch
@@ -106,7 +106,7 @@ def main():
                     #output_pascal.plot_preds(preds_d_p, preds_skl_p, y_d_p, al_i)
                     #output_dennis.plot_preds(preds_d_d, preds_skl_d, y_d_d, al_i)
                 if debug:
-                    output_dennis.plot_train_val_loss(training_loss, validation_loss, math.pow(10,-5), al_i)
+                    output_dennis.plot_train_val_loss(training_loss, validation_loss, math.pow(10,-7), al_i)
             if not debug:
                 if learn_mode == 'all':
                     mse,ae, mse_non_zero = sgd_dennis.evaluate('val_all')

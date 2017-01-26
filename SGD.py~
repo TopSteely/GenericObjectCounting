@@ -51,9 +51,10 @@ class SGD:
             self.predict = self.predict_max
         elif mode == 'multi':
             self.method = self.learn_multi
-            #self.loss = self.loss_mean
-            self.predict = self.predict_mean
-	    self.w_multi = np.zeros(self.prune_tree_levels,self.n_features)
+            self.loss = self.loss_multi
+            self.predict = self.predict_multi
+            self.w_multi = np.zeros((self.prune_tree_levels,self.n_features))
+            self.w_update = np.zeros((self.prune_tree_levels,self.n_features))
             
     def set_scaler(self, scaler):
         self.scaler = scaler
@@ -65,6 +66,35 @@ class SGD:
     def loss_mean(self, img_data):
         level_preds, _ = self.predictor.get_iep_levels(img_data, [])
         return np.mean(np.array(level_preds) - img_data.y)**2 + self.alpha * math.sqrt(np.dot(self.w,self.w))
+
+    def loss_multi(self, img_data):
+        level_preds = []
+        for lvl in range(self.prune_tree_levels):
+            if lvl >= len(img_data.levels):
+                level_pred = level_preds[-1]
+            else:
+                predictor = IEP.IEP(self.w_multi[lvl], 'prediction')
+                level_pred, _ = predictor.iep(img_data, [], lvl)
+            level_preds.append(level_pred)
+        return np.mean(np.array(level_preds) - img_data.y)**2 + self.alpha * math.sqrt(np.dot(self.w,self.w))
+
+    def loss_per_level(self, img_data):
+        if self.version == 'multi':
+            level_preds = []
+            for lvl in range(self.prune_tree_levels):
+                if lvl >= len(img_data.levels):
+                    level_pred = level_preds[-1]
+                else:
+                    predictor = IEP.IEP(self.w_multi[lvl], 'prediction')
+                    level_pred, _ = predictor.iep(img_data, [], lvl)
+                level_preds.append(level_pred)
+        else:
+            level_preds, _ = self.predictor.get_iep_levels(img_data, [])
+            # for images with less levels than prune_tree_levels, just append the last level
+            if len(level_preds) < self.prune_tree_levels:
+                for missing in range(self.prune_tree_levels - len(level_preds)):
+                    level_preds.append(level_preds[-1])
+        return (np.array(level_preds) - img_data.y)**2 + self.alpha * math.sqrt(np.dot(self.w,self.w))
         
     def predict_mean(self, img_data):
         level_preds, _ = self.predictor.get_iep_levels(img_data, [])
@@ -81,20 +111,40 @@ class SGD:
     def predict_ind(self, img_data):
         level_preds, _ = self.predictor.get_iep_levels(img_data, [])
         return level_preds
+
+    def predict_multi(self, img_data):
+        preds = []
+        for level in range(self.prune_tree_levels):
+            if level >= len(img_data.levels):
+                level_pred = preds[-1]
+            else:
+                predictor = IEP.IEP(self.w_multi[level], 'prediction')
+                level_pred, _ = predictor.iep(img_data, [], level)
+            preds.append(level_pred)
+        return np.array(preds) #np.mean(preds)
         
         
     def evaluate(self, mode, to=-1, debug=False):
-        squared_error = 0.0
-        error = 0.0
-        non_zero_error = 0.0
-        n_non_zero = 0.0
-        skl_error = 0.0
+        if self.version == 'multi':
+            squared_error = np.zeros(self.prune_tree_levels)
+            error = np.zeros(self.prune_tree_levels)
+            non_zero_error = np.zeros(self.prune_tree_levels)
+            n_non_zero = np.zeros(self.prune_tree_levels)
+            skl_error = np.zeros(self.prune_tree_levels)
+        else:
+            squared_error = 0.0
+            error = 0.0
+            non_zero_error = 0.0
+            n_non_zero = 0.0
+            skl_error = 0.0
         if debug:
             preds_d = []
             y_d = []
             preds_skl = []
-        if mode == 'train':
+        if mode == 'train_cat':
             numbers = self.load.category_train[:to]
+        if mode == 'train_all':
+            numbers = self.load.training_numbers[:to]
         elif mode == 'test':
             numbers = self.load.test_numbers[:to]
         elif mode == 'val_cat':
@@ -123,19 +173,34 @@ class SGD:
         
         
     def loss_all(self, to=-1):
-	tra_loss_temp = 0.0
-	te_loss_temp = 0.0
-	for img_nr in self.load.category_train[0:to]:
+        tra_loss_temp = 0.0
+        te_loss_temp = 0.0
+        for img_nr in self.load.category_train[0:to]:
             img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
-	    tra_loss_temp += self.loss(img_data)
-	for img_nr in self.load.category_val[0:to]:
+            tra_loss_temp += self.loss(img_data)
+        for img_nr in self.load.category_val[0:to]:
             img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
-	    te_loss_temp += self.loss(img_data)
-	return tra_loss_temp/len(self.load.category_train), te_loss_temp/len(self.load.category_val)
+            te_loss_temp += self.loss(img_data)
+        return tra_loss_temp/len(self.load.category_train), te_loss_temp/len(self.load.category_val)
+
+    def loss_per_level_all(self, to=-1):
+        tra_loss_temp = np.zeros(self.prune_tree_levels+1)
+        te_loss_temp = np.zeros(self.prune_tree_levels+1)
+        #tr_loss_mean_temp = 0.0
+        #te_loss_mean_temp = 0.0
+        for img_nr in self.load.category_train[0:to]:
+            img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
+            tra_loss_temp[0:self.prune_tree_levels] += self.loss_per_level(img_data)
+            tra_loss_temp[self.prune_tree_levels] += self.loss(img_data)
+        for img_nr in self.load.category_val[0:to]:
+            img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
+            te_loss_temp[0:self.prune_tree_levels] += self.loss_per_level(img_data)
+            te_loss_temp[self.prune_tree_levels] += self.loss(img_data)
+        return tra_loss_temp/len(self.load.category_train), te_loss_temp/len(self.load.category_val)
         
     def learn(self, instances='all', to=-1, debug=False):
-        train_losses = []
-        test_losses = []
+        train_losses = np.array([], dtype=np.int64).reshape(self.prune_tree_levels+1,0)
+        test_losses = np.array([], dtype=np.int64).reshape(self.prune_tree_levels+1,0)
         if instances=='all':
             training_data = self.load.training_numbers
         else:
@@ -150,7 +215,7 @@ class SGD:
                 upd,_ = self.method(img_data, img_functions)
                 self.w_update += upd
             else:
-                temp = {}
+                temp = []
                 if self.version == 'old':
                     self.method(img_data, temp)
                 else:
@@ -164,23 +229,27 @@ class SGD:
             if (i_img_nr + 1)%self.batch_size == 0:
                 self.update()
                 if debug:
-                    tr_loss, te_loss = self.loss_all(to)
-                    train_losses.append(tr_loss)
-                    test_losses.append(te_loss)
+                    tr_loss, te_loss = self.loss_per_level_all(to)
+                    train_losses = np.concatenate((train_losses,tr_loss.reshape(-1,1)), axis=1)
+                    test_losses = np.concatenate((test_losses,te_loss.reshape(-1,1)), axis=1)
         if (i_img_nr + 1)%self.batch_size != 0:
             if self.version!='old':
                 self.update()
             if debug:
-                tr_loss, te_loss = self.loss_all()
-                train_losses.append(tr_loss)
-                test_losses.append(te_loss)
+                tr_loss, te_loss = self.loss_per_level_all(to)
+                train_losses = np.concatenate((train_losses,tr_loss.reshape(-1,1)), axis=1)
+                test_losses = np.concatenate((test_losses,te_loss.reshape(-1,1)), axis=1)
         if debug:
     	   return train_losses, test_losses
         
     def update(self):
-        self.w -= (self.eta * self.w_update)
+        if self.version == 'multi':
+            self.w_multi -= (self.eta * self.w_update)
+            self.w_update = np.zeros((self.prune_tree_levels,self.n_features))
+        else:
+            self.w -= (self.eta * self.w_update)
+            self.w_update = np.zeros(self.n_features)
         self.eta = self.eta * (1+self.eta0*self.gamma*self.samples_seen)**-1
-        self.w_update = np.zeros(self.n_features)
         self.predictor = IEP.IEP(self.w, 'prediction')
         
     def learn_max(self, img_data, functions):
@@ -193,19 +262,22 @@ class SGD:
         return 2 * (self.predict(img_data) - img_data.y) * upd + 2 * self.alpha * self.w, functions
         
     def learn_mean(self, img_data, functions):
-	level_preds = self.predict_ind(img_data)
+        level_preds = self.predict_ind(img_data)
         iep_levels, functions = self.learner.get_iep_levels(img_data, functions)
         return 2 * np.sum((np.array(level_preds) - img_data.y).reshape(-1,1) * iep_levels/len(iep_levels) + 2 * self.alpha * self.w, axis=0), functions
 
 
     def learn_multi(self, img_data, functions):
-	ret = []
-	for level in img_data.levels:
-		predictor = IEP.IEP(self.w_muli[level], 'prediction')
-		level_pred, _ = predictor.iep(img_data, [], level)
-	        iep_level, _ = self.learner.iep(img_data, functions, level)
-		ret.append(2 * (level_pred - img_data.y) * iep_level + 2 * self.alpha * self.w_muli[level])
-        return 2 * np.sum((np.array(level_preds) - img_data.y).reshape(-1,1) * iep_levels/len(iep_levels) + 2 * self.alpha * self.w, axis=0), functions
+        ret = np.zeros((self.prune_tree_levels,self.n_features))
+        for level in range(self.prune_tree_levels):
+            if level >= len(img_data.levels):
+                continue
+            predictor = IEP.IEP(self.w_multi[level], 'prediction')
+            level_pred, _ = predictor.iep(img_data, [], level)
+            iep_level, _ = self.learner.iep(img_data, functions, level)
+            a = (2 * (level_pred - img_data.y) * iep_level + 2 * self.alpha * self.w_multi[level])
+            ret[level,:] = (2 * (level_pred - img_data.y) * iep_level + 2 * self.alpha * self.w_multi[level])
+        return ret, functions
 
 
     def learn_old(self, img_data, functions):
@@ -214,15 +286,6 @@ class SGD:
             iep_level, _ = self.learner.iep(img_data, functions, level)
             self.w += (self.eta * ((preds_level - img_data.y) * -iep_level))#self.w -= (self.eta * (2*(preds_level - img_data.y)*iep_level))
             self.predictor = IEP.IEP(self.w, 'prediction')
-
-    #def learn_really_old(self, img_data):
-        #for level in img_data.levels:
-        #    for f_ in self.w:
-        #        inner_prod += (f_ * x_node[f_])
-        #    dloss = (inner_prod - y_node)
-        #    preds_level = self.predict_old(img_data, level)
-        #    for i_f,f in enumerate(self.w):
-        #        w[f] += (self.eta * ((preds_level - img_data.y) * -iep_level[i_f]))
 
     def learn_ind(self, img_data, functions):
         level_preds = self.predict_ind(img_data)
