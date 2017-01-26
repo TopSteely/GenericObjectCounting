@@ -21,6 +21,7 @@ class SGD:
         self.predictor = IEP.IEP(self.w, 'prediction')
         self.w_update = np.zeros(self.n_features)
         self.learner = IEP.IEP(1, 'learning')
+        self.dataset = dataset
         self.load = Input.Input(dataset, category)
         self.batch_size = batch_size
         self.samples_seen = 0
@@ -218,7 +219,7 @@ class SGD:
         random.shuffle(subset)
         for i_img_nr, img_nr in enumerate(subset):
             start = time.time()
-            if self.load == 'blob':
+            if self.dataset == 'blob':
                 img_data = BlobData.BlobData(self.load, img_nr)
             else:
                 img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
