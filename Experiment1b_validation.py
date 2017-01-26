@@ -10,6 +10,9 @@ import sys
 import Data
 from random import randint
 
+def bool_rect_intersect(A, B):
+    return not (B[0]>A[2] or B[2]<A[0] or B[3]<A[1] or B[1]>A[3])
+
 def get_intersection_over_union(A, B):
     in_ = bool_rect_intersect(A, B)
     if not in_:
