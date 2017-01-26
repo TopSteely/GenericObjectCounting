@@ -196,7 +196,7 @@ class Input:
 
     def get_coords_blob(self, img_nr):
         if os.path.isfile('/var/node436/local/tstahl/Dummy/%s.txt'%(format(img_nr, "02d"))):
-            ret = np.loadtxt(self.coord_path%(format(img_nr, "06d")), delimiter=',')
+            ret = np.loadtxt('/var/node436/local/tstahl/Dummy/%s.txt'%(format(img_nr, "02d")), delimiter=',')
             if isinstance(ret[0], np.float64):
                 return np.array([ret])
             else:
