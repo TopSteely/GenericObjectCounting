@@ -12,7 +12,7 @@ import time
 import random
 
 def main():
-	sgd_blob = SGD.SGD('blob', 'mean', 'sheep', 3, 5, 0.0001, 0.0001, 0.0001, 5)
+	sgd_blob = SGD.SGD('blob', 'mean', 'sheep', 5, 5, 0.0001, 0.0001, 0.0001, 3)
 	sgd_blob.learn()
 
 if __name__ == "__main__":
