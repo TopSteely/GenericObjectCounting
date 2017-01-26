@@ -213,14 +213,14 @@ class SGD:
             if img_nr in self.functions:
                 img_functions = self.functions[img_nr]
                 upd,_ = self.method(img_data, img_functions)
-                self.w_update += upd
+                self.w_update -= upd
             else:
                 temp = []
                 if self.version == 'old':
                     self.method(img_data, temp)
                 else:
                     upd, fct = self.method(img_data, temp)
-                    self.w_update += upd
+                    self.w_update -= upd
                 #self.functions[img_nr] = fct
             self.samples_seen += 1
             if self.prune_tree_levels == 1:
@@ -244,7 +244,7 @@ class SGD:
         
     def update(self):
         if self.version == 'multi':
-            self.w_multi -= (self.eta * self.w_update)
+            self.w_multi += (self.eta * self.w_update)
             self.w_update = np.zeros((self.prune_tree_levels,self.n_features))
         else:
             self.w -= (self.eta * self.w_update)
@@ -276,7 +276,7 @@ class SGD:
             level_pred, _ = predictor.iep(img_data, [], level)
             iep_level, _ = self.learner.iep(img_data, functions, level)
             a = (2 * (level_pred - img_data.y) * iep_level + 2 * self.alpha * self.w_multi[level])
-            ret[level,:] = (2 * (level_pred - img_data.y) * iep_level + 2 * self.alpha * self.w_multi[level])
+            ret[level,:] = (2 * (level_pred - img_data.y) * -iep_level + 2 * self.alpha * self.w_multi[level])
         return ret, functions
 
 
