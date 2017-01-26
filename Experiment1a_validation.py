@@ -58,13 +58,13 @@ mlp4.fit(scaled,y)
 mlp5.fit(scaled,y)
 
 print 'fitted'
-sgd_error = 0.0
-mlp1_error = 0.0
-mlp2_error = 0.0
-mlp3_error = 0.0
-mlp4_error = 0.0
-mlp5_error = 0.0
-seen = 0
+correct_sgd = 0.0
+correct_mlp1 = 0.0
+correct_mlp2 = 0.0
+correct_mlp3 = 0.0
+correct_mlp4 = 0.0
+correct_mlp5 = 0.0
+seen = 0.0
 for img_nr in test_d:
 	if os.path.isfile('/var/node436/local/tstahl/Features_groundtruth/Features_ground_truth/%s/%s.txt'%(class_,format(img_nr, "06d"))):
 		feat = pd.read_csv('/var/node436/local/tstahl/Features_groundtruth/Features_ground_truth/%s/%s.txt'%(class_,format(img_nr, "06d")), header=None, delimiter=",").values
