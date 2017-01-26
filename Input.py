@@ -19,13 +19,15 @@ class Input:
             self.coord_path = 'bla'
             self.label_path = 'bla'
             self.feature_path = 'bla'
+        elif self.mode == 'blob':
+            self.training_numbers = range(1,12)
         else:
             if self.mode == 'pascal':
                 self.coord_path =  '/var/node436/local/tstahl/new_Resnet_features/2nd/coords/1-%s.csv'
                 self.label_path =  '/var/node436/local/tstahl/Coords_prop_windows/Labels/Labels/%s_%s_partial.txt'
                 self.feature_path = '/var/node436/local/tstahl/new_Resnet_features/2nd/1-%s.csv'
                 self.coord_tree_path = '/var/node436/local/tstahl/Coords_prop_windows/%s.txt'
-		self.scaler_category_path = '/var/node436/local/tstahl/models/scaler_%s_pascal.p'%(category)
+                self.scaler_category_path = '/var/node436/local/tstahl/models/scaler_%s_pascal.p'%(category)
             elif self.mode == 'dennis':
                 self.coord_path =  '/var/node436/local/tstahl/Coords_prop_windows/%s.txt'
                 self.coord_tree_path = '/var/node436/local/tstahl/Coords_prop_windows/%s.txt'
@@ -36,9 +38,9 @@ class Input:
                 self.scaler_path = '/var/node436/local/tstahl/models/scaler_dennis.p'
                 self.scaler_category_path = '/var/node436/local/tstahl/models/scaler_%s_dennis.p'%(category)
                 self.classifier_path = '/var/node436/local/tstahl/models/classifier_%s.p'%(category)
-        self.test_numbers, training_numbers_tmp = self.get_training_numbers()
-        self.training_numbers, self.val_numbers = self.get_val_numbers(training_numbers_tmp)
-        self.category_train, self.category_val = self.get_category_imgs()
+            self.test_numbers, training_numbers_tmp = self.get_training_numbers()
+            self.training_numbers, self.val_numbers = self.get_val_numbers(training_numbers_tmp)
+            self.category_train, self.category_val = self.get_category_imgs()
         
 	#old
 #    def get_intersection_features(self, img_nr):
@@ -191,3 +193,57 @@ class Input:
         tmp = line.split()[0]
         label = float(tmp)
         return label
+
+    def get_coords_blob(self, img_nr):
+        if os.path.isfile('/var/node436/local/tstahl/Dummy/%s.txt'%(format(img_nr, "02d"))):
+            ret = np.loadtxt(self.coord_path%(format(img_nr, "06d")), delimiter=',')
+            if isinstance(ret[0], np.float64):
+                return np.array([ret])
+            else:
+                return ret
+
+    def get_label_blob(self, img_nr):
+        if img_nr == 1:
+            return 2
+        elif img_nr == 2:
+            return 3
+        elif img_nr == 3:
+            return 3
+        elif img_nr == 4:
+            return 4
+        elif img_nr == 5:
+            return 4
+        elif img_nr == 6:
+            return 5
+        elif img_nr == 7:
+            return 5
+        elif img_nr == 8:
+            return 7
+        elif img_nr == 9:
+            return 7
+        elif img_nr == 10:
+            return 9
+        elif img_nr == 11:
+            return 9
+
+    def get_features_blob(self, img_nr):
+        im = imread('/var/node436/local/tstahl/Dummy/%s.png'%(format(img_nr, "02d"))):
+        assert im[:,:,0] == im[:,:,1]
+        assert im[:,:,1] == im[:,:,2]
+        im = [:,:,1]
+        #image 6 has to be inverted
+        if img_nr == 6:
+            im = 255 - im
+        #x = [x0, x1, x2]
+        #x0 = average intensity value in the bounding box.
+        #x1 = width of the boundig box
+        #x2 = height of the bounding box. 
+        features = []
+        for box in self.boxes:
+            cropped = img[box[1]:box[1]+box[3], box[0]:box[0]+box[2]]
+            ff = []
+            ff.append(np.sum(cropped))
+            ff.append(box[3])
+            ff.append(box[2])
+            features.append(ff)
+        return np.array(features)

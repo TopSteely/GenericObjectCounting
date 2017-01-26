@@ -2,6 +2,7 @@ import IEP
 import Input
 import numpy as np
 import Data
+import BlobData
 import random
 import time
 #from sklearn.preprocessing import MinMaxScaler
@@ -217,7 +218,10 @@ class SGD:
         random.shuffle(subset)
         for i_img_nr, img_nr in enumerate(subset):
             start = time.time()
-            img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
+            if self.load == 'blob':
+                img_data = BlobData.BlobData(self.load, img_nr)
+            else:
+                img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
             if img_nr in self.functions:
                 img_functions = self.functions[img_nr]
                 upd,_ = self.method(img_data, img_functions)
