@@ -69,24 +69,31 @@ for img_nr in test_d:
 	if os.path.isfile('/var/node436/local/tstahl/Features_groundtruth/Features_ground_truth/%s/%s.txt'%(class_,format(img_nr, "06d"))):
 		feat = pd.read_csv('/var/node436/local/tstahl/Features_groundtruth/Features_ground_truth/%s/%s.txt'%(class_,format(img_nr, "06d")), header=None, delimiter=",").values
 		for ff in range(feat.shape[0]): 
-			correct_sgd += 1 if abs(sgd.predict(scaler.transform(feat[ff])) - 1) < 0.2 else 0
-			correct_mlp1 += 1 if abs(mlp1.predict(scaler.transform(feat[ff])) - 1) < 0.2 else 0
-			correct_mlp2 += 1 if abs(mlp2.predict(scaler.transform(feat[ff])) - 1) < 0.2 else 0
-			correct_mlp3 += 1 if abs(mlp3.predict(scaler.transform(feat[ff])) - 1) < 0.2 else 0
-			correct_mlp4 += 1 if abs(mlp4.predict(scaler.transform(feat[ff])) - 1) < 0.2 else 0
-			correct_mlp5 += 1 if abs(mlp5.predict(scaler.transform(feat[ff])) - 1) < 0.2 else 0
+			#correct_sgd += 1 if abs(sgd.predict(scaler.transform(feat[ff])) - 1) < 0.2 else 0
+			#correct_mlp1 += 1 if abs(mlp1.predict(scaler.transform(feat[ff])) - 1) < 0.2 else 0
+			#correct_mlp2 += 1 if abs(mlp2.predict(scaler.transform(feat[ff])) - 1) < 0.2 else 0
+			#correct_mlp3 += 1 if abs(mlp3.predict(scaler.transform(feat[ff])) - 1) < 0.2 else 0
+			#correct_mlp4 += 1 if abs(mlp4.predict(scaler.transform(feat[ff])) - 1) < 0.2 else 0
+			#correct_mlp5 += 1 if abs(mlp5.predict(scaler.transform(feat[ff])) - 1) < 0.2 else 0
+			#or
+			correct_sgd += 1 if (sgd.predict(scaler.transform(feat[ff]))) > 0.5 else 0
+			correct_mlp1 += 1 if (mlp1.predict(scaler.transform(feat[ff]))) > 0.5 else 0
+			correct_mlp2 += 1 if (mlp2.predict(scaler.transform(feat[ff]))) > 0.5 else 0
+			correct_mlp3 += 1 if (mlp3.predict(scaler.transform(feat[ff]))) > 0.5 else 0
+			correct_mlp4 += 1 if (mlp4.predict(scaler.transform(feat[ff]))) > 0.5 else 0
+			correct_mlp5 += 1 if (mlp5.predict(scaler.transform(feat[ff]))) > 0.5 else 0
 			seen += 1
 
 for img_nr in other_test_d:
 	img_data = Data.Data(load_other1, img_nr, 10, None)
 	one = randint(1,len(img_data.X)-1)
 
-	correct_sgd += 1 if abs(sgd.predict(scaler.transform(img_data.X[one])) - 1) < 0.2 else 0
-	correct_mlp1 += 1 if abs(mlp1.predict(scaler.transform(img_data.X[one])) - 1) < 0.2 else 0
-	correct_mlp2 += 1 if abs(mlp2.predict(scaler.transform(img_data.X[one])) - 1) < 0.2 else 0
-	correct_mlp3 += 1 if abs(mlp3.predict(scaler.transform(img_data.X[one])) - 1) < 0.2 else 0
-	correct_mlp4 += 1 if abs(mlp4.predict(scaler.transform(img_data.X[one])) - 1) < 0.2 else 0
-	correct_mlp5 += 1 if abs(mlp5.predict(scaler.transform(img_data.X[one])) - 1) < 0.2 else 0
+	correct_sgd += 1 if sgd.predict(scaler.transform(img_data.X[one]))  < 0.5 else 0
+	correct_mlp1 += 1 if mlp1.predict(scaler.transform(img_data.X[one])) < 0.5 else 0
+	correct_mlp2 += 1 if mlp2.predict(scaler.transform(img_data.X[one]))  < 0.5 else 0
+	correct_mlp3 += 1 if mlp3.predict(scaler.transform(img_data.X[one]))  < 0.5 else 0
+	correct_mlp4 += 1 if mlp4.predict(scaler.transform(img_data.X[one]))  < 0.5 else 0
+	correct_mlp5 += 1 if mlp5.predict(scaler.transform(img_data.X[one])) < 0.5 else 0
 	seen += 1
 
 #div_by = len(test_d) + len(other_test_d)
@@ -96,3 +103,4 @@ print 'MLP2: ', correct_mlp2/seen
 print 'MLP3: ', correct_mlp3/seen
 print 'MLP4: ', correct_mlp4/seen
 print 'MLP5: ', correct_mlp5/seen
+print 'second way'
