@@ -81,17 +81,18 @@ for img_nr in other_test_d:
 	img_data = Data.Data(load_other1, img_nr, 10, None)
 	one = randint(1,len(img_data.X)-1)
 
-	sgd_error += sgd.predict(scaler.transform(img_data.X[one]))
-	mlp1_error += mlp1.predict(scaler.transform(img_data.X[one]))
-	mlp2_error += mlp2.predict(scaler.transform(img_data.X[one]))
-	mlp3_error += mlp3.predict(scaler.transform(img_data.X[one]))
-	mlp4_error += mlp4.predict(scaler.transform(img_data.X[one]))
-	mlp5_error += mlp5.predict(scaler.transform(img_data.X[one]))
+	correct_sgd += 1 if abs(sgd.predict(scaler.transform(img_data.X[one])) - 1) < 0.2 else 0
+	correct_mlp1 += 1 if abs(mlp1.predict(scaler.transform(img_data.X[one])) - 1) < 0.2 else 0
+	correct_mlp2 += 1 if abs(mlp2.predict(scaler.transform(img_data.X[one])) - 1) < 0.2 else 0
+	correct_mlp3 += 1 if abs(mlp3.predict(scaler.transform(img_data.X[one])) - 1) < 0.2 else 0
+	correct_mlp4 += 1 if abs(mlp4.predict(scaler.transform(img_data.X[one])) - 1) < 0.2 else 0
+	correct_mlp5 += 1 if abs(mlp5.predict(scaler.transform(img_data.X[one])) - 1) < 0.2 else 0
+	seen += 1
 
-div_by = len(test_d) + len(other_test_d)
-print 'SGD: ', sgd_error/div_by
-print 'MLP1: ', mlp1_error/div_by
-print 'MLP2: ', mlp2_error/div_by
-print 'MLP3: ', mlp3_error/div_by
-print 'MLP4: ', mlp4_error/div_by
-print 'MLP5: ', mlp5_error/div_by
+#div_by = len(test_d) + len(other_test_d)
+print 'SGD: ', correct_sgd/seen
+print 'MLP1: ', correct_mlp1/seen
+print 'MLP2: ', correct_mlp2/seen
+print 'MLP3: ', correct_mlp3/seen
+print 'MLP4: ', correct_mlp4/seen
+print 'MLP5: ', correct_mlp5/seen
