@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 import pickle
 from scipy.misc import imread
-import cv2
+#import cv2
 
 
 class Input:
