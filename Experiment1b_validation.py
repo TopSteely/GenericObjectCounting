@@ -53,11 +53,11 @@ scaler.fit(data_to_scale)
 scaled = scaler.transform(data_to_scale)
 sgd1  = SGDRegressor(eta0=math.pow(10,-5), learning_rate='invscaling', shuffle=True, average=True)
 sgd2  = SGDRegressor(eta0=math.pow(10,-4), learning_rate='invscaling', shuffle=True, average=True)
-mlp1 = MLPRegressor(verbose=False, hidden_layer_sizes=(2000,500), alpha=al_i, activation='tanh')#learning_rate_init=math.pow(10,-3), learning_rate='invscaling',tol=0.00001
-mlp2 = MLPRegressor(verbose=False, hidden_layer_sizes=(2000,1000), alpha=al_i, activation='tanh')#learning_rate_init=math.pow(10,-3), learning_rate='invscaling',tol=0.00001
-mlp3 = MLPRegressor(verbose=False, hidden_layer_sizes=(1000,500), alpha=al_i, activation='tanh')#learning_rate_init=math.pow(10,-3), learning_rate='invscaling',tol=0.00001
-mlp4 = MLPRegressor(verbose=False, hidden_layer_sizes=(2000,250), alpha=al_i, activation='tanh')#learning_rate_init=math.pow(10,-3), learning_rate='invscaling',tol=0.00001
-mlp5 = MLPRegressor(verbose=False, hidden_layer_sizes=(500,500), alpha=al_i, activation='tanh')#learning_rate_init=math.pow(10,-3), learning_rate='invscaling',tol=0.00001
+mlp1 = MLPRegressor(hidden_layer_sizes=(2000,500), activation='tanh')#learning_rate_init=math.pow(10,-3), learning_rate='invscaling',tol=0.00001
+mlp2 = MLPRegressor(hidden_layer_sizes=(2000,1000), activation='tanh')#learning_rate_init=math.pow(10,-3), learning_rate='invscaling',tol=0.00001
+mlp3 = MLPRegressor(hidden_layer_sizes=(1000,500), activation='tanh')#learning_rate_init=math.pow(10,-3), learning_rate='invscaling',tol=0.00001
+mlp4 = MLPRegressor(hidden_layer_sizes=(2000,250), activation='tanh')#learning_rate_init=math.pow(10,-3), learning_rate='invscaling',tol=0.00001
+mlp5 = MLPRegressor(hidden_layer_sizes=(500,500), activation='tanh')#learning_rate_init=math.pow(10,-3), learning_rate='invscaling',tol=0.00001
 print 'fitting'
 sgd1.fit(scaled,y)
 sgd2.fit(scaled,y)
