@@ -75,19 +75,19 @@ mlp5_error = 0.0
 for img_nr in test_d:
 	if os.path.isfile('/var/node436/local/tstahl/GroundTruth/%s/%s.txt'%(class_,format(img_nr, "06d"))):
 			gr = pd.read_csv('/var/node436/local/tstahl/GroundTruth/%s/%s.txt'%(class_,format(img_nr, "06d")), header=None, delimiter=",").values
-		img_data = Data.Data(load_other, img_nr, 10, None)
-		for i_b,bbox in enumerate(img_data.boxes):
-			count = 0.0
-			for ground_truth in gr:
-				count += get_intersection_over_union(bbox, ground_truth)
+			img_data = Data.Data(load_other, img_nr, 10, None)
+			for i_b,bbox in enumerate(img_data.boxes):
+				count = 0.0
+				for ground_truth in gr:
+					count += get_intersection_over_union(bbox, ground_truth)
 
-			sgd_error1 += (sgd1.predict(scaler.transform(img_data.X[i_b])) - count)**2
-			sgd_error2 += (sgd2.predict(scaler.transform(img_data.X[i_b])) - count)**2
-			mlp1_error += (mlp1.predict(scaler.transform(img_data.X[i_b])) - count)**2
-			mlp2_error += (mlp2.predict(scaler.transform(img_data.X[i_b])) - count)**2
-			mlp3_error += (mlp3.predict(scaler.transform(img_data.X[i_b])) - count)**2
-			mlp4_error += (mlp4.predict(scaler.transform(img_data.X[i_b])) - count)**2
-			mlp5_error += (mlp5.predict(scaler.transform(img_data.X[i_b])) - count)**2
+				sgd_error1 += (sgd1.predict(scaler.transform(img_data.X[i_b])) - count)**2
+				sgd_error2 += (sgd2.predict(scaler.transform(img_data.X[i_b])) - count)**2
+				mlp1_error += (mlp1.predict(scaler.transform(img_data.X[i_b])) - count)**2
+				mlp2_error += (mlp2.predict(scaler.transform(img_data.X[i_b])) - count)**2
+				mlp3_error += (mlp3.predict(scaler.transform(img_data.X[i_b])) - count)**2
+				mlp4_error += (mlp4.predict(scaler.transform(img_data.X[i_b])) - count)**2
+				mlp5_error += (mlp5.predict(scaler.transform(img_data.X[i_b])) - count)**2
 
 div_by = len(test_d)
 print 'SGD: ', sgd_error/div_by
