@@ -21,15 +21,15 @@ def main():
 
     pred_mode = 'multi'
 
-    debug = False
+    debug = True
 
     batch_size = 5
 
-    epochs = 8
+    epochs = 1
 
-    subsamples = 100
+    subsamples = 10
 
-    for tree_level_size in range(1,6):
+    for tree_level_size in range(5,6):
         #initialize
         print 'initializing', tree_level_size
         #sgd = SGD.SGD('max', category, tree_level_size, batch_size, math.pow(10,-4), 0.003, math.pow(10,-5))
@@ -115,10 +115,10 @@ def main():
                 print "Eval loss: ", al_i, mse
             else:
                 if learn_mode == 'all':
-                    mse,ae, mse_non_zero = sgd_dennis.evaluate('train_all')
+                    preds_d_d, y_d_d = sgd_dennis.evaluate('train_all', subsamples, debug)
                 elif learn_mode == 'category':
-                    mse,ae, mse_non_zero = sgd_dennis.evaluate('train_cat')
-                print "Train loss: ", al_i, mse
+                   preds_d_d, y_d_d = sgd_dennis.evaluate('train_cat', subsamples, debug)
+                output_dennis.plot_preds(preds_d_d, [], y_d_d, al_i)
             #output_dennis.save(mse, ae, mse_non_zero, sgd_dennis, 'ind', al_i, learn_mode)
     print learn_mode, pred_mode, epochs
     

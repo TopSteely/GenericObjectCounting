@@ -19,7 +19,7 @@ class Output:
         self.nn_path = "/home/tstahl/plot/%s_%s_nn_%s_%s_%s_%s_%s.p"
         self.npe_path = "/home/tstahl/plot/%s_%s_npe_%s_%s.p"
         self.model_path = "/var/node436/local/tstahl/models/%s_%s_%s_%s_%s_%s_%s.p"
-        self.plot_path = "/var/node436/local/tstahl/plos/%s_%s.png"
+        self.plot_path = "/var/node436/local/tstahl/plos/%s_%s_%s.png"
         self.image_path = "/var/node436/local/tstahl/Images/%s.jpg"
         self.scaler_path = '/var/node436/local/tstahl/models/scaler_dennis.p'
 	if mode.startswith('dennis'):
@@ -49,26 +49,39 @@ class Output:
         #pickle.dump(num_per_image, open( self.npe_path%(self.experiment, self.mode, self.category, self.prune_tree_levels), "wb" ))
         
     def plot_preds(self, preds, preds_skl, y, alpha):
-        sorted_preds = []
-        sorted_preds_skl = []
-        sorted_y = []
-        decorated = [(y_i, i) for i, y_i in enumerate(y)]
-        decorated.sort()
-        for y_i, i in reversed(decorated):
-            sorted_preds.append(preds[i])
-            sorted_preds_skl.append(preds_skl[i])
-            sorted_y.append(y_i)
-        plt.figure()
-        plt.plot(range(len(preds)), preds, 'ro',label='prediction')
-        plt.plot(range(len(preds)), preds_skl, 'gD', label='sklearn')
-        plt.plot(range(len(preds)), y, 'y*',label='target')
-        plt.ylabel('y')
-        plt.ylim([-1,len(preds)+1])
-        plt.xlim([-1,len(preds)+1])
-        plt.legend(loc='upper center')
-        plt.title('%s'%(alpha))
-	print self.plot_path%(self.mode,alpha)
-        plt.savefig(self.plot_path%(self.mode,alpha))     
+        if self.mode.endswith('multi'):
+            f,ax = plt.subplots(self.prune_tree_levels)
+            for lvl in range(self.prune_tree_levels):
+                ax[lvl].plot(preds[lvl], 'ro', label="prediction")
+                ax[lvl].plot(y, 'y*', label="target")
+                ax[lvl].tick_params(
+                    axis='x',          # changes apply to the x-axis
+                    which='both',      # both major and minor ticks are affected
+                    bottom='off',      # ticks along the bottom edge are off
+                    top='off',         # ticks along the top edge are off
+                    labelbottom='off')
+                ax[lvl].title.set_text("Prediction level %s"%(lvl))
+            plt.legend('upper left')
+        else:
+            sorted_preds = []
+            sorted_preds_skl = []
+            sorted_y = []
+            decorated = [(y_i, i) for i, y_i in enumerate(y)]
+            decorated.sort()
+            for y_i, i in reversed(decorated):
+                sorted_preds.append(preds[i])
+                sorted_preds_skl.append(preds_skl[i])
+                sorted_y.append(y_i)
+            plt.figure()
+            plt.plot(range(len(preds)), preds, 'ro',label='prediction')
+            plt.plot(range(len(preds)), preds_skl, 'gD', label='sklearn')
+            plt.plot(range(len(preds)), y, 'y*',label='target')
+            plt.ylabel('y')
+            plt.ylim([-1,len(preds)+1])
+            plt.xlim([-1,len(preds)+1])
+            plt.legend(loc='upper center')
+            plt.title('%s'%(alpha))
+        plt.savefig(self.plot_path%(self.mode,alpha,self.category))     
         
     def plot_level_boxes(self, rects, img_nr):
         colors = ['red','blue','green']

@@ -28,7 +28,7 @@ class SGD:
         self.gamma = gamma
         self.alpha = alpha
         self.functions = {}
-	self.scaler = None
+        self.scaler = None
         self.sgd = SGDRegressor(eta0=eta, learning_rate='invscaling', shuffle=True, average=True, alpha=alpha)
         if mode == 'max':
             self.method = self.learn_max
@@ -132,6 +132,7 @@ class SGD:
             non_zero_error = np.zeros(self.prune_tree_levels)
             n_non_zero = np.zeros(self.prune_tree_levels)
             skl_error = np.zeros(self.prune_tree_levels)
+            preds_d = np.array([], dtype=np.int64).reshape(self.prune_tree_levels,0)
         else:
             squared_error = 0.0
             error = 0.0
@@ -164,12 +165,15 @@ class SGD:
                 non_zero_error += img_loss
                 n_non_zero += 1
             if debug:
-                skl_error += (self.sgd.predict(img_data.X[img_data.levels[0][0]].reshape(1, -1)) - img_data.y)**2
-                preds_d.append(self.predict(img_data))
+                #skl_error += (self.sgd.predict(img_data.X[img_data.levels[0][0]].reshape(1, -1)) - img_data.y)**2
+                if self.version == 'multi':
+                    np.concatenate((preds_d,self.predict(img_data).reshape(-1,1)), axis=1)
+                else:
+                    preds_d.append(self.predict(img_data))
                 y_d.append(img_data.y)
-                preds_skl.append(self.sgd.predict(img_data.X[img_data.levels[0][0]].reshape(1, -1)))
+                #preds_skl.append(self.sgd.predict(img_data.X[img_data.levels[0][0]].reshape(1, -1)))
         if debug:
-            return preds_d, preds_skl, y_d
+            return preds_d, y_d#,  preds_skl
         return squared_error/len(numbers), error / len(numbers), non_zero_error / n_non_zero#skl_error/len(numbers),, self.eta
         
         
