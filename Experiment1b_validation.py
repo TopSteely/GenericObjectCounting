@@ -38,7 +38,7 @@ test_d = load_dennis.category_val
 scaler = StandardScaler()
 data_to_scale = []
 y = []
-for img_nr in training_data[0:10]:
+for img_nr in training_data:
 	if os.path.isfile('/var/node436/local/tstahl/GroundTruth/%s/%s.txt'%(class_,format(img_nr, "06d"))):
 		gr = pd.read_csv('/var/node436/local/tstahl/GroundTruth/%s/%s.txt'%(class_,format(img_nr, "06d")), header=None, delimiter=",").values
 	img_data = Data.Data(load_dennis, img_nr, 10, None)
@@ -75,7 +75,7 @@ mlp2_error = 0.0
 mlp3_error = 0.0
 mlp4_error = 0.0
 mlp5_error = 0.0
-for img_nr in test_d[0:10]:
+for img_nr in test_d:
 	if os.path.isfile('/var/node436/local/tstahl/GroundTruth/%s/%s.txt'%(class_,format(img_nr, "06d"))):
 			gr = pd.read_csv('/var/node436/local/tstahl/GroundTruth/%s/%s.txt'%(class_,format(img_nr, "06d")), header=None, delimiter=",").values
 			img_data = Data.Data(load_dennis, img_nr, 10, None)
@@ -93,6 +93,7 @@ for img_nr in test_d[0:10]:
 				mlp5_error += (mlp5.predict(scaler.transform(img_data.X[i_b])) - count)**2
 
 div_by = len(test_d)
+print div_by
 print 'SGD1: ', sgd_error1/div_by
 print 'SGD2: ', sgd_error2/div_by
 print 'MLP1: ', mlp1_error/div_by
