@@ -80,7 +80,7 @@ def main():
                 validation_loss = np.array([], dtype=np.int64).reshape(tree_level_size+1,0)
                 #sgd_pascal = SGD.SGD('pascal', 'max', category, tree_level_size, batch_size, eta_i, gamma_i, al_i)
                 sgd_dennis = SGD.SGD('dennis', pred_mode, category, tree_level_size, batch_size, math.pow(10,-7), gamma_i, al_i, feature_size)
-                #sgd_dennis.set_scaler(scaler_dennis)
+                sgd_dennis.set_scaler(scaler_dennis)
                 print al_i, gamma_i
                 for epoch in range(epochs):
                     #print epoch
@@ -124,7 +124,7 @@ def main():
                    preds_d_d, y_d_d = sgd_dennis.evaluate('val_cat', subsamples, debug)
                 output_dennis.plot_preds(preds_d_d, [], y_d_d, al_i, 'val_cat')
             #output_dennis.save(mse, ae, mse_non_zero, sgd_dennis, 'ind', al_i, learn_mode)
-    print learn_mode, pred_mode, epochs
+    print learn_mode, pred_mode, epochs,'with scaler'
     
     
 if __name__ == "__main__":
