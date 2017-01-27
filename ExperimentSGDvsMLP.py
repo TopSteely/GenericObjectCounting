@@ -46,7 +46,7 @@ def main():
                 print len(training_data)
                 random.shuffle(training_data)
                 for img_nr in training_data[0:400]:
-                     img_data = Data.Data(load_dennis, img_nr, 10, None)
+                     img_data = Data.Data(load_dennis, img_nr, 10, None, 4096)
                      data_to_scale.extend(img_data.X)
                 scaler.fit(data_to_scale)
                 output_dennis.dump_scaler(scaler)
@@ -62,7 +62,7 @@ def main():
             	print len(training_data)
             	random.shuffle(training_data)
             	for img_nr in training_data[0:100]:
-            	     img_data = Data.Data(load_dennis, img_nr, 10, None)
+            	     img_data = Data.Data(load_dennis, img_nr, 10, None, 4096)
             	     data_to_scale.extend(img_data.X)
             	scaler_category.fit(data_to_scale)
             	output_dennis.dump_scaler_category(scaler_category)
@@ -80,7 +80,7 @@ def main():
                     mlp_data = []
                     mlp_y = []
                     for img_nr in training_data[bi_x*len(training_data)/5:(bi_x+1)*len(training_data)/5-1]:
-                        img_data = Data.Data(load_dennis, img_nr, 10, None)
+                        img_data = Data.Data(load_dennis, img_nr, 10, None, 4096)
                         mlp_data.append(img_data.X[0])
                         mlp_y.append(img_data.y)
                     mlp1.partial_fit(scaler_dennis.transform(mlp_data),mlp_y)
@@ -97,7 +97,7 @@ def main():
                 mlp_error5 = 0.0
                 sgd_error = 0.0
                 for img_nr in test_numbers_d:
-                    img_data = Data.Data(load_dennis, img_nr, 10, None)
+                    img_data = Data.Data(load_dennis, img_nr, 10, None, 4096)
                     mlp_error1 += ((mlp1.predict(scaler_dennis.transform(np.array(img_data.X[0]).reshape(1, -1)))-img_data.y)**2)
                     mlp_error2 += ((mlp2.predict(scaler_dennis.transform(np.array(img_data.X[0]).reshape(1, -1)))-img_data.y)**2)
                     mlp_error3 += ((mlp3.predict(scaler_dennis.transform(np.array(img_data.X[0]).reshape(1, -1)))-img_data.y)**2)
@@ -116,14 +116,14 @@ def main():
             mlp_data = []
             mlp_y = []
             for img_nr in training_data:
-                img_data = Data.Data(load_dennis, img_nr, 10, None)
+                img_data = Data.Data(load_dennis, img_nr, 10, None, 4096)
                 mlp_data.append(img_data.X[0])
                 mlp_y.append(img_data.y)
 
             mlp_data_val = []
             mlp_y_val = []
             for img_nr in test_numbers_d:
-                img_data = Data.Data(load_dennis, img_nr, 10, None)
+                img_data = Data.Data(load_dennis, img_nr, 10, None, 4096)
                 mlp_data_val.append(img_data.X[0])
                 mlp_y_val.append(img_data.y)
             # learn SGD

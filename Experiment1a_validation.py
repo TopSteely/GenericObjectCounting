@@ -34,7 +34,7 @@ for img_nr in training_data:
 	for ff in range(feat.shape[0]):
 		y.append(1)
 for img_nr in negative_data:
-	img_data = Data.Data(load_other, img_nr, 10, None)
+	img_data = Data.Data(load_other, img_nr, 10, None, 4096)
 	data_to_scale.append(img_data.X[randint(1,len(img_data.X)-1)])
 	data_to_scale.append(img_data.X[randint(1,len(img_data.X)-1)])
 	y.append(0)
@@ -89,7 +89,7 @@ for img_nr in test_d:
 			seen += 1
 
 for img_nr in other_test_d:
-	img_data = Data.Data(load_other1, img_nr, 10, None)
+	img_data = Data.Data(load_other1, img_nr, 10, None, 4096)
 	one = randint(1,len(img_data.X)-1)
 
 	correct_sgd1 += 1 if sgd1.predict(scaler.transform(img_data.X[one]))  < 0.5 else 0

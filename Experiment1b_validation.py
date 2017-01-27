@@ -44,7 +44,7 @@ y = []
 for img_nr in training_data:
 	if os.path.isfile('/var/node436/local/tstahl/GroundTruth/%s/%s.txt'%(class_,format(img_nr, "06d"))):
 		gr = pd.read_csv('/var/node436/local/tstahl/GroundTruth/%s/%s.txt'%(class_,format(img_nr, "06d")), header=None, delimiter=",").values
-	img_data = Data.Data(load_dennis, img_nr, 10, None)
+	img_data = Data.Data(load_dennis, img_nr, 10, None, 4096)
 	data_to_scale.extend(img_data.X)
 	for bbox in img_data.boxes:
 		count = 0.0
@@ -90,7 +90,7 @@ y_p = []
 for img_nr in test_d:
 	if os.path.isfile('/var/node436/local/tstahl/GroundTruth/%s/%s.txt'%(class_,format(img_nr, "06d"))):
 			gr = pd.read_csv('/var/node436/local/tstahl/GroundTruth/%s/%s.txt'%(class_,format(img_nr, "06d")), header=None, delimiter=",").values
-			img_data = Data.Data(load_dennis, img_nr, 10, None)
+			img_data = Data.Data(load_dennis, img_nr, 10, None, 4096)
 			for i_b,bbox in enumerate(img_data.boxes):
 				count = 0.0
 				for ground_truth in gr:
