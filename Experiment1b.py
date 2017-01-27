@@ -23,13 +23,13 @@ def main():
 
     debug = True
 
-    batch_size = 1
+    batch_size = 5
 
-    epochs = 1
+    epochs = 8
 
-    subsamples = 4
+    subsamples = 100
 
-    feature_size = 5
+    feature_size = 4096
 
     for tree_level_size in range(2,3):
         #initialize
