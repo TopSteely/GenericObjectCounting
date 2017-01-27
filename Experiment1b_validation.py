@@ -125,6 +125,7 @@ print 'MLP5: ', mlp5_error/div_by
 plt.figure()
 for i_p, preds in enumerate([sgd_preds1]):#,sgd_preds2,mlp1_preds,mlp2_preds,mlp3_preds,mlp4_preds,mlp5_preds]):
 	sorted_preds = []
+	sorted_y = []
 	decorated = [(y_i, i) for i, y_i in enumerate(y_p)]
 	decorated.sort()
 	for y_i, i in reversed(decorated):
