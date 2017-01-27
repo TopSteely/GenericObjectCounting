@@ -122,14 +122,14 @@ print 'MLP5: ', mlp5_error/div_by
 plt.figure()
 for i_p, preds in enumerate([sgd_preds1,sgd_preds2,mlp1_preds,mlp2_preds,mlp3_preds,mlp4_preds,mlp5_preds]):
 	sorted_preds = []
-    decorated = [(y_i, i) for i, y_i in enumerate(y_p)]
-    decorated.sort()
-    for y_i, i in reversed(decorated):
-        sorted_preds.append(preds[i])
-        sorted_y.append(y_i)
+	decorated = [(y_i, i) for i, y_i in enumerate(y_p)]
+	decorated.sort()
+	for y_i, i in reversed(decorated):
+	    sorted_preds.append(preds[i])
+	    sorted_y.append(y_i)
 	plt.plot(sorted_preds, 'ro',label='prediction')
-    plt.plot(sorted_y, 'y*',label='target')
-    plt.ylabel('y')
-    plt.legend(loc='upper center')
-    plt.savefig('/var/node436/local/tstahl/plos/Val1b_%s_%s.png'%(i_p,alpha,class_))
-    plt.clf()
+	plt.plot(sorted_y, 'y*',label='target')
+	plt.ylabel('y')
+	plt.legend(loc='upper center')
+	plt.savefig('/var/node436/local/tstahl/plos/Val1b_%s_%s.png'%(i_p,alpha,class_))
+	plt.clf()
