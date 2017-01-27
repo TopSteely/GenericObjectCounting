@@ -236,8 +236,7 @@ class Input:
         #assert np.array_equal(im[:,:,1], im[:,:,2])
         #im = im[:,:,0]
         im = 255 - im
-        print im
-        raw_input()
+        print np.sum(im)
         #x = [x0, x1, x2]
         #x0 = average intensity value in the bounding box.
         #x1 = width of the boundig box

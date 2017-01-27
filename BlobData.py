@@ -8,7 +8,6 @@ class BlobData():
 		prune_tree_levels = 10
 		boxes = load.get_coords_blob(img_nr)
 		self.boxes = self.random_bbox(boxes[0][2], boxes[0][3])
-		print self.boxes
 		self.tree_boxes = self.boxes
 		self.X = load.get_features_blob(img_nr, self.boxes)
 		self.num_features = 3
@@ -19,6 +18,7 @@ class BlobData():
 		self.G, levels = create_tree(self.tree_boxes)
 		#prune tree to only have levels which fully cover the image, tested
 		total_size = surface_area_old(self.tree_boxes, levels[0])
+		print total_size
 		for level in levels:
 			sa = surface_area_old(self.tree_boxes, levels[level])
 			sa_co = sa/total_size
@@ -46,5 +46,34 @@ class BlobData():
 			box.append(random.randint(0, im_h))
 			box.append(random.randint(box[0], im_w))
 			box.append(random.randint(box[1], im_h))
+			boxes.append(box)
+		#make sure some are at the corners
+		for b_i in range(10):
+			box = []
+			box.append(0)
+			box.append(random.randint(0, im_h))
+			box.append(random.randint(box[0], im_w))
+			box.append(random.randint(box[1], im_h))
+			boxes.append(box)
+		for b_i in range(10):
+			box = []
+			box.append(random.randint(0, im_w))
+			box.append(0)
+			box.append(random.randint(box[0], im_w))
+			box.append(random.randint(box[1], im_h))
+			boxes.append(box)
+		for b_i in range(10):
+			box = []
+			box.append(random.randint(0, im_w))
+			box.append(random.randint(0, im_h))
+			box.append(im_w)
+			box.append(random.randint(box[1], im_h))
+			boxes.append(box)
+		for b_i in range(10):
+			box = []
+			box.append(random.randint(0, im_w))
+			box.append(random.randint(0, im_h))
+			box.append(random.randint(box[0], im_w))
+			box.append(im_h)
 			boxes.append(box)
 		return boxes
