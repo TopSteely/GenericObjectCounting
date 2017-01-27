@@ -83,7 +83,6 @@ def main():
                 #sgd_dennis.set_scaler(scaler_dennis)
                 print al_i, gamma_i
                 for epoch in range(epochs):
-                    print epoch
                     #print epoch
                     #tr_l, te_l = sgd_dennis.learn('categories')
                     if debug:
