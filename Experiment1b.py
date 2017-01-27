@@ -111,9 +111,12 @@ def main():
             if not debug:
                 if learn_mode == 'all':
                     mse,ae, mse_non_zero = sgd_dennis.evaluate('val_all')
+                    mse_tr,ae_tr, mse_non_zero_tr = sgd_dennis.evaluate('train_all')
                 elif learn_mode == 'category':
                     mse,ae, mse_non_zero = sgd_dennis.evaluate('val_cat')
-                print "Eval loss: ", al_i, mse
+                    mse_tr,ae_tr, mse_non_zero_tr = sgd_dennis.evaluate('train_cat')
+                print "Eval loss train: ", al_i, mse_tr
+                print "Eval loss val: ", al_i, mse
             else:
                 if learn_mode == 'all':
                     preds_d_d, y_d_d = sgd_dennis.evaluate('val_all', subsamples, debug)
