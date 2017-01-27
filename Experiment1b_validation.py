@@ -41,7 +41,7 @@ test_d = load_dennis.category_val
 scaler = StandardScaler()
 data_to_scale = []
 y = []
-for img_nr in training_data[0:10]:
+for img_nr in training_data:
 	if os.path.isfile('/var/node436/local/tstahl/GroundTruth/%s/%s.txt'%(class_,format(img_nr, "06d"))):
 		gr = pd.read_csv('/var/node436/local/tstahl/GroundTruth/%s/%s.txt'%(class_,format(img_nr, "06d")), header=None, delimiter=",").values
 	img_data = Data.Data(load_dennis, img_nr, 10, None)
@@ -62,8 +62,8 @@ mlp3 = MLPRegressor(hidden_layer_sizes=(1000,500), activation='tanh')#learning_r
 mlp4 = MLPRegressor(hidden_layer_sizes=(2000,250), activation='tanh')#learning_rate_init=math.pow(10,-3), learning_rate='invscaling',tol=0.00001
 mlp5 = MLPRegressor(hidden_layer_sizes=(500,500), activation='tanh')#learning_rate_init=math.pow(10,-3), learning_rate='invscaling',tol=0.00001
 print 'fitting'
-sgd1.fit(scaled,y)
-#sgd2.fit(scaled,y)
+#sgd1.fit(scaled,y)
+sgd2.fit(scaled,y)
 #mlp1.fit(scaled,y)
 #mlp2.fit(scaled,y)
 #mlp3.fit(scaled,y)
@@ -87,7 +87,7 @@ mlp3_preds = []
 mlp4_preds = []
 mlp5_preds = []
 y_p = []
-for img_nr in test_d[0:10]:
+for img_nr in test_d:
 	if os.path.isfile('/var/node436/local/tstahl/GroundTruth/%s/%s.txt'%(class_,format(img_nr, "06d"))):
 			gr = pd.read_csv('/var/node436/local/tstahl/GroundTruth/%s/%s.txt'%(class_,format(img_nr, "06d")), header=None, delimiter=",").values
 			img_data = Data.Data(load_dennis, img_nr, 10, None)
@@ -96,10 +96,10 @@ for img_nr in test_d[0:10]:
 				for ground_truth in gr:
 					count += get_intersection_over_union(bbox, ground_truth)
 
-				sgd_error1 += (sgd1.predict(scaler.transform(img_data.X[i_b])) - count)**2
-				sgd_preds1.append(sgd1.predict(scaler.transform(img_data.X[i_b])))
-				#sgd_error2 += (sgd2.predict(scaler.transform(img_data.X[i_b])) - count)**2
-				#sgd_preds2.append(sgd2.predict(scaler.transform(img_data.X[i_b])))
+				#sgd_error1 += (sgd1.predict(scaler.transform(img_data.X[i_b])) - count)**2
+				#sgd_preds1.append(sgd1.predict(scaler.transform(img_data.X[i_b])))
+				sgd_error2 += (sgd2.predict(scaler.transform(img_data.X[i_b])) - count)**2
+				sgd_preds2.append(sgd2.predict(scaler.transform(img_data.X[i_b])))
 				#mlp1_error += (mlp1.predict(scaler.transform(img_data.X[i_b])) - count)**2
 				#mlp1_preds.append(mlp1.predict(scaler.transform(img_data.X[i_b])))
 				#mlp2_error += (mlp2.predict(scaler.transform(img_data.X[i_b])) - count)**2
@@ -123,7 +123,7 @@ print 'MLP4: ', mlp4_error/div_by
 print 'MLP5: ', mlp5_error/div_by
 
 plt.figure()
-for i_p, preds in enumerate([sgd_preds1]):#,sgd_preds2,mlp1_preds,mlp2_preds,mlp3_preds,mlp4_preds,mlp5_preds]):
+for i_p, preds in enumerate([sgd_preds2]):#,sgd_preds2,mlp1_preds,mlp2_preds,mlp3_preds,mlp4_preds,mlp5_preds]):
 	sorted_preds = []
 	sorted_y = []
 	decorated = [(y_i, i) for i, y_i in enumerate(y_p)]
