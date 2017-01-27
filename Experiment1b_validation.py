@@ -135,5 +135,5 @@ for i_p, preds in enumerate([sgd_preds1]):#,sgd_preds2,mlp1_preds,mlp2_preds,mlp
 	plt.plot(sorted_y, 'y*',label='target')
 	plt.ylabel('y')
 	plt.legend(loc='upper center')
-	plt.savefig('/var/node436/local/tstahl/plos/Val1b_%s_%s.png'%(i_p,alpha,class_))
+	plt.savefig('/var/node436/local/tstahl/plos/Val1b_%s_%s.png'%(i_p,class_))
 	plt.clf()
