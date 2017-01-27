@@ -3,13 +3,13 @@ import numpy as np
 import time
 
 class Data:
-    def __init__(self, load, img_nr, prune_tree_levels, scaler, num_features=1000):
+    def __init__(self, load, img_nr, prune_tree_levels, scaler, num_features=4096):
 	#print img_nr
         self.img_nr = img_nr
         self.boxes = load.get_coords(img_nr)
         self.X = load.get_features(img_nr)
         self.num_features = num_features
-        if num_features != 1000:
+        if num_features != 4096:
             features_temp = []
             for p in self.X:
                 features_temp.append(p[0:num_features])
@@ -61,7 +61,6 @@ class Data:
             assert len(intersection_coords) == len(intersection_features)
             if len(intersection_coords) > 0:
                 self.boxes = np.append(self.boxes, intersection_coords, axis=0)
-                print np.array(self.X).shape, intersection_features[:,0:num_features].shape
                 self.X = np.append(self.X, intersection_features[:,0:num_features], axis=0)
             else:
                 self.boxes = np.array(self.boxes)

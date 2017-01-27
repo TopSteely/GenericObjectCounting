@@ -299,6 +299,7 @@ class SGD:
 
 
     def learn_multi(self, img_data, functions):
+        print predict_multi(img_data)
         ret = np.zeros((self.prune_tree_levels,self.n_features))
         print img_data.img_nr, img_data.levels
         for level in range(self.prune_tree_levels):
