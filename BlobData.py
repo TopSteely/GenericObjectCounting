@@ -17,6 +17,7 @@ class BlobData():
 		#assert(self.boxes==self.tree_boxes)
 		self.G, levels = create_tree(self.tree_boxes)
 		#prune tree to only have levels which fully cover the image, tested
+		print levels
 		total_size = surface_area_old(self.tree_boxes, levels[0])
 		for level in levels:
 			sa = surface_area_old(self.tree_boxes, levels[level])
