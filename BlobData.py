@@ -37,7 +37,7 @@ class BlobData():
 			self.G.remove_nodes_from(trash_level)
 		self.boxes = np.array(self.boxes)
 		assert np.array_equal(self.boxes,self.tree_boxes)
-		intersection_coords = load.get_intersections_blob(img_nr, self.levels, self.boxes)
+		intersection_coords = load.get_intersections_blob(self.levels, self.boxes)
 		intersection_features = load.get_features_blob(img_nr, intersection_coords)
 		if scaler != None and len(intersection_features) > 0:
 		    intersection_features = scaler.transform(intersection_features)
