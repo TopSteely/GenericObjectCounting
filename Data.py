@@ -61,7 +61,7 @@ class Data:
             assert len(intersection_coords) == len(intersection_features)
             if len(intersection_coords) > 0:
                 self.boxes = np.append(self.boxes, intersection_coords, axis=0)
-                print self.X.shape, np.array(intersection_features[0:num_features,:]).shape
+                print self.X.shape, intersection_features[:,0:num_features].shape
                 self.X = np.append(self.X, intersection_features[0:num_features,:], axis=0)
                 print self.X.shape
             else:
