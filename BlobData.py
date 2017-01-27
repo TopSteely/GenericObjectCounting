@@ -38,6 +38,17 @@ class BlobData():
 		for trash_level in levels_gone.values():
 			self.G.remove_nodes_from(trash_level)
 		self.boxes = np.array(self.boxes)
+		assert self.boxes==self.tree_boxes
+        intersection_coords = load.get_intersections_blob(img_nr, self.levels, self.boxes)
+        intersection_features = load.get_features_blob(img_nr, intersection_coords)
+        if scaler != None and len(intersection_features) > 0:
+            intersection_features = scaler.transform(intersection_features)
+        assert len(intersection_coords) == len(intersection_features)
+        if len(intersection_coords) > 0:
+            self.boxes = np.append(self.boxes, intersection_coords, axis=0)
+            self.X = np.append(self.X, intersection_features[:,0:num_features], axis=0)
+        else:
+            self.boxes = np.array(self.boxes)
 
 	def random_bbox(self,im_w, im_h):
 		boxes = [[0,0,im_w,im_h]]

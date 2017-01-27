@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import pickle
 from scipy.misc import imread
+from utils import extract_coords
 #import cv2
 
 
@@ -236,7 +237,6 @@ class Input:
         #assert np.array_equal(im[:,:,1], im[:,:,2])
         #im = im[:,:,0]
         im = 255 - im
-        print np.sum(im)
         #x = [x0, x1, x2]
         #x0 = average intensity value in the bounding box.
         #x1 = width of the boundig box
@@ -246,7 +246,13 @@ class Input:
             cropped = im[box[1]:box[1]+box[3], box[0]:box[0]+box[2]]
             ff = []
             ff.append(np.sum(cropped))
-            ff.append(box[3])
-            ff.append(box[2])
+            ff.append(box[0]+box[2])
+            ff.append(box[1]+box[3])
             features.append(ff)
         return np.array(features)
+
+    def get_intersections_blob(self, levels, boxes):
+        intersection_coords = []
+        for level_numbers in levels.values():
+            intersection_coords.extend(extract_coords(level_numbers, boxes))
+        return np.array(intersection_coords)
