@@ -38,7 +38,7 @@ test_d = load_dennis.category_val
 scaler = StandardScaler()
 data_to_scale = []
 y = []
-for img_nr in training_data:
+for img_nr in training_data[0:10]:
 	if os.path.isfile('/var/node436/local/tstahl/GroundTruth/%s/%s.txt'%(class_,format(img_nr, "06d"))):
 		gr = pd.read_csv('/var/node436/local/tstahl/GroundTruth/%s/%s.txt'%(class_,format(img_nr, "06d")), header=None, delimiter=",").values
 	img_data = Data.Data(load_dennis, img_nr, 10, None)
@@ -75,7 +75,16 @@ mlp2_error = 0.0
 mlp3_error = 0.0
 mlp4_error = 0.0
 mlp5_error = 0.0
-for img_nr in test_d:
+
+sgd_preds1 = []
+sgd_preds2 = []
+mlp1_preds = []
+mlp2_preds = []
+mlp3_preds = []
+mlp4_preds = []
+mlp5_preds = []
+y_p = []
+for img_nr in test_d[0:10]:
 	if os.path.isfile('/var/node436/local/tstahl/GroundTruth/%s/%s.txt'%(class_,format(img_nr, "06d"))):
 			gr = pd.read_csv('/var/node436/local/tstahl/GroundTruth/%s/%s.txt'%(class_,format(img_nr, "06d")), header=None, delimiter=",").values
 			img_data = Data.Data(load_dennis, img_nr, 10, None)
@@ -85,12 +94,20 @@ for img_nr in test_d:
 					count += get_intersection_over_union(bbox, ground_truth)
 
 				sgd_error1 += (sgd1.predict(scaler.transform(img_data.X[i_b])) - count)**2
+				sgd_preds1.append(sgd1.predict(scaler.transform(img_data.X[i_b])))
 				sgd_error2 += (sgd2.predict(scaler.transform(img_data.X[i_b])) - count)**2
+				sgd_preds2.append(sgd2.predict(scaler.transform(img_data.X[i_b])))
 				mlp1_error += (mlp1.predict(scaler.transform(img_data.X[i_b])) - count)**2
+				mlp1_preds.append(mlp1.predict(scaler.transform(img_data.X[i_b])))
 				mlp2_error += (mlp2.predict(scaler.transform(img_data.X[i_b])) - count)**2
+				mlp2_preds.append(mlp2.predict(scaler.transform(img_data.X[i_b])))
 				mlp3_error += (mlp3.predict(scaler.transform(img_data.X[i_b])) - count)**2
+				mlp3_preds.append(mlp3.predict(scaler.transform(img_data.X[i_b])))
 				mlp4_error += (mlp4.predict(scaler.transform(img_data.X[i_b])) - count)**2
+				mlp4_preds.append(mlp4.predict(scaler.transform(img_data.X[i_b])))
 				mlp5_error += (mlp5.predict(scaler.transform(img_data.X[i_b])) - count)**2
+				mlp5_preds.append(mlp5.predict(scaler.transform(img_data.X[i_b])))
+				y_p.append(count)
 
 div_by = len(test_d)
 print div_by
@@ -101,3 +118,18 @@ print 'MLP2: ', mlp2_error/div_by
 print 'MLP3: ', mlp3_error/div_by
 print 'MLP4: ', mlp4_error/div_by
 print 'MLP5: ', mlp5_error/div_by
+
+plt.figure()
+for i_p, preds in enumerate([sgd_preds1,sgd_preds2,mlp1_preds,mlp2_preds,mlp3_preds,mlp4_preds,mlp5_preds]):
+	sorted_preds = []
+    decorated = [(y_i, i) for i, y_i in enumerate(y_p)]
+    decorated.sort()
+    for y_i, i in reversed(decorated):
+        sorted_preds.append(preds[i])
+        sorted_y.append(y_i)
+	plt.plot(sorted_preds, 'ro',label='prediction')
+    plt.plot(sorted_y, 'y*',label='target')
+    plt.ylabel('y')
+    plt.legend(loc='upper center')
+    plt.savefig('/var/node436/local/tstahl/plos/Val1b_%s_%s.png'%(i_p,alpha,class_))
+    plt.clf()
