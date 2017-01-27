@@ -130,7 +130,7 @@ class SGD:
     def evaluate(self, mode, to=-1, debug=False):
         if self.version == 'multi':
             print 'evaluating, key'
-            print self.w
+            print self.w_multi
             raw_input()
             squared_error = np.zeros(self.prune_tree_levels)
             error = np.zeros(self.prune_tree_levels)
@@ -241,9 +241,6 @@ class SGD:
                     self.method(img_data, temp)
                 else:
                     upd, _ = self.method(img_data, temp)
-                    print upd
-                    print 'update, waiting for key'
-                    raw_input()
                     self.w_update += upd
                 #self.functions[img_nr] = fct
             self.samples_seen += 1
@@ -251,7 +248,6 @@ class SGD:
                 to_fit = img_data.X[img_data.levels[0][0]].reshape(1, -1)
                 self.sgd.partial_fit(to_fit,[img_data.y])
             if (i_img_nr + 1)%self.batch_size == 0:
-                print 'updating because of batchsize'
                 self.update()
                 if debug:
                     tr_loss, te_loss = self.loss_per_level_all(to)
@@ -259,7 +255,6 @@ class SGD:
                     test_losses = np.concatenate((test_losses,te_loss.reshape(-1,1)), axis=1)
         if (i_img_nr + 1)%self.batch_size != 0:
             if self.version!='old':
-                print 'updating because of end'
                 self.update()
             if debug:
                 tr_loss, te_loss = self.loss_per_level_all(to)
@@ -299,23 +294,15 @@ class SGD:
 
 
     def learn_multi(self, img_data, functions):
-        print self.predict_multi(img_data)
         ret = np.zeros((self.prune_tree_levels,self.n_features))
-        print img_data.img_nr, img_data.levels
         for level in range(self.prune_tree_levels):
-            print 'learning level ', level
             if level >= len(img_data.levels):
                 continue
             predictor = IEP.IEP(self.w_multi[level], 'prediction')
             level_pred, _ = predictor.iep(img_data, [], level)
-            print level_pred
             iep_level, _ = self.learner.iep(img_data, functions, level)
-            print iep_level
             #a = (2 * (level_pred - img_data.y) * iep_level + 2 * self.alpha * self.w_multi[level])
             ret[level,:] = (2 * (level_pred - img_data.y) * iep_level + 2 * self.alpha * self.w_multi[level])
-        print ret
-        print 'done learning, waiting for key'
-        raw_input()
         return ret, functions
 
 
