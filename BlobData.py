@@ -9,23 +9,19 @@ class BlobData():
 		boxes = load.get_coords_blob(img_nr)
 		self.boxes = self.random_bbox(boxes[0][2], boxes[0][3])
 		self.tree_boxes = self.boxes
-		print len(self.tree_boxes)
 		self.X = load.get_features_blob(img_nr, self.boxes)
-		print len(self.X)
 		self.num_features = 3
 		self.y = load.get_label_blob(img_nr)
 		self.tree_boxes, self.X = sort_boxes(self.tree_boxes, self.X)
 		self.boxes = self.tree_boxes
 		#assert(self.boxes==self.tree_boxes)
 		self.G, levels = create_tree(self.tree_boxes)
-		print G.nodes(), levels
 		#prune tree to only have levels which fully cover the image, tested
 		total_size = surface_area_old(self.tree_boxes, levels[0])
-		print total_size
 		for level in levels:
 			sa = surface_area_old(self.tree_boxes, levels[level])
 			sa_co = sa/total_size
-			print sa_co
+			print level, sa_co
 			if sa_co != 1.0:
 				self.G.remove_nodes_from(levels[level])
 			else:
@@ -36,6 +32,7 @@ class BlobData():
 		levels_tmp = {k:v for k,v in levels.iteritems() if k<prune_tree_levels}
 		levels_gone = {k:v for k,v in levels.iteritems() if k>=prune_tree_levels}
 		self.levels = levels_tmp
+		print self.levels
 		#prune tree as well, for patches training
 		for trash_level in levels_gone.values():
 			self.G.remove_nodes_from(trash_level)
