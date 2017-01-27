@@ -117,10 +117,10 @@ def main():
                 print "Eval loss: ", al_i, mse
             else:
                 if learn_mode == 'all':
-                    preds_d_d, y_d_d = sgd_dennis.evaluate('train_all', subsamples, debug)
+                    preds_d_d, y_d_d = sgd_dennis.evaluate('val_all', subsamples, debug)
                 elif learn_mode == 'category':
-                   preds_d_d, y_d_d = sgd_dennis.evaluate('train_cat', subsamples, debug)
-                output_dennis.plot_preds(preds_d_d, [], y_d_d, al_i)
+                   preds_d_d, y_d_d = sgd_dennis.evaluate('val_cat', subsamples, debug)
+                output_dennis.plot_preds(preds_d_d, [], y_d_d, al_i, 'val_cat')
             #output_dennis.save(mse, ae, mse_non_zero, sgd_dennis, 'ind', al_i, learn_mode)
     print learn_mode, pred_mode, epochs
     

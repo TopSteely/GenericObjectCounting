@@ -20,6 +20,7 @@ class Output:
         self.npe_path = "/home/tstahl/plot/%s_%s_npe_%s_%s.p"
         self.model_path = "/var/node436/local/tstahl/models/%s_%s_%s_%s_%s_%s_%s.p"
         self.plot_path = "/var/node436/local/tstahl/plos/%s_%s_%s.png"
+        self.preds_plot_path = "/var/node436/local/tstahl/plos/preds_%s_%s_%s_%s.png"
         self.image_path = "/var/node436/local/tstahl/Images/%s.jpg"
         self.scaler_path = '/var/node436/local/tstahl/models/scaler_dennis.p'
 	if mode.startswith('dennis'):
@@ -48,7 +49,7 @@ class Output:
         pickle.dump(sgd.w, open( self.model_path%(self.experiment, self.mode, self.category, self.prune_tree_levels, eta0, alpha, learn_mode), "wb" ))
         #pickle.dump(num_per_image, open( self.npe_path%(self.experiment, self.mode, self.category, self.prune_tree_levels), "wb" ))
         
-    def plot_preds(self, preds, preds_skl, y, alpha):
+    def plot_preds(self, preds, preds_skl, y, alpha, dataset):
         if self.mode.endswith('multi'):
             f,ax = plt.subplots(self.prune_tree_levels)
             for lvl in range(self.prune_tree_levels):
@@ -81,7 +82,7 @@ class Output:
             plt.xlim([-1,len(preds)+1])
             plt.legend(loc='upper center')
             plt.title('%s'%(alpha))
-        plt.savefig(self.plot_path%(self.mode,alpha,self.category))     
+        plt.savefig(self.preds_plot_path%(self.mode,alpha,self.category, dataset))     
         
     def plot_level_boxes(self, rects, img_nr):
         colors = ['red','blue','green']

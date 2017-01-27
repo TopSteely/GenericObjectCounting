@@ -129,9 +129,6 @@ class SGD:
         
     def evaluate(self, mode, to=-1, debug=False):
         if self.version == 'multi':
-            print 'evaluating, key'
-            print self.w_multi
-            raw_input()
             squared_error = np.zeros(self.prune_tree_levels)
             error = np.zeros(self.prune_tree_levels)
             non_zero_error = np.zeros(self.prune_tree_levels)
@@ -162,13 +159,8 @@ class SGD:
             numbers = self.load.val_numbers[:to]
 
         for img_nr in numbers:
-            print img_nr
             img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
-            print self.predict(img_data), img_data.y
             img_loss = (self.predict(img_data) - img_data.y) ** 2
-            print img_loss
-            print 'wainting for key'
-            raw_input()
 	    #print 'preds: ',img_data.img_nr, self.predict(img_data), ' y: ', img_data.y
             #print 'preds: ',img_data.img_nr, self.predict(img_data), ' y: ', img_data.y, ' sklearn: ', self.sgd.predict(img_data.X[img_data.levels[0][0]].reshape(1, -1))
             squared_error += img_loss
@@ -265,12 +257,7 @@ class SGD:
         
     def update(self):
         if self.version == 'multi':
-            print self.w_multi
-            print self.w_update
             self.w_multi -= (self.eta * self.w_update)
-            print self.w_multi
-            print 'updated, waiting for key'
-            raw_input()
             self.w_update = np.zeros((self.prune_tree_levels,self.n_features))
         else:
             self.w -= (self.eta * self.w_update)
@@ -292,7 +279,7 @@ class SGD:
         iep_levels, functions = self.learner.get_iep_levels(img_data, functions)
         return 2 * np.sum((np.array(level_preds) - img_data.y).reshape(-1,1) * iep_levels/len(iep_levels) + 2 * self.alpha * self.w, axis=0), functions
 
-
+    #tested
     def learn_multi(self, img_data, functions):
         ret = np.zeros((self.prune_tree_levels,self.n_features))
         for level in range(self.prune_tree_levels):
