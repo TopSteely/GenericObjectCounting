@@ -41,10 +41,10 @@ class BlobData():
 
 	def random_bbox(self,im_w, im_h):
 		boxes = [[0,0,im_w,im_h]]
-		boxes.append(0,0,400,400)
-		boxes.append(0,0,im_w,400)
-		boxes.append(0,0,400,im_h)
-		boxes.append(30,30,im_w,im_h)
+		boxes.append([0,0,400,400])
+		boxes.append([0,0,im_w,400])
+		boxes.append([0,0,400,im_h])
+		boxes.append([30,30,im_w,im_h])
 		for b_i in range(5):
 			box = []
 			box.append(random.randint(0, im_w))
