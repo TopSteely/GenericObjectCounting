@@ -270,12 +270,12 @@ class SGD:
         
     def update(self):
         if self.version == 'multi':
-            print w_multi
-            print w_update
+            print self.w_multi
+            print self.w_update
             self.w_multi -= (self.eta * self.w_update)
-            print w_multi
+            print self.w_multi
             print 'updated, waiting for key'
-            raw_input
+            raw_input()
             self.w_update = np.zeros((self.prune_tree_levels,self.n_features))
         else:
             self.w -= (self.eta * self.w_update)
