@@ -8,7 +8,7 @@ class BlobData():
 		boxes = load.get_coords_blob(img_nr)
 		print 'box0', boxes[0]
 		print boxes[0][2], boxes[0][3]
-		self.boxes = random_bbox(boxes[0][2], boxes[0][3])
+		self.boxes = self.random_bbox(boxes[0][2], boxes[0][3])
 		print self.boxes
 		self.tree_boxes = self.boxes
 		self.X = load.get_features_blob(img_nr, self.boxes)
@@ -39,7 +39,7 @@ class BlobData():
 			self.G.remove_nodes_from(trash_level)
 		self.boxes = np.array(self.boxes)
 
-	def random_bbox(im_w, im_h):
+	def random_bbox(self,im_w, im_h):
 		boxes = [[0,0,im_w,im_h]]
 		for b_i in range(150):
 			box = []
