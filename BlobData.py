@@ -7,8 +7,6 @@ class BlobData():
 	def __init__(self, load, img_nr):
 		prune_tree_levels = 10
 		boxes = load.get_coords_blob(img_nr)
-		print 'box0', boxes[0]
-		print boxes[0][2], boxes[0][3]
 		self.boxes = self.random_bbox(boxes[0][2], boxes[0][3])
 		print self.boxes
 		self.tree_boxes = self.boxes
@@ -44,9 +42,9 @@ class BlobData():
 		boxes = [[0,0,im_w,im_h]]
 		for b_i in range(150):
 			box = []
-			box.append(randint(0, im_w))
-			box.append(randint(0, im_h))
-			box.append(randint(box[0], im_w))
-			box.append(randint(box[1], im_h))
+			box.append(random.randint(0, im_w))
+			box.append(random.randint(0, im_h))
+			box.append(random.randint(box[0], im_w))
+			box.append(random.randint(box[1], im_h))
 			boxes.append(box)
 		return boxes
