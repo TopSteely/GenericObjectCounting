@@ -1,3 +1,6 @@
+import matplotlib
+matplotlib.use('agg')
+import matplotlib.pyplot as plt
 import Input
 import os
 import numpy as np
@@ -60,12 +63,12 @@ mlp4 = MLPRegressor(hidden_layer_sizes=(2000,250), activation='tanh')#learning_r
 mlp5 = MLPRegressor(hidden_layer_sizes=(500,500), activation='tanh')#learning_rate_init=math.pow(10,-3), learning_rate='invscaling',tol=0.00001
 print 'fitting'
 sgd1.fit(scaled,y)
-sgd2.fit(scaled,y)
-mlp1.fit(scaled,y)
-mlp2.fit(scaled,y)
-mlp3.fit(scaled,y)
-mlp4.fit(scaled,y)
-mlp5.fit(scaled,y)
+#sgd2.fit(scaled,y)
+#mlp1.fit(scaled,y)
+#mlp2.fit(scaled,y)
+#mlp3.fit(scaled,y)
+#mlp4.fit(scaled,y)
+#mlp5.fit(scaled,y)
 
 print 'fitted'
 sgd_error1 = 0.0
@@ -95,18 +98,18 @@ for img_nr in test_d[0:10]:
 
 				sgd_error1 += (sgd1.predict(scaler.transform(img_data.X[i_b])) - count)**2
 				sgd_preds1.append(sgd1.predict(scaler.transform(img_data.X[i_b])))
-				sgd_error2 += (sgd2.predict(scaler.transform(img_data.X[i_b])) - count)**2
-				sgd_preds2.append(sgd2.predict(scaler.transform(img_data.X[i_b])))
-				mlp1_error += (mlp1.predict(scaler.transform(img_data.X[i_b])) - count)**2
-				mlp1_preds.append(mlp1.predict(scaler.transform(img_data.X[i_b])))
-				mlp2_error += (mlp2.predict(scaler.transform(img_data.X[i_b])) - count)**2
-				mlp2_preds.append(mlp2.predict(scaler.transform(img_data.X[i_b])))
-				mlp3_error += (mlp3.predict(scaler.transform(img_data.X[i_b])) - count)**2
-				mlp3_preds.append(mlp3.predict(scaler.transform(img_data.X[i_b])))
-				mlp4_error += (mlp4.predict(scaler.transform(img_data.X[i_b])) - count)**2
-				mlp4_preds.append(mlp4.predict(scaler.transform(img_data.X[i_b])))
-				mlp5_error += (mlp5.predict(scaler.transform(img_data.X[i_b])) - count)**2
-				mlp5_preds.append(mlp5.predict(scaler.transform(img_data.X[i_b])))
+				#sgd_error2 += (sgd2.predict(scaler.transform(img_data.X[i_b])) - count)**2
+				#sgd_preds2.append(sgd2.predict(scaler.transform(img_data.X[i_b])))
+				#mlp1_error += (mlp1.predict(scaler.transform(img_data.X[i_b])) - count)**2
+				#mlp1_preds.append(mlp1.predict(scaler.transform(img_data.X[i_b])))
+				#mlp2_error += (mlp2.predict(scaler.transform(img_data.X[i_b])) - count)**2
+				#mlp2_preds.append(mlp2.predict(scaler.transform(img_data.X[i_b])))
+				#mlp3_error += (mlp3.predict(scaler.transform(img_data.X[i_b])) - count)**2
+				#mlp3_preds.append(mlp3.predict(scaler.transform(img_data.X[i_b])))
+				#mlp4_error += (mlp4.predict(scaler.transform(img_data.X[i_b])) - count)**2
+				#mlp4_preds.append(mlp4.predict(scaler.transform(img_data.X[i_b])))
+				#mlp5_error += (mlp5.predict(scaler.transform(img_data.X[i_b])) - count)**2
+				#mlp5_preds.append(mlp5.predict(scaler.transform(img_data.X[i_b])))
 				y_p.append(count)
 
 div_by = len(test_d)
@@ -120,7 +123,7 @@ print 'MLP4: ', mlp4_error/div_by
 print 'MLP5: ', mlp5_error/div_by
 
 plt.figure()
-for i_p, preds in enumerate([sgd_preds1,sgd_preds2,mlp1_preds,mlp2_preds,mlp3_preds,mlp4_preds,mlp5_preds]):
+for i_p, preds in enumerate([sgd_preds1]):#,sgd_preds2,mlp1_preds,mlp2_preds,mlp3_preds,mlp4_preds,mlp5_preds]):
 	sorted_preds = []
 	decorated = [(y_i, i) for i, y_i in enumerate(y_p)]
 	decorated.sort()
