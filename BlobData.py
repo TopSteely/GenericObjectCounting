@@ -71,7 +71,7 @@ class BlobData():
 			box = []
 			box.append(0)
 			box.append(random.randint(0, im_h))
-			box.append(random.randint(600, im_w))
+			box.append(random.randint(550, im_w))
 			box.append(random.randint(box[1], im_h))
 			boxes.append(box)
 		for b_i in range(3):
@@ -79,7 +79,7 @@ class BlobData():
 			box.append(random.randint(0, im_w))
 			box.append(0)
 			box.append(random.randint(box[0], im_w))
-			box.append(random.randint(600, im_h))
+			box.append(random.randint(350, im_h))
 			boxes.append(box)
 		for b_i in range(3):
 			box = []
@@ -91,7 +91,7 @@ class BlobData():
 		for b_i in range(3):
 			box = []
 			box.append(0)
-			box.append(random.randint(0, im_h-600))
+			box.append(random.randint(0, im_h-350))
 			box.append(random.randint(box[0], im_w))
 			box.append(im_h)
 			boxes.append(box)
