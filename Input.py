@@ -4,6 +4,7 @@ import pandas as pd
 import pickle
 from scipy.misc import imread
 from utils import extract_coords
+import random
 #import cv2
 
 
@@ -24,7 +25,8 @@ class Input:
             self.label_path = 'bla'
             self.feature_path = 'bla'
         elif self.mode == 'blob':
-            self.training_numbers = range(1,12)
+            self.training_numbers = [1,2,3,5,6,7,9,10,11]
+            self.val_numbers = [4,8]
         else:
             if self.mode == 'pascal':
                 self.coord_path =  '/var/node436/local/tstahl/new_Resnet_features/2nd/coords/1-%s.csv'

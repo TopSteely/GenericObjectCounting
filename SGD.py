@@ -58,6 +58,11 @@ class SGD:
             self.predict = self.predict_multi
             self.w_multi = np.zeros((self.prune_tree_levels,self.n_features))
             self.w_update = np.zeros((self.prune_tree_levels,self.n_features))
+        #blob dataset, have to save the data because of random bbox creation
+        if dataset = 'blob':
+            self.blobdata = []
+            for img_nr in load.training_numbers:
+                self.blobdata.append(BlobData.BlobData(self.load, img_nr, self.scaler))
             
     def set_scaler(self, scaler):
         self.scaler = scaler
@@ -221,7 +226,7 @@ class SGD:
             start = time.time()
             if self.dataset == 'blob':
                 print 'blob ', img_nr
-                img_data = BlobData.BlobData(self.load, img_nr, self.scaler)
+                img_data = self.blobdata[img_nr]
             else:
                 img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
             if img_nr in self.functions:
