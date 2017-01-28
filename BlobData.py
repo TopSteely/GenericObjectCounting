@@ -85,7 +85,7 @@ class BlobData():
 		for b_i in range(3):
 			box = []
 			box.append(0)
-			box.append(random.randint(0, im_h-800))
+			box.append(random.randint(0, im_h-400))
 			box.append(random.randint(box[0], im_w))
 			box.append(im_h)
 			boxes.append(box)
