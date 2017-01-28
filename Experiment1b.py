@@ -31,7 +31,7 @@ def main():
 
     feature_size = 4096
 
-    for tree_level_size in range(7,10):
+    for tree_level_size in range(9,10):
         #initialize
         print 'initializing', tree_level_size
         #sgd = SGD.SGD('max', category, tree_level_size, batch_size, math.pow(10,-4), 0.003, math.pow(10,-5))

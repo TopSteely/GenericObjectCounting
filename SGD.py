@@ -301,12 +301,14 @@ class SGD:
     #tested
     def learn_multi(self, img_data, functions):
         ret = np.zeros((self.prune_tree_levels,self.n_features))
+        print img_data.img_nr, img_data.y, len(img_data.levels)
         for level in range(self.prune_tree_levels):
             if level >= len(img_data.levels):
                 continue
             predictor = IEP.IEP(self.w_multi[level], 'prediction')
             level_pred, _ = predictor.iep(img_data, [], level)
             iep_level, _ = self.learner.iep(img_data, functions, level)
+            print level, np.min(iep_level), np.max(iep_level)
             #a = (2 * (level_pred - img_data.y) * iep_level + 2 * self.alpha * self.w_multi[level])
             ret[level,:] = (2 * (level_pred - img_data.y) * iep_level + 2 * self.alpha * self.w_multi[level])
         return ret, functions
