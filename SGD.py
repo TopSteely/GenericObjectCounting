@@ -177,6 +177,7 @@ class SGD:
                 img_data = b_data[i_img_nr]
             else:
                 img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
+            print self.predict(img_data), img_data.y
             img_loss = (self.predict(img_data) - img_data.y) ** 2
 	    #print 'preds: ',img_data.img_nr, self.predict(img_data), ' y: ', img_data.y
             #print 'preds: ',img_data.img_nr, self.predict(img_data), ' y: ', img_data.y, ' sklearn: ', self.sgd.predict(img_data.X[img_data.levels[0][0]].reshape(1, -1))
@@ -189,7 +190,6 @@ class SGD:
                 #skl_error += (self.sgd.predict(img_data.X[img_data.levels[0][0]].reshape(1, -1)) - img_data.y)**2
                 if self.version == 'multi':
                     tmptmp = self.predict(img_data)
-                    print tmptmp
                     preds_d = np.concatenate((preds_d,self.predict(img_data).reshape(-1,1)), axis=1)
                 else:
                     preds_d.append(self.predict(img_data))
@@ -301,17 +301,20 @@ class SGD:
     #tested
     def learn_multi(self, img_data, functions):
         ret = np.zeros((self.prune_tree_levels,self.n_features))
-        print img_data.img_nr, img_data.y, len(img_data.levels)
+        if len(img_data.levels) >= 10:
+            print img_data.img_nr, img_data.y, len(img_data.levels)
         for level in range(self.prune_tree_levels):
             if level >= len(img_data.levels):
                 continue
             predictor = IEP.IEP(self.w_multi[level], 'prediction')
             level_pred, _ = predictor.iep(img_data, [], level)
             iep_level, _ = self.learner.iep(img_data, functions, level)
-            if len(img_data.levels) >= 8:
+            if len(img_data.levels) >= 10:
                 print level, np.min(iep_level), np.max(iep_level)
             #a = (2 * (level_pred - img_data.y) * iep_level + 2 * self.alpha * self.w_multi[level])
             ret[level,:] = (2 * (level_pred - img_data.y) * iep_level + 2 * self.alpha * self.w_multi[level])
+        if len(img_data.levels) >= 10:
+            raw_input()
         return ret, functions
 
 
