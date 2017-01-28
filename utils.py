@@ -387,10 +387,8 @@ def extract_coords(level_numbers, boxes):
             print np.array(I).shape
             print np.array(real_b).shape
             print np.any(I==real_b)
-            print np.all(I==real_b)
-            print np.any(I==np.array(real_b))
-            print np.all(I==np.array(real_b))
-            print I in real_b
+            print np.any(np.array_equal(I,real_b))
+            print np.array_equal(I,real_b)
             if I not in real_b:
                 coords.append(I)
         for i, u in enumerate(cnbrs):
