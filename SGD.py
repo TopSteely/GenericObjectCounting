@@ -308,7 +308,8 @@ class SGD:
             predictor = IEP.IEP(self.w_multi[level], 'prediction')
             level_pred, _ = predictor.iep(img_data, [], level)
             iep_level, _ = self.learner.iep(img_data, functions, level)
-            print level, np.min(iep_level), np.max(iep_level)
+            if len(img_data.levels) >= 8:
+                print level, np.min(iep_level), np.max(iep_level)
             #a = (2 * (level_pred - img_data.y) * iep_level + 2 * self.alpha * self.w_multi[level])
             ret[level,:] = (2 * (level_pred - img_data.y) * iep_level + 2 * self.alpha * self.w_multi[level])
         return ret, functions
