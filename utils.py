@@ -391,9 +391,9 @@ def extract_coords(level_numbers, boxes):
             print np.any(I in np.array(real_b))
             print I in np.array(real_b)
             print np.array_equal(I,real_b)
+            raw_input()
             if I not in real_b:
                 coords.append(I)
-            raw_input()
         for i, u in enumerate(cnbrs):
             # Use generators to reduce memory consumption.
             queue.append((chain(base, [u]),
