@@ -17,6 +17,7 @@ class IEP:
     def iep(self, Data, function, level):
         X = Data.X
         sets = Data.levels[level]
+        print sets
         coords = Data.boxes
         if np.all(self.w == 1):
             iep = np.zeros(Data.num_features)
@@ -85,11 +86,11 @@ class IEP:
                              print 'index bigger than X'
                              exit()
                          if len(base)%2==1:
-                            #print '+', X[ind]
+                            print '+', X[ind]
                             iep += np.dot(self.w,X[ind])
                             #function.append(['+',ind])
                          elif len(base)%2==0:
-                            #print '-', X[ind]
+                            print '-', X[ind]
                             iep -=  np.dot(self.w,X[ind])
                             #function.append(['-',ind])
                       else:
