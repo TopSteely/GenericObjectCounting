@@ -123,3 +123,6 @@ class BlobData():
 			box.append(im_h)
 			boxes.append(box)
 		return boxes
+
+	def scaler_transform(self,scaler):
+		self.X = scaler.transform(self.X)
