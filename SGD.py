@@ -237,7 +237,7 @@ class SGD:
         for i_img_nr, img_nr in enumerate(subset):
             start = time.time()
             if self.dataset == 'blob':
-                print 'blob ', img_nr
+                print 'blob ', img_nr, len(self.blobtraindata[i_img_nr].levels)
                 img_data = self.blobtraindata[i_img_nr]
             else:
                 img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
