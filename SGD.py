@@ -64,8 +64,6 @@ class SGD:
             self.blobtestdata = []
             for img_nr in self.load.training_numbers:
                 self.blobtraindata.append(BlobData.BlobData(self.load, img_nr, self.scaler))
-                print img_nr, np.max(self.blobtraindata[0].X)
-                print img_nr, np.min(self.blobtraindata[0].X)
             for img_nr in self.load.val_numbers:
                 self.blobtestdata.append(BlobData.BlobData(self.load, img_nr, self.scaler))
     def set_scaler(self, scaler):
@@ -241,8 +239,6 @@ class SGD:
             if self.dataset == 'blob':
                 print 'blob ', img_nr
                 img_data = self.blobtraindata[i_img_nr]
-                print np.max(img_data.X)
-                print np.min(img_data.X)
             else:
                 img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
             if img_nr in self.functions:
