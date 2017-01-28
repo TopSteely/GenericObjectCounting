@@ -384,15 +384,7 @@ def extract_coords(level_numbers, boxes):
             if I != []:
                I = get_intersection(boxes[c], I)
         if I != []:
-            real_b.append(I)
-            print np.array(I).shape
-            print np.array(real_b).shape
-            print np.any(I==real_b)
-            print np.any(I in np.array(real_b))
-            print I in np.array(real_b)
-            print np.array_equal(I,real_b)
-            raw_input()
-            if I not in real_b:
+            if I not in np.array(real_b):
                 coords.append(I)
         for i, u in enumerate(cnbrs):
             # Use generators to reduce memory consumption.
