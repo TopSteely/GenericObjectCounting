@@ -59,7 +59,7 @@ class SGD:
             self.w_multi = np.zeros((self.prune_tree_levels,self.n_features))
             self.w_update = np.zeros((self.prune_tree_levels,self.n_features))
         #blob dataset, have to save the data because of random bbox creation
-        if dataset = 'blob':
+        if dataset == 'blob':
             self.blobdata = []
             for img_nr in load.training_numbers:
                 self.blobdata.append(BlobData.BlobData(self.load, img_nr, self.scaler))
