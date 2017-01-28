@@ -17,8 +17,6 @@ class IEP:
     def iep(self, Data, function, level):
         X = Data.X
         sets = Data.levels[level]
-        print sets
-        raw_input()
         coords = Data.boxes
         if np.all(self.w == 1):
             iep = np.zeros(Data.num_features)
@@ -74,7 +72,6 @@ class IEP:
             # 3. cnbrs is a set of common neighbors of nodes in base.
             while queue:
                 base, cnbrs = map(list, queue.popleft())
-                print base
                 raw_input()
                 if len(base) > length:
                     length = len(base)
