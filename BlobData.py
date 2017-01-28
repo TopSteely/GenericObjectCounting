@@ -26,7 +26,6 @@ class BlobData():
 				self.G.remove_nodes_from(levels[level])
 			else:
 				nr_levels_covered = level
-		raw_input()
 		levels = {k: levels[k] for k in range(0,nr_levels_covered + 1)}
 		# prune levels, speedup + performance 
 		levels_tmp = {k:v for k,v in levels.iteritems() if k<prune_tree_levels}
@@ -44,7 +43,7 @@ class BlobData():
 		assert len(intersection_coords) == len(intersection_features)
 		if len(intersection_coords) > 0:
 		    self.boxes = np.append(self.boxes, intersection_coords, axis=0)
-		    self.X = np.append(self.X, intersection_features[:,0:num_features], axis=0)
+		    self.X = np.append(self.X, intersection_features[:,0:self.num_features], axis=0)
 		else:
 		    self.boxes = np.array(self.boxes)
 
