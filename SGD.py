@@ -61,7 +61,7 @@ class SGD:
         #blob dataset, have to save the data because of random bbox creation
         if dataset == 'blob':
             self.blobdata = []
-            for img_nr in load.training_numbers:
+            for img_nr in self.load.training_numbers:
                 self.blobdata.append(BlobData.BlobData(self.load, img_nr, self.scaler))
             
     def set_scaler(self, scaler):
