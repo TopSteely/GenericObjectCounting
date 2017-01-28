@@ -63,9 +63,13 @@ class SGD:
             self.blobtraindata = []
             self.blobtestdata = []
             for img_nr in self.load.training_numbers:
-                self.blobtraindata.append(BlobData.BlobData(self.load, img_nr, self.scaler))
+                tmp_data = BlobData.BlobData(self.load, img_nr, self.scaler)
+                print len(tmp_data.levels)
+                self.blobtraindata.append(tmp_data)
             for img_nr in self.load.val_numbers:
-                self.blobtestdata.append(BlobData.BlobData(self.load, img_nr, self.scaler))
+                tmp_data = BlobData.BlobData(self.load, img_nr, self.scaler)
+                print len(tmp_data.levels)
+                self.blobtestdata.append(tmp_data)
     def set_scaler(self, scaler):
         self.scaler = scaler
         
