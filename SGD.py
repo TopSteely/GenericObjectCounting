@@ -189,6 +189,7 @@ class SGD:
                 #skl_error += (self.sgd.predict(img_data.X[img_data.levels[0][0]].reshape(1, -1)) - img_data.y)**2
                 if self.version == 'multi':
                     tmptmp = self.predict(img_data)
+                    print tmptmp
                     preds_d = np.concatenate((preds_d,self.predict(img_data).reshape(-1,1)), axis=1)
                 else:
                     preds_d.append(self.predict(img_data))
