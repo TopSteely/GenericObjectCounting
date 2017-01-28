@@ -5,6 +5,7 @@ import random
 
 class BlobData():
 	def __init__(self, load, img_nr, scaler):
+		self.img_nr = img_nr
 		prune_tree_levels = 2
 		boxes = load.get_coords_blob(img_nr)
 		self.boxes = self.random_bbox(boxes[0][2], boxes[0][3])
@@ -48,12 +49,16 @@ class BlobData():
 		    self.boxes = np.array(self.boxes)
 
 	def random_bbox(self,im_w, im_h):
-		print im_w, im_h
 		boxes = [[0,0,im_w,im_h]]
-		boxes.append([0,0,350,800])
-		boxes.append([0,0,im_w,800])
-		boxes.append([0,0,350,im_h])
 		boxes.append([30,30,im_w,im_h])
+		if self.img_nr == 6:
+			boxes.append([0,0,600,350])
+			boxes.append([0,0,im_w,350])
+			boxes.append([0,0,600,im_h])
+		else:
+			boxes.append([0,0,800,550])
+			boxes.append([0,0,im_w,550])
+			boxes.append([0,0,800,im_h])
 		for b_i in range(5):
 			box = []
 			box.append(random.randint(0, im_w))
@@ -66,7 +71,7 @@ class BlobData():
 			box = []
 			box.append(0)
 			box.append(random.randint(0, im_h))
-			box.append(random.randint(350, im_w))
+			box.append(random.randint(600, im_w))
 			box.append(random.randint(box[1], im_h))
 			boxes.append(box)
 		for b_i in range(3):
@@ -74,11 +79,11 @@ class BlobData():
 			box.append(random.randint(0, im_w))
 			box.append(0)
 			box.append(random.randint(box[0], im_w))
-			box.append(random.randint(350, im_h))
+			box.append(random.randint(600, im_h))
 			boxes.append(box)
 		for b_i in range(3):
 			box = []
-			box.append(random.randint(0, im_w - 800))
+			box.append(random.randint(0, im_w - 600))
 			box.append(0)
 			box.append(im_w)
 			box.append(random.randint(box[1], im_h))
@@ -86,7 +91,7 @@ class BlobData():
 		for b_i in range(3):
 			box = []
 			box.append(0)
-			box.append(random.randint(0, im_h-400))
+			box.append(random.randint(0, im_h-600))
 			box.append(random.randint(box[0], im_w))
 			box.append(im_h)
 			boxes.append(box)
@@ -94,7 +99,7 @@ class BlobData():
 			box = []
 			box.append(0)
 			box.append(0)
-			box.append(random.randint(800, im_w))
+			box.append(random.randint(600, im_w))
 			box.append(random.randint(350, im_h))
 			boxes.append(box)
 		for b_i in range(3):
