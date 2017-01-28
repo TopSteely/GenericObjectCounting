@@ -11,9 +11,9 @@ from sklearn.svm import SVC
 import time
 import random
 
-epochs = 5
+epochs = 1
 
-eta = 0.001
+eta = 0.01
 
 def main():
 	sgd_blob = SGD.SGD('blob', 'multi', '', 5, 5, eta, 0.0001, 0.1, 3)
