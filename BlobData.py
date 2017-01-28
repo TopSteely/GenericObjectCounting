@@ -49,9 +49,9 @@ class BlobData():
 
 	def random_bbox(self,im_w, im_h):
 		boxes = [[0,0,im_w,im_h]]
-		boxes.append([0,0,400,400])
-		boxes.append([0,0,im_w,400])
-		boxes.append([0,0,400,im_h])
+		boxes.append([0,0,800,800])
+		boxes.append([0,0,im_w,800])
+		boxes.append([0,0,800,im_h])
 		boxes.append([30,30,im_w,im_h])
 		for b_i in range(5):
 			box = []
@@ -61,56 +61,56 @@ class BlobData():
 			box.append(random.randint(box[1], im_h))
 			boxes.append(box)
 		#make sure some are at the corners
-		for b_i in range(5):
+		for b_i in range(3):
 			box = []
 			box.append(0)
 			box.append(random.randint(0, im_h))
-			box.append(random.randint(box[0]+400, im_w))
+			box.append(random.randint(box[0]+800, im_w))
 			box.append(random.randint(box[1], im_h))
 			boxes.append(box)
-		for b_i in range(5):
+		for b_i in range(3):
 			box = []
 			box.append(random.randint(0, im_w))
 			box.append(0)
 			box.append(random.randint(box[0], im_w))
-			box.append(random.randint(box[1]+400, im_h))
+			box.append(random.randint(box[1]+800, im_h))
 			boxes.append(box)
-		for b_i in range(5):
+		for b_i in range(3):
 			box = []
-			box.append(random.randint(0, im_w - 400))
+			box.append(random.randint(0, im_w - 800))
 			box.append(0)
 			box.append(im_w)
 			box.append(random.randint(box[1], im_h))
 			boxes.append(box)
-		for b_i in range(5):
+		for b_i in range(3):
 			box = []
 			box.append(0)
-			box.append(random.randint(0, im_h-400))
+			box.append(random.randint(0, im_h-800))
 			box.append(random.randint(box[0], im_w))
 			box.append(im_h)
 			boxes.append(box)
-		for b_i in range(5):
+		for b_i in range(3):
 			box = []
 			box.append(0)
 			box.append(0)
-			box.append(random.randint(box[0]+400, im_w))
-			box.append(random.randint(box[1]+400, im_h))
+			box.append(random.randint(box[0]+800, im_w))
+			box.append(random.randint(box[1]+800, im_h))
 			boxes.append(box)
-		for b_i in range(5):
+		for b_i in range(3):
 			box = []
 			box.append(random.randint(0, im_w))
 			box.append(0)
 			box.append(random.randint(box[0], im_w))
 			box.append(im_h)
 			boxes.append(box)
-		for b_i in range(5):
+		for b_i in range(3):
 			box = []
 			box.append(0)
 			box.append(random.randint(0, im_h))
 			box.append(im_w)
 			box.append(random.randint(box[1], im_h))
 			boxes.append(box)
-		for b_i in range(15):
+		for b_i in range(3):
 			box = []
 			box.append(random.randint(0, im_w))
 			box.append(random.randint(0, im_h))

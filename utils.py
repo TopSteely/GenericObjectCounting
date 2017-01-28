@@ -377,7 +377,6 @@ def extract_coords(level_numbers, boxes):
     # 3. cnbrs is a set of common neighbors of nodes in base.
     while queue:
         base, cnbrs = map(list, queue.popleft())
-        print base
         if len(base) > length:
             length = len(base)
         I = [0,0,1100,1100]
