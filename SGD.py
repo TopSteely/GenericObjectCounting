@@ -226,7 +226,7 @@ class SGD:
             start = time.time()
             if self.dataset == 'blob':
                 print 'blob ', img_nr
-                img_data = self.blobdata[img_nr]
+                img_data = self.blobdata[i_img_nr]
             else:
                 img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
             if img_nr in self.functions:
