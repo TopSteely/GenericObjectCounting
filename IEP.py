@@ -73,8 +73,9 @@ class IEP:
             # 2. (base + cnbrs) is sorted with respect to the iteration order of G.
             # 3. cnbrs is a set of common neighbors of nodes in base.
             while queue:
-                print base
                 base, cnbrs = map(list, queue.popleft())
+                print base
+                raw_input()
                 if len(base) > length:
                     length = len(base)
                 I = [0,0,1000,1000]
