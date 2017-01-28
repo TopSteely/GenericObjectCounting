@@ -377,6 +377,7 @@ def extract_coords(level_numbers, boxes):
     # 3. cnbrs is a set of common neighbors of nodes in base.
     while queue:
         base, cnbrs = map(list, queue.popleft())
+        print base
         if len(base) > length:
             length = len(base)
         I = [0,0,1100,1100]
@@ -384,6 +385,7 @@ def extract_coords(level_numbers, boxes):
             if I != []:
                I = get_intersection(boxes[c], I)
         if I != []:
+            print I, I in np.array(real_b)
             if I not in np.array(real_b):
                 coords.append(I)
         for i, u in enumerate(cnbrs):

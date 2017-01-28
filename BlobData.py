@@ -5,7 +5,7 @@ import random
 
 class BlobData():
 	def __init__(self, load, img_nr, scaler):
-		prune_tree_levels = 10
+		prune_tree_levels = 2
 		boxes = load.get_coords_blob(img_nr)
 		self.boxes = self.random_bbox(boxes[0][2], boxes[0][3])
 		self.tree_boxes = self.boxes
