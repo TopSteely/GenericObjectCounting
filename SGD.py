@@ -62,8 +62,9 @@ class SGD:
         if dataset == 'blob':
             self.blobdata = []
             for img_nr in self.load.training_numbers:
-                self.blobdata.append(BlobData.BlobData(self.load, img_nr, self.scaler))
-            
+                self.blobtraindata.append(BlobData.BlobData(self.load, img_nr, self.scaler))
+            for img_nr in self.load.val_numbers:
+                self.blobtestdata.append(BlobData.BlobData(self.load, img_nr, self.scaler))
     def set_scaler(self, scaler):
         self.scaler = scaler
         
@@ -162,9 +163,19 @@ class SGD:
             numbers = self.load.category_val[:to]
         elif mode == 'val_all':
             numbers = self.load.val_numbers[:to]
+        elif mode == 'blobtrain':
+            numbers = self.load.training_numbers
+            b_data = self.blobtraindata
+        elif mode == 'blobtest':
+            numbers = self.load.val_numbers
+            b_data = self.blobtestdata
 
-        for img_nr in numbers:
-            img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
+        for i_img_nr,img_nr in enumerate(numbers):
+            if self.dataset == 'blob':
+                print 'blob ', img_nr
+                img_data = b_data[i_img_nr]
+            else:
+                img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
             img_loss = (self.predict(img_data) - img_data.y) ** 2
 	    #print 'preds: ',img_data.img_nr, self.predict(img_data), ' y: ', img_data.y
             #print 'preds: ',img_data.img_nr, self.predict(img_data), ' y: ', img_data.y, ' sklearn: ', self.sgd.predict(img_data.X[img_data.levels[0][0]].reshape(1, -1))
@@ -226,7 +237,7 @@ class SGD:
             start = time.time()
             if self.dataset == 'blob':
                 print 'blob ', img_nr
-                img_data = self.blobdata[i_img_nr]
+                img_data = self.blobtraindata[i_img_nr]
             else:
                 img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
             if img_nr in self.functions:

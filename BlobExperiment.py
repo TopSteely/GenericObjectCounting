@@ -14,6 +14,10 @@ import random
 def main():
 	sgd_blob = SGD.SGD('blob', 'mean', 'sheep', 5, 5, 0.0001, 0.0001, 0.0001, 3)
 	sgd_blob.learn()
+	mse,ae, mse_non_zero = sgd_blob.evaluate()
+	mse_tr,ae_tr, mse_non_zero_tr = sgd_blob.evaluate()
+	print "Eval loss train: ", mse_tr
+	print "Eval loss val: ", mse
 
 if __name__ == "__main__":
     main()
