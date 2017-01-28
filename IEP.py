@@ -18,6 +18,7 @@ class IEP:
         X = Data.X
         sets = Data.levels[level]
         print sets
+        raw_input()
         coords = Data.boxes
         if np.all(self.w == 1):
             iep = np.zeros(Data.num_features)
@@ -72,6 +73,7 @@ class IEP:
             # 2. (base + cnbrs) is sorted with respect to the iteration order of G.
             # 3. cnbrs is a set of common neighbors of nodes in base.
             while queue:
+                print base
                 base, cnbrs = map(list, queue.popleft())
                 if len(base) > length:
                     length = len(base)
