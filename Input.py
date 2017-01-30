@@ -9,7 +9,7 @@ import random
 
 
 class Input:
-    def __init__(self, mode, category):
+    def __init__(self, mode, category, number_of_levels):
         self.mode = mode
         self.category = category
         if self.mode == 'grid':
@@ -47,6 +47,7 @@ class Input:
             self.test_numbers, training_numbers_tmp = self.get_training_numbers()
             self.training_numbers, self.val_numbers = self.get_val_numbers(training_numbers_tmp)
             self.category_train, self.category_val = self.get_category_imgs()
+            self.category_train_with_levels, self.category_val_with_levels = self.get_samples_with_number_of_levels(number_of_levels)
         
 	#old
 #    def get_intersection_features(self, img_nr):
@@ -60,6 +61,20 @@ class Input:
 #               ff.append(float(s))
 #            features.append(ff)
 #        return features
+
+    def get_samples_with_number_of_levels(self, number_of_levels):
+        imgs_with_levels_train = []
+        imgs_with_levels_val = []
+        for im in self.category_train:
+            d = Data.Data(self, im, number_of_levels, None, 4096)
+            if len(d.levels) >= number_of_levels:
+                imgs_with_levels_train.append(im)
+        for im in self.category_val:
+            d = Data.Data(self, im, number_of_levels, None, 4096)
+            if len(d.levels) >= number_of_levels:
+                imgs_with_levels_val.append(im)
+        return imgs_with_levels_train, imgs_with_levels_val
+
 
     def get_intersection_features(self, img_nr):
 	if os.stat(self.intersection_feature_path%(format(img_nr, "06d"))).st_size > 0:

@@ -19,7 +19,7 @@ class SGD:
         self.n_features = num_features
         self.w = np.zeros(self.n_features)#0.1 * np.random.rand(self.n_features)
         self.predictor = IEP.IEP(self.w, 'prediction')
-        self.w_update = np.zeros(self.n_features)
+        self.w_update = np.zeros((self.prune_tree_levels,self.n_features))
         self.learner = IEP.IEP(1, 'learning')
         self.dataset = dataset
         self.load = Input.Input(dataset, category)
@@ -174,6 +174,10 @@ class SGD:
         elif mode == 'blobtest':
             numbers = self.load.val_numbers
             b_data = self.blobtestdata
+        elif mode == 'val_category_levels':
+            numbers = self.load.category_val_with_levels[:to]
+        elif mode == 'train_category_levels':
+            numbers = self.load.category_train_with_levels[:to]
 
         for i_img_nr,img_nr in enumerate(numbers):
             if self.dataset == 'blob':
@@ -215,16 +219,23 @@ class SGD:
             te_loss_temp += self.loss(img_data)
         return tra_loss_temp/len(self.load.category_train), te_loss_temp/len(self.load.category_val)
 
-    def loss_per_level_all(self, to=-1):
+    def loss_per_level_all(self, instances, to=-1):
         tra_loss_temp = np.zeros(self.prune_tree_levels+1)
         te_loss_temp = np.zeros(self.prune_tree_levels+1)
-        #tr_loss_mean_temp = 0.0
-        #te_loss_mean_temp = 0.0
-        for img_nr in self.load.category_train[0:to]:
+        if instances == 'all':
+            training_ims = self.training_numbers[0:to]
+            validation_ims = self.val_numbers[0:to]
+        elif instances == 'category':
+            training_ims = self.load.category_train[0:to]
+            validation_ims = self.load.category_val[0:to]
+        elif instances == 'category_levels':
+            training_ims = self.load.category_train_with_levels[0:to]
+            validation_ims = self.load.category_val_with_levels[0:to]
+        for img_nr in training_ims:
             img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
             tra_loss_temp[0:self.prune_tree_levels] += self.loss_per_level(img_data)
             tra_loss_temp[self.prune_tree_levels] += self.loss(img_data)
-        for img_nr in self.load.category_val[0:to]:
+        for img_nr in validation_ims:
             img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
             te_loss_temp[0:self.prune_tree_levels] += self.loss_per_level(img_data)
             te_loss_temp[self.prune_tree_levels] += self.loss(img_data)
@@ -235,8 +246,10 @@ class SGD:
         test_losses = np.array([], dtype=np.int64).reshape(self.prune_tree_levels+1,0)
         if instances=='all':
             training_data = self.load.training_numbers
-        else:
+        elif instances=='category':
             training_data = self.load.category_train
+        elif instances=='category_levels':
+            training_data==self.load.category_train_with_levels
         subset = training_data[:to]
         random.shuffle(subset)
         for i_img_nr, img_nr in enumerate(subset):
@@ -256,6 +269,7 @@ class SGD:
                     self.method(img_data, temp)
                 else:
                     upd, _ = self.method(img_data, temp)
+                    print upd.shape, self.w_update.shape
                     self.w_update += upd
                 #self.functions[img_nr] = fct
             self.samples_seen += 1
@@ -265,7 +279,7 @@ class SGD:
             if (i_img_nr + 1)%self.batch_size == 0:
                 self.update()
                 if debug:
-                    tr_loss, te_loss = self.loss_per_level_all(to)
+                    tr_loss, te_loss = self.loss_per_level_all(instances, to)
                     train_losses = np.concatenate((train_losses,tr_loss.reshape(-1,1)), axis=1)
                     test_losses = np.concatenate((test_losses,te_loss.reshape(-1,1)), axis=1)
         if (i_img_nr + 1)%self.batch_size != 0:
@@ -273,7 +287,7 @@ class SGD:
                 print 'updating because of end'
                 self.update()
             if debug:
-                tr_loss, te_loss = self.loss_per_level_all(to)
+                tr_loss, te_loss = self.loss_per_level_all(instances, to)
                 train_losses = np.concatenate((train_losses,tr_loss.reshape(-1,1)), axis=1)
                 test_losses = np.concatenate((test_losses,te_loss.reshape(-1,1)), axis=1)
         if debug:
@@ -286,8 +300,9 @@ class SGD:
             self.w_update = np.zeros((self.prune_tree_levels,self.n_features))
             print self.w_update, self.w_multi
         else:
-            self.w -= (self.eta * self.w_update)
-            self.w_update = np.zeros(self.n_features)
+            for upd_lvl in self.w_update:
+                self.w -= (self.eta * upd_lvl)
+            self.w_update = np.zeros((self.prune_tree_levels,self.n_features))
         self.eta = self.eta * (1+self.eta0*self.gamma*self.samples_seen)**-1
         self.predictor = IEP.IEP(self.w, 'prediction')
         
@@ -302,8 +317,8 @@ class SGD:
         
     def learn_mean(self, img_data, functions):
         level_preds = self.predict_ind(img_data)
-        iep_levels, functions = self.learner.get_iep_levels(img_data, functions)
-        return 2 * np.sum((np.array(level_preds) - img_data.y).reshape(-1,1) * iep_levels/len(iep_levels) + 2 * self.alpha * self.w, axis=0), functions
+        iep_levels, _ = self.learner.get_iep_levels(img_data, functions)
+        return 2 * (np.array(level_preds) - img_data.y).reshape(-1,1) * iep_levels + 2 * self.alpha * self.w, functions
 
     #tested
     def learn_multi(self, img_data, functions):

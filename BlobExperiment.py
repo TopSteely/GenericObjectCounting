@@ -16,7 +16,7 @@ epochs = 1
 eta = 0.01
 
 def main():
-	sgd_blob = SGD.SGD('blob', 'multi', '', 5, 5, eta, 0.0001, 0.1, 3)
+	sgd_blob = SGD.SGD('blob', 'mean', '', 5, 5, eta, 0.0001, 0.1, 3)
 	scaler = StandardScaler()
 	data_to_scale = []
 	for im in sgd_blob.blobtraindata:

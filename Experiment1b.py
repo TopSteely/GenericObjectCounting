@@ -17,26 +17,26 @@ def main():
 #        exit()
     category = sys.argv[1]
 
-    learn_mode = 'category'
+    learn_mode = 'category_levels'
 
     pred_mode = 'multi'
 
-    debug = False
+    debug = True
 
     batch_size = 5
 
-    epochs = 8
+    epochs = 4
 
     subsamples = 100
 
     feature_size = 4096
 
-    for tree_level_size in range(9,10):
+    for tree_level_size in range(5,6):
         #initialize
         print 'initializing', tree_level_size
         #sgd = SGD.SGD('max', category, tree_level_size, batch_size, math.pow(10,-4), 0.003, math.pow(10,-5))
         #load_pascal = Input.Input('pascal',category)
-        load_dennis = Input.Input('dennis',category)
+        load_dennis = Input.Input('dennis',category,tree_level_size)
         #output_pascal = Output.Output('pascal_max', category, tree_level_size, '1b')
         output_dennis = Output.Output('dennis_%s'%(pred_mode), category, tree_level_size, '1b')
         
@@ -122,9 +122,11 @@ def main():
                     preds_d_d, y_d_d = sgd_dennis.evaluate('val_all', subsamples, debug)
                 elif learn_mode == 'category':
                    preds_d_d, y_d_d = sgd_dennis.evaluate('val_cat', subsamples, debug)
-                output_dennis.plot_preds(preds_d_d, [], y_d_d, al_i, 'val_cat')
+                elif learn_mode == 'category_levels':
+                   preds_d_d, y_d_d = sgd_dennis.evaluate('val_category_levels', subsamples, debug)
+                output_dennis.plot_preds(preds_d_d, [], y_d_d, al_i, 'val_cat_levels')
             #output_dennis.save(mse, ae, mse_non_zero, sgd_dennis, 'ind', al_i, learn_mode)
-    print learn_mode, pred_mode, epochs,'with scaler'
+    print learn_mode, pred_mode, epochs,'with scaler', debug
     
     
 if __name__ == "__main__":
