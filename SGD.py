@@ -180,7 +180,6 @@ class SGD:
         for i_img_nr,img_nr in enumerate(numbers):
             if self.dataset == 'blob':
                 img_data = b_data[i_img_nr]
-                print 'blob ', img_nr, len(img_data.levels)
             else:
                 img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
             img_loss = (self.predict(img_data) - img_data.y) ** 2
