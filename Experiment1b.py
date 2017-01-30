@@ -19,7 +19,7 @@ def main():
 
     learn_mode = 'category_levels'
 
-    pred_mode = 'multi'
+    pred_mode = 'mean'
 
     debug = False
 
