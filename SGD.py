@@ -64,11 +64,9 @@ class SGD:
             self.blobtestdata = []
             for img_nr in self.load.training_numbers:
                 tmp_data = BlobData.BlobData(self.load, img_nr, self.scaler)
-                print len(tmp_data.levels)
                 self.blobtraindata.append(tmp_data)
             for img_nr in self.load.val_numbers:
                 tmp_data = BlobData.BlobData(self.load, img_nr, self.scaler)
-                print len(tmp_data.levels)
                 self.blobtestdata.append(tmp_data)
     def set_scaler(self, scaler):
         self.scaler = scaler
@@ -254,10 +252,11 @@ class SGD:
         for i_img_nr, img_nr in enumerate(subset):
             start = time.time()
             if self.dataset == 'blob':
-                print 'blob ', img_nr, len(self.blobtraindata[i_img_nr].levels)
                 img_data = self.blobtraindata[i_img_nr]
             else:
                 img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
+                if instances=='category_levels':
+                    assert len(img_data.levels) >= self.prune_tree_levels
             if img_nr in self.functions:
                 img_functions = self.functions[img_nr]
                 upd,_ = self.method(img_data, img_functions)
