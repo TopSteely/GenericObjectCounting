@@ -16,7 +16,7 @@ epochs = 3
 eta = 0.01
 
 def main():
-	for eta in [1, 0.1, 0.01, 0.001]:
+	for eta in [0.1, 0.01, 0.001, 0.0001]:
 		sgd_blob = SGD.SGD('blob', 'multi', '', 5, 5, eta, 0.0001, 0.1, 3)
 		scaler = StandardScaler()
 		data_to_scale = []
