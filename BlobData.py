@@ -7,8 +7,8 @@ class BlobData():
 	def __init__(self, load, img_nr, scaler):
 		self.img_nr = img_nr
 		prune_tree_levels = 4
-		boxes = load.get_coords_blob(img_nr)
-		self.boxes = self.random_bbox(boxes[0][2], boxes[0][3])
+		#boxes = load.get_coords_blob(img_nr)
+		self.boxes = self.random_bbox(640, 400)
 		self.tree_boxes = self.boxes
 		self.X = load.get_features_blob(img_nr, self.boxes)
 		self.num_features = 3
@@ -50,14 +50,9 @@ class BlobData():
 	def random_bbox(self,im_w, im_h):
 		boxes = [[0,0,im_w,im_h]]
 		boxes.append([30,30,im_w,im_h])
-		if self.img_nr == 6:
-			boxes.append([0,0,600,350])
-			boxes.append([0,0,im_w,350])
-			boxes.append([0,0,600,im_h])
-		else:
-			boxes.append([0,0,800,550])
-			boxes.append([0,0,im_w,550])
-			boxes.append([0,0,800,im_h])
+		boxes.append([0,0,600,350])
+		boxes.append([0,0,im_w,350])
+		boxes.append([0,0,600,im_h])
 		for b_i in range(5):
 			box = []
 			box.append(random.randint(0, im_w))
