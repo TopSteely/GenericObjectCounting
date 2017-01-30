@@ -26,7 +26,7 @@ class Input:
             self.label_path = 'bla'
             self.feature_path = 'bla'
         elif self.mode == 'blob':
-            self.training_numbers = [1,2,3,5,6,7,9,10,11]
+            self.training_numbers = [1,2,3,5,6,7]
             self.val_numbers = [4,8]
         else:
             if self.mode == 'pascal':
@@ -226,26 +226,20 @@ class Input:
 
     def get_label_blob(self, img_nr):
         if img_nr == 1:
-            return 2
+            return 1
         elif img_nr == 2:
-            return 3
+            return 2
         elif img_nr == 3:
             return 3
         elif img_nr == 4:
-            return 4
+            return 5
         elif img_nr == 5:
-            return 4
+            return 5
         elif img_nr == 6:
-            return 5
+            return 7
         elif img_nr == 7:
-            return 5
+            return 7
         elif img_nr == 8:
-            return 7
-        elif img_nr == 9:
-            return 7
-        elif img_nr == 10:
-            return 9
-        elif img_nr == 11:
             return 9
 
     def get_features_blob(self, img_nr, boxes):
@@ -254,7 +248,7 @@ class Input:
         #assert np.array_equal(im[:,:,0], im[:,:,1])
         #assert np.array_equal(im[:,:,1], im[:,:,2])
         #im = im[:,:,0]
-        im = 255 - im
+        #im = 255 - im
         #x = [x0, x1, x2]
         #x0 = average intensity value in the bounding box.
         #x1 = width of the boundig box
