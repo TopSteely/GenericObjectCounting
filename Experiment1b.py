@@ -19,9 +19,9 @@ def main():
 
     learn_mode = 'category_levels'
 
-    pred_mode = 'mean'
+    pred_mode = 'multi'
 
-    debug = False
+    debug = True
 
     batch_size = 5
 
@@ -31,7 +31,7 @@ def main():
 
     feature_size = 4096
 
-    for tree_level_size in range(1,6):
+    for tree_level_size in range(5,6):
         #initialize
         print 'initializing', tree_level_size
         #sgd = SGD.SGD('max', category, tree_level_size, batch_size, math.pow(10,-4), 0.003, math.pow(10,-5))

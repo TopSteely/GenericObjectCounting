@@ -249,7 +249,7 @@ class SGD:
         elif instances=='category':
             training_data = self.load.category_train
         elif instances=='category_levels':
-            training_data==self.load.category_train_with_levels
+            training_data = self.load.category_train_with_levels
         subset = training_data[:to]
         random.shuffle(subset)
         for i_img_nr, img_nr in enumerate(subset):

@@ -266,7 +266,8 @@ class Input:
             ff.append(np.sum(cropped))
             ff.append(box[0]+box[2])
             ff.append(box[1]+box[3])
-            features.append(ff)
+            # adding Gaussian noise with a sigma of 10
+            features.append(np.array(ff) + np.random.normal(10,1,3))
         return np.array(features)
 
     def get_intersections_blob(self, levels, boxes):
