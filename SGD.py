@@ -185,7 +185,6 @@ class SGD:
                 print 'blob ', img_nr, len(img_data.levels)
             else:
                 img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
-            print self.predict(img_data), img_data.y
             img_loss = (self.predict(img_data) - img_data.y) ** 2
 	    #print 'preds: ',img_data.img_nr, self.predict(img_data), ' y: ', img_data.y
             #print 'preds: ',img_data.img_nr, self.predict(img_data), ' y: ', img_data.y, ' sklearn: ', self.sgd.predict(img_data.X[img_data.levels[0][0]].reshape(1, -1))
@@ -283,7 +282,6 @@ class SGD:
                     test_losses = np.concatenate((test_losses,te_loss.reshape(-1,1)), axis=1)
         if (i_img_nr + 1)%self.batch_size != 0:
             if self.version!='old':
-                print 'updating because of end'
                 self.update()
             if debug:
                 tr_loss, te_loss = self.loss_per_level_all(instances, to)
@@ -294,10 +292,8 @@ class SGD:
         
     def update(self):
         if self.version == 'multi':
-            print self.w_update, self.w_multi
             self.w_multi -= (self.eta * self.w_update)
             self.w_update = np.zeros((self.prune_tree_levels,self.n_features))
-            print self.w_update, self.w_multi
         else:
             for upd_lvl in self.w_update:
                 self.w -= (self.eta * upd_lvl)
@@ -330,13 +326,10 @@ class SGD:
             predictor = IEP.IEP(self.w_multi[level], 'prediction')
             level_pred, _ = predictor.iep(img_data, [], level)
             iep_level, _ = self.learner.iep(img_data, functions, level)
-            print level, level_pred, iep_level
             if len(img_data.levels) >= 10:
                 print level, np.min(iep_level), np.max(iep_level)
             #a = (2 * (level_pred - img_data.y) * iep_level + 2 * self.alpha * self.w_multi[level])
             ret[level,:] = (2 * (level_pred - img_data.y) * iep_level + 2 * self.alpha * self.w_multi[level])
-        if len(img_data.levels) >= 10:
-            raw_input()
         return ret, functions
 
 
