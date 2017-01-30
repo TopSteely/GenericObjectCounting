@@ -22,7 +22,7 @@ class SGD:
         self.w_update = np.zeros((self.prune_tree_levels,self.n_features))
         self.learner = IEP.IEP(1, 'learning')
         self.dataset = dataset
-        self.load = Input.Input(dataset, category)
+        self.load = Input.Input(dataset, category, prune_tree_levels)
         self.batch_size = batch_size
         self.samples_seen = 0
         self.eta = eta
@@ -269,7 +269,6 @@ class SGD:
                     self.method(img_data, temp)
                 else:
                     upd, _ = self.method(img_data, temp)
-                    print upd.shape, self.w_update.shape
                     self.w_update += upd
                 #self.functions[img_nr] = fct
             self.samples_seen += 1
