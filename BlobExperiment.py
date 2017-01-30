@@ -11,7 +11,7 @@ from sklearn.svm import SVC
 import time
 import random
 
-epochs = 1
+epochs = 3
 
 eta = 0.01
 
@@ -32,10 +32,10 @@ def main():
 
 		for ep in range(epochs):
 			sgd_blob.learn()
-		mse,ae, mse_non_zero = sgd_blob.evaluate('blobtest')
-		mse_tr,ae_tr, mse_non_zero_tr = sgd_blob.evaluate('blobtrain')
-		print "Eval loss train: ", mse_tr
-		print "Eval loss val: ", mse
+			mse,ae, mse_non_zero = sgd_blob.evaluate('blobtest')
+			mse_tr,ae_tr, mse_non_zero_tr = sgd_blob.evaluate('blobtrain')
+			print "Eval loss train: ",eta, mse_tr
+			print "Eval loss val: ",eta, mse
 
 if __name__ == "__main__":
     main()
