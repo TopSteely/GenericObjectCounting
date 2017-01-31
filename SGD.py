@@ -168,10 +168,10 @@ class SGD:
         elif mode == 'val_all':
             numbers = self.load.val_numbers[:to]
         elif mode == 'blobtrain':
-            numbers = self.load.training_numbers
+            numbers = self.load.training_numbers[:to]
             b_data = self.blobtraindata
         elif mode == 'blobtest':
-            numbers = self.load.val_numbers
+            numbers = self.load.val_numbers[:to]
             b_data = self.blobtestdata
         elif mode == 'val_category_levels':
             numbers = self.load.category_val_with_levels[:to]

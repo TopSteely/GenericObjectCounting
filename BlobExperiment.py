@@ -54,6 +54,7 @@ def main():
 					print "Eval loss train: ",eta, mse_tr
 					print "Eval loss val: ",eta, mse
 					if pr_mode == 'multi':
+						print losses_imas_tr.shape, mse_tr.reshape(-1,1).shape, mse_tr.shape
 						losses_imas_tr = np.concatenate((losses_imas_tr,mse_tr), axis=1)#.reshape(-1,1)
 						losses_imas_te = np.concatenate((losses_imas_te,mse), axis=1)#.reshape(-1,1)
 					else:
