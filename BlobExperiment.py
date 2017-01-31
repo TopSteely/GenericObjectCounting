@@ -26,7 +26,7 @@ batch_size = 1
 
 def main():
 	for pr_mode in ['mean','multi']:
-		for eta in [0.01]:
+		for eta in [0.1]:
 			sgd_blob = SGD.SGD('blob', pr_mode, '', tree_level_size, batch_size, eta, 0.0001, 0.1, 3)
 			scaler = StandardScaler()
 			data_to_scale = []
@@ -67,7 +67,7 @@ def main():
 			plt.xlabel('Training  samples')
 			plt.ylabel('MSE')
 			plt.legend('%s %s'%('blob',pr_mode))
-			plt.savefig('/var/node436/local/tstahl/plos/blob_%s_%s'%(pr_mode, tree_level_size))
+			plt.savefig('/var/node436/local/tstahl/plos/blob_%s_%s_'%(pr_mode, tree_level_size))
 
 if __name__ == "__main__":
     main()
