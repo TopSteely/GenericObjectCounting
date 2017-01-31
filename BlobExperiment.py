@@ -20,7 +20,7 @@ eta = 0.01
 
 pr_mode = 'multi'
 
-tree_level_size = 3
+tree_level_size = 1
 
 batch_size = 1
 
@@ -67,7 +67,7 @@ def main():
 			plt.xlabel('Training  samples')
 			plt.ylabel('MSE')
 			plt.legend('%s %s'%('blob',pr_mode))
-			plt.savefig('/var/node436/local/tstahl/plos/blob_%s'%(pr_mode))
+			plt.savefig('/var/node436/local/tstahl/plos/blob_%s_%s'%(pr_mode, tree_level_size))
 
 if __name__ == "__main__":
     main()
