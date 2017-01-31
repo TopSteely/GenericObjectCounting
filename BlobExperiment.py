@@ -22,10 +22,12 @@ pr_mode = 'multi'
 
 tree_level_size = 2
 
+batch_size = 1
+
 def main():
 	for pr_mode in ['mean','multi']:
 		for eta in [0.01]:
-			sgd_blob = SGD.SGD('blob', pr_mode, '', tree_level_size, 5, eta, 0.0001, 0.1, 3)
+			sgd_blob = SGD.SGD('blob', pr_mode, '', tree_level_size, batch_size, eta, 0.0001, 0.1, 3)
 			scaler = StandardScaler()
 			data_to_scale = []
 			for im in sgd_blob.blobtraindata:
