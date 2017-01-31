@@ -47,7 +47,7 @@ def main():
 				else:
 					losses_imas_tr = []
 					losses_imas_te = []
-				for imas in range(1,9):
+				for imas in range(1,7):
 					sgd_blob.learn('all',imas)
 					mse,ae, mse_non_zero = sgd_blob.evaluate('blobtest')
 					mse_tr,ae_tr, mse_non_zero_tr = sgd_blob.evaluate('blobtrain', imas)

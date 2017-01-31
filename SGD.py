@@ -171,7 +171,7 @@ class SGD:
             numbers = self.load.training_numbers[:to]
             b_data = self.blobtraindata
         elif mode == 'blobtest':
-            numbers = self.load.val_numbers[:to]
+            numbers = self.load.val_numbers
             b_data = self.blobtestdata
         elif mode == 'val_category_levels':
             numbers = self.load.category_val_with_levels[:to]
