@@ -63,10 +63,10 @@ class SGD:
             self.blobtraindata = []
             self.blobtestdata = []
             for img_nr in self.load.training_numbers:
-                tmp_data = BlobData.BlobData(self.load, img_nr, self.scaler)
+                tmp_data = BlobData.BlobData(self.load, img_nr, self.scaler, prune_tree_levels)
                 self.blobtraindata.append(tmp_data)
             for img_nr in self.load.val_numbers:
-                tmp_data = BlobData.BlobData(self.load, img_nr, self.scaler)
+                tmp_data = BlobData.BlobData(self.load, img_nr, self.scaler, prune_tree_levels)
                 self.blobtestdata.append(tmp_data)
     def set_scaler(self, scaler):
         self.scaler = scaler
@@ -320,12 +320,10 @@ class SGD:
 
     #tested
     def learn_multi(self, img_data, functions):
-        print self.prune_tree_levels
         ret = np.zeros((self.prune_tree_levels,self.n_features))
         if len(img_data.levels) >= 10:
             print img_data.img_nr, img_data.y, len(img_data.levels)
         for level in range(self.prune_tree_levels):
-            print level
             if level >= len(img_data.levels):
                 continue
             predictor = IEP.IEP(self.w_multi[level], 'prediction')
@@ -335,7 +333,6 @@ class SGD:
                 print level, np.min(iep_level), np.max(iep_level)
             #a = (2 * (level_pred - img_data.y) * iep_level + 2 * self.alpha * self.w_multi[level])
             ret[level,:] = (2 * (level_pred - img_data.y) * iep_level + 2 * self.alpha * self.w_multi[level])
-        print ret
         return ret, functions
 
 
