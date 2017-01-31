@@ -128,6 +128,7 @@ class SGD:
         preds = []
         for level in range(self.prune_tree_levels):
             if level >= len(img_data.levels):
+                print 'cannot evaluate, using last possible level'
                 level_pred = preds[-1]
             else:
                 predictor = IEP.IEP(self.w_multi[level], 'prediction')
@@ -177,11 +178,14 @@ class SGD:
         elif mode == 'train_category_levels':
             numbers = self.load.category_train_with_levels[:to]
 
+        print 'evaluate Len: ', numbers
+
         for i_img_nr,img_nr in enumerate(numbers):
             if self.dataset == 'blob':
                 img_data = b_data[i_img_nr]
             else:
                 img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
+            print self.predict(img_data), img_data.y
             img_loss = (self.predict(img_data) - img_data.y) ** 2
 	    #print 'preds: ',img_data.img_nr, self.predict(img_data), ' y: ', img_data.y
             #print 'preds: ',img_data.img_nr, self.predict(img_data), ' y: ', img_data.y, ' sklearn: ', self.sgd.predict(img_data.X[img_data.levels[0][0]].reshape(1, -1))
@@ -247,6 +251,7 @@ class SGD:
         elif instances=='category_levels':
             training_data = self.load.category_train_with_levels
         subset = training_data[:to]
+        print 'Len: ', len(training_data)
         random.shuffle(subset)
         for i_img_nr, img_nr in enumerate(subset):
             start = time.time()
