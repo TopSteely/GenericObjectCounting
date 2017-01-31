@@ -20,7 +20,7 @@ eta = 0.01
 
 pr_mode = 'multi'
 
-tree_level_size = 3
+tree_level_size = 2
 
 def main():
 	for pr_mode in ['mean','multi']:
@@ -39,9 +39,13 @@ def main():
 				im.scaler_transform(scaler)
 
 			for ep in range(epochs):
-				losses_imas_tr = np.array([], dtype=np.int64).reshape(tree_level_size,0)
-				losses_imas_te = np.array([], dtype=np.int64).reshape(tree_level_size,0)
-				for imas in range(1,7):
+				if pr_mode == 'multi':
+					losses_imas_tr = np.array([], dtype=np.int64).reshape(tree_level_size,0)
+					losses_imas_te = np.array([], dtype=np.int64).reshape(tree_level_size,0)
+				else:
+					losses_imas_tr = []
+					losses_imas_te = []
+				for imas in range(1,3):
 					sgd_blob.learn('all',imas)
 					mse,ae, mse_non_zero = sgd_blob.evaluate('blobtest')
 					mse_tr,ae_tr, mse_non_zero_tr = sgd_blob.evaluate('blobtrain')
