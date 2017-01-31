@@ -68,6 +68,15 @@ class SGD:
             for img_nr in self.load.val_numbers:
                 tmp_data = BlobData.BlobData(self.load, img_nr, self.scaler, prune_tree_levels)
                 self.blobtestdata.append(tmp_data)
+
+    def reset_w(self):
+        self.w_update = np.zeros((self.prune_tree_levels,self.n_features))
+        self.w = np.zeros(self.n_features)
+        self.predictor = IEP.IEP(self.w, 'prediction')
+        if mode == 'multi':
+            self.w_multi = np.zeros((self.prune_tree_levels,self.n_features))
+            self.w_update = np.zeros((self.prune_tree_levels,self.n_features))
+
     def set_scaler(self, scaler):
         self.scaler = scaler
         
