@@ -20,7 +20,7 @@ eta = 0.01
 
 pr_mode = 'multi'
 
-tree_level_size = 2
+tree_level_size = 3
 
 batch_size = 1
 
