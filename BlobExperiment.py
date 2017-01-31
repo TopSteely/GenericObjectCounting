@@ -47,16 +47,16 @@ def main():
 				else:
 					losses_imas_tr = []
 					losses_imas_te = []
-				for imas in range(1,3):
+				for imas in range(1,7):
 					sgd_blob.learn('all',imas)
 					mse,ae, mse_non_zero = sgd_blob.evaluate('blobtest')
 					mse_tr,ae_tr, mse_non_zero_tr = sgd_blob.evaluate('blobtrain', imas)
 					print "Eval loss train: ",eta, mse_tr
 					print "Eval loss val: ",eta, mse
 					if pr_mode == 'multi':
-						print losses_imas_tr.shape, mse_tr.reshape(-1,1).shape, mse_tr.shape
-						losses_imas_tr = np.concatenate((losses_imas_tr,mse_tr), axis=1)#.reshape(-1,1)
-						losses_imas_te = np.concatenate((losses_imas_te,mse), axis=1)#.reshape(-1,1)
+						#print losses_imas_tr.shape, mse_tr.reshape(-1,1).shape, mse_tr.shape
+						losses_imas_tr = np.concatenate((losses_imas_tr,mse_tr.reshape(-1,1)), axis=1)#.reshape(-1,1)
+						losses_imas_te = np.concatenate((losses_imas_te,mse.reshape(-1,1)), axis=1)#.reshape(-1,1)
 					else:
 						losses_imas_tr.append(mse_tr)
 						losses_imas_te.append(mse)
