@@ -73,7 +73,7 @@ class SGD:
         self.w_update = np.zeros((self.prune_tree_levels,self.n_features))
         self.w = np.zeros(self.n_features)
         self.predictor = IEP.IEP(self.w, 'prediction')
-        if mode == 'multi':
+        if self.version == 'multi':
             self.w_multi = np.zeros((self.prune_tree_levels,self.n_features))
             self.w_update = np.zeros((self.prune_tree_levels,self.n_features))
 
