@@ -50,7 +50,7 @@ def main():
 				for imas in range(1,3):
 					sgd_blob.learn('all',imas)
 					mse,ae, mse_non_zero = sgd_blob.evaluate('blobtest')
-					mse_tr,ae_tr, mse_non_zero_tr = sgd_blob.evaluate('blobtrain')
+					mse_tr,ae_tr, mse_non_zero_tr = sgd_blob.evaluate('blobtrain', imas)
 					print "Eval loss train: ",eta, mse_tr
 					print "Eval loss val: ",eta, mse
 					if pr_mode == 'multi':
@@ -60,7 +60,7 @@ def main():
 						losses_imas_tr.append(mse_tr)
 						losses_imas_te.append(mse)
 			plt.plot(losses_imas_tr, '-rx', label='training error')
-			plt.plot(losses_imas_te, '-g0', label='test error')
+			plt.plot(losses_imas_te, '-go', label='test error')
 			plt.legend()
 			plt.xlabel('Training  samples')
 			plt.ylabel('MSE')
