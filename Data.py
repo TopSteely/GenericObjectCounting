@@ -1,6 +1,7 @@
 from utils import create_tree_as_extracted, surface_area_old, sort_boxes, create_tree
 import numpy as np
 import time
+import os
 
 class Data:
     def __init__(self, load, img_nr, prune_tree_levels, scaler, num_features=4096, overlap_gt=False):
@@ -10,6 +11,7 @@ class Data:
         self.X = load.get_features(img_nr)
         self.num_features = num_features
         if overlap_gt:
+            #todo: put in Input
             if os.path.isfile('/var/node436/local/tstahl/GroundTruth/%s/%s.txt'%(load.category,format(img_nr, "06d"))):
                 gr = pd.read_csv('/var/node436/local/tstahl/GroundTruth/%s/%s.txt'%(load.category,format(img_nr, "06d")), header=None, delimiter=",").values
         elif num_features != 4096:
