@@ -193,7 +193,10 @@ class SGD:
             if self.dataset == 'blob':
                 img_data = b_data[i_img_nr]
             else:
-                img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
+                if self.n_features == 1:
+                    img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features, True)
+                else:
+                    img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
             print self.predict(img_data), img_data.y
             img_loss = (self.predict(img_data) - img_data.y) ** 2
 	    #print 'preds: ',img_data.img_nr, self.predict(img_data), ' y: ', img_data.y
@@ -221,10 +224,16 @@ class SGD:
         tra_loss_temp = 0.0
         te_loss_temp = 0.0
         for img_nr in self.load.category_train[0:to]:
-            img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
+            if self.n_features == 1:
+                    img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features, True)
+                else:
+                    img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
             tra_loss_temp += self.loss(img_data)
         for img_nr in self.load.category_val[0:to]:
-            img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
+            if self.n_features == 1:
+                    img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features, True)
+                else:
+                    img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
             te_loss_temp += self.loss(img_data)
         return tra_loss_temp/len(self.load.category_train), te_loss_temp/len(self.load.category_val)
 
@@ -241,11 +250,17 @@ class SGD:
             training_ims = self.load.category_train_with_levels[0:to]
             validation_ims = self.load.category_val_with_levels[0:to]
         for img_nr in training_ims:
-            img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
+            if self.n_features == 1:
+                    img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features, True)
+                else:
+                    img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
             tra_loss_temp[0:self.prune_tree_levels] += self.loss_per_level(img_data)
             tra_loss_temp[self.prune_tree_levels] += self.loss(img_data)
         for img_nr in validation_ims:
-            img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
+            if self.n_features == 1:
+                    img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features, True)
+                else:
+                    img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
             te_loss_temp[0:self.prune_tree_levels] += self.loss_per_level(img_data)
             te_loss_temp[self.prune_tree_levels] += self.loss(img_data)
         return tra_loss_temp/len(self.load.category_train), te_loss_temp/len(self.load.category_val)
@@ -267,7 +282,10 @@ class SGD:
             if self.dataset == 'blob':
                 img_data = self.blobtraindata[i_img_nr]
             else:
-                img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
+                if self.n_features == 1:
+                    img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features, True)
+                else:
+                    img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
                 if instances=='category_levels':
                     assert len(img_data.levels) >= self.prune_tree_levels
             if img_nr in self.functions:

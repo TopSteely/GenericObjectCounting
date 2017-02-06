@@ -3,13 +3,16 @@ import numpy as np
 import time
 
 class Data:
-    def __init__(self, load, img_nr, prune_tree_levels, scaler, num_features=4096):
+    def __init__(self, load, img_nr, prune_tree_levels, scaler, num_features=4096, overlap_gt=False):
 	#print img_nr
         self.img_nr = img_nr
         self.boxes = load.get_coords(img_nr)
         self.X = load.get_features(img_nr)
         self.num_features = num_features
-        if num_features != 4096:
+        if overlap_gt:
+            if os.path.isfile('/var/node436/local/tstahl/GroundTruth/%s/%s.txt'%(load.category,format(img_nr, "06d"))):
+                gr = pd.read_csv('/var/node436/local/tstahl/GroundTruth/%s/%s.txt'%(load.category,format(img_nr, "06d")), header=None, delimiter=",").values
+        elif num_features != 4096:
             features_temp = []
             for p in self.X:
                 features_temp.append(p[0:num_features])
@@ -22,6 +25,15 @@ class Data:
         self.tree_boxes = load.get_coords_tree(img_nr)
         #print len(self.tree_boxes), len(self.tree_boxes[0])
         self.tree_boxes,self.X = sort_boxes(self.tree_boxes, self.X)
+
+        if overlap_gt:
+            self.y_boxes = []
+            for b_i in self.tree_boxes:
+                sum_tmp = 0.0
+                for g_i in gr:
+                    sum_tmp += get_overlap_ratio(g_i, b_i)
+                    self.y_boxes.append(sum_tmp)
+
         #self.G, levels = create_tree_as_extracted(self.tree_boxes)
         self.G, levels = create_tree(self.tree_boxes)
         #print "tree", (time.time() - start)
@@ -61,7 +73,16 @@ class Data:
             assert len(intersection_coords) == len(intersection_features)
             if len(intersection_coords) > 0:
                 self.boxes = np.append(self.boxes, intersection_coords, axis=0)
-                self.X = np.append(self.X, intersection_features[:,0:num_features], axis=0)
+                if overlap_gt:
+                    for is_i in intersection_coords:
+                        sum_tmp = 0.0
+                        for g_i in gr:
+                            sum_tmp += get_overlap_ratio(g_i, is_i)
+                            self.y_boxes.append(sum_tmp)
+                    self.X = np.array(self.y_boxes)
+                    assert self.num_features == 1
+                else:
+                    self.X = np.append(self.X, intersection_features[:,0:num_features], axis=0)
             else:
                 self.boxes = np.array(self.boxes)
         
