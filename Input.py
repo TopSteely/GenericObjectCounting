@@ -78,8 +78,11 @@ class Input:
 
 
     def get_gts(self, img_nr):
+        gr = []
         if os.path.isfile('/var/node436/local/tstahl/GroundTruth/%s/%s.txt'%(self.category,format(img_nr, "06d"))):
             gr = pd.read_csv('/var/node436/local/tstahl/GroundTruth/%s/%s.txt'%(self.category,format(img_nr, "06d")), header=None, delimiter=",").values
+        return gr
+
 
 
     def get_intersection_features(self, img_nr):
