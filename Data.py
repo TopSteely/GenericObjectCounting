@@ -14,6 +14,7 @@ class Data:
             #todo: put in Input
             if os.path.isfile('/var/node436/local/tstahl/GroundTruth/%s/%s.txt'%(load.category,format(img_nr, "06d"))):
                 gr = pd.read_csv('/var/node436/local/tstahl/GroundTruth/%s/%s.txt'%(load.category,format(img_nr, "06d")), header=None, delimiter=",").values
+            gr = load.get_gts(img_nr)
         elif num_features != 4096:
             features_temp = []
             for p in self.X:

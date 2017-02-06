@@ -77,6 +77,11 @@ class Input:
         return imgs_with_levels_train, imgs_with_levels_val
 
 
+    def get_gts(self, img_nr):
+        if os.path.isfile('/var/node436/local/tstahl/GroundTruth/%s/%s.txt'%(self.category,format(img_nr, "06d"))):
+            gr = pd.read_csv('/var/node436/local/tstahl/GroundTruth/%s/%s.txt'%(self.category,format(img_nr, "06d")), header=None, delimiter=",").values
+
+
     def get_intersection_features(self, img_nr):
 	if os.stat(self.intersection_feature_path%(format(img_nr, "06d"))).st_size > 0:
 		if os.path.isfile(self.intersection_feature_path%(format(img_nr, "06d"))):
