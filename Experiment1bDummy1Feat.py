@@ -26,7 +26,7 @@ def main():
 
     epochs = 4
 
-    subsamples = 4
+    subsamples = 50
 
     feature_size = 1
 

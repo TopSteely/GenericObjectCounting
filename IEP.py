@@ -85,11 +85,11 @@ class IEP:
                              print 'index bigger than X'
                              exit()
                          if len(base)%2==1:
-                            print '+', X[ind]
+                            #print '+', X[ind]
                             iep += np.dot(self.w,X[ind])
                             #function.append(['+',ind])
                          elif len(base)%2==0:
-                            print '-', X[ind]
+                            #print '-', X[ind]
                             iep -=  np.dot(self.w,X[ind])
                             #function.append(['-',ind])
                       else:
