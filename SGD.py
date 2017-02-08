@@ -263,9 +263,9 @@ class SGD:
                 img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features, True)
             else:
                 img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
-            print tra_loss_temp[0:self.prune_tree_levels].reshape(-1,1).shape
-            tra_loss_temp[0:self.prune_tree_levels,:] += self.loss_per_level(img_data)
-            tra_loss_temp[self.prune_tree_levels,:] += self.loss(img_data)
+            #print tra_loss_temp[0:self.prune_tree_levels].reshape(-1,1).shape
+            tra_loss_temp[0:self.prune_tree_levels].reshape(-1,1) += self.loss_per_level(img_data)
+            tra_loss_temp[self.prune_tree_levels] += self.loss(img_data)
         for img_nr in validation_ims:
             if self.n_features == 1:
                 img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features, True)
@@ -307,9 +307,9 @@ class SGD:
                 if self.version == 'old':
                     self.method(img_data, temp)
                 else:
-                    upd, _ = self.method(img_data, temp)
+                    upd, fct = self.method(img_data, temp)
                     self.w_update += upd
-                #self.functions[img_nr] = fct
+                    self.functions[img_nr] = fct
             self.samples_seen += 1
             if self.prune_tree_levels == 1:
                 to_fit = img_data.X[img_data.levels[0][0]].reshape(1, -1)
@@ -368,7 +368,6 @@ class SGD:
             iep_level, _ = self.learner.iep(img_data, functions, level)
             #print level, iep_level, img_data.y
             if self.n_features == 1:
-                print iep_level, img_data.y
                 assert abs(iep_level-img_data.y) < 0.0001
             if len(img_data.levels) >= 10:
                 print level, np.min(iep_level), np.max(iep_level)
