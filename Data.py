@@ -32,7 +32,7 @@ class Data:
                 for g_i in gr:
                     sum_tmp += get_overlap_ratio(g_i, b_i)
                     self.y_boxes.append(sum_tmp)
-            print self.y_boxes
+            print self.y_boxes[0:10]
 
         #self.G, levels = create_tree_as_extracted(self.tree_boxes)
         self.G, levels = create_tree(self.tree_boxes)
@@ -90,7 +90,7 @@ class Data:
                 else:
                     self.boxes = np.array(self.boxes)
             if overlap_gt:
-                print "X in data: ", self.X
+                print "X in data: ", self.X[0:10]
         
     def lookup_coords(self):
         #have to change level indexes because of rearranging in extraction
