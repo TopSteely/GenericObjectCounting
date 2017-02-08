@@ -427,5 +427,5 @@ class SGD:
         for i_level,level_fct in enumerate(fct):
             print i_level,level_fct
             for fun in level_fct:
-                update += 
+                update -= img_data.X[fun[1]]
         return update + 2 * self.alpha * self.w, fct
