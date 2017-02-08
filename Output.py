@@ -49,7 +49,7 @@ class Output:
         pickle.dump(sgd.w, open( self.model_path%(self.experiment, self.mode, self.category, self.prune_tree_levels, eta0, alpha, learn_mode), "wb" ))
         #pickle.dump(num_per_image, open( self.npe_path%(self.experiment, self.mode, self.category, self.prune_tree_levels), "wb" ))
         
-    def plot_preds(self, preds, preds_skl, y, alpha, dataset):
+    def plot_preds(self, preds, y, alpha, dataset):
         if self.mode.endswith('multi'):
             f,ax = plt.subplots(self.prune_tree_levels)
             for lvl in range(self.prune_tree_levels):
@@ -65,17 +65,14 @@ class Output:
             #plt.legend('upper left')
         else:
             sorted_preds = []
-            sorted_preds_skl = []
             sorted_y = []
             decorated = [(y_i, i) for i, y_i in enumerate(y)]
             decorated.sort()
             for y_i, i in reversed(decorated):
                 sorted_preds.append(preds[i])
-                sorted_preds_skl.append(preds_skl[i])
                 sorted_y.append(y_i)
             plt.figure()
             plt.plot(range(len(preds)), preds, 'ro',label='prediction')
-            plt.plot(range(len(preds)), preds_skl, 'gD', label='sklearn')
             plt.plot(range(len(preds)), y, 'y*',label='target')
             plt.ylabel('y')
             plt.ylim([-1,len(preds)+1])
