@@ -90,7 +90,7 @@ class SGD:
 
     def loss_new(self, img_data, fct):
         #for fun in fct:
-            fun[1]
+#            fun[1]
         level_preds, _ = self.predictor.get_iep_levels(img_data, [])
         return (np.array(level_preds) - img_data.y)**2 + self.alpha * math.sqrt(np.dot(self.w,self.w))
         
