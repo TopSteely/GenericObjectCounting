@@ -408,7 +408,7 @@ class SGD:
         update = np.zeros(self.n_features)
         fct = self.functions[img_data.img_nr]
         print fct
-        if fct == []
+        #if fct == []
         for i_level,level_fct in enumerate(fct):
             print i_level,level_fct
             for fun in level_fct:
