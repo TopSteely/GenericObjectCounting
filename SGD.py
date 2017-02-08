@@ -89,6 +89,7 @@ class SGD:
         return np.min(np.array(level_preds) - img_data.y)**2 + self.alpha * math.sqrt(np.dot(self.w,self.w))
 
     def loss_new(self, img_data):
+        #for 
         level_preds, _ = self.predictor.get_iep_levels(img_data, [])
         return np.min(np.array(level_preds) - img_data.y)**2 + self.alpha * math.sqrt(np.dot(self.w,self.w))
         
@@ -366,7 +367,7 @@ class SGD:
             level_pred, _ = predictor.iep(img_data, [], level)
             iep_level, _ = self.learner.iep(img_data, functions, level)
             #print level, iep_level, img_data.y
-            if num_features == 1:
+            if self.num_features == 1:
                 print iep_level, img_data.y
                 assert abs(iep_level-img_data.y) < 0.0001
             if len(img_data.levels) >= 10:
