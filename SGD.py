@@ -88,10 +88,11 @@ class SGD:
         level_preds, _ = self.predictor.get_iep_levels(img_data, [])
         return np.min(np.array(level_preds) - img_data.y)**2 + self.alpha * math.sqrt(np.dot(self.w,self.w))
 
-    def loss_new(self, img_data):
-        #for 
+    def loss_new(self, img_data, fct):
+        #for fun in fct:
+            fun[1]
         level_preds, _ = self.predictor.get_iep_levels(img_data, [])
-        return np.min(np.array(level_preds) - img_data.y)**2 + self.alpha * math.sqrt(np.dot(self.w,self.w))
+        return (np.array(level_preds) - img_data.y)**2 + self.alpha * math.sqrt(np.dot(self.w,self.w))
         
     def loss_mean(self, img_data):
         level_preds, _ = self.predictor.get_iep_levels(img_data, [])
@@ -305,7 +306,7 @@ class SGD:
                 upd,_ = self.method(img_data, img_functions)
                 self.w_update += upd
             else:
-                temp = []
+                temp = {}
                 if self.version == 'old':
                     self.method(img_data, temp)
                 else:
@@ -367,8 +368,12 @@ class SGD:
             if level >= len(img_data.levels):
                 continue
             predictor = IEP.IEP(self.w_multi[level], 'prediction')
-            level_pred, _ = predictor.iep(img_data, [], level)
-            iep_level, _ = self.learner.iep(img_data, functions, level)
+            if level in functions:
+                level_pred, _ = predictor.iep(img_data, functions[level], level)
+            else:
+                level_pred, fct = predictor.iep(img_data, [], level)
+                functions[level] = fct
+            iep_level, _ = self.learner.iep(img_data, functions[level], level)
             #print level, iep_level, img_data.y
             if self.n_features == 1:
                 assert abs(iep_level-img_data.y) < 0.0001
