@@ -263,8 +263,8 @@ class SGD:
                 img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features, True)
             else:
                 img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
-            #print tra_loss_temp[0:self.prune_tree_levels].reshape(-1,1).shape
-            tra_loss_temp[0:self.prune_tree_levels].reshape(-1,1) += self.loss_per_level(img_data)
+            print self.loss_per_level(img_data).shape, tra_loss_temp[0:self.prune_tree_levels].shape, self.loss_per_level(img_data).reshape(1,-1).shape
+            tra_loss_temp[0:self.prune_tree_levels] += self.loss_per_level(img_data).reshape(1,-1)
             tra_loss_temp[self.prune_tree_levels] += self.loss(img_data)
         for img_nr in validation_ims:
             if self.n_features == 1:
