@@ -25,13 +25,19 @@ class Data:
         #print len(self.tree_boxes), len(self.tree_boxes[0])
         self.tree_boxes,self.X = sort_boxes(self.tree_boxes, self.X)
 
+        print self.y
+        print gr
+
         if overlap_gt:
             self.y_boxes = []
             for b_i in self.tree_boxes:
+                print b_i
                 sum_tmp = 0.0
                 for g_i in gr:
                     sum_tmp += get_overlap_ratio(g_i, b_i)
                     self.y_boxes.append(sum_tmp)
+                print sum_tmp
+                raw_input()
 
         #self.G, levels = create_tree_as_extracted(self.tree_boxes)
         self.G, levels = create_tree(self.tree_boxes)
