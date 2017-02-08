@@ -25,10 +25,9 @@ class Data:
         #print len(self.tree_boxes), len(self.tree_boxes[0])
         self.tree_boxes,self.X = sort_boxes(self.tree_boxes, self.X)
 
-        print self.y
-        print gr
-
         if overlap_gt:
+            print self.y
+            print gr
             self.y_boxes = []
             for b_i in self.tree_boxes:
                 print b_i
