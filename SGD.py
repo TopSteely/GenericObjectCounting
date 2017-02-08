@@ -318,6 +318,7 @@ class SGD:
                     self.method(img_data, temp)
                 else:
                     upd, fct = self.method(img_data, temp)
+                    print upd, self.update
                     if self.version == 'multi':
                         self.w_update += upd
                     else:
@@ -365,7 +366,7 @@ class SGD:
     def learn_mean(self, img_data, functions):
         level_preds = self.predict_ind(img_data)
         iep_levels, _ = self.learner.get_iep_levels(img_data, functions)
-        return 2 * (np.array(level_preds) - img_data.y).reshape(-1,1) * iep_levels + 2 * self.alpha * self.w, functions
+        return 2 * np.sum(np.array(level_preds) - img_data.y).reshape(-1,1) * iep_levels + 2 * self.alpha * self.w, functions
 
     #tested
     def learn_multi(self, img_data, functions):
@@ -408,7 +409,12 @@ class SGD:
         update = np.zeros(self.n_features)
         fct = self.functions[img_data.img_nr]
         print fct
-        #if fct == []
+
+        # if function is empty run iep first, just to get function -> we need the patches for each level to learn
+        if fct == []:
+            _,fctions = self.learner.get_iep_levels(img_data, {})
+            fct = fctions
+
         for i_level,level_fct in enumerate(fct):
             print i_level,level_fct
             for fun in level_fct:
