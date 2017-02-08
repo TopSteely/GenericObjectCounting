@@ -213,7 +213,7 @@ class SGD:
             #print 'preds: ',img_data.img_nr, self.predict(img_data), ' y: ', img_data.y, ' sklearn: ', self.sgd.predict(img_data.X[img_data.levels[0][0]].reshape(1, -1))
             print img_loss, squared_error
             print img_loss.shape, squared_error.shape
-            squared_error += img_loss
+            squared_error += img_loss.reshape(-1,)
             error += abs(self.predict(img_data) - img_data.y)
             if img_data.y > 0:
                 non_zero_error += img_loss
