@@ -367,7 +367,7 @@ class SGD:
             level_pred, _ = predictor.iep(img_data, [], level)
             iep_level, _ = self.learner.iep(img_data, functions, level)
             #print level, iep_level, img_data.y
-            if self.num_features == 1:
+            if self.n_features == 1:
                 print iep_level, img_data.y
                 assert abs(iep_level-img_data.y) < 0.0001
             if len(img_data.levels) >= 10:
