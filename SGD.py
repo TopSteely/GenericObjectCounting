@@ -366,7 +366,7 @@ class SGD:
     def learn_mean(self, img_data, functions):
         level_preds = self.predict_ind(img_data)
         iep_levels, _ = self.learner.get_iep_levels(img_data, functions)
-        return 2 * np.sum(np.array(level_preds) - img_data.y).reshape(-1,1) * iep_levels + 2 * self.alpha * self.w, functions
+        return 2 * np.sum((np.array(level_preds) - img_data.y).reshape(-1,1) * iep_levels, axis=0) + 2 * self.alpha * self.w, functions
 
     #tested
     def learn_multi(self, img_data, functions):
