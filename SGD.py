@@ -61,7 +61,7 @@ class SGD:
         elif mode == 'new':
             self.method = self.learn_new
             self.loss = self.loss_new
-            self.predict = self.predict_new
+            self.predict = self.predict_mean
         #blob dataset, have to save the data because of random bbox creation
         if dataset == 'blob':
             self.blobtraindata = []
@@ -367,7 +367,9 @@ class SGD:
         level_preds = self.predict_ind(img_data)
         iep_levels, _ = self.learner.get_iep_levels(img_data, functions)
         #might be axis=0?
-        return 2 * np.sum((np.array(level_preds) - img_data.y).reshape(-1,1) * iep_levels, axis=1) + 2 * self.alpha * self.w, functions
+        print iep_levels
+        print (np.array(level_preds) - img_data.y).reshape(-1,1) * iep_levels
+        return 2 * np.sum((np.array(level_preds) - img_data.y).reshape(-1,1) * iep_levels, axis=0) + 2 * self.alpha * self.w, functions
 
     #tested
     def learn_multi(self, img_data, functions):
@@ -407,19 +409,23 @@ class SGD:
         return np.sum(2 * (np.array(level_preds) - img_data.y).reshape(-1,1) * iep_levels + 2 * self.alpha * self.w, axis=0), functions
 
     def learn_new(self, img_data):
+        need_ieps = True
         update = np.zeros(self.n_features)
         fct = self.functions[img_data.img_nr]
         print fct
 
         # if function is empty run iep first, just to get function -> we need the patches for each level to learn
         if fct == {}:
-            _,fctions = self.learner.get_iep_levels(img_data, {})
+            iep_levels,fctions = self.learner.get_iep_levels(img_data, {})
             fct = fctions
+            need_ieps = False
+
+        if need_ieps:
+            iep_levels,_ = self.learner.get_iep_levels(img_data, fctions)
+                
 
         for i_level,level_fct in enumerate(fct):
             print i_level,level_fct
             for fun in level_fct:
-                iep = self.predictor.iep(img_data, level_fct, lvl)
-                window_pred = self.predict_window(img_data, fun[1])
-                loss += (iep - window_pred) ** 2
-        return loss + self.alpha * math.sqrt(np.dot(self.w,self.w))
+                update += 
+        return update + 2 * self.alpha * self.w, fct
