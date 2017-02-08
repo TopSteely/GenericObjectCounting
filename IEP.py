@@ -40,7 +40,6 @@ class IEP:
                 else:
                     print 'wrong symbol 0', fun[0]
                     exit()
-            print iep
             raw_input()
             return iep, function
         else:

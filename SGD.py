@@ -272,7 +272,7 @@ class SGD:
                 img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features, True)
             else:
                 img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
-            te_loss_temp[0:self.prune_tree_levels] += self.loss_per_level(img_data)
+            te_loss_temp[0:self.prune_tree_levels] += self.loss_per_level(img_data).reshape(self.prune_tree_levels,)
             te_loss_temp[self.prune_tree_levels] += self.loss(img_data)
         return tra_loss_temp/len(self.load.category_train), te_loss_temp/len(self.load.category_val)
         
@@ -311,7 +311,6 @@ class SGD:
                     self.method(img_data, temp)
                 else:
                     upd, fct = self.method(img_data, temp)
-                    print 'creating', fct
                     self.w_update += upd
                     self.functions[img_nr] = fct
             self.samples_seen += 1
