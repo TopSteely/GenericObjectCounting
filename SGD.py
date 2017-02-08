@@ -88,9 +88,11 @@ class SGD:
         level_preds, _ = self.predictor.get_iep_levels(img_data, [])
         return np.min(np.array(level_preds) - img_data.y)**2 + self.alpha * math.sqrt(np.dot(self.w,self.w))
 
-    def loss_new(self, img_data, fct):
-        #for fun in fct:
-#            fun[1]
+    def loss_new(self, img_data):
+        fct = self.functions[img_data.img_nr]
+        for level_fct in fct:
+            #for fun in level_fct:
+    #            fun[1]
         level_preds, _ = self.predictor.get_iep_levels(img_data, [])
         return (np.array(level_preds) - img_data.y)**2 + self.alpha * math.sqrt(np.dot(self.w,self.w))
         
@@ -214,7 +216,7 @@ class SGD:
             print self.predict(img_data), img_data.y, abs(self.predict(img_data) - img_data.y), error
             error += abs(self.predict(img_data) - img_data.y).reshape(-1,)
             if img_data.y > 0:
-                non_zero_error += img_loss
+                non_zero_error += img_loss.reshape(-1,)
                 n_non_zero += 1
             if debug:
                 #skl_error += (self.sgd.predict(img_data.X[img_data.levels[0][0]].reshape(1, -1)) - img_data.y)**2
