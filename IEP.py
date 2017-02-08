@@ -31,7 +31,6 @@ class IEP:
 #                print 'root: ', sets[0], (X[sets[0]]==0).sum(), self.w.sum(), len(self.w)
             return np.dot(self.w,X[sets[0]]), function
         elif function != []:
-            print sets, function
             for fun in function:
                 if '+' in fun[0]:
                     iep += np.dot(self.w,X[fun[1]])
@@ -40,7 +39,6 @@ class IEP:
                 else:
                     print 'wrong symbol 0', fun[0]
                     exit()
-            raw_input()
             return iep, function
         else:
             level_coords = []
