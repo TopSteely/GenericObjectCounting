@@ -318,7 +318,6 @@ class SGD:
                     self.method(img_data, temp)
                 else:
                     upd, fct = self.method(img_data, temp)
-                    print upd, self.update
                     if self.version == 'multi':
                         self.w_update += upd
                     else:
@@ -329,14 +328,14 @@ class SGD:
                 to_fit = img_data.X[img_data.levels[0][0]].reshape(1, -1)
                 self.sgd.partial_fit(to_fit,[img_data.y])
             if (i_img_nr + 1)%self.batch_size == 0:
-                self.update()
+                self.update_self()
                 if debug:
                     tr_loss, te_loss = self.loss_per_level_all(instances, to)
                     train_losses = np.concatenate((train_losses,tr_loss.reshape(-1,1)), axis=1)
                     test_losses = np.concatenate((test_losses,te_loss.reshape(-1,1)), axis=1)
         if (i_img_nr + 1)%self.batch_size != 0:
             if self.version!='old':
-                self.update()
+                self.update_self()
             if debug:
                 tr_loss, te_loss = self.loss_per_level_all(instances, to)
                 train_losses = np.concatenate((train_losses,tr_loss.reshape(-1,1)), axis=1)
@@ -344,7 +343,7 @@ class SGD:
         if debug:
     	   return train_losses, test_losses
         
-    def update(self):
+    def update_self(self):
         if self.version == 'multi':
             self.w_multi -= (self.eta * self.w_update)
             self.w_update = np.zeros((self.prune_tree_levels,self.n_features))
