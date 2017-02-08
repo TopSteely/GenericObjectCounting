@@ -89,12 +89,15 @@ class SGD:
         return np.min(np.array(level_preds) - img_data.y)**2 + self.alpha * math.sqrt(np.dot(self.w,self.w))
 
     def loss_new(self, img_data):
+        loss = 0.0
         fct = self.functions[img_data.img_nr]
-        for level_fct in fct:
+        for i_level,level_fct in enumerate(fct):
+            print i_level,level_fct
             for fun in level_fct:
-                print fun[1]
-        level_preds, _ = self.predictor.get_iep_levels(img_data, [])
-        return (np.array(level_preds) - img_data.y)**2 + self.alpha * math.sqrt(np.dot(self.w,self.w))
+                iep = self.predictor.iep(img_data, level_fct, lvl)
+                window_pred = self.predict_window(img_data, fun[1])
+                loss += (iep - window_pred) ** 2
+        return loss + self.alpha * math.sqrt(np.dot(self.w,self.w))
         
     def loss_mean(self, img_data):
         level_preds, _ = self.predictor.get_iep_levels(img_data, [])
@@ -128,6 +131,9 @@ class SGD:
                 for missing in range(self.prune_tree_levels - len(level_preds)):
                     level_preds.append(level_preds[-1])
         return (np.array(level_preds) - img_data.y)**2 + self.alpha * math.sqrt(np.dot(self.w,self.w))
+
+    def predict_window(self, img_data, ind):
+        return np.dot(self.w * img_data.X[ind])
         
     def predict_mean(self, img_data):
         level_preds, _ = self.predictor.get_iep_levels(img_data, [])
