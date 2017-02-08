@@ -368,6 +368,7 @@ class SGD:
         iep_levels, _ = self.learner.get_iep_levels(img_data, functions)
         #might be axis=0?
         print iep_levels, np.array(level_preds) - img_data.y
+        print (np.array(level_preds) - img_data.y).shape, iep_levels.shape
         print np.array(np.array(level_preds) - img_data.y) * iep_levels
         return 2 * np.sum((np.array(level_preds) - img_data.y) * iep_levels, axis=0) + 2 * self.alpha * self.w, functions
 
@@ -426,6 +427,7 @@ class SGD:
 
         for i_level,level_fct in enumerate(fct):
             print i_level,level_fct
+            update += iep_levels[i_level]
             for fun in level_fct:
                 update -= img_data.X[fun[1]]
         return update + 2 * self.alpha * self.w, fct
