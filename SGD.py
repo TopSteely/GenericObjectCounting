@@ -19,7 +19,7 @@ class SGD:
         self.n_features = num_features
         self.w = np.zeros(self.n_features)#0.1 * np.random.rand(self.n_features)
         self.predictor = IEP.IEP(self.w, 'prediction')
-        self.update = np.zeros(self.n_features)
+        self.w_update = np.zeros(self.n_features)
         self.learner = IEP.IEP(1, 'learning')
         self.dataset = dataset
         self.load = Input.Input(dataset, category, prune_tree_levels)
@@ -320,7 +320,7 @@ class SGD:
                     if self.version == 'multi':
                         self.w_update += upd
                     else:
-                        self.update += upd
+                        self.w_update += upd
                     self.functions[img_nr] = fct
             self.samples_seen += 1
             if self.prune_tree_levels == 1:
@@ -347,8 +347,8 @@ class SGD:
             self.w_multi -= (self.eta * self.w_update)
             self.w_update = np.zeros((self.prune_tree_levels,self.n_features))
         else:
-            self.w -= (self.eta * self.update)
-            self.update = np.zeros(self.n_features)
+            self.w -= (self.eta * self.w_update)
+            self.w_update = np.zeros(self.n_features)
         self.eta = self.eta * (1+self.eta0*self.gamma*self.samples_seen)**-1
         self.predictor = IEP.IEP(self.w, 'prediction')
         
