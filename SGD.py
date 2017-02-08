@@ -254,6 +254,7 @@ class SGD:
                 img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features, True)
             else:
                 img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
+            print self.loss_per_level(img_data), self.loss_per_level(img_data).shape
             tra_loss_temp[0:self.prune_tree_levels] += self.loss_per_level(img_data)
             tra_loss_temp[self.prune_tree_levels] += self.loss(img_data)
         for img_nr in validation_ims:
@@ -356,6 +357,7 @@ class SGD:
             predictor = IEP.IEP(self.w_multi[level], 'prediction')
             level_pred, _ = predictor.iep(img_data, [], level)
             iep_level, _ = self.learner.iep(img_data, functions, level)
+            print level, iep_level, img_data.y
             if len(img_data.levels) >= 10:
                 print level, np.min(iep_level), np.max(iep_level)
             #a = (2 * (level_pred - img_data.y) * iep_level + 2 * self.alpha * self.w_multi[level])
