@@ -348,7 +348,7 @@ class SGD:
             self.w_multi -= (self.eta * self.w_update)
             self.w_update = np.zeros((self.prune_tree_levels,self.n_features))
         else:
-            self.w -= (self.eta * upd_lvl)
+            self.w -= (self.eta * self.update)
             self.update = np.zeros(self.n_features)
         self.eta = self.eta * (1+self.eta0*self.gamma*self.samples_seen)**-1
         self.predictor = IEP.IEP(self.w, 'prediction')
