@@ -263,8 +263,8 @@ class SGD:
                 img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features, True)
             else:
                 img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
-            print self.loss_per_level(img_data).shape, tra_loss_temp[0:self.prune_tree_levels].shape, self.loss_per_level(img_data).reshape(1,-1).shape
-            tra_loss_temp[0:self.prune_tree_levels] += self.loss_per_level(img_data).reshape(1,-1)
+            #print self.loss_per_level(img_data).shape, tra_loss_temp[0:self.prune_tree_levels].shape, self.loss_per_level(img_data).reshape(1,-1).shape
+            tra_loss_temp[0:self.prune_tree_levels] += self.loss_per_level(img_data).reshape(0:self.prune_tree_levels,)
             tra_loss_temp[self.prune_tree_levels] += self.loss(img_data)
         for img_nr in validation_ims:
             if self.n_features == 1:
@@ -288,6 +288,7 @@ class SGD:
         print 'Len: ', len(training_data)
         random.shuffle(subset)
         for i_img_nr, img_nr in enumerate(subset):
+            print 'img', img_nr
             start = time.time()
             if self.dataset == 'blob':
                 img_data = self.blobtraindata[i_img_nr]
@@ -300,6 +301,7 @@ class SGD:
                     assert len(img_data.levels) >= self.prune_tree_levels
             if img_nr in self.functions:
                 img_functions = self.functions[img_nr]
+                print 'getting fct ', img_functions
                 upd,_ = self.method(img_data, img_functions)
                 self.w_update += upd
             else:
@@ -308,6 +310,7 @@ class SGD:
                     self.method(img_data, temp)
                 else:
                     upd, fct = self.method(img_data, temp)
+                    print 'creating', fct
                     self.w_update += upd
                     self.functions[img_nr] = fct
             self.samples_seen += 1
