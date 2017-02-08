@@ -16,6 +16,7 @@ class IEP:
     #returns the cardinality of the union of sets
     def iep(self, Data, function, level):
         X = Data.X
+        print "X in IEP: ", X
         sets = Data.levels[level]
         print sets
         coords = Data.boxes
