@@ -18,9 +18,9 @@ def main():
 
     learn_mode = 'category'
 
-    pred_mode = 'multi'
+    pred_mode = 'mean'
 
-    debug = True
+    debug = False
 
     batch_size = 5
 
