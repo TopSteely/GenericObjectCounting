@@ -90,9 +90,12 @@ class SGD:
 
     def loss_new(self, img_data):
         loss = 0.0
-        fct = self.functions[img_data.img_nr]
+        if img_data.img_nr in self.functions:
+            fct = self.functions[img_data.img_nr]
+        else:
+            _,fct = self.learner.get_iep_levels(img_data, {})
         for i_level,level_fct in enumerate(fct):
-            print i_level,level_fct
+            print 'in loss', i_level,level_fct
             for fun in level_fct:
                 iep = self.predictor.iep(img_data, level_fct, lvl)
                 window_pred = self.predict_window(img_data, fun[1])
@@ -412,14 +415,16 @@ class SGD:
 
         # if function is empty run iep first, just to get function -> we need the patches for each level to learn
         if fct == {}:
-            iep_levels,fctions = self.learner.get_iep_levels(img_data, {})
-            fct = fctions
+            print "fct == {}"
+            iep_levels,fct = self.learner.get_iep_levels(img_data, {})
+            
             need_ieps = False
 
         if need_ieps:
-            iep_levels,_ = self.learner.get_iep_levels(img_data, fctions)
+            iep_levels,_ = self.learner.get_iep_levels(img_data, fct)
                 
 
+        print fct
 
         for i_level,level_fct in enumerate(fct):
             print i_level,level_fct, level_preds[i_level]
