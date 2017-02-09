@@ -423,11 +423,7 @@ class SGD:
             iep_levels,_ = self.learner.get_iep_levels(img_data, fct)
                 
 
-
-        print fct
-        print fct.values()
-
-        for i_level,level_fct in enumerate(fct):
+        for i_level,level_fct in enumerate(fct.values()):
             print i_level,level_fct, level_preds[i_level]
             if i_level==0:
                 update += (self.predict_window(img_data, 0) + level_preds[0] - img_data.y) * (iep_levels[0] + img_data.X[0])
