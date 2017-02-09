@@ -404,6 +404,7 @@ class SGD:
         return np.sum(2 * (np.array(level_preds) - img_data.y).reshape(-1,1) * iep_levels + 2 * self.alpha * self.w, axis=0), functions
 
     def learn_new(self, img_data):
+        level_preds = self.predict_ind(img_data)
         need_ieps = True
         update = np.zeros(self.n_features)
         fct = self.functions[img_data.img_nr]
@@ -419,9 +420,10 @@ class SGD:
             iep_levels,_ = self.learner.get_iep_levels(img_data, fctions)
                 
 
+
         for i_level,level_fct in enumerate(fct):
-            print i_level,level_fct
-            update += iep_levels[i_level]
+            print i_level,level_fct, level_preds[i_level]
+            #update += iep_levels[i_level]
             for fun in level_fct:
-                update -= img_data.X[fun[1]]
-        return update + 2 * self.alpha * self.w, fct
+                update += (self.predict_window(img_data, fun[1]) + level_preds[i_level] - img_data.y) * (iep_levels[i_level] + img_data.X[fun[1]])
+        return 2 * update + 2 * self.alpha * self.w, fct

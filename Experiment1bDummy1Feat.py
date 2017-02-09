@@ -18,15 +18,15 @@ def main():
 
     learn_mode = 'category'
 
-    pred_mode = 'mean'
+    pred_mode = 'new'
 
-    debug = False
+    debug = True
 
     batch_size = 5
 
-    epochs = 5
+    epochs = 1
 
-    subsamples = 150
+    subsamples = 10
 
     feature_size = 1
 
