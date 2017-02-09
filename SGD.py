@@ -139,11 +139,11 @@ class SGD:
         return np.dot(self.w * img_data.X[ind])
         
     def predict_mean(self, img_data):
-        level_preds, _ = self.predictor.get_iep_levels(img_data, [])
+        level_preds, _ = self.predictor.get_iep_levels(img_data, {})
         return np.mean(level_preds)
         
     def predict_max(self, img_data):
-        level_preds, _ = self.predictor.get_iep_levels(img_data, [])
+        level_preds, _ = self.predictor.get_iep_levels(img_data, {})
         return np.max(level_preds)
 
     def predict_old(self, img_data, level):
@@ -151,7 +151,7 @@ class SGD:
         return level_pred
 
     def predict_ind(self, img_data):
-        level_preds, _ = self.predictor.get_iep_levels(img_data, [])
+        level_preds, _ = self.predictor.get_iep_levels(img_data, {})
         return level_preds
 
     def predict_multi(self, img_data):
