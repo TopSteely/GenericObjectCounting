@@ -128,7 +128,7 @@ class SGD:
                     level_pred, _ = predictor.iep(img_data, [], lvl)
                 level_preds.append(level_pred)
         else:
-            level_preds, _ = self.predictor.get_iep_levels(img_data, [])
+            level_preds, _ = self.predictor.get_iep_levels(img_data, {})
             # for images with less levels than prune_tree_levels, just append the last level
             if len(level_preds) < self.prune_tree_levels:
                 for missing in range(self.prune_tree_levels - len(level_preds)):
@@ -424,11 +424,9 @@ class SGD:
                 
 
         for i_level,level_fct in enumerate(fct.values()):
-            print i_level,level_fct, level_preds[i_level]
             if i_level==0:
                 update += (self.predict_window(img_data, 0) + level_preds[0] - img_data.y) * (iep_levels[0] + img_data.X[0])
             else:
                 for fun in level_fct:
-                    print fun
                     update += (self.predict_window(img_data, fun[1]) + level_preds[i_level] - img_data.y) * (iep_levels[i_level] + img_data.X[fun[1]])
         return 2 * update + 2 * self.alpha * self.w, fct
