@@ -411,11 +411,10 @@ class SGD:
         need_ieps = True
         update = np.zeros(self.n_features)
         fct = function
-        print fct
+
 
         # if function is empty run iep first, just to get function -> we need the patches for each level to learn
         if fct == {}:
-            print "fct == {}"
             iep_levels,fct = self.learner.get_iep_levels(img_data, {})
             
             need_ieps = False
@@ -424,11 +423,13 @@ class SGD:
             iep_levels,_ = self.learner.get_iep_levels(img_data, fct)
                 
 
-        print fct
 
         for i_level,level_fct in enumerate(fct):
             print i_level,level_fct, level_preds[i_level]
-            #update += iep_levels[i_level]
-            for fun in level_fct:
-                update += (self.predict_window(img_data, fun[1]) + level_preds[i_level] - img_data.y) * (iep_levels[i_level] + img_data.X[fun[1]])
+            if i_level==0:
+                update += (self.predict_window(img_data, 0) + level_preds[0] - img_data.y) * (iep_levels[0] + img_data.X[0])
+            else:
+                for fun in level_fct.values():
+                    print fun
+                    update += (self.predict_window(img_data, fun[1]) + level_preds[i_level] - img_data.y) * (iep_levels[i_level] + img_data.X[fun[1]])
         return 2 * update + 2 * self.alpha * self.w, fct
