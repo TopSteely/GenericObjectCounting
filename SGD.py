@@ -403,11 +403,11 @@ class SGD:
         iep_levels, _ = self.learner.get_iep_levels(img_data, [])
         return np.sum(2 * (np.array(level_preds) - img_data.y).reshape(-1,1) * iep_levels + 2 * self.alpha * self.w, axis=0), functions
 
-    def learn_new(self, img_data):
+    def learn_new(self, img_data, function):
         level_preds = self.predict_ind(img_data)
         need_ieps = True
         update = np.zeros(self.n_features)
-        fct = self.functions[img_data.img_nr]
+        fct = function
         print fct
 
         # if function is empty run iep first, just to get function -> we need the patches for each level to learn
