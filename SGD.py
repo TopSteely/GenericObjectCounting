@@ -424,12 +424,15 @@ class SGD:
                 
 
 
+        print fct
+        print fct.values()
+
         for i_level,level_fct in enumerate(fct):
             print i_level,level_fct, level_preds[i_level]
             if i_level==0:
                 update += (self.predict_window(img_data, 0) + level_preds[0] - img_data.y) * (iep_levels[0] + img_data.X[0])
             else:
-                for fun in level_fct.values():
+                for fun in level_fct:
                     print fun
                     update += (self.predict_window(img_data, fun[1]) + level_preds[i_level] - img_data.y) * (iep_levels[i_level] + img_data.X[fun[1]])
         return 2 * update + 2 * self.alpha * self.w, fct
