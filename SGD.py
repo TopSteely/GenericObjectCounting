@@ -136,7 +136,7 @@ class SGD:
         return (np.array(level_preds) - img_data.y)**2 + self.alpha * math.sqrt(np.dot(self.w,self.w))
 
     def predict_window(self, img_data, ind):
-        return np.dot(self.w * img_data.X[ind])
+        return np.dot(self.w, img_data.X[ind])
         
     def predict_mean(self, img_data):
         level_preds, _ = self.predictor.get_iep_levels(img_data, {})
