@@ -92,8 +92,10 @@ def main():
                 elif learn_mode == 'category':
                    preds_d_d, y_d_d = sgd_dennis.evaluate('val_cat', subsamples, debug)
                 elif learn_mode == 'category_levels':
-                   preds_d_d, y_d_d = sgd_dennis.evaluate('val_category_levels', subsamples, debug)
-                   preds_d_t, y_d_t = sgd_dennis.evaluate('train_category_levels', subsamples, debug)
+                    print 'val_category_levels'
+                    preds_d_d, y_d_d = sgd_dennis.evaluate('val_category_levels', subsamples, debug)
+                    print 'train_category_levels'
+                    preds_d_t, y_d_t = sgd_dennis.evaluate('train_category_levels', subsamples, debug)
 
 
                 output_dennis.plot_preds(preds_d_d, y_d_d, al_i, 'val_category_levels')
