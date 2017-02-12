@@ -99,7 +99,7 @@ class SGD:
             for fun in level_fct:
                 iep = self.predictor.iep(img_data, level_fct, i_level)
                 window_pred = self.predict_window(img_data, fun[1])
-                loss += (img_data.y - iep - window_pred) ** 2
+                loss += (img_data.y - iep[0] - window_pred) ** 2
         return loss + self.alpha * math.sqrt(np.dot(self.w,self.w))
         
     def loss_mean(self, img_data):
