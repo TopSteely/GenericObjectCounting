@@ -18,7 +18,7 @@ def main():
 
     learn_mode = 'category'
 
-    pred_mode = 'new'
+    pred_mode = 'mean'
 
     debug = True
 

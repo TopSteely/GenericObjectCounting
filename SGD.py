@@ -157,7 +157,7 @@ class SGD:
         preds = []
         for level in range(self.prune_tree_levels):
             if level >= len(img_data.levels):
-                print 'cannot evaluate, using last possible level'
+                #print 'cannot evaluate, using last possible level'
                 level_pred = preds[-1]
             else:
                 predictor = IEP.IEP(self.w_multi[level], 'prediction')
@@ -237,6 +237,7 @@ class SGD:
                 y_d.append(img_data.y)
                 #preds_skl.append(self.sgd.predict(img_data.X[img_data.levels[0][0]].reshape(1, -1)))
         if debug:
+            print len(preds_d)
             return preds_d, y_d#,  preds_skl
         return squared_error/len(numbers), error / len(numbers), non_zero_error / n_non_zero#skl_error/len(numbers),, self.eta
         
