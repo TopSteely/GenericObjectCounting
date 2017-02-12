@@ -95,7 +95,6 @@ class SGD:
         else:
             _,fct = self.learner.get_iep_levels(img_data, {})
         for i_level,level_fct in enumerate(fct.values()):
-            print 'in loss', i_level,level_fct
             for fun in level_fct:
                 iep = self.predictor.iep(img_data, level_fct, i_level)
                 window_pred = self.predict_window(img_data, fun[1])

@@ -18,7 +18,7 @@ def main():
 
     learn_mode = 'category'
 
-    pred_mode = 'new'
+    pred_mode = 'mean'
 
     debug = True
 
@@ -37,7 +37,7 @@ def main():
         #load_pascal = Input.Input('pascal',category)
         load_dennis = Input.Input('dennis',category,tree_level_size)
         #output_pascal = Output.Output('pascal_max', category, tree_level_size, '1b')
-        output_dennis = Output.Output('dennis_%s'%(pred_mode), category, tree_level_size, '1b')
+        output_dennis = Output.Output('1feat_%s'%(pred_mode), category, tree_level_size, '1b')
         
             
         # learn SGD
@@ -94,6 +94,8 @@ def main():
                 elif learn_mode == 'category_levels':
                    preds_d_d, y_d_d = sgd_dennis.evaluate('val_category_levels', subsamples, debug)
                    preds_d_t, y_d_t = sgd_dennis.evaluate('train_category_levels', subsamples, debug)
+
+                
                 output_dennis.plot_preds(preds_d_d, y_d_d, al_i, 'val_category_levels')
                 output_dennis.plot_preds(preds_d_t, y_d_t, al_i, 'train_category_levels')
             #output_dennis.save(mse, ae, mse_non_zero, sgd_dennis, 'ind', al_i, learn_mode)
