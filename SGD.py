@@ -102,7 +102,7 @@ class SGD:
         return loss + self.alpha * math.sqrt(np.dot(self.w,self.w))
         
     def loss_mean(self, img_data):
-        level_preds, _ = self.predictor.get_iep_levels(img_data, [])
+        level_preds, _ = self.predictor.get_iep_levels(img_data, {})
         return np.mean(np.array(level_preds) - img_data.y)**2 + self.alpha * math.sqrt(np.dot(self.w,self.w))
 
     def loss_multi(self, img_data):
