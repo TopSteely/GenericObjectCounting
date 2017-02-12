@@ -18,7 +18,7 @@ def main():
 
     learn_mode = 'category'
 
-    pred_mode = 'mean'
+    pred_mode = 'new'
 
     debug = True
 
@@ -95,7 +95,7 @@ def main():
                    preds_d_d, y_d_d = sgd_dennis.evaluate('val_category_levels', subsamples, debug)
                    preds_d_t, y_d_t = sgd_dennis.evaluate('train_category_levels', subsamples, debug)
 
-                
+
                 output_dennis.plot_preds(preds_d_d, y_d_d, al_i, 'val_category_levels')
                 output_dennis.plot_preds(preds_d_t, y_d_t, al_i, 'train_category_levels')
             #output_dennis.save(mse, ae, mse_non_zero, sgd_dennis, 'ind', al_i, learn_mode)
