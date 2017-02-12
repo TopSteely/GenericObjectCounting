@@ -188,7 +188,7 @@ class SGD:
             preds_skl = []
         if mode == 'train_cat':
             numbers = self.load.category_train[:to]
-        if mode == 'train_all':
+        elif mode == 'train_all':
             numbers = self.load.training_numbers[:to]
         elif mode == 'test':
             numbers = self.load.test_numbers[:to]
@@ -206,6 +206,8 @@ class SGD:
             numbers = self.load.category_val_with_levels[:to]
         elif mode == 'train_category_levels':
             numbers = self.load.category_train_with_levels[:to]
+        else:
+            print 'wrong mode: ', mode
 
         print 'evaluate Len: ', numbers
 
