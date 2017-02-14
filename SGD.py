@@ -377,7 +377,7 @@ class SGD:
                     img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
 
                 #todo: only append information we need?
-                for lvl in self.prune_tree_levels:
+                for lvl in range(self.prune_tree_levels):
                     x.append(img_data.X)
                     y.append(img_data.y)
                     alpha.append(self.alpha)

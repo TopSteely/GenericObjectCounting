@@ -24,6 +24,10 @@ for epoch in range(5):
 	level_preds.append(np.dot(w, x[1]) + np.dot(w, x[2]))
 	for i_level,level_fct in enumerate(fct):
 	    for fun in level_fct:
+	    	a = (np.dot(w, x[fun[1]]) + level_preds[i_level] - y)
+	    	print a
+	    	b = (iep_with_func(w,x,level_fct) + x[fun[1]])
+	    	print b
 	        w_update += (np.dot(w, x[fun[1]]) + level_preds[i_level] - y) * (iep_with_func(w,x,level_fct) + x[fun[1]])
 	w_update += 2 * w_update + 2 * alpha * w, fct
 
