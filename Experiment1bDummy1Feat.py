@@ -18,21 +18,21 @@ def main():
 
     learn_mode = 'category'
 
-    pred_mode = 'mean'
+    pred_mode = 'new'
 
     debug = True
 
     batch_size = 5
 
-    epochs = 4
+    epochs = 1
 
-    subsamples = 50
+    subsamples = 10
 
     feature_size = 1
 
     eta = math.pow(10,-3)
 
-    for tree_level_size in range(3,4):
+    for tree_level_size in range(2,3):
         #initialize
         print 'initializing', tree_level_size
         #sgd = SGD.SGD('max', category, tree_level_size, batch_size, math.pow(10,-4), 0.003, math.pow(10,-5))
@@ -59,7 +59,7 @@ def main():
                         validation_loss = np.concatenate((validation_loss,te_l), axis=1)#.reshape(-1,1)
                         print training_loss
                     else:
-                        sgd_dennis.learn(learn_mode)
+                        sgd_dennis.learn_scipy(learn_mode)
                     #print tr_l, te_l
                     
                     #training_loss.extend(tr_l)
