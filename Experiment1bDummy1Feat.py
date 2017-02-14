@@ -24,9 +24,9 @@ def main():
 
     batch_size = 5
 
-    epochs = 1
+    epochs = 4
 
-    subsamples = 10
+    subsamples = 50
 
     feature_size = 1
 

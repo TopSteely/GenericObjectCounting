@@ -209,8 +209,6 @@ class SGD:
         else:
             print 'wrong mode: ', mode
 
-        print 'evaluate Len: ', numbers
-
         for i_img_nr,img_nr in enumerate(numbers):
             if self.dataset == 'blob':
                 img_data = b_data[i_img_nr]
@@ -239,7 +237,6 @@ class SGD:
                 y_d.append(img_data.y)
                 #preds_skl.append(self.sgd.predict(img_data.X[img_data.levels[0][0]].reshape(1, -1)))
         if debug:
-            print len(preds_d)
             return preds_d, y_d#,  preds_skl
         return squared_error/len(numbers), error / len(numbers), non_zero_error / n_non_zero#skl_error/len(numbers),, self.eta
         
