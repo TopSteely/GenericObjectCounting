@@ -54,7 +54,7 @@ def main():
                     #print epoch
                     #tr_l, te_l = sgd_dennis.learn('categories')
                     if debug:
-                        tr_l, te_l = sgd_dennis.learn(learn_mode, subsamples, debug)
+                        tr_l, te_l = sgd_dennis.learn_scipy(learn_mode, subsamples, debug)
                         training_loss = np.concatenate((training_loss,tr_l), axis=1)#.reshape(-1,1)
                         validation_loss = np.concatenate((validation_loss,te_l), axis=1)#.reshape(-1,1)
                         print training_loss
