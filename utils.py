@@ -15,7 +15,7 @@ def iep_with_func(w, X, function):
         else:
             print 'wrong symbol 0', fun[0]
             exit()
-    return iep, function
+    return iep
 
 
 def bool_rect_intersect(A, B):
