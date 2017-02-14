@@ -33,10 +33,10 @@ def loss_new_scipy(w, x, y, alpha, level_fct):
 for epoch in range(5):
 	for i_level,level_fct in enumerate(fct):
 		original_function = level_fct
-	    for fun in level_fct:
-	    	copy = original_function
-	    	copy.remove(fun)
-	        w_update += (np.dot(w, x[fun[1]]) + iep_with_func(w,x,copy) - y) * (iep_with_func(1.0,x,copy) + x[fun[1]])
+		for fun in level_fct:
+			copy = original_function
+			copy.remove(fun)
+			w_update += (np.dot(w, x[fun[1]]) + iep_with_func(w,x,copy) - y) * (iep_with_func(1.0,x,copy) + x[fun[1]])
 	w_update += 2 * w_update + 2 * alpha * w
 
 	w -= 0.01 * w_update
