@@ -7,6 +7,7 @@ import numpy as np
 
 def loss_new_scipy(w, x, y, alpha, level_fct):
         loss = 0.0
+        print level_fct
         iep = iep_with_func(w,x,level_fct)
         for fun in level_fct:
             window_pred = np.dot(w, x[fun[1]])
