@@ -91,10 +91,9 @@ def main():
                     preds_d_d, y_d_d = sgd_dennis.evaluate('val_all', subsamples, debug)
                 elif learn_mode == 'category':
                    preds_d_d, y_d_d = sgd_dennis.evaluate('val_cat', subsamples, debug)
+                   preds_d_t, y_d_t = sgd_dennis.evaluate('train_cat', subsamples, debug)
                 elif learn_mode == 'category_levels':
-                    print 'val_category_levels'
                     preds_d_d, y_d_d = sgd_dennis.evaluate('val_category_levels', subsamples, debug)
-                    print 'train_category_levels'
                     preds_d_t, y_d_t = sgd_dennis.evaluate('train_category_levels', subsamples, debug)
 
 
