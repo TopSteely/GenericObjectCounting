@@ -100,17 +100,12 @@ class SGD:
                 loss += (img_data.y - iep[0] - window_pred) ** 2
         return loss + self.alpha * math.sqrt(np.dot(self.w,self.w))
 
-    def loss_new_scipy(w, x, y, alpha, fct):
+    def loss_new_scipy(w, x, y, alpha, level_fct):
         loss = 0.0
-        if img_data.img_nr in self.functions:
-            fct = self.functions[img_data.img_nr]
-        else:
-            _,fct = self.learner.get_iep_levels(img_data, {})
-        for i_level,level_fct in enumerate(fct.values()):
-            for fun in level_fct:
-                iep = iep_with_func(w, level_fct, i_level)
-                window_pred = np.dot(w, x[fun[1]])
-                loss += (y - iep[0] - window_pred) ** 2
+        iep = iep_with_func(w,x,level_fct)
+        for fun in level_fct:
+            window_pred = np.dot(w, x[fun[1]])
+            loss += (y - iep - window_pred) ** 2
         return loss + alpha * math.sqrt(np.dot(w,w))
         
     def loss_mean(self, img_data):
@@ -379,7 +374,7 @@ class SGD:
                     img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
                 data_imgs.append(img_data)
         print 'starting minimizing'
-        res = minimize(loss_new, data_imgs)
+        res = minimize(loss_new_scipy, data_imgs)
         print res
         if debug:
             tr_loss, te_loss = self.loss_per_level_all(instances, to)

@@ -30,7 +30,9 @@ def main():
 
     feature_size = 1
 
-    for tree_level_size in range(5,6):
+    eta = math.pow(10,-3)
+
+    for tree_level_size in range(3,4):
         #initialize
         print 'initializing', tree_level_size
         #sgd = SGD.SGD('max', category, tree_level_size, batch_size, math.pow(10,-4), 0.003, math.pow(10,-5))
@@ -46,7 +48,7 @@ def main():
                 training_loss = np.array([], dtype=np.int64).reshape(tree_level_size+1,0)
                 validation_loss = np.array([], dtype=np.int64).reshape(tree_level_size+1,0)
                 #sgd_pascal = SGD.SGD('pascal', 'max', category, tree_level_size, batch_size, eta_i, gamma_i, al_i)
-                sgd_dennis = SGD.SGD('dennis', pred_mode, category, tree_level_size, batch_size, math.pow(10,-5), gamma_i, al_i, feature_size)
+                sgd_dennis = SGD.SGD('dennis', pred_mode, category, tree_level_size, batch_size, eta, gamma_i, al_i, feature_size)
                 print al_i, gamma_i
                 for epoch in range(epochs):
                     #print epoch
@@ -55,6 +57,7 @@ def main():
                         tr_l, te_l = sgd_dennis.learn(learn_mode, subsamples, debug)
                         training_loss = np.concatenate((training_loss,tr_l), axis=1)#.reshape(-1,1)
                         validation_loss = np.concatenate((validation_loss,te_l), axis=1)#.reshape(-1,1)
+                        print training_loss
                     else:
                         sgd_dennis.learn(learn_mode)
                     #print tr_l, te_l
@@ -73,7 +76,7 @@ def main():
                     #output_pascal.plot_preds(preds_d_p, preds_skl_p, y_d_p, al_i)
                     #output_dennis.plot_preds(preds_d_d, preds_skl_d, y_d_d, al_i)
                 if debug:
-                    output_dennis.plot_train_val_loss(training_loss, validation_loss, math.pow(10,-5), al_i)
+                    output_dennis.plot_train_val_loss(training_loss, validation_loss, eta, al_i)
             if not debug:
                 if learn_mode == 'all':
                     mse,ae, mse_non_zero = sgd_dennis.evaluate('val_all')
@@ -90,11 +93,19 @@ def main():
                 if learn_mode == 'all':
                     preds_d_d, y_d_d = sgd_dennis.evaluate('val_all', subsamples, debug)
                 elif learn_mode == 'category':
-                   preds_d_d, y_d_d = sgd_dennis.evaluate('val_cat', subsamples, debug)
-                   preds_d_t, y_d_t = sgd_dennis.evaluate('train_cat', subsamples, debug)
+                    preds_d_d, y_d_d = sgd_dennis.evaluate('val_cat', subsamples, debug)
+                    preds_d_t, y_d_t = sgd_dennis.evaluate('train_cat', subsamples, debug)
+                    mse,ae, mse_non_zero = sgd_dennis.evaluate('val_cat',subsamples)
+                    mse_tr,ae_tr, mse_non_zero_tr = sgd_dennis.evaluate('train_cat',subsamples)
+                    print "Eval loss train: ", al_i, mse_tr
+                    print "Eval loss val: ", al_i, mse
                 elif learn_mode == 'category_levels':
                     preds_d_d, y_d_d = sgd_dennis.evaluate('val_category_levels', subsamples, debug)
                     preds_d_t, y_d_t = sgd_dennis.evaluate('train_category_levels', subsamples, debug)
+                    mse,ae, mse_non_zero = sgd_dennis.evaluate('val_category_levels',subsamples)
+                    mse_tr,ae_tr, mse_non_zero_tr = sgd_dennis.evaluate('train_category_levels',subsamples)
+                    print "Eval loss train: ", al_i, mse_tr
+                    print "Eval loss val: ", al_i, mse
 
 
                 output_dennis.plot_preds(preds_d_d, y_d_d, al_i, 'val_category_levels')

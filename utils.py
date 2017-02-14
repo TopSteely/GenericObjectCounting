@@ -5,32 +5,17 @@ from itertools import chain, islice
 import numpy as np
 
 
-def iep_with_func(w, Data, function, level):
-        X = Data.X
-        sets = Data.levels[level]
-        coords = Data.boxes
-        if np.all(w == 1):
-            iep = np.zeros(Data.num_features)
+def iep_with_func(w, X, function):
+    iep = 0
+    for fun in function:
+        if '+' in fun[0]:
+            iep += np.dot(w,X[fun[1]])
+        elif '-' in fun[0]:
+            iep -= np.dot(w,X[fun[1]])
         else:
-            iep = 0
-        if len(sets) == 1:
-            #if function == []:
-                #function.append(['+',sets[0]])
-#            if np.all(self.w == 1):
-#                print 'root: ', sets[0], (X[sets[0]]==0).sum(), self.w
-#            else:
-#                print 'root: ', sets[0], (X[sets[0]]==0).sum(), self.w.sum(), len(self.w)
-            return np.dot(w,X[sets[0]]), function
-        elif function != []:
-            for fun in function:
-                if '+' in fun[0]:
-                    iep += np.dot(w,X[fun[1]])
-                elif '-' in fun[0]:
-                    iep -= np.dot(w,X[fun[1]])
-                else:
-                    print 'wrong symbol 0', fun[0]
-                    exit()
-            return iep, function
+            print 'wrong symbol 0', fun[0]
+            exit()
+    return iep, function
 
 
 def bool_rect_intersect(A, B):
