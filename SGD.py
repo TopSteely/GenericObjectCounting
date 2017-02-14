@@ -5,9 +5,9 @@ import Data
 import BlobData
 import random
 import time
-#from sklearn.preprocessing import MinMaxScaler
-from sklearn.linear_model import SGDRegressor
 import math
+from scipy.optimize import minimize
+from utils import iep_with_func
 
 
 
@@ -31,7 +31,6 @@ class SGD:
         self.alpha = alpha
         self.functions = {}
         self.scaler = None
-        self.sgd = SGDRegressor(eta0=eta, learning_rate='invscaling', shuffle=True, average=True, alpha=alpha)
         if mode == 'max':
             self.method = self.learn_max
             self.loss = self.loss_max
@@ -100,6 +99,19 @@ class SGD:
                 window_pred = self.predict_window(img_data, fun[1])
                 loss += (img_data.y - iep[0] - window_pred) ** 2
         return loss + self.alpha * math.sqrt(np.dot(self.w,self.w))
+
+    def loss_new_scipy(w, x, y, alpha, fct):
+        loss = 0.0
+        if img_data.img_nr in self.functions:
+            fct = self.functions[img_data.img_nr]
+        else:
+            _,fct = self.learner.get_iep_levels(img_data, {})
+        for i_level,level_fct in enumerate(fct.values()):
+            for fun in level_fct:
+                iep = iep_with_func(w, level_fct, i_level)
+                window_pred = np.dot(w, x[fun[1]])
+                loss += (y - iep[0] - window_pred) ** 2
+        return loss + alpha * math.sqrt(np.dot(w,w))
         
     def loss_mean(self, img_data):
         level_preds, _ = self.predictor.get_iep_levels(img_data, {})
@@ -296,7 +308,6 @@ class SGD:
         elif instances=='category_levels':
             training_data = self.load.category_train_with_levels
         subset = training_data[:to]
-        print 'Len: ', len(training_data)
         random.shuffle(subset)
         for i_img_nr, img_nr in enumerate(subset):
             start = time.time()
@@ -343,6 +354,39 @@ class SGD:
                 test_losses = np.concatenate((test_losses,te_loss.reshape(-1,1)), axis=1)
         if debug:
     	   return train_losses, test_losses
+
+
+    def learn_scipy(self, instances='all', to=-1, debug=False):
+        train_losses = np.array([], dtype=np.int64).reshape(self.prune_tree_levels+1,0)
+        test_losses = np.array([], dtype=np.int64).reshape(self.prune_tree_levels+1,0)
+        if instances=='all':
+            training_data = self.load.training_numbers
+        elif instances=='category':
+            training_data = self.load.category_train
+        elif instances=='category_levels':
+            training_data = self.load.category_train_with_levels
+        subset = training_data[:to]
+        random.shuffle(subset)
+        data_imgs = []
+        for i_img_nr, img_nr in enumerate(subset):
+            start = time.time()
+            if self.dataset == 'blob':
+                img_data = self.blobtraindata[i_img_nr]
+            else:
+                if self.n_features == 1:
+                    img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features, True)
+                else:
+                    img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
+                data_imgs.append(img_data)
+        print 'starting minimizing'
+        res = minimize(loss_new, data_imgs)
+        print res
+        if debug:
+            tr_loss, te_loss = self.loss_per_level_all(instances, to)
+            train_losses = np.concatenate((train_losses,tr_loss.reshape(-1,1)), axis=1)
+            test_losses = np.concatenate((test_losses,te_loss.reshape(-1,1)), axis=1)
+            return train_losses, test_losses
+
         
     def update_self(self):
         if self.version == 'multi':
