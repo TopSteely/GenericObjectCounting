@@ -7,7 +7,7 @@ import random
 import time
 import math
 from scipy.optimize import minimize
-from utils import iep_with_func
+from utils import iep_with_func, loss_new_scipy
 
 
 
@@ -99,14 +99,6 @@ class SGD:
                 window_pred = self.predict_window(img_data, fun[1])
                 loss += (img_data.y - iep[0] - window_pred) ** 2
         return loss + self.alpha * math.sqrt(np.dot(self.w,self.w))
-
-    def loss_new_scipy(w, x, y, alpha, level_fct):
-        loss = 0.0
-        iep = iep_with_func(w,x,level_fct)
-        for fun in level_fct:
-            window_pred = np.dot(w, x[fun[1]])
-            loss += (y - iep - window_pred) ** 2
-        return loss + alpha * math.sqrt(np.dot(w,w))
         
     def loss_mean(self, img_data):
         level_preds, _ = self.predictor.get_iep_levels(img_data, {})
@@ -384,7 +376,7 @@ class SGD:
                     _,fct = self.learner.get_iep_levels(img_data, {})
                     level_fcts.append(fct[lvl])
         print 'starting minimizing'
-        res = minimize(lambda w: loss_new_scipy(w, x, y, alpha, level_fcts),0.0)
+        res = minimize(lambda w: loss_new_scipy(w, x, y, alpha, level_fcts), 0.0)
         print res
         print res.w
         raw_input()
