@@ -384,7 +384,7 @@ class SGD:
                     _,fct = self.learner.get_iep_levels(img_data, {})
                     level_fcts.append(fct[lvl])
         print 'starting minimizing'
-        res = minimize(lambda w: loss_new_scipy(w, x, y, alpha, level_fcts))
+        res = minimize(lambda w: loss_new_scipy(w, x, y, alpha, level_fcts),0.0)
         print res
         print res.w
         raw_input()
