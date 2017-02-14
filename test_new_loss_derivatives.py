@@ -40,9 +40,8 @@ for epoch in range(5):
 	w_update = 0.0
 	loss = 0.0
 	for level_fct in fct:
-		print level_fct
 		loss += loss_new_scipy(w, x, y, alpha, level_fct)
-		print loss_new_scipy(w, x, y, alpha, level_fct)
+		print 'loss', loss_new_scipy(w, x, y, alpha, level_fct)
 	print 'Loss', epoch, loss
 	for level_fct in fct:
 		print 'pred: ', predict_new(w, x, y, alpha, level_fct)
