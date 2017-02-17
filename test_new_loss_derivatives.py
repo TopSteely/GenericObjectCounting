@@ -2,6 +2,7 @@ from utils import iep_with_func
 import numpy as np
 import math
 from copy import deepcopy
+from scipy.optimize import minimize
 
 w = 0.0
 w_update = 0.0
@@ -18,7 +19,7 @@ def predict_new(w, x, y, alpha, level_fct):
         copy.remove(fun)
         window_pred = np.dot(w, x[fun[1]])
         iep = iep_with_func(w,x,copy)
-        loss += (iep - window_pred)
+        loss += (iep + window_pred)
         print fun[1], x[fun[1]], iep, window_pred
     loss1 = iep_with_func(w,x,level_fct)
     return loss, loss1
@@ -50,7 +51,9 @@ for epoch in range(5):
     for level_fct in fct:
     	loss += loss_new_scipy(w, x, y, alpha, level_fct)
     print 'Loss', epoch, loss
-
+res = minimize(lambda w: loss_new_scipy(w, x, y, alpha, fct), 0.0)
+print res.w
+print res
 for i_level,level_fct in enumerate(fct):
     ax = predict_new(w, x, y, alpha, level_fct)
     print i_level, ax
