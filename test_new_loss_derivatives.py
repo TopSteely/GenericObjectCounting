@@ -32,9 +32,9 @@ def loss_new_scipy(w, x, y, alpha, fct):
     for level_fct in fct:
         for fun in level_fct:
             print fun
-        	copy = deepcopy(level_fct)
-        	copy.remove(fun)
-        	iep = iep_with_func(w,x,copy)
+            copy = deepcopy(level_fct)
+            copy.remove(fun)
+            iep = iep_with_func(w,x,copy)
             window_pred = np.dot(w, x[fun[1]])
             loss += ((y - iep - window_pred) ** 2)
     return loss + alpha * math.sqrt(np.dot(w,w))
