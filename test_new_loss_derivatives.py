@@ -10,6 +10,7 @@ x = [1.0,0.64,0.36,0.3,0.2]
 y = 1.0
 alpha = 0
 fct = [[['+',0]],[['+',1],['+',2]]]
+fct1 = [['+',1],['+',2]]
 
 def predict_new(w, x, y, alpha, level_fct):
     loss = 0.0
@@ -52,7 +53,7 @@ def loss_new_scipy(w, x, y, alpha, level_fct):
 #    for level_fct in fct:
 #    	loss += loss_new_scipy(w, x, y, alpha, level_fct)
 #    print 'Loss', epoch, loss
-res = minimize(loss_new_scipy, 0.0, args=(x, y, alpha, fct))
+res = minimize(loss_new_scipy, 0.0, args=(x, y, alpha, fct1))
 print res.w
 print res
 for i_level,level_fct in enumerate(fct):
