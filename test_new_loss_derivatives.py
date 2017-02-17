@@ -18,7 +18,7 @@ def predict_new(w, x, y, alpha, level_fct):
         copy.remove(fun)
         window_pred = np.dot(w, x[fun[1]])
         iep = iep_with_func(w,x,copy)
-        loss += (iep - window_pred)
+        loss += (iep + window_pred)
         print fun[1], x[fun[1]], iep, window_pred
     loss1 = iep_with_func(w,x,level_fct)
     return loss, loss1
