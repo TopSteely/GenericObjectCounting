@@ -1,6 +1,7 @@
 from utils import iep_with_func
 import numpy as np
 import math
+from copy import deepcopy
 
 w = 0.0
 w_update = 0.0
@@ -11,7 +12,7 @@ fct = [[['+',0]],[['+',1],['+',2]]]
 
 def predict_new(w, x, y, alpha, level_fct):
     loss = 0.0
-    original_function = level_fct
+    original_function = deepcopy(level_fct)
     print level_fct
     for fun in level_fct:
         print fun
@@ -26,7 +27,7 @@ def predict_new(w, x, y, alpha, level_fct):
 
 def loss_new_scipy(w, x, y, alpha, level_fct):
     loss = 0.0
-    original_function = level_fct
+    original_function = deepcopy(level_fct)
     for fun in level_fct:
     	copy = original_function
     	copy.remove(fun)
@@ -39,7 +40,7 @@ def loss_new_scipy(w, x, y, alpha, level_fct):
 print fct
 for epoch in range(5):
     for i_level,level_fct in enumerate(fct):
-    	original_function = level_fct
+    	original_function = deepcopy(level_fct)
     	for fun in level_fct:
     		copy = original_function
     		copy.remove(fun)
