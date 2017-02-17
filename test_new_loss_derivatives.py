@@ -52,6 +52,7 @@ for epoch in range(5):
 		loss += loss_new_scipy(w, x, y, alpha, level_fct)
 	print 'Loss', epoch, loss
 
+print fct
 for i_level,level_fct in enumerate(fct):
     ax = predict_new(w, x, y, alpha, level_fct)
     print i_level, ax
