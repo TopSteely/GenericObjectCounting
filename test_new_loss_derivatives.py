@@ -5,20 +5,17 @@ from copy import deepcopy
 
 w = 0.0
 w_update = 0.0
-x = [1.0,0.5,0.5,0.3,0.2]
+x = [1.0,0.64,0.36,0.3,0.2]
 y = 1.0
 alpha = 0.1
 fct = [[['+',0]],[['+',1],['+',2]]]
 
 def predict_new(w, x, y, alpha, level_fct):
     loss = 0.0
-    original_function = deepcopy(level_fct)
     for fun in level_fct:
-        print fun
         copy = deepcopy(level_fct)
         copy.remove(fun)
         window_pred = np.dot(w, x[fun[1]])
-        print copy
         iep = iep_with_func(w,x,copy)
         loss += (iep - window_pred)
         print fun[1], x[fun[1]], iep, window_pred
@@ -27,9 +24,8 @@ def predict_new(w, x, y, alpha, level_fct):
 
 def loss_new_scipy(w, x, y, alpha, level_fct):
     loss = 0.0
-    original_function = deepcopy(level_fct)
     for fun in level_fct:
-    	copy = original_function
+    	copy = deepcopy(level_fct)
     	copy.remove(fun)
     	iep = iep_with_func(w,x,copy)
         window_pred = np.dot(w, x[fun[1]])
@@ -40,9 +36,8 @@ def loss_new_scipy(w, x, y, alpha, level_fct):
 print fct
 for epoch in range(105):
     for i_level,level_fct in enumerate(fct):
-    	original_function = deepcopy(level_fct)
     	for fun in level_fct:
-    		copy = original_function
+    		copy = deepcopy(level_fct)
     		copy.remove(fun)
     		w_update += (np.dot(w, x[fun[1]]) + iep_with_func(w,x,copy) - y) * (iep_with_func(1.0,x,copy) + x[fun[1]])
     w_update += 2 * w_update + 2 * alpha * w
