@@ -45,7 +45,7 @@ for epoch in range(5):
     		w_update += (np.dot(w, x[fun[1]]) + iep_with_func(w,x,copy) - y) * (iep_with_func(1.0,x,copy) + x[fun[1]])
     w_update += 2 * w_update + 2 * alpha * w
 
-    w -= 0.01 * w_update
+    w -= 0.1 * w_update
     w_update = 0.0
     loss = 0.0
 
