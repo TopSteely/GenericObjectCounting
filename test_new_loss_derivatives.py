@@ -11,10 +11,14 @@ fct = [[['+',0]],[['+',1],['+',2]]]
 
 def predict_new(w, x, y, alpha, level_fct):
     loss = 0.0
-    iep = iep_with_func(w,x,level_fct)
+    original_function = level_fct
     for fun in level_fct:
+        copy = original_function
+        copy.remove(fun)
         window_pred = np.dot(w, x[fun[1]])
+        iep = iep_with_func(w,x,copy)
         loss += (iep - window_pred)
+        print fun[1], x[fun[1]], iep, window_pred
     return loss
 
 
@@ -44,5 +48,7 @@ for epoch in range(5):
 	loss = 0.0
 	for level_fct in fct:
 		loss += loss_new_scipy(w, x, y, alpha, level_fct)
-		print 'loss', loss_new_scipy(w, x, y, alpha, level_fct)
 	print 'Loss', epoch, loss
+
+for i_level,level_fct in enumerate(fct):
+    print predict_new(w, x, y, alpha, level_fct)
