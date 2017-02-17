@@ -6,12 +6,10 @@ from scipy.optimize import minimize
 
 w = 0.0
 w_update = 0.0
-x = [1.0,0.64,0.36,0.3,0.2]
-y = 1.0
+x = [[1.0,0.64,0.36,0.3,0.2],[2.0,0.5,1.8,0.3]]
+y = [1.0,2.0]
 alpha = 0
-fct = [[['+',0]],[['+',1],['+',2]]]
-fct1 = [['+',1],['+',2]]
-fct2 = {0:[['+',0]],1:[['+',1],['+',2]]}
+fct = {0:[[['+',0]],[['+',1],['+',2]]], 1:[[['+',0]],[['+',1],['+',2],['-',3]]]}
 
 def predict_new(w, x, y, alpha, level_fct):
     loss = 0.0
@@ -29,14 +27,15 @@ def predict_new(w, x, y, alpha, level_fct):
 
 def loss_new_scipy(w, x, y, alpha, fct):
     loss = 0.0
-    for level_fct in fct:
-        for fun in level_fct:
-            print fun
-            copy = deepcopy(level_fct)
-            copy.remove(fun)
-            iep = iep_with_func(w,x,copy)
-            window_pred = np.dot(w, x[fun[1]])
-            loss += ((y - iep - window_pred) ** 2)
+    for img_nr, img_fct in zip(fct.keys(),fct.values()):
+        for level_fct in img_fct:
+            for fun in level_fct:
+                print img_nr, fun
+                copy = deepcopy(level_fct)
+                copy.remove(fun)
+                iep = iep_with_func(w,x[img_nr],copy)
+                window_pred = np.dot(w, x[img_nr][fun[1]])
+                loss += ((y - iep - window_pred) ** 2)
     return loss + alpha * math.sqrt(np.dot(w,w))
 
 
