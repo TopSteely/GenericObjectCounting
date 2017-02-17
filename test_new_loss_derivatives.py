@@ -15,7 +15,7 @@ def predict_new(w, x, y, alpha, level_fct):
     original_function = deepcopy(level_fct)
     for fun in level_fct:
         print fun
-        copy = original_function
+        copy = deepcopy(level_fct)
         copy.remove(fun)
         window_pred = np.dot(w, x[fun[1]])
         print copy
