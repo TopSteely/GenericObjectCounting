@@ -11,6 +11,9 @@ y = [1.0,2.0]
 alpha = 0
 fct = {0:[[['+',0]],[['+',1],['+',2]]], 1:[[['+',0]],[['+',1],['+',2],['-',3]]]}
 
+cons = ({'type': 'ineq', 'fun': lambda x:  x},
+    {'type': 'eq', 'fun': lambda x: x-3})
+
 def predict_new(w, x, y, alpha, level_fct):
     loss = 0.0
     loss1 = 0.0
@@ -26,6 +29,7 @@ def predict_new(w, x, y, alpha, level_fct):
 
 
 def loss_new_scipy(w, x, y, alpha, fct):
+    print w
     loss = 0.0
     for img_nr, img_fct in zip(fct.keys(),fct.values()):
         for level_fct in img_fct:
@@ -54,7 +58,7 @@ def loss_new_scipy(w, x, y, alpha, fct):
 #    for level_fct in fct:
 #    	loss += loss_new_scipy(w, x, y, alpha, level_fct)
 #    print 'Loss', epoch, loss
-res = minimize(loss_new_scipy, 0.0, args=(x, y, alpha, fct))
+res = minimize(loss_new_scipy, 0.0, args=(x, y, alpha, fct),constraints=cons)
 print res
 for i_level,level_fct in enumerate(fct):
     ax = predict_new(w, x, y, alpha, level_fct)
