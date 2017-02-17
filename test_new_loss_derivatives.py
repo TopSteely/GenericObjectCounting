@@ -51,7 +51,7 @@ for epoch in range(5):
     for level_fct in fct:
     	loss += loss_new_scipy(w, x, y, alpha, level_fct)
     print 'Loss', epoch, loss
-res = minimize(lambda w: loss_new_scipy, 0.0, args=((w, x, y, alpha, fct),0))
+res = minimize(loss_new_scipy, 0.0, args=(w, x, y, alpha, fct))
 print res.w
 print res
 for i_level,level_fct in enumerate(fct):
