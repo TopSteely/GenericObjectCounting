@@ -51,4 +51,5 @@ for epoch in range(5):
 	print 'Loss', epoch, loss
 
 for i_level,level_fct in enumerate(fct):
-    print predict_new(w, x, y, alpha, level_fct)
+    ax = predict_new(w, x, y, alpha, level_fct)
+    print i_level, ax
