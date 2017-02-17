@@ -7,7 +7,7 @@ w = 0.0
 w_update = 0.0
 x = [1.0,0.64,0.36,0.3,0.2]
 y = 1.0
-alpha = 0.1
+alpha = 0
 fct = [[['+',0]],[['+',1],['+',2]]]
 
 def predict_new(w, x, y, alpha, level_fct):
