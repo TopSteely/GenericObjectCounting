@@ -36,6 +36,7 @@ def loss_new_scipy(w, x, y, alpha, level_fct):
     return loss + alpha * math.sqrt(np.dot(w,w))
 
 
+print fct
 for epoch in range(5):
 	for i_level,level_fct in enumerate(fct):
 		original_function = level_fct
