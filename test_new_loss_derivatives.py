@@ -34,7 +34,6 @@ def loss_new_scipy(w, x, y, alpha, fct):
     for img_nr, img_fct in zip(fct.keys(),fct.values()):
         for level_fct in img_fct:
             for fun in level_fct:
-                print img_nr, fun
                 copy = deepcopy(level_fct)
                 copy.remove(fun)
                 iep = iep_with_func(w,x[img_nr],copy)
