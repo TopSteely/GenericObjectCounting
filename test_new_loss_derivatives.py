@@ -37,7 +37,7 @@ def loss_new_scipy(w, x, y, alpha, level_fct):
 
 
 print fct
-for epoch in range(105):
+for epoch in range(5):
     for i_level,level_fct in enumerate(fct):
     	for fun in level_fct:
     		copy = deepcopy(level_fct)
@@ -50,6 +50,7 @@ for epoch in range(105):
     loss = 0.0
 
     for level_fct in fct:
+        print loss
     	loss += loss_new_scipy(w, x, y, alpha, level_fct)
         print level_fct, loss
     print 'Loss', epoch, loss
