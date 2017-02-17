@@ -7,12 +7,19 @@ from scipy.optimize import minimize
 w = 0.0
 w_update = 0.0
 x = [[1.0,0.64,0.36,0.3,0.2],[2.0,0.5,1.8,0.3]]
-y = [1.0,2.0]
+y = [-1.0,-2.0]
 alpha = 0
 fct = {0:[[['+',0]],[['+',1],['+',2]]], 1:[[['+',0]],[['+',1],['+',2],['-',3]]]}
 
-cons = ({'type': 'ineq', 'fun': lambda x:  x},
-    {'type': 'eq', 'fun': lambda x: x-3})
+
+def con(w,x):
+    for i_x in x:
+        for i_i_x in i_x[1:]:
+
+
+cons = ({'type': 'ineq', 'fun': con2},
+    {'type': 'eq', 'fun': con1})
+
 
 def predict_new(w, x, y, alpha, level_fct):
     loss = 0.0
