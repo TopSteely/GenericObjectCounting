@@ -13,12 +13,12 @@ fct = [[['+',0]],[['+',1],['+',2]]]
 def predict_new(w, x, y, alpha, level_fct):
     loss = 0.0
     original_function = deepcopy(level_fct)
-    print level_fct
     for fun in level_fct:
         print fun
         copy = original_function
         copy.remove(fun)
         window_pred = np.dot(w, x[fun[1]])
+        print copy
         iep = iep_with_func(w,x,copy)
         loss += (iep - window_pred)
         print fun[1], x[fun[1]], iep, window_pred
