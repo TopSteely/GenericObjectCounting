@@ -31,6 +31,7 @@ def loss_new_scipy(w, x, y, alpha, level_fct):
     	copy.remove(fun)
     	iep = iep_with_func(w,x,copy)
         window_pred = np.dot(w, x[fun[1]])
+        print y, iep + window_pred
         loss += (y - iep - window_pred) ** 2
     return loss + alpha * math.sqrt(np.dot(w,w))
 
@@ -50,7 +51,7 @@ for epoch in range(105):
 
     for level_fct in fct:
     	loss += loss_new_scipy(w, x, y, alpha, level_fct)
-        #print loss
+        print level_fct, loss
     print 'Loss', epoch, loss
 
 for i_level,level_fct in enumerate(fct):
