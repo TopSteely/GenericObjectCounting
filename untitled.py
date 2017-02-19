@@ -8,7 +8,7 @@ x = [1.0,0.64,0.36,0.3,0.2]
 y = [1.0,0.5,0.4,-0.1,-0.2]
 alpha = 0
 
-def con(w,x):
+def con(x):
     loss = 0.0
     for i_x in x:
         for i_i_x in i_x:
