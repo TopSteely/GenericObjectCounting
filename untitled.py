@@ -25,5 +25,5 @@ def loss_new_scipy(w, x, y, alpha):
         loss += ((y_i - np.dot(w,x_i)) ** 2)
     return loss + alpha * math.sqrt(np.dot(w,w))
 
-res = minimize(loss_new_scipy, 10.0, args=(x, y, alpha, fct),constraints=cons)
+res = minimize(loss_new_scipy, 10.0, args=(x, y, alpha),constraints=cons)
 print res
