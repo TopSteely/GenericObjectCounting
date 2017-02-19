@@ -13,12 +13,15 @@ fct = {0:[[['+',0]],[['+',1],['+',2]]], 1:[[['+',0]],[['+',1],['+',2],['-',3]]]}
 
 
 def con(w,x):
+    loss = 0.0
     for i_x in x:
-        for i_i_x in i_x[1:]:
+        for i_i_x in i_x:
+            loss += (np.dot(w, i_i_x))
+    return loss
 
 
-cons = ({'type': 'ineq', 'fun': con2},
-    {'type': 'eq', 'fun': con1})
+cons = ({'type': 'ineq', 'fun': con})#,
+    #{'type': 'ineq', 'fun': con1})
 
 
 def predict_new(w, x, y, alpha, level_fct):
