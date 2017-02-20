@@ -4,8 +4,8 @@ import math
 from copy import deepcopy
 from scipy.optimize import minimize
 
-x = np.array([[[1.0],[0.64]],[[0.1],[0.3],[0.6]]])
-y = [[10.0,0.64],[1,3,6]]
+x = np.array([[[1.0],[0.64]],[[0.1]]])
+y = [[10.0,0.64],[1]]
 alpha = 0
 
 def con(w,x,y,alpha):
@@ -18,8 +18,8 @@ def con(w,x,y,alpha):
 def upper_constraint(w,x,y,alpha):
     ret = 0.0
     for x_,y_ in zip(x,y):
-        print w, np.maximum(np.dot(np.array(x_),w),y_)
-        ret += np.maximum(np.dot(np.array(x_),w),y_).sum()
+        print w, np.dot(np.array(x_),w),np.minimum(np.dot(np.array(x_),w),y_)
+        ret += np.minimum(np.dot(np.array(x_),w),y_).sum()
     return ret
 
 cons = ({'type': 'ineq', 'fun': upper_constraint,'args':(x,y,alpha)})
