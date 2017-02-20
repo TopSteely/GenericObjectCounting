@@ -380,7 +380,7 @@ class SGD:
                 _,fct = self.learner.get_iep_levels(img_data, {})
                 for lvl in range(len(img_data.levels)):
                     print lvl
-                    fcts[img_nr].append(fct[lvl])
+                    fcts[i_img_nr].append(fct[lvl])
         print y
         print fcts
         print 'starting minimizing'
