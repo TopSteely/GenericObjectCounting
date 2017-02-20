@@ -4,7 +4,7 @@ import math
 from copy import deepcopy
 from scipy.optimize import minimize
 
-x = np.array([[[1.0,0.5],[0.64,0.32]],[[0.1,0.05],[0.3,0.15],[0.6,0.3]]])
+x = np.array([[[1.0],[0.64]],[[0.1],[0.3],[0.6]]])
 y = [[-1.0,-0.5],[-2.2,-3.3,-6.6]]
 alpha = 0
 
@@ -31,5 +31,5 @@ def loss_new_scipy(w, x, y, alpha):
             loss += ((y_i - np.dot(w,x_i)) ** 2)
     return loss + alpha * math.sqrt(np.dot(w,w))
 
-res = minimize(loss_new_scipy, np.array([1.0,2.0]).reshape(1,2), args=(x, y, alpha),constraints=cons,method='SLSQP')
+res = minimize(loss_new_scipy, np.array([1.0]).reshape(1,2), args=(x, y, alpha),constraints=cons,method='SLSQP')
 print res
