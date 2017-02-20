@@ -4,26 +4,26 @@ import math
 from copy import deepcopy
 from scipy.optimize import minimize
 
-x = [1.0,0.64,0.36,0.3,0.2]
-y = [1.0,0.5,0.4,-0.1,-0.2]
+x = np.array([[1.0,0.64,0.36,0.3,0.2],[0.1,0.3,0.6]])
+y = [[-1.0,-0.5,-0.4,-0.1,-0.2],[2.2,3.3,6.6]]
 alpha = 0
 
-def con(w,x):
-    loss = 0.0
-    for i_x in x:
-        for i_i_x in i_x:
-            loss += (np.dot(w, i_i_x))
-    return loss
+def con(w,x,y,alpha):
+    ret = 0.0
+    for x_ in x:
+    	print w, np.minimum(w*x_-1,0)
+        ret += np.minimum(w*x_-1,0).sum()
+    return ret
 
 
-cons = ({'type': 'ineq', 'fun': con})
+cons = ({'type': 'ineq', 'fun': con,'args':(x,y,alpha)})
 
 def loss_new_scipy(w, x, y, alpha):
-    print w
     loss = 0.0
-    for y_i,x_i in zip(y,x):
-        loss += ((y_i - np.dot(w,x_i)) ** 2)
+    for x_,y_ in zip(x,y):
+        for y_i,x_i in zip(y_,x_):
+            loss += ((y_i - np.dot(w,x_i)) ** 2)
     return loss + alpha * math.sqrt(np.dot(w,w))
 
-res = minimize(loss_new_scipy, 10.0, args=(x, y, alpha),constraints=cons)
+res = minimize(loss_new_scipy, np.array([1.0]), args=(x, y, alpha),constraints=cons,method='SLSQP')
 print res
