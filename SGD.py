@@ -98,9 +98,9 @@ class SGD:
             for fun in level_fct:
                 copy = deepcopy(level_fct)
                 copy.remove(fun)
-                iep = iep_with_func(w,x[img_nr],copy)
-                window_pred = np.dot(w, x[img_nr][fun[1]])
-                loss += ((y[img_nr] - iep - window_pred) ** 2)
+                iep = iep_with_func(self.w,img_data.X,copy)
+                window_pred = np.dot(self.w, img_data.X[fun[1]])
+                loss += ((img_data.y - iep - window_pred) ** 2)
         return loss + self.alpha * math.sqrt(np.dot(self.w,self.w))
         
     def loss_mean(self, img_data):
@@ -300,6 +300,7 @@ class SGD:
         subset = training_data[:to]
         random.shuffle(subset)
         for i_img_nr, img_nr in enumerate(subset):
+            print i_img_nr
             start = time.time()
             if self.dataset == 'blob':
                 img_data = self.blobtraindata[i_img_nr]
@@ -362,6 +363,7 @@ class SGD:
         y = []
         fcts = []
         for i_img_nr, img_nr in enumerate(subset):
+            print 'scipy', i_img_nr
             start = time.time()
             if self.dataset == 'blob':
                 img_data = self.blobtraindata[i_img_nr]
