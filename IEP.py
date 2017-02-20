@@ -114,19 +114,21 @@ class IEP:
         return iep_levels, functions
 
 
-    def iep_single_patch(self, Data):
-        tru = y
-        if len(levels[level]) == 1:
-            return [np.dot(w,x[levels[level][0]])], []
+    def iep_single_patch(self, Data, function, level):
+        if len(Data.levels) == 1:
+            return np.dot(self.w,Data.X[0]), []
         count_per_level_temp = 0
         level_boxes = []
-        for i in levels[level]:
-            level_boxes.append(coords[i][0])
+        for i in Data.levels[level]:
+            level_boxes.append(Data.boxes[i])
         
         # create graph G from combinations possible        
-        combinations = list(itertools.combinations(levels[level], 2)) 
+        combinations = list(itertools.combinations(Data.levels[level], 2)) 
         iep_patch = []
-        for iep_node in levels[level]:
+        all_patches = [a[1] for a in function]
+        print all_patches
+        raw_input()
+        for iep_node in :#Data.levels[level]
             comb_node = [its for its in combinations if iep_node in its]
             G = nx.Graph()
             G.add_edges_from(comb_node)
@@ -162,17 +164,16 @@ class IEP:
                 I = [0,0,1000,1000]
                 for c in base:
                     if I != []:
-                       I = get_intersection(coords[c], I)
+                       I = get_intersection(Data.boxes[c], I)
                 if I != []:
-                  if I in coords:
-                     ind = coords.tolist().index(I)
+                  if I in Data.boxes:
+                     ind = Data.boxes.tolist().index(I)
                      if len(base)%2==1:
-                         count_per_level_temp += np.dot(w,x[ind])
-                         function.append(['+',ind])
+                         count_per_level_temp += np.dot(self.w,Data.X[ind])
                      else:
-                         count_per_level_temp -= np.dot(w,x[ind])
+                         count_per_level_temp -= np.dot(self.w,Data.X[ind])
                   else:
-                    print 'not founf'
+                    print 'not found'
                     exit()
                 for i, u in enumerate(cnbrs):
                     # Use generators to reduce memory consumption.
@@ -180,5 +181,5 @@ class IEP:
                                   filter(nbrs[u].__contains__,
                                          islice(cnbrs, i + 1, None))))
             iep_patch.append(count_per_level_temp)
-        return iep_patch, function
+        return iep_patch
         

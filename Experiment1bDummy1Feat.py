@@ -59,21 +59,6 @@ def main():
                         validation_loss = np.concatenate((validation_loss,te_l), axis=1)#.reshape(-1,1)
                     else:
                         sgd_dennis.learn(learn_mode)
-                    #print tr_l, te_l
-                    
-                    #training_loss.extend(tr_l)
-                    #validation_loss.extend(te_l)
-                    
-                    #print training_loss
-                    #print training_loss, validation_loss
-                    #t1,_,_ = sgd_dennis.evaluate('train', 20)
-                    #t2,_,_ = sgd_dennis.evaluate('val', 20)
-                    #training_loss.append(t1)
-                    #validation_loss.append(t2)
-                    #preds_d_p, preds_skl_p, y_d_p = sgd_pascal.evaluate('train',2, True)
-                    #preds_d_d, preds_skl_d, y_d_d = sgd_dennis.evaluate('train',50, True)
-                    #output_pascal.plot_preds(preds_d_p, preds_skl_p, y_d_p, al_i)
-                    #output_dennis.plot_preds(preds_d_d, preds_skl_d, y_d_d, al_i)
                 if debug:
                     output_dennis.plot_train_val_loss(training_loss, validation_loss, eta, al_i)
             if not debug:

@@ -238,12 +238,29 @@ class SGD:
                 else:
                     preds_d.append(self.predict(img_data))
                 y_d.append(img_data.y)
-                #if i_img_nr < 10:
-                #    level_pred = 
-                #    level_patch_preds = 
-                #    level_patch_iep = 
+                level_pred_d = {}
+                max_iep_patches_d = {}
+                max_level_preds_d = {}
+                if i_img_nr < 10:
+                    level_preds = self.predict_ind(img_data)
+                    level_pred_d[img_data.img_nr] = level_preds
+                    max_iep_patches_d[img_data.img_nr] = []
+                    max_level_preds_d[img_data.img_nr] = []
+                    for level in range(len(img_data.levels)):
+                        iep_patches = self.predictor.iep_single_patch(img_data, self.functions[img_nr][level],level)
+                        max_iep_patches = np.max(iep_patches)
+                        ind = iep_patches.index(max_iep_patches)
+                        max_iep_patches_d[img_data.img_nr].append([img_data.boxes[ind],max_iep_patches])
+
+                        all_patches = [a[1] for a in self.functions[img_nr][level]]
+                        level_patch_preds = []
+                        for level_patch in all_patches:
+                            level_patch_preds.append(self.predict_window(img_data, level_patch))
+                        max_level_pred = np.max(level_patch_preds)
+                        ind = level_patch_preds.index(max_level_pred)
+                        max_level_preds_d[img_data.img_nr].append([img_data.boxes[ind],max_level_pred])
         if debug:
-            return preds_d, y_d#,  preds_skl
+            return preds_d, y_d, level_pred_d, max_iep_patches_d, max_level_preds_d
         return squared_error/len(numbers), error / len(numbers), non_zero_error / n_non_zero#skl_error/len(numbers),, self.eta
         
         
