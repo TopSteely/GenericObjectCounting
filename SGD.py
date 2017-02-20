@@ -237,7 +237,10 @@ class SGD:
                 else:
                     preds_d.append(self.predict(img_data))
                 y_d.append(img_data.y)
-                #preds_skl.append(self.sgd.predict(img_data.X[img_data.levels[0][0]].reshape(1, -1)))
+                #if i_img_nr < 10:
+                #    level_pred = 
+                #    level_patch_preds = 
+                #    level_patch_iep = 
         if debug:
             return preds_d, y_d#,  preds_skl
         return squared_error/len(numbers), error / len(numbers), non_zero_error / n_non_zero#skl_error/len(numbers),, self.eta
@@ -387,6 +390,8 @@ class SGD:
         else:
             res = minimize(loss_new_scipy, np.zeros(self.n_features), args=(x, y, alpha, fcts), options={'maxiter':5})
         print res
+        self.w = res.X
+        self.predictor = IEP.IEP(self.w, 'prediction')
         if debug:
             tr_loss, te_loss = self.loss_per_level_all(instances, to)
             train_losses = np.concatenate((train_losses,tr_loss.reshape(-1,1)), axis=1)
