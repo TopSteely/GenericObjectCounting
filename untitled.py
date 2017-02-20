@@ -5,7 +5,7 @@ from copy import deepcopy
 from scipy.optimize import minimize
 
 x = np.array([[[1.0,0.5],[0.64,0.32],[0.36,0.18],[0.3,0.15],[0.2,0.1]],[[0.1,0.05],[0.3,0.15],[0.6,0.3]]])
-y = [[-1.0,-0.5,-0.4,-0.1,-0.2],[2.2,3.3,6.6]]
+y = [[-1.0,-0.5,-0.4,-0.1,-0.2],[-2.2,-3.3,-6.6]]
 alpha = 0
 
 def con(w,x,y,alpha):
@@ -15,7 +15,14 @@ def con(w,x,y,alpha):
         ret += np.minimum(np.dot(np.array(x_),w)-1,0).sum()
     return ret
 
-cons = ({'type': 'ineq', 'fun': con,'args':(x,y,alpha)})
+def upper_constraint(w,x,y,alpha):
+    ret = 0.0
+    for x_ in x:
+        print w,x_,np.dot(np.array(x_),w) ,np.minimum(np.dot(np.array(x_),w)-1,0)
+        ret += np.maximim(y-np.dot(np.array(x_),w),y).sum()
+    return ret
+
+cons = ({'type': 'ineq', 'fun': upper_constraint,'args':(x,y,alpha)})
 
 def loss_new_scipy(w, x, y, alpha):
     loss = 0.0

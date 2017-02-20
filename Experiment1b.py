@@ -17,19 +17,21 @@ def main():
 #        exit()
     category = sys.argv[1]
 
-    learn_mode = 'category_levels'
+    learn_mode = 'category'
 
-    pred_mode = 'multi'
+    pred_mode = 'new'
 
-    debug = False
+    debug = True
 
     batch_size = 5
 
-    epochs = 4
+    epochs = 1
 
-    subsamples = 100
+    subsamples = 2
 
     feature_size = 4096
+
+    eta = math.pow(10,-5)
 
     for tree_level_size in range(5,6):
         #initialize
@@ -39,6 +41,7 @@ def main():
         load_dennis = Input.Input('dennis',category,tree_level_size)
         #output_pascal = Output.Output('pascal_max', category, tree_level_size, '1b')
         output_dennis = Output.Output('dennis_%s'%(pred_mode), category, tree_level_size, '1b')
+        output_dennis_scipy = Output.Output('dennis_scipy%s'%(pred_mode), category, tree_level_size, '1b')
         
         #learn scaler
         #scaler_pascal = StandardScaler()
@@ -78,58 +81,73 @@ def main():
             for gamma_i in [math.pow(10,-5)]:#,math.pow(10,-4),math.pow(10,-3),math.pow(10,-2)
                 training_loss = np.array([], dtype=np.int64).reshape(tree_level_size+1,0)
                 validation_loss = np.array([], dtype=np.int64).reshape(tree_level_size+1,0)
+                training_loss_scipy = np.array([], dtype=np.int64).reshape(tree_level_size+1,0)
+                validation_loss_scipy = np.array([], dtype=np.int64).reshape(tree_level_size+1,0)
                 #sgd_pascal = SGD.SGD('pascal', 'max', category, tree_level_size, batch_size, eta_i, gamma_i, al_i)
-                sgd_dennis = SGD.SGD('dennis', pred_mode, category, tree_level_size, batch_size, math.pow(10,-5), gamma_i, al_i, feature_size)
+                sgd_dennis = SGD.SGD('dennis', pred_mode, category, tree_level_size, batch_size, eta, gamma_i, al_i, feature_size)
+                sgd_dennis_scipy = SGD.SGD('dennis', pred_mode, category, tree_level_size, batch_size, eta, gamma_i, al_i, feature_size)
                 sgd_dennis.set_scaler(scaler_dennis)
+                sgd_dennis_scipy.set_scaler(scaler_dennis)
                 print al_i, gamma_i
                 for epoch in range(epochs):
                     #print epoch
                     #tr_l, te_l = sgd_dennis.learn('categories')
                     if debug:
                         tr_l, te_l = sgd_dennis.learn(learn_mode, subsamples, debug)
+                        tr_l_sc, te_l_sc = sgd_dennis.learn_scipy(learn_mode, subsamples, debug)
                         training_loss = np.concatenate((training_loss,tr_l), axis=1)#.reshape(-1,1)
                         validation_loss = np.concatenate((validation_loss,te_l), axis=1)#.reshape(-1,1)
+                        training_loss_scipy = np.concatenate((training_loss_scipy,tr_l_sc), axis=1)#.reshape(-1,1)
+                        validation_loss_scipy = np.concatenate((validation_loss_scipy,te_l_sc), axis=1)#.reshape(-1,1)
                     else:
                         sgd_dennis.learn(learn_mode)
-                    #print tr_l, te_l
-                    
-                    #training_loss.extend(tr_l)
-                    #validation_loss.extend(te_l)
-                    
-                    #print training_loss
-                    #print training_loss, validation_loss
-                    #t1,_,_ = sgd_dennis.evaluate('train', 20)
-                    #t2,_,_ = sgd_dennis.evaluate('val', 20)
-                    #training_loss.append(t1)
-                    #validation_loss.append(t2)
-                    #preds_d_p, preds_skl_p, y_d_p = sgd_pascal.evaluate('train',2, True)
-                    #preds_d_d, preds_skl_d, y_d_d = sgd_dennis.evaluate('train',50, True)
-                    #output_pascal.plot_preds(preds_d_p, preds_skl_p, y_d_p, al_i)
-                    #output_dennis.plot_preds(preds_d_d, preds_skl_d, y_d_d, al_i)
+                        sgd_dennis_scipy.learn_scipy(learn_mode)
                 if debug:
-                    output_dennis.plot_train_val_loss(training_loss, validation_loss, math.pow(10,-5), al_i)
+                    output_dennis.plot_train_val_loss(training_loss, validation_loss, eta, al_i)
+                    output_dennis_scipy.plot_train_val_loss(training_loss, validation_loss, eta, al_i)
             if not debug:
                 if learn_mode == 'all':
                     mse,ae, mse_non_zero = sgd_dennis.evaluate('val_all')
                     mse_tr,ae_tr, mse_non_zero_tr = sgd_dennis.evaluate('train_all')
+                    mse_sc,_, _ = sgd_dennis_scipy.evaluate('val_all')
+                    mse_tr_sc,_, _ = sgd_dennis_scipy.evaluate('train_all')
                 elif learn_mode == 'category':
                     mse,ae, mse_non_zero = sgd_dennis.evaluate('val_cat')
                     mse_tr,ae_tr, mse_non_zero_tr = sgd_dennis.evaluate('train_cat')
+                    mse_sc,_, _ = sgd_dennis_scipy.evaluate('val_cat')
+                    mse_tr_sc,_, _ = sgd_dennis_scipy.evaluate('train_cat')
                 elif learn_mode == 'category_levels':
                     mse,ae, mse_non_zero = sgd_dennis.evaluate('val_category_levels')
                     mse_tr,ae_tr, mse_non_zero_tr = sgd_dennis.evaluate('train_category_levels')
-                print "Eval loss train: ", al_i, mse_tr
-                print "Eval loss val: ", al_i, mse
+                    mse_sc,_, _ = sgd_dennis_scipy.evaluate('val_category_levels')
+                    mse_tr_sc,_, _ = sgd_dennis_scipy.evaluate('train_category_levels')
+                print "Eval loss train: ", al_i, mse_tr, mse_tr_sc
+                print "Eval loss val: ", al_i, mse, mse_sc
             else:
                 if learn_mode == 'all':
                     preds_d_d, y_d_d = sgd_dennis.evaluate('val_all', subsamples, debug)
                 elif learn_mode == 'category':
-                   preds_d_d, y_d_d = sgd_dennis.evaluate('val_cat', subsamples, debug)
+                    preds_d_d, y_d_d = sgd_dennis.evaluate('val_cat', subsamples, debug)
+                    preds_d_t, y_d_t = sgd_dennis.evaluate('train_cat', subsamples, debug)
+                    mse,ae, mse_non_zero = sgd_dennis.evaluate('val_cat',subsamples)
+                    mse_tr,ae_tr, mse_non_zero_tr = sgd_dennis.evaluate('train_cat',subsamples)
+                    preds_d_d_sc, _ = sgd_dennis_scipy.evaluate('val_cat', subsamples, debug)
+                    preds_d_t_sc, _ = sgd_dennis_scipy.evaluate('train_cat', subsamples, debug)
+                    mse_sc,_, _ = sgd_dennis_scipy.evaluate('val_cat',subsamples)
+                    mse_tr_sc,_, _ = sgd_dennis_scipy.evaluate('train_cat',subsamples)
+                    print "Eval loss train: ", al_i, mse_tr
+                    print "Eval loss val: ", al_i, mse
                 elif learn_mode == 'category_levels':
-                   preds_d_d, y_d_d = sgd_dennis.evaluate('val_category_levels', subsamples, debug)
-                   preds_d_t, y_d_t = sgd_dennis.evaluate('train_category_levels', subsamples, debug)
-                output_dennis.plot_preds(preds_d_d, [], y_d_d, al_i, 'val_category_levels')
-                output_dennis.plot_preds(preds_d_t, [], y_d_t, al_i, 'train_category_levels')
+                    preds_d_d, y_d_d = sgd_dennis.evaluate('val_category_levels', subsamples, debug)
+                    preds_d_t, y_d_t = sgd_dennis.evaluate('train_category_levels', subsamples, debug)
+                    mse,ae, mse_non_zero = sgd_dennis.evaluate('val_category_levels',subsamples)
+                    mse_tr,ae_tr, mse_non_zero_tr = sgd_dennis.evaluate('train_category_levels',subsamples)
+                    print "Eval loss train: ", al_i, mse_tr
+                    print "Eval loss val: ", al_i, mse
+                output_dennis.plot_preds(preds_d_d, y_d_d, al_i, 'val')
+                output_dennis.plot_preds(preds_d_t, y_d_t, al_i, 'train')
+                output_dennis_scipy.plot_preds(preds_d_d_sc, y_d_d, al_i, 'val')
+                output_dennis_scipy.plot_preds(preds_d_t_sc, y_d_t, al_i, 'train')
             #output_dennis.save(mse, ae, mse_non_zero, sgd_dennis, 'ind', al_i, learn_mode)
     print learn_mode, pred_mode, epochs,'with scaler', debug
     

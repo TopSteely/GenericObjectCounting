@@ -8,6 +8,7 @@ import time
 import math
 from scipy.optimize import minimize
 from utils import iep_with_func, loss_new_scipy
+from copy import deepcopy
 
 
 
@@ -95,9 +96,11 @@ class SGD:
             _,fct = self.learner.get_iep_levels(img_data, {})
         for i_level,level_fct in enumerate(fct.values()):
             for fun in level_fct:
-                iep = self.predictor.iep(img_data, level_fct, i_level)
-                window_pred = self.predict_window(img_data, fun[1])
-                loss += (img_data.y - iep[0] - window_pred) ** 2
+                copy = deepcopy(level_fct)
+                copy.remove(fun)
+                iep = iep_with_func(w,x[img_nr],copy)
+                window_pred = np.dot(w, x[img_nr][fun[1]])
+                loss += ((y[img_nr] - iep - window_pred) ** 2)
         return loss + self.alpha * math.sqrt(np.dot(self.w,self.w))
         
     def loss_mean(self, img_data):
@@ -343,7 +346,7 @@ class SGD:
     	   return train_losses, test_losses
 
 
-    def learn_scipy(self, instances='all', to=-1, debug=False):
+    def learn_scipy(self, instances='all', with_constraints=False, to=-1, debug=False):
         train_losses = np.array([], dtype=np.int64).reshape(self.prune_tree_levels+1,0)
         test_losses = np.array([], dtype=np.int64).reshape(self.prune_tree_levels+1,0)
         if instances=='all':
@@ -449,28 +452,18 @@ class SGD:
         return np.sum(2 * (np.array(level_preds) - img_data.y).reshape(-1,1) * iep_levels + 2 * self.alpha * self.w, axis=0), functions
 
     def learn_new(self, img_data, function):
-        need_ieps = True
         update = np.zeros(self.n_features)
         fct = function
 
 
         # if function is empty run iep first, just to get function -> we need the patches for each level to learn
         if fct == {}:
-            iep_levels,fct = self.learner.get_iep_levels(img_data, {})
-            
-            need_ieps = False
-
-        if need_ieps:
-            iep_levels,_ = self.learner.get_iep_levels(img_data, fct)
+            _,fct = self.learner.get_iep_levels(img_data, {})
                 
 
         for i_level,level_fct in enumerate(fct.values()):
-            original_function = level_fct
-#            if i_level==0:
-#                update += (self.predict_window(img_data, 0) + level_preds[0] - img_data.y) * (iep_levels[0] + img_data.X[0])
-#            else:
             for fun in level_fct:
-                copy = original_function
+                copy = deepcopy(level_fct)
                 copy.remove(fun)
                 update += (self.predict_window(img_data, fun[1]) + iep_with_func(w,x,copy) - img_data.y) * (iep_with_func(1.0,x,copy) + img_data.X[fun[1]])
         return 2 * update + 2 * self.alpha * self.w, fct
