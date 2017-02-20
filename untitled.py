@@ -15,7 +15,6 @@ def con(w,x,y,alpha):
         ret += np.minimum(w*x_-1,0).sum()
     return ret
 
-
 cons = ({'type': 'ineq', 'fun': con,'args':(x,y,alpha)})
 
 def loss_new_scipy(w, x, y, alpha):
