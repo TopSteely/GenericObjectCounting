@@ -361,8 +361,9 @@ class SGD:
         x = []
         alpha = self.alpha
         y = []
-        fcts = []
+        fcts = {}
         for i_img_nr, img_nr in enumerate(subset):
+            fcts[img_nr] = []
             print 'scipy', i_img_nr
             start = time.time()
             if self.dataset == 'blob':
@@ -379,7 +380,7 @@ class SGD:
                 _,fct = self.learner.get_iep_levels(img_data, {})
                 for lvl in range(len(img_data.levels)):
                     print lvl
-                    fcts.append(fct[lvl])
+                    fcts[img_nr].append(fct[lvl])
         print y
         print fcts
         print 'starting minimizing'

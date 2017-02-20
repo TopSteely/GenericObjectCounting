@@ -23,8 +23,8 @@ class IEP:
         else:
             iep = 0
         if len(sets) == 1:
-            #if function == []:
-                #function.append(['+',sets[0]])
+            if function == []:
+                function.append(['+',sets[0]])
 #            if np.all(self.w == 1):
 #                print 'root: ', sets[0], (X[sets[0]]==0).sum(), self.w
 #            else:

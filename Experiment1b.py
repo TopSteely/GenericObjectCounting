@@ -81,8 +81,6 @@ def main():
             for gamma_i in [math.pow(10,-5)]:#,math.pow(10,-4),math.pow(10,-3),math.pow(10,-2)
                 training_loss = np.array([], dtype=np.int64).reshape(tree_level_size+1,0)
                 validation_loss = np.array([], dtype=np.int64).reshape(tree_level_size+1,0)
-                training_loss_scipy = np.array([], dtype=np.int64).reshape(tree_level_size+1,0)
-                validation_loss_scipy = np.array([], dtype=np.int64).reshape(tree_level_size+1,0)
                 #sgd_pascal = SGD.SGD('pascal', 'max', category, tree_level_size, batch_size, eta_i, gamma_i, al_i)
                 sgd_dennis = SGD.SGD('dennis', pred_mode, category, tree_level_size, batch_size, eta, gamma_i, al_i, feature_size)
                 sgd_dennis_scipy = SGD.SGD('dennis', pred_mode, category, tree_level_size, batch_size, eta, gamma_i, al_i, feature_size)
@@ -94,17 +92,16 @@ def main():
                     #tr_l, te_l = sgd_dennis.learn('categories')
                     if debug:
                         tr_l, te_l = sgd_dennis.learn(learn_mode, subsamples, debug)
-                        tr_l_sc, te_l_sc = sgd_dennis_scipy.learn_scipy(learn_mode, False, subsamples, debug)
                         training_loss = np.concatenate((training_loss,tr_l), axis=1)#.reshape(-1,1)
                         validation_loss = np.concatenate((validation_loss,te_l), axis=1)#.reshape(-1,1)
-                        training_loss_scipy = np.concatenate((training_loss_scipy,tr_l_sc), axis=1)#.reshape(-1,1)
-                        validation_loss_scipy = np.concatenate((validation_loss_scipy,te_l_sc), axis=1)#.reshape(-1,1)
                     else:
                         sgd_dennis.learn(learn_mode)
-                        sgd_dennis_scipy.learn_scipy(learn_mode)
                 if debug:
+                    tr_l_sc, te_l_sc = sgd_dennis_scipy.learn_scipy(learn_mode, False, subsamples, debug)
                     output_dennis.plot_train_val_loss(training_loss, validation_loss, eta, al_i)
-                    output_dennis_scipy.plot_train_val_loss(training_loss, validation_loss, eta, al_i)
+                    output_dennis_scipy.plot_train_val_loss(tr_l_sc, te_l_sc, eta, al_i)
+                else:
+                    sgd_dennis_scipy.learn_scipy(learn_mode)
             if not debug:
                 if learn_mode == 'all':
                     mse,ae, mse_non_zero = sgd_dennis.evaluate('val_all')
