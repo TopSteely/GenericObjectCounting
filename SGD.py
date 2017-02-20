@@ -376,7 +376,7 @@ class SGD:
                     img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
 
                 #todo: only append information we need?
-                print max(np.max(img_data.X))
+                print img_data.X[0:20]
                 x.append(img_data.X)
                 y.append(img_data.y)
                 _,fct = self.learner.get_iep_levels(img_data, {})
