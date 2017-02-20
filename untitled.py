@@ -5,7 +5,7 @@ from copy import deepcopy
 from scipy.optimize import minimize
 
 x = np.array([[[1.0],[0.64]],[[0.1],[0.3],[0.6]]])
-y = [[1.0,-0.64],[-.1,-.3,-.6]]
+y = [[10.0,0.64],[1,3,6]]
 alpha = 0
 
 def con(w,x,y,alpha):
