@@ -11,8 +11,8 @@ alpha = 0
 def con(w,x,y,alpha):
     ret = 0.0
     for x_ in x:
-    	print w, np.minimum(np.dot(w,x)_-1,0)
-        ret += np.minimum(np.dot(w,x)_-1,0).sum()
+    	print w,x_,np.dot(np.array(x_),w) ,np.minimum(np.dot(np.array(x_),w)-1,0)
+        ret += np.minimum(np.dot(np.array(x_),w)-1,0).sum()
     return ret
 
 cons = ({'type': 'ineq', 'fun': con,'args':(x,y,alpha)})
@@ -24,5 +24,5 @@ def loss_new_scipy(w, x, y, alpha):
             loss += ((y_i - np.dot(w,x_i)) ** 2)
     return loss + alpha * math.sqrt(np.dot(w,w))
 
-res = minimize(loss_new_scipy, np.array([1.0,2.0]), args=(x, y, alpha),constraints=cons,method='SLSQP')
+res = minimize(loss_new_scipy, np.array([1.0,2.0]).reshape(1,2), args=(x, y, alpha),constraints=cons,method='SLSQP')
 print res
