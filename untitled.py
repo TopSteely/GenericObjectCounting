@@ -18,7 +18,7 @@ def con(w,x,y,alpha):
 def upper_constraint(w,x,y,alpha):
     ret = 0.0
     for x_,y_ in zip(x,y):
-        print w, np.dot(np.array(x_),w),np.minimum(np.dot(np.array(x_)-y_,w),0)
+        print w, np.dot(np.array(x_),w),np.minimum(np.dot(np.array(x_),w)-y_,0)
         ret += np.minimum(np.dot(np.array(x_),w)-y_,0).sum()
     return ret
 
