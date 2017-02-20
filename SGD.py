@@ -471,5 +471,5 @@ class SGD:
             for fun in level_fct:
                 copy = deepcopy(level_fct)
                 copy.remove(fun)
-                update += (self.predict_window(img_data, fun[1]) + iep_with_func(self.w,x,copy) - img_data.y) * (iep_with_func(1.0,x,copy) + img_data.X[fun[1]])
+                update += (self.predict_window(img_data, fun[1]) + iep_with_func(self.w,img_data.X,copy) - img_data.y) * (iep_with_func(1.0,img_data.X,copy) + img_data.X[fun[1]])
         return 2 * update + 2 * self.alpha * self.w, fct
