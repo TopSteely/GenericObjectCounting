@@ -5,7 +5,7 @@ from copy import deepcopy
 from scipy.optimize import minimize
 
 x = np.array([[[1.0],[0.64]],[[0.1]]])
-y = [[10.0,0.64],[1]]
+y = [[10.0,1.28],[1]]
 alpha = 0
 
 def con(w,x,y,alpha):
@@ -31,5 +31,5 @@ def loss_new_scipy(w, x, y, alpha):
             loss += ((y_i - np.dot(w,x_i)) ** 2)
     return loss + alpha * math.sqrt(np.dot(w,w))
 
-res = minimize(loss_new_scipy, np.array([1.0]), args=(x, y, alpha),constraints=cons,method='SLSQP')
+res = minimize(loss_new_scipy, np.array([0.0]), args=(x, y, alpha),constraints=cons,method='SLSQP')
 print res
