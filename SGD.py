@@ -376,11 +376,11 @@ class SGD:
                     img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
 
                 #todo: only append information we need?
+                print max(img_data.X)
                 x.append(img_data.X)
                 y.append(img_data.y)
                 _,fct = self.learner.get_iep_levels(img_data, {})
                 for lvl in range(len(img_data.levels)):
-                    print lvl
                     fcts[i_img_nr].append(fct[lvl])
         print 'starting minimizing'
         if with_constraints:
@@ -390,7 +390,7 @@ class SGD:
         else:
             res = minimize(loss_new_scipy, np.zeros(self.n_features), args=(x, y, alpha, fcts), options={'maxiter':5})
         print res
-        self.w = res.X
+        self.w = res.x
         self.predictor = IEP.IEP(self.w, 'prediction')
         if debug:
             tr_loss, te_loss = self.loss_per_level_all(instances, to)
