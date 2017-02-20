@@ -387,11 +387,10 @@ class SGD:
         if with_constraints:
             cons = ({'type': 'ineq', 'fun': upper_constraint,'args':(x,y,alpha,fcts)},
                     {'type': 'ineq', 'fun': lower_constraint,'args':(x,y,alpha,fcts)})
-            res = minimize(loss_new_scipy, np.zeros(self.n_features), args=(x, y, alpha, fcts), constraints=cons)
+            res = minimize(loss_new_scipy, np.zeros(self.n_features), args=(x, y, alpha, fcts), constraints=cons, options={maxiter:5})
         else:
-            res = minimize(loss_new_scipy, np.zeros(self.n_features), args=(x, y, alpha, fcts))
+            res = minimize(loss_new_scipy, np.zeros(self.n_features), args=(x, y, alpha, fcts), options={maxiter:5})
         print res
-        raw_input()
         if debug:
             tr_loss, te_loss = self.loss_per_level_all(instances, to)
             train_losses = np.concatenate((train_losses,tr_loss.reshape(-1,1)), axis=1)

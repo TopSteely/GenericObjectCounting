@@ -25,9 +25,9 @@ def main():
 
     batch_size = 5
 
-    epochs = 1
+    epochs = 5
 
-    subsamples = 2
+    subsamples = 20
 
     feature_size = 4096
 
@@ -132,8 +132,8 @@ def main():
                     preds_d_t_sc, _ = sgd_dennis_scipy.evaluate('train_cat', subsamples, debug)
                     mse_sc,_, _ = sgd_dennis_scipy.evaluate('val_cat',subsamples)
                     mse_tr_sc,_, _ = sgd_dennis_scipy.evaluate('train_cat',subsamples)
-                    print "Eval loss train: ", al_i, mse_tr
-                    print "Eval loss val: ", al_i, mse
+                    print "Eval loss train: ", al_i, mse_tr, mse_tr_sc
+                    print "Eval loss val: ", al_i, mse, mse_sc
                 elif learn_mode == 'category_levels':
                     preds_d_d, y_d_d = sgd_dennis.evaluate('val_category_levels', subsamples, debug)
                     preds_d_t, y_d_t = sgd_dennis.evaluate('train_category_levels', subsamples, debug)
