@@ -15,9 +15,9 @@ def lower_constraint(w,x,y,alpha):
 
 def upper_constraint(w,x,y,alpha):
     ret = 0.0
-    for x_ in x:
-        print w,x_,np.dot(np.array(x_),w) ,np.minimum(np.dot(np.array(x_),w)-1,0)
-        ret += np.maximim(y-np.dot(np.array(x_),w),y).sum()
+    for x_,y_ in zip(x,y):
+        print w,x_,np.dot(np.array(x_),w) ,np.maximum(y_-np.dot(np.array(x_),w),y_)
+        ret += np.maximum(y_-np.dot(np.array(x_),w),y_).sum()
     return ret
 
 
