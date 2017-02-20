@@ -33,7 +33,7 @@ def main():
 
     eta = math.pow(10,-5)
 
-    for tree_level_size in range(5,6):
+    for tree_level_size in range(2,3):
         #initialize
         print 'initializing', tree_level_size
         #sgd = SGD.SGD('max', category, tree_level_size, batch_size, math.pow(10,-4), 0.003, math.pow(10,-5))
@@ -94,14 +94,14 @@ def main():
                     #tr_l, te_l = sgd_dennis.learn('categories')
                     if debug:
                         tr_l, te_l = sgd_dennis.learn(learn_mode, subsamples, debug)
-                        tr_l_sc, te_l_sc = sgd_dennis.learn_scipy(learn_mode, subsamples, debug)
+                        tr_l_sc, te_l_sc = sgd_dennis_scipy.learn_scipy(learn_mode, with_constraints=False, subsamples, debug)
                         training_loss = np.concatenate((training_loss,tr_l), axis=1)#.reshape(-1,1)
                         validation_loss = np.concatenate((validation_loss,te_l), axis=1)#.reshape(-1,1)
                         training_loss_scipy = np.concatenate((training_loss_scipy,tr_l_sc), axis=1)#.reshape(-1,1)
                         validation_loss_scipy = np.concatenate((validation_loss_scipy,te_l_sc), axis=1)#.reshape(-1,1)
                     else:
                         sgd_dennis.learn(learn_mode)
-                        sgd_dennis_scipy.learn_scipy(learn_mode)
+                        sgd_dennis_scipy.learn_scipy(learn_mode, with_constraints=False)
                 if debug:
                     output_dennis.plot_train_val_loss(training_loss, validation_loss, eta, al_i)
                     output_dennis_scipy.plot_train_val_loss(training_loss, validation_loss, eta, al_i)

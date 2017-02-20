@@ -5,7 +5,7 @@ from itertools import chain, islice
 import numpy as np
 
 
-def lower_constraint(w,x,y,alpha):
+def lower_constraint(w,x,y,alpha,level_fcts):
     ret = 0.0
     for x_ in x:
         print w,x_,np.dot(np.array(x_),w) ,np.minimum(np.dot(np.array(x_),w)-1,0)
@@ -13,31 +13,21 @@ def lower_constraint(w,x,y,alpha):
     return ret
 
 
-def upper_constraint(w,x,y,alpha):
+def upper_constraint(w,x,y,alpha,level_fcts):
     ret = 0.0
     for x_,y_ in zip(x,y):
-        print w,x_,np.dot(np.array(x_),w) ,np.maximum(y_-np.dot(np.array(x_),w),y_)
-        ret += np.maximum(y_-np.dot(np.array(x_),w),y_).sum()
+        print w, np.dot(np.array(x_),w),np.minimum(y_-np.dot(np.array(x_),w),0)
+        ret += np.minimum(y_-np.dot(np.array(x_),w),0).sum()
     return ret
 
 
-def loss_new_scipy(w, x, y, alpha, level_fct):
-    loss = 0.0
-    original_function = level_fct
-    for fun in level_fct:
-        copy = original_function
-        copy.remove(fun)
-        iep = iep_with_func(w,x,copy)
-        window_pred = np.dot(w, x[fun[1]])
-        loss += (y - iep - window_pred) ** 2
-    return loss + alpha * math.sqrt(np.dot(w,w))
-
-
 def loss_new_scipy(w, x, y, alpha, fct):
-    print w
     loss = 0.0
     for img_nr, img_fct in zip(fct.keys(),fct.values()):
+        print img_fct
         for level_fct in img_fct:
+            print level_fct
+            raw_input()
             for fun in level_fct:
                 copy = deepcopy(level_fct)
                 copy.remove(fun)

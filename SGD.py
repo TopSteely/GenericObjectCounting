@@ -7,7 +7,7 @@ import random
 import time
 import math
 from scipy.optimize import minimize
-from utils import iep_with_func, loss_new_scipy
+from utils import iep_with_func, loss_new_scipy, lower_constraint, upper_constraint
 from copy import deepcopy
 
 
@@ -358,9 +358,9 @@ class SGD:
         subset = training_data[:to]
         random.shuffle(subset)
         x = []
-        alpha = []
+        alpha = self.alpha
         y = []
-        level_fcts = []
+        fcts = []
         for i_img_nr, img_nr in enumerate(subset):
             start = time.time()
             if self.dataset == 'blob':
@@ -372,16 +372,22 @@ class SGD:
                     img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
 
                 #todo: only append information we need?
-                for lvl in range(self.prune_tree_levels):
-                    x.append(img_data.X)
-                    y.append(img_data.y)
-                    alpha.append(self.alpha)
-                    _,fct = self.learner.get_iep_levels(img_data, {})
-                    level_fcts.append(fct[lvl])
+                x.append(img_data.X)
+                y.extend(img_data.y)
+                _,fct = self.learner.get_iep_levels(img_data, {})
+                for lvl in range(len(img_data.levels)):
+                    print lvl
+                    fcts.append(fct[lvl])
+        print y
+        print fcts
         print 'starting minimizing'
-        res = minimize(lambda w: loss_new_scipy(w, x, y, alpha, level_fcts), 0.0)
+        if with_constraints:
+            cons = ({'type': 'ineq', 'fun': upper_constraint,'args':(x,y,alpha,fcts)},
+                    {'type': 'ineq', 'fun': lower_constraint,'args':(x,y,alpha,fcts)})
+            res = minimize(loss_new_scipy, np.zeros(self.n_features), args=(x, y, alpha, fcts), constraints=cons)
+        else:
+            res = minimize(loss_new_scipy, np.zeros(self.n_features), args=(x, y, alpha, fcts))
         print res
-        print res.w
         raw_input()
         if debug:
             tr_loss, te_loss = self.loss_per_level_all(instances, to)
