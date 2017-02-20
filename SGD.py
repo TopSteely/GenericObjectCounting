@@ -300,7 +300,6 @@ class SGD:
         subset = training_data[:to]
         random.shuffle(subset)
         for i_img_nr, img_nr in enumerate(subset):
-            print i_img_nr
             start = time.time()
             if self.dataset == 'blob':
                 img_data = self.blobtraindata[i_img_nr]
@@ -364,7 +363,6 @@ class SGD:
         fcts = {}
         for i_img_nr, img_nr in enumerate(subset):
             fcts[i_img_nr] = []
-            print 'scipy', i_img_nr
             start = time.time()
             if self.dataset == 'blob':
                 img_data = self.blobtraindata[i_img_nr]
@@ -381,15 +379,13 @@ class SGD:
                 for lvl in range(len(img_data.levels)):
                     print lvl
                     fcts[i_img_nr].append(fct[lvl])
-        print y
-        print fcts
         print 'starting minimizing'
         if with_constraints:
             cons = ({'type': 'ineq', 'fun': upper_constraint,'args':(x,y,alpha,fcts)},
                     {'type': 'ineq', 'fun': lower_constraint,'args':(x,y,alpha,fcts)})
-            res = minimize(loss_new_scipy, np.zeros(self.n_features), args=(x, y, alpha, fcts), constraints=cons, options={maxiter:5})
+            res = minimize(loss_new_scipy, np.zeros(self.n_features), args=(x, y, alpha, fcts), constraints=cons, options={'maxiter':5})
         else:
-            res = minimize(loss_new_scipy, np.zeros(self.n_features), args=(x, y, alpha, fcts), options={maxiter:5})
+            res = minimize(loss_new_scipy, np.zeros(self.n_features), args=(x, y, alpha, fcts), options={'maxiter':5})
         print res
         if debug:
             tr_loss, te_loss = self.loss_per_level_all(instances, to)
