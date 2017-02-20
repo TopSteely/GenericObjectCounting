@@ -363,7 +363,7 @@ class SGD:
         y = []
         fcts = {}
         for i_img_nr, img_nr in enumerate(subset):
-            fcts[img_nr] = []
+            fcts[i_img_nr] = []
             print 'scipy', i_img_nr
             start = time.time()
             if self.dataset == 'blob':
