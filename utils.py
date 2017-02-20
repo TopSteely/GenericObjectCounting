@@ -3,6 +3,7 @@ from collections import deque
 import itertools
 from itertools import chain, islice
 import numpy as np
+from copy import deepcopy
 
 
 def lower_constraint(w,x,y,alpha,level_fcts):
