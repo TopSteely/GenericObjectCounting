@@ -18,8 +18,8 @@ def con(w,x,y,alpha):
 def upper_constraint(w,x,y,alpha):
     ret = 0.0
     for x_,y_ in zip(x,y):
-        print w, np.dot(np.array(x_),w),np.minimum(np.dot(np.array(x_),w),y_)
-        ret += np.minimum(np.dot(np.array(x_),w),y_).sum()
+        print w, np.dot(np.array(x_),w),np.minimum(np.dot(np.array(x_)-y_,w),0)
+        ret += np.minimum(np.dot(np.array(x_),w)-y_,0).sum()
     return ret
 
 cons = ({'type': 'ineq', 'fun': upper_constraint,'args':(x,y,alpha)})
