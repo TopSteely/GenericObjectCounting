@@ -4,6 +4,7 @@ import itertools
 from itertools import chain, islice
 import numpy as np
 from copy import deepcopy
+import math
 
 
 def lower_constraint(w,x,y,alpha,level_fcts):
