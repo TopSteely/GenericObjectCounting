@@ -24,9 +24,9 @@ def main():
 
     batch_size = 5
 
-    epochs = 1
+    epochs = 5
 
-    subsamples = 10
+    subsamples = 40
 
     feature_size = 1
 
@@ -54,11 +54,11 @@ def main():
                     #print epoch
                     #tr_l, te_l = sgd_dennis.learn('categories')
                     if debug:
-                        tr_l, te_l = sgd_dennis.learn_scipy(learn_mode, subsamples, debug)
+                        tr_l, te_l = sgd_dennis.learn(learn_mode, subsamples, debug)
                         training_loss = np.concatenate((training_loss,tr_l), axis=1)#.reshape(-1,1)
                         validation_loss = np.concatenate((validation_loss,te_l), axis=1)#.reshape(-1,1)
                     else:
-                        sgd_dennis.learn_scipy(learn_mode)
+                        sgd_dennis.learn(learn_mode)
                     #print tr_l, te_l
                     
                     #training_loss.extend(tr_l)

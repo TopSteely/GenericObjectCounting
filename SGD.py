@@ -102,6 +102,7 @@ class SGD:
                 window_pred = np.dot(self.w, img_data.X[fun[1]])
                 loss += ((img_data.y - iep - window_pred) ** 2)
         return loss + self.alpha * math.sqrt(np.dot(self.w,self.w))
+
         
     def loss_mean(self, img_data):
         level_preds, _ = self.predictor.get_iep_levels(img_data, {})
@@ -375,8 +376,6 @@ class SGD:
                 else:
                     img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
 
-                #todo: only append information we need?
-                print img_data.X[0:20]
                 x.append(img_data.X)
                 y.append(img_data.y)
                 _,fct = self.learner.get_iep_levels(img_data, {})

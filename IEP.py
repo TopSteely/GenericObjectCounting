@@ -112,4 +112,73 @@ class IEP:
                 functions[level] = function
             iep_levels.append(iep)
         return iep_levels, functions
+
+
+    def iep_single_patch(self, Data):
+    tru = y
+    if len(levels[level]) == 1:
+        return [np.dot(w,x[levels[level][0]])], []
+    count_per_level_temp = 0
+    level_boxes = []
+    for i in levels[level]:
+        level_boxes.append(coords[i][0])
+    
+    # create graph G from combinations possible        
+    combinations = list(itertools.combinations(levels[level], 2)) 
+    iep_patch = []
+    for iep_node in levels[level]:
+        comb_node = [its for its in combinations if iep_node in its]
+        G = nx.Graph()
+        G.add_edges_from(comb_node)
+        for comb in comb_node:
+            set_ = []
+            for c in comb:
+                set_.append(coords[c])
+            I = get_set_intersection(set_)
+            if I == []:
+                G.remove_edges_from([comb])
+        
+        feat_exist = True #must be false in order to write
+        length = 1
+        index = {}
+        nbrs = {}
+    
+        for u in G:
+            index[u] = len(index)
+            # Neighbors of u that appear after u in the iteration order of G.
+            nbrs[u] = {v for v in G[u] if v not in index}
+    
+        queue = deque(([u], sorted(nbrs[u], key=index.__getitem__)) for u in G)
+        # Loop invariants:
+        # 1. len(base) is nondecreasing.
+        # 2. (base + cnbrs) is sorted with respect to the iteration order of G.
+        # 3. cnbrs is a set of common neighbors of nodes in base.
+        while queue:
+            base, cnbrs = map(list, queue.popleft())
+            if iep_node not in base:
+                continue
+            if len(base) > length:
+                length = len(base)
+            I = [0,0,1000,1000]
+            for c in base:
+                if I != []:
+                   I = get_intersection(coords[c], I)
+            if I != []:
+              if I in coords:
+                 ind = coords.tolist().index(I)
+                 if len(base)%2==1:
+                     count_per_level_temp += np.dot(w,x[ind])
+                     function.append(['+',ind])
+                 else:
+                     count_per_level_temp -= np.dot(w,x[ind])
+              else:
+                print 'not founf'
+                exit()
+            for i, u in enumerate(cnbrs):
+                # Use generators to reduce memory consumption.
+                queue.append((chain(base, [u]),
+                              filter(nbrs[u].__contains__,
+                                     islice(cnbrs, i + 1, None))))
+        iep_patch.append(count_per_level_temp)
+    return iep_patch, function
         
