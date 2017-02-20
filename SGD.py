@@ -375,7 +375,7 @@ class SGD:
 
                 #todo: only append information we need?
                 x.append(img_data.X)
-                y.extend(img_data.y)
+                y.append(img_data.y)
                 _,fct = self.learner.get_iep_levels(img_data, {})
                 for lvl in range(len(img_data.levels)):
                     print lvl
