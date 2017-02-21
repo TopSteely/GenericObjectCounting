@@ -10,7 +10,6 @@ import math
 def lower_constraint(w,x,y,alpha,level_fcts):
     ret = 0.0
     for x_ in x:
-        print w,x_,np.dot(np.array(x_),w) ,np.minimum(np.dot(np.array(x_),w)-1,0)
         ret += np.minimum(np.dot(np.array(x_),w)-1,0).sum()
     return ret
 
@@ -18,7 +17,6 @@ def lower_constraint(w,x,y,alpha,level_fcts):
 def upper_constraint(w,x,y,alpha,level_fcts):
     ret = 0.0
     for x_,y_ in zip(x,y):
-        print w, np.dot(np.array(x_),w),np.minimum(y_-np.dot(np.array(x_),w),0)
         ret += np.minimum(y_-np.dot(np.array(x_),w),0).sum()
     return ret
 
