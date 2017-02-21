@@ -83,6 +83,7 @@ def main():
                 validation_loss = np.array([], dtype=np.int64).reshape(tree_level_size+1,0)
                 #sgd_pascal = SGD.SGD('pascal', 'max', category, tree_level_size, batch_size, eta_i, gamma_i, al_i)
                 sgd_dennis = SGD.SGD('dennis', pred_mode, category, tree_level_size, batch_size, eta, gamma_i, al_i, feature_size)
+                sgd_dennis_old = SGD.SGD('dennis', 'mean', category, tree_level_size, batch_size, eta, gamma_i, al_i, feature_size)
                 sgd_dennis_scipy = SGD.SGD('dennis', pred_mode, category, tree_level_size, batch_size, eta, gamma_i, al_i, feature_size)
                 sgd_dennis.set_scaler(scaler_dennis)
                 sgd_dennis_scipy.set_scaler(scaler_dennis)
@@ -95,6 +96,7 @@ def main():
                         validation_loss = np.concatenate((validation_loss,te_l), axis=1)#.reshape(-1,1)
                     else:
                         sgd_dennis.learn(learn_mode)
+                        sgd_dennis_old.learn(learn_mode)
                 if debug:
                     tr_l_sc, te_l_sc = sgd_dennis_scipy.learn_scipy(learn_mode, False, subsamples, debug)
                     output_dennis.plot_train_val_loss(training_loss, validation_loss, eta, al_i)
@@ -112,13 +114,15 @@ def main():
                     mse_tr,ae_tr, mse_non_zero_tr = sgd_dennis.evaluate('train_cat')
                     mse_sc,_, _ = sgd_dennis_scipy.evaluate('val_cat')
                     mse_tr_sc,_, _ = sgd_dennis_scipy.evaluate('train_cat')
+                    mse_old,_, _ = sgd_dennis_old.evaluate('val_cat')
+                    mse_tr_old,_, _ = sgd_dennis_old.evaluate('train_cat')
                 elif learn_mode == 'category_levels':
                     mse,ae, mse_non_zero = sgd_dennis.evaluate('val_category_levels')
                     mse_tr,ae_tr, mse_non_zero_tr = sgd_dennis.evaluate('train_category_levels')
                     mse_sc,_, _ = sgd_dennis_scipy.evaluate('val_category_levels')
                     mse_tr_sc,_, _ = sgd_dennis_scipy.evaluate('train_category_levels')
-                print "Eval loss train: ", al_i, mse_tr, mse_tr_sc
-                print "Eval loss val: ", al_i, mse, mse_sc
+                print "Eval loss train: ", al_i, mse_tr, mse_tr_sc, mse_tr_old
+                print "Eval loss val: ", al_i, mse, mse_sc, mse_old
             else:
                 if learn_mode == 'all':
                     preds_d_d, y_d_d, level_pred_d, max_iep_patches_d, max_level_preds_d = sgd_dennis.evaluate('val_all', subsamples, debug)
