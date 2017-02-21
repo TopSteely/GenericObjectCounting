@@ -48,11 +48,12 @@ def loss_new_scipy(w, x, y, alpha, fct):
                 copy.remove(fun)
                 iep = iep_with_func(w,x[img_nr],copy)
                 window_pred = np.dot(w, x[img_nr][fun[1]])
+                print y[img_nr], iep, window_pred
                 loss += ((y[img_nr] - iep - window_pred) ** 2)
     return loss + alpha * math.sqrt(np.dot(w,w))
 
 
-for epoch in range(30):
+for epoch in range(8):
     for img_nr, img_fct in zip(fct.keys(),fct.values()):
         for level_fct in img_fct:
             for fun in level_fct:
@@ -61,7 +62,7 @@ for epoch in range(30):
                 w_update += (np.dot(w, x[img_nr][fun[1]]) + iep_with_func(w,x[img_nr],copy) - y[img_nr]) * (iep_with_func(1.0,x[img_nr],copy) + x[img_nr][fun[1]])
     w_update += 2 * w_update + 2 * alpha * w
 
-    w -= 0.001 * w_update
+    w -= 0.01 * w_update
     w_update = 0.0
     loss = 0.0
 
