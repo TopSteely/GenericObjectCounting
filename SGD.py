@@ -439,7 +439,7 @@ class SGD:
         print level_preds
         iep_levels, _ = self.learner.get_iep_levels(img_data, functions)
         print iep_levels
-        print iep_levels.shape
+        print np.array(iep_levels).shape
         c = np.array(level_preds) - img_data.y
         print c
         print np.array(iep_levels).reshape(-1,1).shape
