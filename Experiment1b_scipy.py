@@ -43,6 +43,7 @@ def main():
         output_dennis_scipy = Output.Output('dennis_scipy%s'%(pred_mode), category, tree_level_size, '1b')
         output_dennis_scipy_cons = Output.Output('dennis_scipy_cons%s'%(pred_mode), category, tree_level_size, '1b')
         
+        print 0,
         #learn scaler
         #scaler_pascal = StandardScaler()
         if learn_mode == 'all':
@@ -75,6 +76,8 @@ def main():
                 scaler_category.fit(data_to_scale)
                 output_dennis.dump_scaler_category(scaler_category)
                 scaler_dennis = scaler_category
+
+        print 1,
             
         # learn SGD
         for al_i in [10,1,0.1]:#[math.pow(10,-4)]:#,math.pow(10,-2)
