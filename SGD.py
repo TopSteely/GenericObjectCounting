@@ -245,6 +245,9 @@ class SGD:
                 max_iep_patches_d = {}
                 max_level_preds_d = {}
                 if i_img_nr < 10:
+                    if img_nr not in self.functions:
+                        _,fct = self.learner.get_iep_levels(img_data, {})
+                        self.functions[img_nr] = fct
                     level_preds = self.predict_ind(img_data)
                     level_pred_d[img_data.img_nr] = level_preds
                     max_iep_patches_d[img_data.img_nr] = []
