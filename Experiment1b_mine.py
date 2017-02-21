@@ -25,7 +25,7 @@ def main():
 
     batch_size = 5
 
-    epochs = 3
+    epochs = 5
 
     subsamples = 5
 
@@ -33,7 +33,7 @@ def main():
 
     eta = math.pow(10,-5)
 
-    for tree_level_size in range(1,3):
+    for tree_level_size in range(1,5):
         #initialize
         print 'initializing', tree_level_size
         #sgd = SGD.SGD('max', category, tree_level_size, batch_size, math.pow(10,-4), 0.003, math.pow(10,-5))
@@ -76,7 +76,7 @@ def main():
                 scaler_dennis = scaler_category
             
         # learn SGD
-        for al_i in [10,1,0.1]:#[math.pow(10,-4)]:#,math.pow(10,-2)
+        for al_i in [0.01]:#[math.pow(10,-4)]:#,math.pow(10,-2)
             for gamma_i in [math.pow(10,-5)]:#,math.pow(10,-4),math.pow(10,-3),math.pow(10,-2)
                 training_loss = np.array([], dtype=np.int64).reshape(tree_level_size+1,0)
                 validation_loss = np.array([], dtype=np.int64).reshape(tree_level_size+1,0)
@@ -90,7 +90,7 @@ def main():
                 sgd_dennis_scipy.set_scaler(scaler_dennis)
                 sgd_dennis_scipy_cons.set_scaler(scaler_dennis)
                 for epoch in range(epochs):
-                    #print epoch
+                    print(epoch, end='')
                     #tr_l, te_l = sgd_dennis.learn('categories')
                     if debug:
                         sgd_dennis_old.learn(learn_mode, subsamples)
@@ -114,8 +114,8 @@ def main():
                 mse_tr,ae_tr, mse_non_zero_tr = sgd_dennis.evaluate('train_cat', subsamples)
                 mse_old,_, _ = sgd_dennis_old.evaluate('val_cat', subsamples)
                 mse_tr_old,_, _ = sgd_dennis_old.evaluate('train_cat', subsamples)
-                preds_d_d, y_d_d, level_pred_d_d, max_iep_patches_d_d, max_level_preds_d_d = sgd_dennis.evaluate('val_cat', subsamples, debug)
-                preds_d_d_old, y_d_d_old, level_pred_d_d_old, max_iep_patches_d_d_old, max_level_preds_d_d_old = sgd_dennis_old.evaluate('val_cat', subsamples, debug)
+                preds_d_d, y_d_d, level_pred_d_d, max_iep_patches_d_d, max_level_preds_d_d = sgd_dennis.evaluate('val_cat', subsamples, True)
+                preds_d_d_old, y_d_d_old, level_pred_d_d_old, max_iep_patches_d_d_old, max_level_preds_d_d_old = sgd_dennis_old.evaluate('val_cat', subsamples, True)
             elif learn_mode == 'category_levels':
                 mse,ae, mse_non_zero = sgd_dennis.evaluate('val_category_levels')
                 mse_tr,ae_tr, mse_non_zero_tr = sgd_dennis.evaluate('train_category_levels')

@@ -92,8 +92,8 @@ def main():
                 mse_tr_sc,_, _ = sgd_dennis_scipy.evaluate('train_cat', subsamples)
                 mse_sc_cons,_, _ = sgd_dennis_scipy_cons.evaluate('val_cat', subsamples)
                 mse_tr_sc_cons,_, _ = sgd_dennis_scipy_cons.evaluate('train_cat', subsamples)
-                preds_d_d_sc, _, level_pred_d_d_sc, max_iep_patches_d_d_sc, max_level_preds_d_d_sc = sgd_dennis_scipy.evaluate('val_cat', subsamples, debug)
-                preds_d_d_sc_cons, _, level_pred_d_d_sc_cons, max_iep_patches_d_d_sc_cons, max_level_preds_d_d_sc_cons = sgd_dennis_scipy_cons.evaluate('val_cat', subsamples, debug)
+                preds_d_d_sc, _, level_pred_d_d_sc, max_iep_patches_d_d_sc, max_level_preds_d_d_sc = sgd_dennis_scipy.evaluate('val_cat', subsamples, True)
+                preds_d_d_sc_cons, _, level_pred_d_d_sc_cons, max_iep_patches_d_d_sc_cons, max_level_preds_d_d_sc_cons = sgd_dennis_scipy_cons.evaluate('val_cat', subsamples, True)
                 
 
             print "Eval loss train: ", al_i, mse_tr_sc, mse_tr_sc_cons
