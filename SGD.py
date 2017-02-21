@@ -399,14 +399,12 @@ class SGD:
                 _,fct = self.learner.get_iep_levels(img_data, {})
                 for lvl in range(len(img_data.levels)):
                     fcts[i_img_nr].append(fct[lvl])
-        print 'starting minimizing'
         if with_constraints:
             cons = ({'type': 'ineq', 'fun': upper_constraint,'args':(x,y,alpha,fcts)},
                     {'type': 'ineq', 'fun': lower_constraint,'args':(x,y,alpha,fcts)})
             res = minimize(loss_new_scipy, np.zeros(self.n_features), args=(x, y, alpha, fcts), constraints=cons, tol=0.1, options={'maxiter':10})#
         else:
             res = minimize(loss_new_scipy, np.zeros(self.n_features), args=(x, y, alpha, fcts), tol=0.1, options={'maxiter':10})#
-        print 'Iterations: ', res.nit
         self.w = res.x
         self.predictor = IEP.IEP(self.w, 'prediction')
         if debug:
@@ -438,7 +436,16 @@ class SGD:
         
     def learn_mean(self, img_data, functions):
         level_preds = self.predict_ind(img_data)
+        print level_preds
         iep_levels, _ = self.learner.get_iep_levels(img_data, functions)
+        print iep_levels
+        c = np.array(level_preds) - img_data.y
+        print c
+        a = np.array(np.array(level_preds) - img_data.y) * np.array(iep_levels).reshape(-1,1)
+        print a
+        b = np.sum(np.array(np.array(level_preds) - img_data.y) * np.array(iep_levels).reshape(-1,1), axis=0)
+        print b
+        print 2 * np.sum(np.array(np.array(level_preds) - img_data.y) * np.array(iep_levels).reshape(-1,1), axis=0) + 2 * self.alpha * self.w
         return 2 * np.sum(np.array(np.array(level_preds) - img_data.y) * np.array(iep_levels).reshape(-1,1), axis=0) + 2 * self.alpha * self.w, functions
 
     #tested
