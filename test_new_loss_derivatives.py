@@ -42,7 +42,6 @@ def loss_new_scipy(w, x, y, alpha, fct):
     #print w
     loss = 0.0
     for img_nr, img_fct in zip(fct.keys(),fct.values()):
-        print img_nr, img_fct
         for level_fct in img_fct:
             for fun in level_fct:
                 copy = deepcopy(level_fct)
