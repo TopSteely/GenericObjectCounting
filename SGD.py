@@ -494,8 +494,7 @@ class SGD:
                 
 
         for i_level,level_fct in enumerate(fct.values()):
-            if i_level > 2:
-                print level_fct
+            print i_level,level_fct
             for fun in level_fct:
                 copy = deepcopy(level_fct)
                 copy.remove(fun)
