@@ -14,7 +14,6 @@ from copy import deepcopy
 
 class SGD:
     def __init__(self, dataset, mode, category, prune_tree_levels, batch_size, eta, gamma, alpha, num_features=1000):
-        print 'init SGD'
         self.version = mode
         self.prune_tree_levels = prune_tree_levels
         self.n_features = num_features
@@ -407,7 +406,7 @@ class SGD:
             res = minimize(loss_new_scipy, np.zeros(self.n_features), args=(x, y, alpha, fcts), constraints=cons, tol=0.1)#, options={'maxiter':5}
         else:
             res = minimize(loss_new_scipy, np.zeros(self.n_features), args=(x, y, alpha, fcts), tol=0.1)#, options={'maxiter':5}
-        print res
+        print 'Iterations: ', res.nit
         self.w = res.x
         self.predictor = IEP.IEP(self.w, 'prediction')
         if debug:

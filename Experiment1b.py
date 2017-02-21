@@ -25,9 +25,9 @@ def main():
 
     batch_size = 7
 
-    epochs = 1
+    epochs = 5
 
-    subsamples = 28
+    subsamples = 14
 
     feature_size = 4096
 
@@ -86,7 +86,6 @@ def main():
                 sgd_dennis_scipy = SGD.SGD('dennis', pred_mode, category, tree_level_size, batch_size, eta, gamma_i, al_i, feature_size)
                 sgd_dennis.set_scaler(scaler_dennis)
                 sgd_dennis_scipy.set_scaler(scaler_dennis)
-                print al_i, gamma_i
                 for epoch in range(epochs):
                     #print epoch
                     #tr_l, te_l = sgd_dennis.learn('categories')
