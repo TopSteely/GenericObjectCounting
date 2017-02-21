@@ -22,17 +22,17 @@ def main():
 
     debug = True
 
-    batch_size = 5
+    batch_size = 7
 
-    epochs = 4
+    epochs = 5
 
-    subsamples = 10
+    subsamples = 21
 
     feature_size = 1
 
     eta = math.pow(10,-4)
 
-    for tree_level_size in range(2,3):
+    for tree_level_size in range(3,4):
         #initialize
         print 'initializing', tree_level_size
         #sgd = SGD.SGD('max', category, tree_level_size, batch_size, math.pow(10,-4), 0.003, math.pow(10,-5))

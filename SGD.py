@@ -89,7 +89,6 @@ class SGD:
         return np.min(np.array(level_preds) - img_data.y)**2 + self.alpha * math.sqrt(np.dot(self.w,self.w))
 
     def loss_new(self, img_data):
-        print 'w: ', self.w
         loss = 0.0
         if img_data.img_nr in self.functions:
             fct = self.functions[img_data.img_nr]
@@ -429,6 +428,7 @@ class SGD:
         else:
             self.w -= (self.eta * self.w_update)
             self.w_update = np.zeros(self.n_features)
+        print 'w: ', self.w
         self.eta = self.eta * (1+self.eta0*self.gamma*self.samples_seen)**-1
         self.predictor = IEP.IEP(self.w, 'prediction')
         
