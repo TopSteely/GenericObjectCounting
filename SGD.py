@@ -397,6 +397,7 @@ class SGD:
                 _,fct = self.learner.get_iep_levels(img_data, {})
                 for lvl in range(len(img_data.levels)):
                     fcts[i_img_nr].append(fct[lvl])
+        print 'gathered ',
         if with_constraints:
             cons = ({'type': 'ineq', 'fun': upper_constraint,'args':(x,y,alpha,fcts)},
                     {'type': 'ineq', 'fun': lower_constraint,'args':(x,y,alpha,fcts)})

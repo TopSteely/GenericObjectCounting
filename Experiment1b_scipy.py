@@ -86,6 +86,7 @@ def main():
                 sgd_dennis_scipy_cons = SGD.SGD('dennis', pred_mode, category, tree_level_size, batch_size, eta, gamma_i, al_i, feature_size)
                 sgd_dennis_scipy.set_scaler(scaler_dennis)
                 sgd_dennis_scipy_cons.set_scaler(scaler_dennis)
+                print 'strating ',
                 sgd_dennis_scipy.learn_scipy(learn_mode,subsamples)
                 print 'learned scipy ',
                 sgd_dennis_scipy_cons.learn_scipy(learn_mode,True,subsamples)
