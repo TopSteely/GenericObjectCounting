@@ -122,8 +122,8 @@ def main():
                 mse_sc,_, _ = sgd_dennis_scipy.evaluate('val_category_levels')
                 mse_tr_sc,_, _ = sgd_dennis_scipy.evaluate('train_category_levels')
 
-            print "Eval loss train: ", al_i, mse_tr_old, mse_tr, mse_tr_sc, mse_tr_sc_cons
-            print "Eval loss val: ", al_i, mse_old, mse, mse_sc, mse_sc_cons
+            print "Eval loss train: ", al_i, mse_tr_old, mse_tr
+            print "Eval loss val: ", al_i, mse_old, mse
             output_dennis.plot_preds(preds_d_d, y_d_d, al_i, 'val')
             output_dennis.plot_best(level_pred_d_d, max_level_preds_d_d)
             output_dennis_old.plot_best(level_pred_d_d_old, max_level_preds_d_d_old)
