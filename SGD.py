@@ -258,7 +258,7 @@ class SGD:
                         print img_data.y, iep_patches, np.max(iep_patches)
                         raw_input()
                         max_iep_patches = np.max(iep_patches)
-                        ind = iep_patches.tolist().index(max_iep_patches)
+                        ind = iep_patches.index(max_iep_patches)
                         max_iep_patches_d[img_data.img_nr].append([img_data.boxes[ind],max_iep_patches])
 
                         all_patches = [a[1] for a in self.functions[img_nr][level]]
@@ -266,7 +266,7 @@ class SGD:
                         for level_patch in all_patches:
                             level_patch_preds.append(self.predict_window(img_data, level_patch))
                         max_level_pred = np.max(level_patch_preds)
-                        ind = level_patch_preds.tolist().index(max_level_pred)
+                        ind = level_patch_preds.index(max_level_pred)
                         max_level_preds_d[img_data.img_nr].append([img_data.boxes[ind],max_level_pred])
         if debug:
             return preds_d, y_d, level_pred_d, max_iep_patches_d, max_level_preds_d
