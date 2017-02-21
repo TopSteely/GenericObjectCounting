@@ -114,8 +114,8 @@ def main():
                 mse_tr,ae_tr, mse_non_zero_tr = sgd_dennis.evaluate('train_cat', subsamples)
                 mse_old,_, _ = sgd_dennis_old.evaluate('val_cat', subsamples)
                 mse_tr_old,_, _ = sgd_dennis_old.evaluate('train_cat', subsamples)
-                preds_d_d, y_d_d, level_pred_d_d, max_iep_patches_d_d, max_level_preds_d_d = sgd_dennis.evaluate('val_cat', subsamples, True)
-                preds_d_d_old, y_d_d_old, level_pred_d_d_old, max_iep_patches_d_d_old, max_level_preds_d_d_old = sgd_dennis_old.evaluate('val_cat', subsamples, True)
+                preds_d_d, y_d_d, level_pred_d_d, max_level_preds_d_d = sgd_dennis.evaluate('val_cat', subsamples, True)
+                preds_d_d_old, y_d_d_old, level_pred_d_d_old, max_level_preds_d_d_old = sgd_dennis_old.evaluate('val_cat', subsamples, True)
             elif learn_mode == 'category_levels':
                 mse,ae, mse_non_zero = sgd_dennis.evaluate('val_category_levels')
                 mse_tr,ae_tr, mse_non_zero_tr = sgd_dennis.evaluate('train_category_levels')

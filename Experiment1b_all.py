@@ -124,10 +124,10 @@ def main():
                 mse_tr_old,_, _ = sgd_dennis_old.evaluate('train_cat', subsamples)
                 mse_sc_cons,_, _ = sgd_dennis_scipy_cons.evaluate('val_cat', subsamples)
                 mse_tr_sc_cons,_, _ = sgd_dennis_scipy_cons.evaluate('train_cat', subsamples)
-                preds_d_d, y_d_d, level_pred_d_d, max_iep_patches_d_d, max_level_preds_d_d = sgd_dennis.evaluate('val_cat', subsamples, debug)
-                preds_d_d_old, y_d_d_old, level_pred_d_d_old, max_iep_patches_d_d_old, max_level_preds_d_d_old = sgd_dennis_old.evaluate('val_cat', subsamples, debug)
-                preds_d_d_sc, _, level_pred_d_d_sc, max_iep_patches_d_d_sc, max_level_preds_d_d_sc = sgd_dennis_scipy.evaluate('val_cat', subsamples, debug)
-                preds_d_d_sc_cons, _, level_pred_d_d_sc_cons, max_iep_patches_d_d_sc_cons, max_level_preds_d_d_sc_cons = sgd_dennis_scipy_cons.evaluate('val_cat', subsamples, debug)
+                preds_d_d, y_d_d, level_pred_d_d, max_level_preds_d_d = sgd_dennis.evaluate('val_cat', subsamples, debug)
+                preds_d_d_old, y_d_d_old, level_pred_d_d_old, max_level_preds_d_d_old = sgd_dennis_old.evaluate('val_cat', subsamples, debug)
+                preds_d_d_sc, _, level_pred_d_d_sc, max_level_preds_d_d_sc = sgd_dennis_scipy.evaluate('val_cat', subsamples, debug)
+                preds_d_d_sc_cons, _, level_pred_d_d_sc_cons, max_level_preds_d_d_sc_cons = sgd_dennis_scipy_cons.evaluate('val_cat', subsamples, debug)
                 
             elif learn_mode == 'category_levels':
                 mse,ae, mse_non_zero = sgd_dennis.evaluate('val_category_levels')

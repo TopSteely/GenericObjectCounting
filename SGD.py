@@ -262,7 +262,7 @@ class SGD:
                         ind = level_patch_preds.index(max_level_pred)
                         max_level_preds_d[img_data.img_nr].append([img_data.boxes[ind],max_level_pred])
         if debug:
-            return preds_d, y_d, level_pred_d, max_iep_patches_d, max_level_preds_d
+            return preds_d, y_d, level_pred_d, max_level_preds_d
         return squared_error/len(numbers), error / len(numbers), non_zero_error / n_non_zero#skl_error/len(numbers),, self.eta
         
         
