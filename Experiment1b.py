@@ -25,13 +25,13 @@ def main():
 
     batch_size = 7
 
-    epochs = 2
+    epochs = 1
 
-    subsamples = 21
+    subsamples = 7
 
     feature_size = 4096
 
-    eta = math.pow(10,-4)
+    eta = math.pow(10,-5)
 
     for tree_level_size in range(1,3):
         #initialize

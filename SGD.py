@@ -245,6 +245,7 @@ class SGD:
                 max_iep_patches_d = {}
                 max_level_preds_d = {}
                 if i_img_nr < 10:
+                    print 'in extra iep patch etc.'
                     if img_nr not in self.functions:
                         _,fct = self.learner.get_iep_levels(img_data, {})
                         self.functions[img_nr] = fct
@@ -255,8 +256,9 @@ class SGD:
                     for level in range(len(img_data.levels)):
                         iep_patches = self.predictor.iep_single_patch(img_data, self.functions[img_nr][level],level)
                         print iep_patches, np.max(iep_patches)
+                        raw_input()
                         max_iep_patches = np.max(iep_patches)
-                        ind = iep_patches.index(max_iep_patches)
+                        ind = iep_patches.tolist().index(max_iep_patches)
                         max_iep_patches_d[img_data.img_nr].append([img_data.boxes[ind],max_iep_patches])
 
                         all_patches = [a[1] for a in self.functions[img_nr][level]]
@@ -264,7 +266,7 @@ class SGD:
                         for level_patch in all_patches:
                             level_patch_preds.append(self.predict_window(img_data, level_patch))
                         max_level_pred = np.max(level_patch_preds)
-                        ind = level_patch_preds.index(max_level_pred)
+                        ind = level_patch_preds.tolist().index(max_level_pred)
                         max_level_preds_d[img_data.img_nr].append([img_data.boxes[ind],max_level_pred])
         if debug:
             return preds_d, y_d, level_pred_d, max_iep_patches_d, max_level_preds_d
