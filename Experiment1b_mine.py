@@ -27,7 +27,7 @@ def main():
 
     epochs = 5
 
-    subsamples = 5
+    subsamples = 10
 
     feature_size = 4096
 
@@ -110,10 +110,10 @@ def main():
                 mse_sc,_, _ = sgd_dennis_scipy.evaluate('val_all')
                 mse_tr_sc,_, _ = sgd_dennis_scipy.evaluate('train_all')
             elif learn_mode == 'category':
-                mse,ae, mse_non_zero = sgd_dennis.evaluate('val_cat', subsamples)
-                mse_tr,ae_tr, mse_non_zero_tr = sgd_dennis.evaluate('train_cat', subsamples)
-                mse_old,_, _ = sgd_dennis_old.evaluate('val_cat', subsamples)
-                mse_tr_old,_, _ = sgd_dennis_old.evaluate('train_cat', subsamples)
+                mse,ae, mse_non_zero = sgd_dennis.evaluate('val_cat')
+                mse_tr,ae_tr, mse_non_zero_tr = sgd_dennis.evaluate('train_cat')
+                mse_old,_, _ = sgd_dennis_old.evaluate('val_cat')
+                mse_tr_old,_, _ = sgd_dennis_old.evaluate('train_cat')
                 preds_d_d, y_d_d, level_pred_d_d, max_level_preds_d_d = sgd_dennis.evaluate('val_cat', subsamples, True)
                 preds_d_d_old, y_d_d_old, level_pred_d_d_old, max_level_preds_d_d_old = sgd_dennis_old.evaluate('val_cat', subsamples, True)
             elif learn_mode == 'category_levels':
