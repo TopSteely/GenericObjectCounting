@@ -135,7 +135,7 @@ class Output:
         plt.savefig(self.loss_path%(self.experiment,self.prune_tree_levels,eta,self.category, alpha, self.mode))
         
 
-    def plot_best(level_preds, max_level_window):
+    def plot_best(self, level_preds, max_level_window):
         #max_level_window = [img_data.boxes[ind],max_level_pred]
         for img_nr in level_preds.keys():
             # in case i want only imgs with levels higher than
