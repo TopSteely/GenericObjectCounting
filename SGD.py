@@ -448,9 +448,9 @@ class SGD:
         print b
         print b.shape, a.shape
         print (a+b).shape
-        print 2 * np.sum(np.array(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels).reshape(-1,1), axis=0) + 2 * self.alpha * self.w
+        print 2 * np.sum(np.array(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels), axis=0) + 2 * self.alpha * self.w
         raw_input()
-        return 2 * np.sum(np.array(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels).reshape(-1,1), axis=0) + 2 * self.alpha * self.w, functions
+        return 2 * np.sum(np.array(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels), axis=0) + 2 * self.alpha * self.w, functions
 
     #tested
     def learn_multi(self, img_data, functions):
