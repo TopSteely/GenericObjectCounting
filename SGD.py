@@ -419,12 +419,13 @@ class SGD:
 
         
     def update_self(self):
-        print self.prune_tree_levels, self.w_update
+        print self.prune_tree_levels, self.w_update, self.w_update/self.prune_tree_levels
         if self.version == 'multi':
             self.w_multi -= (self.eta * self.w_update)
             self.w_update = np.zeros((self.prune_tree_levels,self.n_features))
         else:
-            self.w -= (self.eta * self.w_update)
+            # update for lower levels is way higher than, problems finding good learning rate fitting for all levels -> normalizing by #level
+            self.w -= (self.eta * self.w_update/self.prune_tree_levels)
             self.w_update = np.zeros(self.n_features)
         print 'w: ', self.w
         self.eta = self.eta * (1+self.eta0*self.gamma*self.samples_seen)**-1
