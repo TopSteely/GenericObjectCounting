@@ -23,14 +23,14 @@ class Output:
         self.preds_plot_path = "/var/node436/local/tstahl/plos/preds_%s_%s_%s_%s.png"
         self.image_path = "/var/node436/local/tstahl/Images/%s.jpg"
         self.scaler_path = '/var/node436/local/tstahl/models/scaler_dennis.p'
-	if mode.startswith('dennis'):
-	        self.scaler_category_path = '/var/node436/local/tstahl/models/scaler_%s_dennis.p'%(category)
-	elif mode.startswith('pascal'):
-		self.scaler_category_path = '/var/node436/local/tstahl/models/scaler_%s_pascal.p'%(category)
-        self.classifier_path = '/var/node436/local/tstahl/models/classifier_%s.p'%(category)
-	self.feat_var_path = '/var/node436/local/tstahl/plos/feat_var.png'
-	self.loss_path = '/var/node436/local/tstahl/plos/loss_%s_%s_%s_%s_%s_%s.png'
-    self.best_path = '/var/node436/local/tstahl/plos/best_%s_%s_%s.png'
+        if mode.startswith('dennis'):
+                self.scaler_category_path = '/var/node436/local/tstahl/models/scaler_%s_dennis.p'%(category)
+        elif mode.startswith('pascal'):
+            self.scaler_category_path = '/var/node436/local/tstahl/models/scaler_%s_pascal.p'%(category)
+            self.classifier_path = '/var/node436/local/tstahl/models/classifier_%s.p'%(category)
+        self.feat_var_path = '/var/node436/local/tstahl/plos/feat_var.png'
+        self.loss_path = '/var/node436/local/tstahl/plos/loss_%s_%s_%s_%s_%s_%s.png'
+        self.best_path = '/var/node436/local/tstahl/plos/best_%s_%s_%s.png'
         
     def dump_scaler(self, scaler):
         pickle.dump(scaler, open(self.scaler_path, "wb"))
