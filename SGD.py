@@ -242,7 +242,6 @@ class SGD:
                     preds_d.append(self.predict(img_data))
                 y_d.append(img_data.y)
                 level_pred_d = {}
-                max_iep_patches_d = {}
                 max_level_preds_d = {}
                 if i_img_nr < 10:
                     print 'in extra iep patch etc.'
@@ -250,21 +249,21 @@ class SGD:
                         _,fct = self.learner.get_iep_levels(img_data, {})
                         self.functions[img_nr] = fct
                     level_preds = self.predict_ind(img_data)
+                    print level_preds
                     level_pred_d[img_data.img_nr] = level_preds
-                    max_iep_patches_d[img_data.img_nr] = []
                     max_level_preds_d[img_data.img_nr] = []
                     for level in range(len(img_data.levels)):
-                        iep_patches = self.predictor.iep_single_patch(img_data, self.functions[img_nr][level],level)
-                        max_iep_patches = np.max(iep_patches)
-                        ind = iep_patches.index(max_iep_patches)
-                        max_iep_patches_d[img_data.img_nr].append([img_data.boxes[ind],max_iep_patches])
+                        #don't think iep(single patch is correct, it wasn't on dummy data)
+                        #iep_patches = self.predictor.iep_single_patch(img_data, self.functions[img_nr][level],level)
 
                         all_patches = [a[1] for a in self.functions[img_nr][level]]
                         level_patch_preds = []
                         for level_patch in all_patches:
-                            level_patch_preds.append(self.predict_window(img_data, level_patch))
+                            pred = self.predict_window(img_data, level_patch)
+                            print pred
+                            level_patch_preds.append(pred)
                         max_level_pred = np.max(level_patch_preds)
-                        print img_data.y, level_preds[level], max_iep_patches, max_level_pred
+                        print img_data.y, max_level_pred
                         raw_input()
                         ind = level_patch_preds.index(max_level_pred)
                         max_level_preds_d[img_data.img_nr].append([img_data.boxes[ind],max_level_pred])
