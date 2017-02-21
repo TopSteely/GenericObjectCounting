@@ -128,7 +128,7 @@ class IEP:
         all_patches = [a[1] for a in function]
         print all_patches
         raw_input()
-        for iep_node in :#Data.levels[level]
+        for iep_node in all_patches: #before: Data.levels[level], but i want to have intersections as well
             comb_node = [its for its in combinations if iep_node in its]
             G = nx.Graph()
             G.add_edges_from(comb_node)
