@@ -68,7 +68,7 @@ for epoch in range(8):
                 if fun[0] == '+':
                     w_update += (np.dot(w, x[img_nr][fun[1]]) + iep_with_func(w,x[img_nr],copy) - y[img_nr]) * (iep_with_func(1.0,x[img_nr],copy) + x[img_nr][fun[1]])
                 elif fun[0] == '-':
-                    w_update += (-np.dot(w, x[img_nr][fun[1]]) + iep_with_func(w,x[img_nr],copy) - y[img_nr]) * (iep_with_func(1.0,x[img_nr],copy) + -x[img_nr][fun[1]])
+                    w_update += (-np.dot(w, x[img_nr][fun[1]]) + iep_with_func(w,x[img_nr],copy) - y[img_nr]) * (iep_with_func(1.0,x[img_nr],copy) -x[img_nr][fun[1]])
     w_update += 2 * w_update + 2 * alpha * w
 
     w -= 0.01 * w_update

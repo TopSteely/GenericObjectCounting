@@ -32,7 +32,10 @@ def loss_new_scipy(w, x, y, alpha, fct):
                 copy.remove(fun)
                 iep = iep_with_func(w,x[img_nr],copy)
                 window_pred = np.dot(w, x[img_nr][fun[1]])
-                loss += ((y[img_nr] - iep - window_pred) ** 2)
+                if fun[0] == '+':
+                    loss += ((y[img_nr] - iep - window_pred) ** 2)
+                elif fun[0] == '-':
+                    loss += ((y[img_nr] - iep + window_pred) ** 2)
     return loss + alpha * math.sqrt(np.dot(w,w))
 
 

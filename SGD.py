@@ -100,7 +100,10 @@ class SGD:
                 copy.remove(fun)
                 iep = iep_with_func(self.w,img_data.X,copy)
                 window_pred = np.dot(self.w, img_data.X[fun[1]])
-                loss += ((img_data.y - iep - window_pred) ** 2)
+                if fun[0] == '+':
+                    loss += ((img_data.y - iep - window_pred) ** 2)
+                elif fun[0] == '-':
+                    loss += ((img_data.y - iep + window_pred) ** 2)
         return loss + self.alpha * math.sqrt(np.dot(self.w,self.w))
 
         
@@ -490,5 +493,11 @@ class SGD:
             for fun in level_fct:
                 copy = deepcopy(level_fct)
                 copy.remove(fun)
-                update += (self.predict_window(img_data, fun[1]) + iep_with_func(self.w,img_data.X,copy) - img_data.y) * (iep_with_func(1.0,img_data.X,copy) + img_data.X[fun[1]])
+
+                if fun[0] == '+':
+                    update += (self.predict_window(img_data, fun[1]) + iep_with_func(self.w,img_data.X,copy) - img_data.y) * (iep_with_func(1.0,img_data.X,copy) + img_data.X[fun[1]])
+                elif fun[0] == '-':
+                    update += (-self.predict_window(img_data, fun[1]) + iep_with_func(self.w,img_data.X,copy) - img_data.y) * (iep_with_func(1.0,img_data.X,copy) -img_data.X[fun[1]])
+
+
         return 2 * update + 2 * self.alpha * self.w, fct
