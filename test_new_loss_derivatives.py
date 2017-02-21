@@ -52,8 +52,7 @@ def loss_new_scipy(w, x, y, alpha, fct):
                 loss += ((y[img_nr] - iep - window_pred) ** 2)
     return loss + alpha * math.sqrt(np.dot(w,w))
 
-print 'before'
-print 'Loss', epoch, w, loss_new_scipy(w, x, y, alpha, fct)
+print 'Loss', 'before', w, loss_new_scipy(w, x, y, alpha, fct)
 print 'after'
 
 for epoch in range(8):
