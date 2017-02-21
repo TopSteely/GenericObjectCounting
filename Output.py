@@ -152,5 +152,5 @@ class Output:
                 ax.set_title('best Patch: %s\n IEP Level: %s'%(b_patch[1],lvl_pred))
                 
             
-                plt.savefig(best_path%(self.category,img_nr,lvl))
+                plt.savefig(self.best_path%(self.category,img_nr,lvl))
                 plt.clf()
