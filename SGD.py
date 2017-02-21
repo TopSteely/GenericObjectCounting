@@ -249,7 +249,6 @@ class SGD:
                         _,fct = self.learner.get_iep_levels(img_data, {})
                         self.functions[img_nr] = fct
                     level_preds = self.predict_ind(img_data)
-                    print level_preds
                     level_pred_d[img_data.img_nr] = level_preds
                     max_level_preds_d[img_data.img_nr] = []
                     for level in range(len(img_data.levels)):
@@ -260,10 +259,8 @@ class SGD:
                         level_patch_preds = []
                         for level_patch in all_patches:
                             pred = self.predict_window(img_data, level_patch)
-                            print pred
                             level_patch_preds.append(pred)
                         max_level_pred = np.max(level_patch_preds)
-                        print img_data.y, max_level_pred
                         raw_input()
                         ind = level_patch_preds.index(max_level_pred)
                         max_level_preds_d[img_data.img_nr].append([img_data.boxes[ind],max_level_pred])
@@ -421,7 +418,6 @@ class SGD:
 
         
     def update_self(self):
-        print self.prune_tree_levels, self.w_update, self.w_update/self.prune_tree_levels
         if self.version == 'multi':
             self.w_multi -= (self.eta * self.w_update)
             self.w_update = np.zeros((self.prune_tree_levels,self.n_features))
@@ -429,7 +425,6 @@ class SGD:
             # update for lower levels is way higher than, problems finding good learning rate fitting for all levels -> normalizing by #level
             self.w -= (self.eta * self.w_update/self.prune_tree_levels)
             self.w_update = np.zeros(self.n_features)
-        print 'w: ', self.w
         self.eta = self.eta * (1+self.eta0*self.gamma*self.samples_seen)**-1
         self.predictor = IEP.IEP(self.w, 'prediction')
         
