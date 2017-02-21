@@ -442,16 +442,15 @@ class SGD:
         print np.array(iep_levels).shape
         c = np.array(level_preds) - img_data.y
         print c
-        a = np.array(np.array(level_preds) - img_data.y) * np.array(iep_levels)
+        a = np.array(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels)
         print a
-        b = np.sum(np.array(np.array(level_preds) - img_data.y) * np.array(iep_levels), axis=0)
+        b = np.sum(np.array(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels), axis=0)
         print b
         print b.shape, a.shape
         print (a+b).shape
-        print 'axis=1', 2 * np.sum(np.array(np.array(level_preds) - img_data.y) * np.array(iep_levels).reshape(-1,1), axis=1) + 2 * self.alpha * self.w
-        print 2 * np.sum(np.array(np.array(level_preds) - img_data.y) * np.array(iep_levels).reshape(-1,1), axis=0) + 2 * self.alpha * self.w
+        print 2 * np.sum(np.array(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels).reshape(-1,1), axis=0) + 2 * self.alpha * self.w
         raw_input()
-        return 2 * np.sum(np.array(np.array(level_preds) - img_data.y) * np.array(iep_levels).reshape(-1,1), axis=0) + 2 * self.alpha * self.w, functions
+        return 2 * np.sum(np.array(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels).reshape(-1,1), axis=0) + 2 * self.alpha * self.w, functions
 
     #tested
     def learn_multi(self, img_data, functions):
