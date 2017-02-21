@@ -21,7 +21,7 @@ def main():
 
     pred_mode = 'new'
 
-    debug = True
+    debug = False
 
     batch_size = 5
 
