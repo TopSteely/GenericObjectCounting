@@ -26,11 +26,11 @@ def main():
 
     epochs = 4
 
-    subsamples = 2
+    subsamples = 10
 
     feature_size = 1
 
-    eta = math.pow(10,-2)
+    eta = math.pow(10,-3)
 
     for tree_level_size in range(2,3):
         #initialize
@@ -51,7 +51,7 @@ def main():
                 sgd_dennis = SGD.SGD('dennis', pred_mode, category, tree_level_size, batch_size, eta, gamma_i, al_i, feature_size)
                 print al_i, gamma_i
                 for epoch in range(epochs):
-                    print epoch
+                    print 'epoch: ', epoch
                     #tr_l, te_l = sgd_dennis.learn('categories')
                     if debug:
                         tr_l, te_l = sgd_dennis.learn(learn_mode, subsamples, debug)
