@@ -494,7 +494,11 @@ class SGD:
                 
 
         for i_level,level_fct in enumerate(fct.values()):
-            print i_level,level_fct
+            if i_level > 2:
+                print level_fct
+                aaa = [a[1] for a in level_fct]
+                print [img_data.X[i] for i in aaa]
+                raw_input()
             for fun in level_fct:
                 copy = deepcopy(level_fct)
                 copy.remove(fun)
