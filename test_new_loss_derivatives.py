@@ -4,7 +4,7 @@ import math
 from copy import deepcopy
 from scipy.optimize import minimize
 
-w = 0.0
+w = 1.0
 w_update = 0.0
 x = [[1.0,0.64,0.36,0.3,0.2],[2.0,0.5,1.8,0.3]]
 y = [1.0,2.0]
@@ -52,6 +52,9 @@ def loss_new_scipy(w, x, y, alpha, fct):
                 loss += ((y[img_nr] - iep - window_pred) ** 2)
     return loss + alpha * math.sqrt(np.dot(w,w))
 
+print 'before'
+print 'Loss', epoch, w, loss_new_scipy(w, x, y, alpha, fct)
+print 'after'
 
 for epoch in range(8):
     for img_nr, img_fct in zip(fct.keys(),fct.values()):
@@ -67,7 +70,7 @@ for epoch in range(8):
     loss = 0.0
 
     print 'Loss', epoch, w, loss_new_scipy(w, x, y, alpha, fct)
-res = minimize(loss_new_scipy, 0.0, args=(x, y, alpha, fct))
+res = minimize(loss_new_scipy, 1.0, args=(x, y, alpha, fct))
 print res
 #for i_level,level_fct in enumerate(fct):
 #    ax = predict_new(w, x, y, alpha, level_fct)
