@@ -116,7 +116,7 @@ class IEP:
 
     def iep_single_patch(self, Data, function, level):
         if len(Data.levels) == 1:
-            return np.dot(self.w,Data.X[0])
+            return [np.dot(self.w,Data.X[0])]
         count_per_level_temp = 0
         level_boxes = []
         for i in Data.levels[level]:
