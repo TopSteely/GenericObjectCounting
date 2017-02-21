@@ -145,8 +145,8 @@ def main():
                 output_dennis.plot_preds(preds_d_t, y_d_t, al_i, 'train')
                 output_dennis_scipy.plot_preds(preds_d_d_sc, y_d_d, al_i, 'val')
                 output_dennis_scipy.plot_preds(preds_d_t_sc, y_d_t, al_i, 'train')
-                #output_dennis.plot_best(level_pred_d_d, max_iep_patches_d_d, max_level_preds_d_d)
-                #output_dennis_scipy.plot_best(level_pred_d_d_sc, max_iep_patches_d_d_sc, max_level_preds_d_d_sc)
+                output_dennis.plot_best(level_pred_d_d, max_level_preds_d_d)
+                output_dennis_scipy.plot_best(level_pred_d_d_sc, max_level_preds_d_d_sc)
             #output_dennis.save(mse, ae, mse_non_zero, sgd_dennis, 'ind', al_i, learn_mode)
     print learn_mode, pred_mode, epochs,'with scaler', debug
     

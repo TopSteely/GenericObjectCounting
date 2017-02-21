@@ -404,9 +404,9 @@ class SGD:
         if with_constraints:
             cons = ({'type': 'ineq', 'fun': upper_constraint,'args':(x,y,alpha,fcts)},
                     {'type': 'ineq', 'fun': lower_constraint,'args':(x,y,alpha,fcts)})
-            res = minimize(loss_new_scipy, np.zeros(self.n_features), args=(x, y, alpha, fcts), constraints=cons)#, options={'maxiter':5}
+            res = minimize(loss_new_scipy, np.zeros(self.n_features), args=(x, y, alpha, fcts), constraints=cons, tol=0.1)#, options={'maxiter':5}
         else:
-            res = minimize(loss_new_scipy, np.zeros(self.n_features), args=(x, y, alpha, fcts))#, options={'maxiter':5}
+            res = minimize(loss_new_scipy, np.zeros(self.n_features), args=(x, y, alpha, fcts), tol=0.1)#, options={'maxiter':5}
         print res
         self.w = res.x
         self.predictor = IEP.IEP(self.w, 'prediction')

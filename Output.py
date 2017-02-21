@@ -30,6 +30,7 @@ class Output:
         self.classifier_path = '/var/node436/local/tstahl/models/classifier_%s.p'%(category)
 	self.feat_var_path = '/var/node436/local/tstahl/plos/feat_var.png'
 	self.loss_path = '/var/node436/local/tstahl/plos/loss_%s_%s_%s_%s_%s_%s.png'
+    self.best_path = '/var/node436/local/tstahl/plos/best_%s_%s_%s.png'
         
     def dump_scaler(self, scaler):
         pickle.dump(scaler, open(self.scaler_path, "wb"))
@@ -133,3 +134,23 @@ class Output:
         plt.legend('upper left')
         plt.savefig(self.loss_path%(self.experiment,self.prune_tree_levels,eta,self.category, alpha, self.mode))
         
+
+    def plot_best(level_preds, max_level_window):
+        #max_level_window = [img_data.boxes[ind],max_level_pred]
+        for img_nr in level_preds.keys():
+            # in case i want only imgs with levels higher than
+            #if len(level_preds[i_img]) < 6:
+            #        continue
+            im = imread('/var/node436/local/tstahl/Images/'+ (format(img_nr, "06d")) +'.jpg')
+            for lvl,(lvl_pred,b_patch) in enumerate(zip(level_preds[img_nr], max_level_window[img_nr])):
+                coord_iep = b_patch[0]
+                plt.imshow(im)
+                plt.axis('off')
+                ax = plt.gca()
+                #ax.add_patch(Rectangle((int(coord[0]), int(coord[1])), int(coord[2] - coord[0]), int(coord[3] - coord[1]), edgecolor='black', facecolor='none'))
+                ax.add_patch(Rectangle((int(coord_iep[0]), int(coord_iep[1])), int(coord_iep[2] - coord_iep[0]), int(coord_iep[3] - coord_iep[1]), edgecolor='red', facecolor='none'))
+                ax.set_title('best Patch: %s\n IEP Level: %s'%(b_patch[1],lvl_pred))
+                
+            
+                plt.savefig(best_path%(self.category,img_nr,lvl))
+                plt.clf()
