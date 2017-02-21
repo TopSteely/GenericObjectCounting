@@ -243,7 +243,6 @@ class SGD:
                 level_pred_d = {}
                 max_level_preds_d = {}
                 if i_img_nr < 10:
-                    print 'in extra iep patch etc.'
                     if img_nr not in self.functions:
                         _,fct = self.learner.get_iep_levels(img_data, {})
                         self.functions[img_nr] = fct
@@ -260,7 +259,6 @@ class SGD:
                             pred = self.predict_window(img_data, level_patch)
                             level_patch_preds.append(pred)
                         max_level_pred = np.max(level_patch_preds)
-                        raw_input()
                         ind = level_patch_preds.index(max_level_pred)
                         max_level_preds_d[img_data.img_nr].append([img_data.boxes[ind],max_level_pred])
         if debug:
