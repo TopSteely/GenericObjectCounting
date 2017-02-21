@@ -48,7 +48,7 @@ def loss_new_scipy(w, x, y, alpha, fct):
                 copy.remove(fun)
                 iep = iep_with_func(w,x[img_nr],copy)
                 window_pred = np.dot(w, x[img_nr][fun[1]])
-                print y[img_nr], iep, window_pred
+                #print y[img_nr], iep, window_pred
                 loss += ((y[img_nr] - iep - window_pred) ** 2)
     return loss + alpha * math.sqrt(np.dot(w,w))
 
@@ -67,8 +67,8 @@ for epoch in range(8):
     loss = 0.0
 
     print 'Loss', epoch, w, loss_new_scipy(w, x, y, alpha, fct)
-#res = minimize(loss_new_scipy, 10.0, args=(x, y, alpha, fct),constraints=cons)
-#print res
+res = minimize(loss_new_scipy, 0.0, args=(x, y, alpha, fct))
+print res
 #for i_level,level_fct in enumerate(fct):
 #    ax = predict_new(w, x, y, alpha, level_fct)
 #    print i_level, ax
