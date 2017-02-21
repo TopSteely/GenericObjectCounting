@@ -77,10 +77,11 @@ def main():
                 if learn_mode == 'all':
                     preds_d_d, y_d_d = sgd_dennis.evaluate('val_all', subsamples, debug)
                 elif learn_mode == 'category':
-                    preds_d_d, y_d_d = sgd_dennis.evaluate('val_cat', subsamples, debug)
-                    preds_d_t, y_d_t = sgd_dennis.evaluate('train_cat', subsamples, debug)
+                    preds_d_d, y_d_d, level_pred_d_d, max_iep_patches_d_d, max_level_preds_d_d = sgd_dennis.evaluate('val_cat', subsamples, debug)
+                    preds_d_t, y_d_t, level_pred_d_t, max_iep_patches_d_t, max_level_preds_d_t = sgd_dennis.evaluate('train_cat', subsamples, debug)
                     mse,ae, mse_non_zero = sgd_dennis.evaluate('val_cat',subsamples)
                     mse_tr,ae_tr, mse_non_zero_tr = sgd_dennis.evaluate('train_cat',subsamples)
+                    print sgd_dennis.w
                     print "Eval loss train: ", al_i, mse_tr
                     print "Eval loss val: ", al_i, mse
                 elif learn_mode == 'category_levels':
@@ -88,7 +89,7 @@ def main():
                     preds_d_t, y_d_t = sgd_dennis.evaluate('train_category_levels', subsamples, debug)
                     mse,ae, mse_non_zero = sgd_dennis.evaluate('val_category_levels',subsamples)
                     mse_tr,ae_tr, mse_non_zero_tr = sgd_dennis.evaluate('train_category_levels',subsamples)
-                    print sgd_dennis.w
+                    
                     print "Eval loss train: ", al_i, mse_tr
                     print "Eval loss val: ", al_i, mse
 
