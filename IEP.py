@@ -126,8 +126,7 @@ class IEP:
         combinations = list(itertools.combinations(Data.levels[level], 2)) 
         iep_patch = []
         all_patches = [a[1] for a in function]
-        print all_patches
-        raw_input()
+        
         for iep_node in all_patches: #before: Data.levels[level], but i want to have intersections as well
             comb_node = [its for its in combinations if iep_node in its]
             G = nx.Graph()
@@ -135,7 +134,7 @@ class IEP:
             for comb in comb_node:
                 set_ = []
                 for c in comb:
-                    set_.append(coords[c])
+                    set_.append(Data.boxes[c])
                 I = get_set_intersection(set_)
                 if I == []:
                     G.remove_edges_from([comb])
