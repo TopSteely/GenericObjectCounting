@@ -442,11 +442,9 @@ class SGD:
         print np.array(iep_levels).shape
         c = np.array(level_preds) - img_data.y
         print c
-        print np.array(iep_levels).reshape(-1,1).shape
-        print np.array(iep_levels).reshape(1,-1).shape
-        a = np.array(np.array(level_preds) - img_data.y) * np.array(iep_levels).reshape(-1,1)
+        a = np.array(np.array(level_preds) - img_data.y) * np.array(iep_levels)
         print a
-        b = np.sum(np.array(np.array(level_preds) - img_data.y) * np.array(iep_levels).reshape(-1,1), axis=0)
+        b = np.sum(np.array(np.array(level_preds) - img_data.y) * np.array(iep_levels), axis=0)
         print b
         print b.shape, a.shape
         print (a+b).shape
