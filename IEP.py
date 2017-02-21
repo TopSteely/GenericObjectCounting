@@ -116,7 +116,7 @@ class IEP:
 
     def iep_single_patch(self, Data, function, level):
         if len(Data.levels) == 1:
-            return np.dot(self.w,Data.X[0]), []
+            return np.dot(self.w,Data.X[0])
         count_per_level_temp = 0
         level_boxes = []
         for i in Data.levels[level]:
@@ -126,7 +126,7 @@ class IEP:
         combinations = list(itertools.combinations(Data.levels[level], 2)) 
         iep_patch = []
         all_patches = [a[1] for a in function]
-        
+
         for iep_node in all_patches: #before: Data.levels[level], but i want to have intersections as well
             comb_node = [its for its in combinations if iep_node in its]
             G = nx.Graph()
