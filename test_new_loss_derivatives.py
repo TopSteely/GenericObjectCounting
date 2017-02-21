@@ -50,7 +50,10 @@ def loss_new_scipy(w, x, y, alpha, fct):
                 iep = iep_with_func(w,x[img_nr],copy)
                 window_pred = np.dot(w, x[img_nr][fun[1]])
                 #print y[img_nr], iep, window_pred
-                loss += ((y[img_nr] - iep - window_pred) ** 2)
+                if fun[0] == '+':
+                    loss += ((y[img_nr] - iep - window_pred) ** 2)
+                elif fun[0] == '-':
+                    loss += ((y[img_nr] - iep + window_pred) ** 2)
                 print level_fct, copy,iep, window_pred, y[img_nr], loss
     return loss + alpha * math.sqrt(np.dot(w,w))
 
