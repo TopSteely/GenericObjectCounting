@@ -90,7 +90,7 @@ def main():
                 sgd_dennis_scipy.set_scaler(scaler_dennis)
                 sgd_dennis_scipy_cons.set_scaler(scaler_dennis)
                 for epoch in range(epochs):
-                    print(epoch, end='')
+                    print epoch,
                     #tr_l, te_l = sgd_dennis.learn('categories')
                     if debug:
                         sgd_dennis_old.learn(learn_mode, subsamples)
