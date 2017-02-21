@@ -7,7 +7,7 @@ from scipy.optimize import minimize
 w = 0.0
 w_update = 0.0
 x = [[1.0,0.64,0.36,0.3,0.2],[2.0,0.5,1.8,0.3]]
-y = [-1.0,-2.0]
+y = [1.0,2.0]
 alpha = 0
 fct = {0:[[['+',0]],[['+',1],['+',2]]], 1:[[['+',0]],[['+',1],['+',2],['-',3]]]}
 
@@ -39,7 +39,7 @@ def predict_new(w, x, y, alpha, level_fct):
 
 
 def loss_new_scipy(w, x, y, alpha, fct):
-    print w
+    #print w
     loss = 0.0
     for img_nr, img_fct in zip(fct.keys(),fct.values()):
         for level_fct in img_fct:
@@ -52,23 +52,23 @@ def loss_new_scipy(w, x, y, alpha, fct):
     return loss + alpha * math.sqrt(np.dot(w,w))
 
 
-#for epoch in range(5):
-#    for i_level,level_fct in enumerate(fct):
-#    	for fun in level_fct:
-#    		copy = deepcopy(level_fct)
-#    		copy.remove(fun)
-#    		w_update += (np.dot(w, x[fun[1]]) + iep_with_func(w,x,copy) - y) * (iep_with_func(1.0,x,copy) + x[fun[1]])
-#    w_update += 2 * w_update + 2 * alpha * w
-#
-#    w -= 0.1 * w_update
-#    w_update = 0.0
-#    loss = 0.0
+for epoch in range(5):
+    for i_level,level_fct in enumerate(fct):
+    	for fun in level_fct:
+    		copy = deepcopy(level_fct)
+    		copy.remove(fun)
+    		w_update += (np.dot(w, x[fun[1]]) + iep_with_func(w,x,copy) - y) * (iep_with_func(1.0,x,copy) + x[fun[1]])
+    w_update += 2 * w_update + 2 * alpha * w
 
-#    for level_fct in fct:
-#    	loss += loss_new_scipy(w, x, y, alpha, level_fct)
-#    print 'Loss', epoch, loss
-res = minimize(loss_new_scipy, 10.0, args=(x, y, alpha, fct),constraints=cons)
-print res
-for i_level,level_fct in enumerate(fct):
-    ax = predict_new(w, x, y, alpha, level_fct)
-    print i_level, ax
+    w -= 0.001 * w_update
+    w_update = 0.0
+    loss = 0.0
+
+    for level_fct in fct:
+    	loss += loss_new_scipy(w, x, y, alpha, level_fct)
+    print 'Loss', epoch, loss
+#res = minimize(loss_new_scipy, 10.0, args=(x, y, alpha, fct),constraints=cons)
+#print res
+#for i_level,level_fct in enumerate(fct):
+#    ax = predict_new(w, x, y, alpha, level_fct)
+#    print i_level, ax
