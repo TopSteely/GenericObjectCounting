@@ -30,7 +30,7 @@ def main():
 
     feature_size = 1
 
-    eta = math.pow(10,-3)
+    eta = math.pow(10,-2)
 
     for tree_level_size in range(2,3):
         #initialize
@@ -88,6 +88,7 @@ def main():
                     preds_d_t, y_d_t = sgd_dennis.evaluate('train_category_levels', subsamples, debug)
                     mse,ae, mse_non_zero = sgd_dennis.evaluate('val_category_levels',subsamples)
                     mse_tr,ae_tr, mse_non_zero_tr = sgd_dennis.evaluate('train_category_levels',subsamples)
+                    print sgd_dennis.w
                     print "Eval loss train: ", al_i, mse_tr
                     print "Eval loss val: ", al_i, mse
 
