@@ -42,7 +42,6 @@ def loss_new_scipy(w, x, y, alpha, fct):
     #print w
     loss = 0.0
     for img_nr, img_fct in zip(fct.keys(),fct.values()):
-        print img_nr, img_fct
         for level_fct in img_fct:
             for fun in level_fct:
                 copy = deepcopy(level_fct)
@@ -53,11 +52,9 @@ def loss_new_scipy(w, x, y, alpha, fct):
     return loss + alpha * math.sqrt(np.dot(w,w))
 
 
-for epoch in range(5):
+for epoch in range(30):
     for img_nr, img_fct in zip(fct.keys(),fct.values()):
-        print img_nr
         for level_fct in img_fct:
-            print level_fct
             for fun in level_fct:
                 copy = deepcopy(level_fct)
                 copy.remove(fun)
@@ -68,7 +65,7 @@ for epoch in range(5):
     w_update = 0.0
     loss = 0.0
 
-    print 'Loss', epoch, loss_new_scipy(w, x, y, alpha, fct)
+    print 'Loss', epoch, w, loss_new_scipy(w, x, y, alpha, fct)
 #res = minimize(loss_new_scipy, 10.0, args=(x, y, alpha, fct),constraints=cons)
 #print res
 #for i_level,level_fct in enumerate(fct):
