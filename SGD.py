@@ -446,6 +446,7 @@ class SGD:
         b = np.sum(np.array(np.array(level_preds) - img_data.y) * np.array(iep_levels).reshape(-1,1), axis=0)
         print b
         print 2 * np.sum(np.array(np.array(level_preds) - img_data.y) * np.array(iep_levels).reshape(-1,1), axis=0) + 2 * self.alpha * self.w
+        raw_input()
         return 2 * np.sum(np.array(np.array(level_preds) - img_data.y) * np.array(iep_levels).reshape(-1,1), axis=0) + 2 * self.alpha * self.w, functions
 
     #tested

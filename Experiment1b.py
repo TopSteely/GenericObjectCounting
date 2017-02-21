@@ -25,7 +25,7 @@ def main():
 
     batch_size = 5
 
-    epochs = 5
+    epochs = 3
 
     subsamples = 5
 
@@ -66,17 +66,17 @@ def main():
             training_data = load_dennis.category_train
             scaler_dennis = load_dennis.get_scaler_category()
             if scaler_dennis==[]:
-            	print "learning scaler"
-            	data_to_scale = []
-            	scaler_category = StandardScaler()
-            	print len(training_data)
-            	random.shuffle(training_data)
-            	for img_nr in training_data[0:100]:
-            	     img_data = Data.Data(load_dennis, img_nr, 10, None)
-            	     data_to_scale.extend(img_data.X)
-            	scaler_category.fit(data_to_scale)
-            	output_dennis.dump_scaler_category(scaler_category)
-            	scaler_dennis = scaler_category
+                print "learning scaler"
+                data_to_scale = []
+                scaler_category = StandardScaler()
+                print len(training_data)
+                random.shuffle(training_data)
+                for img_nr in training_data[0:100]:
+                     img_data = Data.Data(load_dennis, img_nr, 10, None)
+                     data_to_scale.extend(img_data.X)
+                scaler_category.fit(data_to_scale)
+                output_dennis.dump_scaler_category(scaler_category)
+                scaler_dennis = scaler_category
             
         # learn SGD
         for al_i in [10,1,0.1]:#[math.pow(10,-4)]:#,math.pow(10,-2)
@@ -114,14 +114,14 @@ def main():
                 mse_sc,_, _ = sgd_dennis_scipy.evaluate('val_all')
                 mse_tr_sc,_, _ = sgd_dennis_scipy.evaluate('train_all')
             elif learn_mode == 'category':
-                mse,ae, mse_non_zero = sgd_dennis.evaluate('val_cat')
-                mse_tr,ae_tr, mse_non_zero_tr = sgd_dennis.evaluate('train_cat')
-                mse_sc,_, _ = sgd_dennis_scipy.evaluate('val_cat')
-                mse_tr_sc,_, _ = sgd_dennis_scipy.evaluate('train_cat')
-                mse_old,_, _ = sgd_dennis_old.evaluate('val_cat')
-                mse_tr_old,_, _ = sgd_dennis_old.evaluate('train_cat')
-                mse_sc_cons,_, _ = sgd_dennis_scipy_cons.evaluate('val_cat')
-                mse_tr_sc_cons,_, _ = sgd_dennis_scipy_cons.evaluate('train_cat')
+                mse,ae, mse_non_zero = sgd_dennis.evaluate('val_cat', subsamples)
+                mse_tr,ae_tr, mse_non_zero_tr = sgd_dennis.evaluate('train_cat', subsamples)
+                mse_sc,_, _ = sgd_dennis_scipy.evaluate('val_cat', subsamples)
+                mse_tr_sc,_, _ = sgd_dennis_scipy.evaluate('train_cat', subsamples)
+                mse_old,_, _ = sgd_dennis_old.evaluate('val_cat', subsamples)
+                mse_tr_old,_, _ = sgd_dennis_old.evaluate('train_cat', subsamples)
+                mse_sc_cons,_, _ = sgd_dennis_scipy_cons.evaluate('val_cat', subsamples)
+                mse_tr_sc_cons,_, _ = sgd_dennis_scipy_cons.evaluate('train_cat', subsamples)
                 preds_d_d, y_d_d, level_pred_d_d, max_iep_patches_d_d, max_level_preds_d_d = sgd_dennis.evaluate('val_cat', subsamples, debug)
                 preds_d_d_old, y_d_d_old, level_pred_d_d_old, max_iep_patches_d_d_old, max_level_preds_d_d_old = sgd_dennis_old.evaluate('val_cat', subsamples, debug)
                 preds_d_d_sc, _, level_pred_d_d_sc, max_iep_patches_d_d_sc, max_level_preds_d_d_sc = sgd_dennis_scipy.evaluate('val_cat', subsamples, debug)
