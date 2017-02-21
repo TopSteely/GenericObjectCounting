@@ -27,7 +27,7 @@ def main():
 
     epochs = 3
 
-    subsamples = 100
+    subsamples = 50
 
     feature_size = 4096
 
@@ -86,11 +86,15 @@ def main():
                 sgd_dennis_scipy_cons = SGD.SGD('dennis', pred_mode, category, tree_level_size, batch_size, eta, gamma_i, al_i, feature_size)
                 sgd_dennis_scipy.set_scaler(scaler_dennis)
                 sgd_dennis_scipy_cons.set_scaler(scaler_dennis)
-                sgd_dennis_scipy.learn_scipy(learn_mode,100)
-                sgd_dennis_scipy_cons.learn_scipy(learn_mode,True,100)
+                sgd_dennis_scipy.learn_scipy(learn_mode,subsamples)
+                print 'learned scipy ',
+                sgd_dennis_scipy_cons.learn_scipy(learn_mode,True,subsamples)
+                print 'learned scipy constrained ',
                 mse_sc,_, _ = sgd_dennis_scipy.evaluate('val_cat', subsamples)
+                print 'evaluated scipy ',
                 #mse_tr_sc,_, _ = sgd_dennis_scipy.evaluate('train_cat', subsamples)
                 mse_sc_cons,_, _ = sgd_dennis_scipy_cons.evaluate('val_cat', subsamples)
+                print 'evaluated scipy constrained ',
                 #mse_tr_sc_cons,_, _ = sgd_dennis_scipy_cons.evaluate('train_cat', subsamples)
                 #preds_d_d_sc, _, level_pred_d_d_sc, max_iep_patches_d_d_sc, max_level_preds_d_d_sc = sgd_dennis_scipy.evaluate('val_cat', subsamples, True)
                 #preds_d_d_sc_cons, _, level_pred_d_d_sc_cons, max_iep_patches_d_d_sc_cons, max_level_preds_d_d_sc_cons = sgd_dennis_scipy_cons.evaluate('val_cat', subsamples, True)
