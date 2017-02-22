@@ -86,28 +86,28 @@ def main():
                 validation_loss = np.array([], dtype=np.int64).reshape(tree_level_size+1,0)
                 #sgd_pascal = SGD.SGD('pascal', 'max', category, tree_level_size, batch_size, eta_i, gamma_i, al_i)
                 sgd_dennis_scipy = SGD.SGD('dennis', pred_mode, category, tree_level_size, batch_size, eta, gamma_i, al_i, feature_size)
-                sgd_dennis_scipy_cons = SGD.SGD('dennis', pred_mode, category, tree_level_size, batch_size, eta, gamma_i, al_i, feature_size)
+                #sgd_dennis_scipy_cons = SGD.SGD('dennis', pred_mode, category, tree_level_size, batch_size, eta, gamma_i, al_i, feature_size)
                 sgd_dennis_scipy.set_scaler(scaler_dennis)
-                sgd_dennis_scipy_cons.set_scaler(scaler_dennis)
+                #sgd_dennis_scipy_cons.set_scaler(scaler_dennis)
                 print 'strating ',
                 start = time.time()
                 sgd_dennis_scipy.learn_scipy(learn_mode,False,subsamples)
                 print 'learned scipy ', time.time() - start # 10 samples = 60s
                 start = time.time()
-                sgd_dennis_scipy_cons.learn_scipy(learn_mode,True,subsamples)
-                print 'learned scipy constrained ', time.time() - start # 10 samples = 920s
+                #sgd_dennis_scipy_cons.learn_scipy(learn_mode,True,subsamples)
+                #print 'learned scipy constrained ', time.time() - start # 10 samples = 920s
                 mse_sc,_, _ = sgd_dennis_scipy.evaluate('val_cat', subsamples)
                 print 'evaluated scipy ',
                 #mse_tr_sc,_, _ = sgd_dennis_scipy.evaluate('train_cat', subsamples)
-                mse_sc_cons,_, _ = sgd_dennis_scipy_cons.evaluate('val_cat', subsamples)
-                print 'evaluated scipy constrained ',
+                #mse_sc_cons,_, _ = sgd_dennis_scipy_cons.evaluate('val_cat', subsamples)
+                #print 'evaluated scipy constrained ',
                 #mse_tr_sc_cons,_, _ = sgd_dennis_scipy_cons.evaluate('train_cat', subsamples)
                 #preds_d_d_sc, _, level_pred_d_d_sc, max_iep_patches_d_d_sc, max_level_preds_d_d_sc = sgd_dennis_scipy.evaluate('val_cat', subsamples, True)
                 #preds_d_d_sc_cons, _, level_pred_d_d_sc_cons, max_iep_patches_d_d_sc_cons, max_level_preds_d_d_sc_cons = sgd_dennis_scipy_cons.evaluate('val_cat', subsamples, True)
                 
 
             #print "Eval loss train: ", al_i, mse_tr_sc, mse_tr_sc_cons
-            print "Eval loss val: ", al_i, mse_sc, mse_sc_cons
+            print "Eval loss val: ", al_i, mse_sc
     print learn_mode, pred_mode, epochs,'with scaler', debug
     
     
