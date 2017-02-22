@@ -27,11 +27,15 @@ def main():
 
     epochs = 1
 
-    subsamples = 10
+    subsamples = 5
 
     feature_size = 4096
 
     eta = math.pow(10,-5)
+
+    updates1_all = []
+    updates2_all = []
+    updates3_all = []
 
     for tree_level_size in range(1,5):
         #initialize
@@ -91,6 +95,7 @@ def main():
                     #tr_l, te_l = sgd_dennis.learn('categories')
                     sgd_dennis_old.learn(learn_mode, subsamples)
                     sgd_dennis.learn(learn_mode, subsamples)
+                    sgd_1_feat.learn(learn_mode, subsamples)
 
             updates1 = sgd_dennis_old.updates_all
             updates2 = sgd_dennis.updates_all
@@ -99,8 +104,14 @@ def main():
             print updates1
             print updates2
             print updates3
+            updates1_all.append(updates1)
+            updates2_all.append(updates2)
+            updates3_all.append(updates3)
+            print updates1_all
+            print updates2_all
+            print updates3_all
 
-            output_dennis.plot_updates(updates1, updates2, updates3)
+            output_dennis.plot_updates(updates1_all, updates2_all, updates3_all)
             #output_dennis.save(mse, ae, mse_non_zero, sgd_dennis, 'ind', al_i, learn_mode)
     print learn_mode, pred_mode, epochs,'with scaler', debug
     
