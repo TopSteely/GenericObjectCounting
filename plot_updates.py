@@ -107,9 +107,6 @@ def main():
             updates1_all.append(updates1)
             updates2_all.append(updates2)
             updates3_all.append(updates3)
-            print updates1_all
-            print updates2_all
-            print updates3_all
 
             output_dennis.plot_updates(updates1_all, updates2_all, updates3_all)
             #output_dennis.save(mse, ae, mse_non_zero, sgd_dennis, 'ind', al_i, learn_mode)

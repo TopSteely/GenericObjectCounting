@@ -163,5 +163,5 @@ class Output:
         plt.plot([upd[1] for upd in updates2], '-gx', label='norm new')
         plt.plot([upd[0] for upd in updates3], '-bo', label='dummy')
         plt.plot([upd[1] for upd in updates3], '-bx', label='norm dummy')
-        plt.legend()
+        #plt.legend()
         plt.savefig(self.upd_path%(self.category))
