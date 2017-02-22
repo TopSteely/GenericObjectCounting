@@ -367,7 +367,7 @@ class SGD:
     	   return train_losses, test_losses
 
 
-    def learn_scipy(self, instances='all', with_constraints=False, to=-1, debug=False):
+    def learn_scipy(self, epochs, instances='all', with_constraints=False, to=-1, debug=False):
         train_losses = np.array([], dtype=np.int64).reshape(self.prune_tree_levels+1,0)
         test_losses = np.array([], dtype=np.int64).reshape(self.prune_tree_levels+1,0)
         if instances=='all':
@@ -402,9 +402,9 @@ class SGD:
         if with_constraints:
             cons = ({'type': 'ineq', 'fun': upper_constraint,'args':(x,y,alpha,fcts)},
                     {'type': 'ineq', 'fun': lower_constraint,'args':(x,y,alpha,fcts)})
-            res = minimize(loss_new_scipy, np.zeros(self.n_features), args=(x, y, alpha, fcts), constraints=cons, tol=0.1, options={'maxiter':3})#
+            res = minimize(loss_new_scipy, np.zeros(self.n_features), args=(x, y, alpha, fcts), constraints=cons, tol=0.1, options={'maxiter':epochs})#
         else:
-            res = minimize(loss_new_scipy, np.zeros(self.n_features), args=(x, y, alpha, fcts), tol=0.1, options={'maxiter':10})#
+            res = minimize(loss_new_scipy, np.zeros(self.n_features), args=(x, y, alpha, fcts), tol=0.1, options={'maxiter':epochs})#
         self.w = res.x
         self.predictor = IEP.IEP(self.w, 'prediction')
         if debug:

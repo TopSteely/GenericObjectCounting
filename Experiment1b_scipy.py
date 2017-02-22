@@ -80,7 +80,7 @@ def main():
         print 1,
             
         # learn SGD
-        for al_i in [0.1]:#[math.pow(10,-4)]:#,math.pow(10,-2)
+        for al_i in [10,1,0.1]:#[math.pow(10,-4)]:#,math.pow(10,-2)
             for gamma_i in [math.pow(10,-5)]:#,math.pow(10,-4),math.pow(10,-3),math.pow(10,-2)
                 training_loss = np.array([], dtype=np.int64).reshape(tree_level_size+1,0)
                 validation_loss = np.array([], dtype=np.int64).reshape(tree_level_size+1,0)
@@ -91,7 +91,7 @@ def main():
                 #sgd_dennis_scipy_cons.set_scaler(scaler_dennis)
                 print 'strating ',
                 start = time.time()
-                sgd_dennis_scipy.learn_scipy(learn_mode,False,subsamples)
+                sgd_dennis_scipy.learn_scipy(epochs,learn_mode,False,subsamples)
                 print 'learned scipy ', time.time() - start # 10 samples = 60s, 20samples = 330s
                 start = time.time()
                 #sgd_dennis_scipy_cons.learn_scipy(learn_mode,True,subsamples)
