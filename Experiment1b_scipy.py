@@ -27,7 +27,7 @@ def main():
 
     epochs = 3
 
-    subsamples = 4
+    subsamples = 10
 
     feature_size = 4096
 
@@ -90,10 +90,12 @@ def main():
                 sgd_dennis_scipy.set_scaler(scaler_dennis)
                 sgd_dennis_scipy_cons.set_scaler(scaler_dennis)
                 print 'strating ',
-                sgd_dennis_scipy.learn_scipy(learn_mode,subsamples)
-                print 'learned scipy ',
+                start = time.time()
+                sgd_dennis_scipy.learn_scipy(learn_mode,False,subsamples)
+                print 'learned scipy ', time.time() - start
+                start = time.time()
                 sgd_dennis_scipy_cons.learn_scipy(learn_mode,True,subsamples)
-                print 'learned scipy constrained ',
+                print 'learned scipy constrained ', time.time() - start
                 mse_sc,_, _ = sgd_dennis_scipy.evaluate('val_cat', subsamples)
                 print 'evaluated scipy ',
                 #mse_tr_sc,_, _ = sgd_dennis_scipy.evaluate('train_cat', subsamples)
