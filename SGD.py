@@ -415,7 +415,7 @@ class SGD:
 
         
     def update_self(self):
-        self.updates_all = [np.mean(self.w_update),np.mean(self.w_update/self.prune_tree_levels)]
+        self.updates_all = [np.mean(self.w_update)]
         if self.version == 'multi':
             self.w_multi -= (self.eta * self.w_update)
             self.w_update = np.zeros((self.prune_tree_levels,self.n_features))
@@ -438,7 +438,7 @@ class SGD:
     def learn_mean(self, img_data, functions):
         level_preds = self.predict_ind(img_data)
         iep_levels, _ = self.learner.get_iep_levels(img_data, functions)
-        return 2 * np.sum(np.array(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels), axis=0) + 2 * self.alpha * self.w, functions
+        return 2 * np.sum(np.array(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels), axis=0)/len(level_preds) + 2 * self.alpha * self.w, functions
 
     #tested
     def learn_multi(self, img_data, functions):
@@ -487,7 +487,9 @@ class SGD:
             _,fct = self.learner.get_iep_levels(img_data, {})
                 
 
+        norm = 0.0
         for i_level,level_fct in enumerate(fct.values()):
+            norm += len(level_fct)
             for fun in level_fct:
                 copy = deepcopy(level_fct)
                 copy.remove(fun)
@@ -497,5 +499,5 @@ class SGD:
                 elif fun[0] == '-':
                     update += (-self.predict_window(img_data, fun[1]) + iep_with_func(self.w,img_data.X,copy) - img_data.y) * (iep_with_func(1.0,img_data.X,copy) -img_data.X[fun[1]])
 
-
-        return 2 * update + 2 * self.alpha * self.w, fct
+        print norm
+        return 2 * update/norm + 2 * self.alpha * self.w, fct
