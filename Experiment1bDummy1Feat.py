@@ -24,7 +24,7 @@ def main():
 
     batch_size = 7
 
-    epochs = 2
+    epochs = 3
 
     subsamples = 21
 
@@ -32,7 +32,7 @@ def main():
 
     eta = math.pow(10,-3)
 
-    for tree_level_size in range(4,7):
+    for tree_level_size in range(1,7):
         #initialize
         print 'initializing', tree_level_size
         #sgd = SGD.SGD('max', category, tree_level_size, batch_size, math.pow(10,-4), 0.003, math.pow(10,-5))
@@ -43,7 +43,7 @@ def main():
         
             
         # learn SGD
-        for al_i in [0.0]:#[math.pow(10,-4)]:#,math.pow(10,-2)
+        for al_i in [0.1,0.0]:#[math.pow(10,-4)]:#,math.pow(10,-2)
             for gamma_i in [math.pow(10,-3)]:#,math.pow(10,-4),math.pow(10,-3),math.pow(10,-2)
                 training_loss = np.array([], dtype=np.int64).reshape(tree_level_size+1,0)
                 validation_loss = np.array([], dtype=np.int64).reshape(tree_level_size+1,0)
@@ -77,8 +77,8 @@ def main():
                 if learn_mode == 'all':
                     preds_d_d, y_d_d = sgd_dennis.evaluate('val_all', subsamples, debug)
                 elif learn_mode == 'category':
-                    preds_d_d, y_d_d, level_pred_d_d, max_iep_patches_d_d, max_level_preds_d_d = sgd_dennis.evaluate('val_cat', subsamples, debug)
-                    preds_d_t, y_d_t, level_pred_d_t, max_iep_patches_d_t, max_level_preds_d_t = sgd_dennis.evaluate('train_cat', subsamples, debug)
+                    preds_d_d, y_d_d, level_pred_d_d, max_level_preds_d_d = sgd_dennis.evaluate('val_cat', subsamples, debug)
+                    preds_d_t, y_d_t, level_pred_d_t, max_level_preds_d_t = sgd_dennis.evaluate('train_cat', subsamples, debug)
                     mse,ae, mse_non_zero = sgd_dennis.evaluate('val_cat',subsamples)
                     mse_tr,ae_tr, mse_non_zero_tr = sgd_dennis.evaluate('train_cat',subsamples)
                     print sgd_dennis.w
