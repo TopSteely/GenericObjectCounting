@@ -159,8 +159,8 @@ class Output:
     def plot_updates(self,updates1, updates2, updates3):
         plt.plot([upd[0] for upd in updates1], '-ro', label='old')
         plt.plot([upd[1] for upd in updates1], '-rx', label='norm old')
-        plt.plot([upd[0] for upd in updates2], '-go', label='old')
-        plt.plot([upd[1] for upd in updates2], '-gx', label='norm old')
+        plt.plot([upd[0] for upd in updates2], '-go', label='new')
+        plt.plot([upd[1] for upd in updates2], '-gx', label='norm new')
         plt.plot([upd[0] for upd in updates3], '-bo', label='dummy')
         plt.plot([upd[1] for upd in updates3], '-bx', label='norm dummy')
         plt.legend()
