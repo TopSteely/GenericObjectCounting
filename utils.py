@@ -35,7 +35,6 @@ def loss_new_scipy(w, x, y, alpha, fct):
                 elif fun[0] == '-':
                     loss += ((y[img_nr] - iep + window_pred) ** 2)
         loss+= alpha * math.sqrt(np.dot(w,w))
-    print loss, alpha * math.sqrt(np.dot(w,w))
     return loss #+ alpha * math.sqrt(np.dot(w,w))
 
 
