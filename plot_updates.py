@@ -89,18 +89,8 @@ def main():
                 for epoch in range(epochs):
                     print epoch,
                     #tr_l, te_l = sgd_dennis.learn('categories')
-                    if debug:
-                        sgd_dennis_old.learn(learn_mode, subsamples)
-                        tr_l, te_l = sgd_dennis.learn(learn_mode, subsamples, debug)
-                        training_loss = np.concatenate((training_loss,tr_l), axis=1)#.reshape(-1,1)
-                        validation_loss = np.concatenate((validation_loss,te_l), axis=1)#.reshape(-1,1)
-                    else:
-                        sgd_dennis_old.learn(learn_mode)
-                        sgd_dennis.learn(learn_mode)
-                if debug:
-                    tr_l_sc, te_l_sc = sgd_dennis_scipy.learn_scipy(learn_mode, False, subsamples, debug)
-                    output_dennis.plot_train_val_loss(training_loss, validation_loss, eta, al_i)
-                    output_dennis_scipy.plot_train_val_loss(tr_l_sc, te_l_sc, eta, al_i)
+                    sgd_dennis_old.learn(learn_mode, subsamples)
+                    sgd_dennis.learn(learn_mode, subsamples)
 
             updates1 = sgd_dennis_old.updates_all
             updates2 = sgd_dennis.updates_all
