@@ -499,5 +499,4 @@ class SGD:
                 elif fun[0] == '-':
                     update += (-self.predict_window(img_data, fun[1]) + iep_with_func(self.w,img_data.X,copy) - img_data.y) * (iep_with_func(1.0,img_data.X,copy) -img_data.X[fun[1]])
 
-        print norm
         return 2 * update/norm + 2 * self.alpha * self.w, fct
