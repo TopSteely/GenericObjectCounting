@@ -14,6 +14,7 @@ from copy import deepcopy
 
 class SGD:
     def __init__(self, dataset, mode, category, prune_tree_levels, batch_size, eta, gamma, alpha, num_features=1000):
+        self.updates_all = []
         self.version = mode
         self.prune_tree_levels = prune_tree_levels
         self.n_features = num_features
@@ -414,6 +415,7 @@ class SGD:
 
         
     def update_self(self):
+        self.updates_all.append([self.w_update,self.w_update/self.prune_tree_levels])
         if self.version == 'multi':
             self.w_multi -= (self.eta * self.w_update)
             self.w_update = np.zeros((self.prune_tree_levels,self.n_features))

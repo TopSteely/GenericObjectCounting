@@ -31,6 +31,7 @@ class Output:
         self.feat_var_path = '/var/node436/local/tstahl/plos/feat_var.png'
         self.loss_path = '/var/node436/local/tstahl/plos/loss_%s_%s_%s_%s_%s_%s.png'
         self.best_path = '/var/node436/local/tstahl/plos/best_%s_%s_%s.png'
+        self.upd_path = '/var/node436/local/tstahl/plos/upd_%s.png'
         
     def dump_scaler(self, scaler):
         pickle.dump(scaler, open(self.scaler_path, "wb"))
@@ -154,3 +155,13 @@ class Output:
             
                 plt.savefig(self.best_path%(self.category,img_nr,lvl))
                 plt.clf()
+
+    def plot_updates(self,updates1, updates2, updates3):
+        plt.plot([upd[0] for upd in updates1], '-ro', label='old')
+        plt.plot([upd[1] for upd in updates1], '-rx', label='norm old')
+        plt.plot([upd[0] for upd in updates2], '-go', label='old')
+        plt.plot([upd[1] for upd in updates2], '-gx', label='norm old')
+        plt.plot([upd[0] for upd in updates3], '-bo', label='dummy')
+        plt.plot([upd[1] for upd in updates3], '-bx', label='norm dummy')
+        plt.legend()
+        plt.savefig(self.upd_path%(self.category))
