@@ -397,13 +397,13 @@ class SGD:
                 _,fct = self.learner.get_iep_levels(img_data, {})
                 for lvl in range(len(img_data.levels)):
                     fcts[i_img_nr].append(fct[lvl])
-        print 'gathered ',
+        print 'gathered ' len(y)
         if with_constraints:
             cons = ({'type': 'ineq', 'fun': upper_constraint,'args':(x,y,alpha,fcts)},
                     {'type': 'ineq', 'fun': lower_constraint,'args':(x,y,alpha,fcts)})
-            res = minimize(loss_new_scipy, np.zeros(self.n_features), args=(x, y, alpha, fcts), constraints=cons, tol=0.1, options={'maxiter':5})#
+            res = minimize(loss_new_scipy, np.zeros(self.n_features), args=(x, y, alpha, fcts), constraints=cons, tol=0.1, options={'maxiter':3})#
         else:
-            res = minimize(loss_new_scipy, np.zeros(self.n_features), args=(x, y, alpha, fcts), tol=0.1, options={'maxiter':5})#
+            res = minimize(loss_new_scipy, np.zeros(self.n_features), args=(x, y, alpha, fcts), tol=0.1, options={'maxiter':3})#
         self.w = res.x
         self.predictor = IEP.IEP(self.w, 'prediction')
         if debug:

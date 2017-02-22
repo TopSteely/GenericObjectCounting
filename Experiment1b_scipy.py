@@ -27,7 +27,7 @@ def main():
 
     epochs = 3
 
-    subsamples = 50
+    subsamples = 4
 
     feature_size = 4096
 
@@ -104,8 +104,8 @@ def main():
                 #preds_d_d_sc_cons, _, level_pred_d_d_sc_cons, max_iep_patches_d_d_sc_cons, max_level_preds_d_d_sc_cons = sgd_dennis_scipy_cons.evaluate('val_cat', subsamples, True)
                 
 
-            print "Eval loss train: ", al_i, mse_tr_sc, mse_tr_sc_cons
-            #print "Eval loss val: ", al_i, mse_sc, mse_sc_cons
+            #print "Eval loss train: ", al_i, mse_tr_sc, mse_tr_sc_cons
+            print "Eval loss val: ", al_i, mse_sc, mse_sc_cons
     print learn_mode, pred_mode, epochs,'with scaler', debug
     
     
