@@ -380,6 +380,7 @@ class SGD:
         random.shuffle(subset)
         x = []
         alpha = self.alpha
+        print alpha
         y = []
         fcts = {}
         for i_img_nr, img_nr in enumerate(subset):
