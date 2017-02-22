@@ -22,7 +22,6 @@ def upper_constraint(w,x,y,alpha,level_fcts):
 
 
 def loss_new_scipy(w, x, y, alpha, fct):
-    print 'u'
     loss = 0.0
     for img_nr, img_fct in zip(fct.keys(),fct.values()):
         for level_fct in img_fct:
