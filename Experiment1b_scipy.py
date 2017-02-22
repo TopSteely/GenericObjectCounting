@@ -98,7 +98,7 @@ def main():
                 #print 'learned scipy constrained ', time.time() - start # 10 samples = 920s, 20samples = 1622s
                 mse_sc,_, _ = sgd_dennis_scipy.evaluate('val_cat', subsamples)
                 print 'evaluated scipy ',
-                #mse_tr_sc,_, _ = sgd_dennis_scipy.evaluate('train_cat', subsamples)
+                mse_tr_sc,_, _ = sgd_dennis_scipy.evaluate('train_cat', subsamples)
                 #mse_sc_cons,_, _ = sgd_dennis_scipy_cons.evaluate('val_cat', subsamples)
                 #print 'evaluated scipy constrained ',
                 #mse_tr_sc_cons,_, _ = sgd_dennis_scipy_cons.evaluate('train_cat', subsamples)
@@ -106,7 +106,7 @@ def main():
                 #preds_d_d_sc_cons, _, level_pred_d_d_sc_cons, max_iep_patches_d_d_sc_cons, max_level_preds_d_d_sc_cons = sgd_dennis_scipy_cons.evaluate('val_cat', subsamples, True)
                 
 
-            #print "Eval loss train: ", al_i, mse_tr_sc, mse_tr_sc_cons
+            print "Eval loss train: ", al_i, mse_tr_sc
             print "Eval loss val: ", al_i, mse_sc
     print learn_mode, pred_mode, epochs,'with scaler', debug
     

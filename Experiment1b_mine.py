@@ -25,7 +25,8 @@ def main():
 
     batch_size = 5
 
-    epochs = 5
+    epochs = 15
+    print epochs
 
     subsamples = 10
 
@@ -76,7 +77,7 @@ def main():
                 scaler_dennis = scaler_category
             
         # learn SGD
-        for al_i in [0.01]:#[math.pow(10,-4)]:#,math.pow(10,-2)
+        for al_i in [0.00]:#[math.pow(10,-4)]:#,math.pow(10,-2)
             for gamma_i in [math.pow(10,-4)]:#,math.pow(10,-4),math.pow(10,-3),math.pow(10,-2)
                 training_loss = np.array([], dtype=np.int64).reshape(tree_level_size+1,0)
                 validation_loss = np.array([], dtype=np.int64).reshape(tree_level_size+1,0)
