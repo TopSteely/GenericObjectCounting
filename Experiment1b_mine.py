@@ -85,8 +85,6 @@ def main():
                 sgd_dennis_old = SGD.SGD('dennis', 'mean', category, tree_level_size, batch_size, eta, gamma_i, al_i, feature_size)
                 sgd_dennis.set_scaler(scaler_dennis)
                 sgd_dennis_old.set_scaler(scaler_dennis)
-                sgd_dennis_scipy.set_scaler(scaler_dennis)
-                sgd_dennis_scipy_cons.set_scaler(scaler_dennis)
                 for epoch in range(epochs):
                     print epoch,
                     #tr_l, te_l = sgd_dennis.learn('categories')

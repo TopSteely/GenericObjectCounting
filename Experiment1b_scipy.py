@@ -95,7 +95,7 @@ def main():
                 print 'learned scipy ', time.time() - start # 10 samples = 60s, 20samples = 330s
                 start = time.time()
                 #sgd_dennis_scipy_cons.learn_scipy(learn_mode,True,subsamples)
-                #print 'learned scipy constrained ', time.time() - start # 10 samples = 920s, 
+                #print 'learned scipy constrained ', time.time() - start # 10 samples = 920s, 20samples = 1622s
                 mse_sc,_, _ = sgd_dennis_scipy.evaluate('val_cat', subsamples)
                 print 'evaluated scipy ',
                 #mse_tr_sc,_, _ = sgd_dennis_scipy.evaluate('train_cat', subsamples)
