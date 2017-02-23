@@ -113,9 +113,10 @@ class SGD:
                 window_pred = np.dot(self.w, img_data.X[fun[1]])
                 if fun[0] == '+':
                     loss += ((img_data.y - iep - window_pred) ** 2)
+                    print img_data.y, iep, window_pred, ((img_data.y - iep - window_pred) ** 2)
                 elif fun[0] == '-':
                     loss += ((img_data.y - iep + window_pred) ** 2)
-                print img_data.y, iep, window_pred, ((img_data.y - iep + window_pred) ** 2)
+                    print img_data.y, iep, window_pred, ((img_data.y - iep + window_pred) ** 2)
             print loss
             level_loss = loss/ norm
             print level_loss
