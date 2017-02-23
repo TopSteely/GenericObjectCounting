@@ -55,8 +55,8 @@ def main():
                     print 'epoch: ', epoch
                     #tr_l, te_l = sgd_dennis.learn('categories')
                     if debug:
-                        tr_l, te_l = sgd_dennis.learn(learn_mode, 500, debug)
-                        tr_l_old, te_l_old = sgd_dennis_old.learn(learn_mode, 500, debug)
+                        tr_l, te_l = sgd_dennis.learn(learn_mode, subsamples, debug)
+                        tr_l_old, te_l_old = sgd_dennis_old.learn(learn_mode, subsamples, debug)
                         mse_tr,_, _ = sgd_dennis.evaluate('train_cat',subsamples)
                         mse,_, _ = sgd_dennis.evaluate('val_cat',subsamples)
                         mse_tr_old,_, _ = sgd_dennis_old.evaluate('train_cat',subsamples)

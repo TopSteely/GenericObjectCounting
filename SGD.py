@@ -516,3 +516,8 @@ class SGD:
                     update += (-self.predict_window(img_data, fun[1]) + iep_with_func(self.w,img_data.X,copy) - img_data.y) * (iep_with_func(1.0,img_data.X,copy) -img_data.X[fun[1]])
 
         return 2 * update/norm + 2 * self.alpha * self.w, fct
+
+    def learn_abs(self, img_data, functions):
+        level_preds = self.predict_ind(img_data)
+        iep_levels, _ = self.learner.get_iep_levels(img_data, functions)
+        return np.sum(np.array(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels), axis=0)/len(level_preds) + 2 * self.alpha * self.w, functions
