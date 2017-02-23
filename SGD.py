@@ -97,13 +97,13 @@ class SGD:
         return np.min(np.array(level_preds) - img_data.y)**2 + self.alpha * math.sqrt(np.dot(self.w,self.w))
 
     def loss_new(self, img_data):
-        loss = 0.0
+        level_loss = 0.0
         if img_data.img_nr in self.functions:
             fct = self.functions[img_data.img_nr]
         else:
             _,fct = self.learner.get_iep_levels(img_data, {})
         for i_level,level_fct in enumerate(fct.values()):
-            level_loss = 0.0
+            loss = 0.0
             print level_fct
             norm = len(level_fct)
             for fun in level_fct:
@@ -118,12 +118,11 @@ class SGD:
                     loss += ((img_data.y - iep + window_pred) ** 2)
                     print img_data.y, iep, window_pred, ((img_data.y - iep + window_pred) ** 2)
             print loss
-            level_loss = loss/ norm
+            level_loss += (loss/ norm)
             print level_loss
-        loss = level_loss/len(fct)
-        print loss
+        print level_loss/len(fct)
         raw_input()
-        return loss + self.alpha * math.sqrt(np.dot(self.w,self.w))
+        return level_loss/len(fct) + self.alpha * math.sqrt(np.dot(self.w,self.w))
 
     def loss_abs(self, img_data):
         level_preds, _ = self.predictor.get_iep_levels(img_data, {})
