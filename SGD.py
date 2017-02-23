@@ -460,6 +460,12 @@ class SGD:
         #print (2 * np.sum(np.array(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels), axis=0)).shape
         #print (2 * np.sum(np.array(np.array(level_preds) - img_data.y).reshape(1,-1) * np.array(iep_levels), axis=0)).shape
         #print np.array(np.array(level_preds) - img_data.y).shape, np.array(iep_levels).shape,np.array(iep_levels).reshape(-1,1).shape, np.array(iep_levels).reshape(1,-1).shape
+        print np.array(np.array(level_preds) - img_data.y).reshape(-1,1)
+        print np.array(iep_levels)
+        print np.array(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels)
+        print np.array(np.array(level_preds) - img_data.y) * np.array(iep_levels)
+        print np.sum(np.array(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels), axis=0)
+        raw_input()
         return 2 * np.sum(np.array(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels), axis=0)/len(level_preds) + 2 * self.alpha * self.w, functions
         #for 1 feat: return 2 * np.sum(np.array(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels).reshape(1,-1), axis=0)/len(level_preds) + 2 * self.alpha * self.w, functions
 
