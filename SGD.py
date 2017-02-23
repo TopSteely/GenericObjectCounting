@@ -32,6 +32,7 @@ class SGD:
         self.alpha = alpha
         self.functions = {}
         self.scaler = None
+        print mode
         if mode == 'max':
             self.method = self.learn_max
             self.loss = self.loss_max
@@ -454,10 +455,14 @@ class SGD:
     def learn_mean(self, img_data, functions):
         level_preds = self.predict_ind(img_data)
         iep_levels, _ = self.learner.get_iep_levels(img_data, functions)
-        return 2 * np.sum(np.array(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels), axis=0)/len(level_preds) + 2 * self.alpha * self.w, functions
+#        print np.array(np.array(level_preds) - img_data.y).reshape(-1,1)
+#        print np.array(
+#        print 2 * np.sum(np.array(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels).reshape(-1,1), axis=0)
+        return 2 * np.sum(np.array(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels).reshape(-1,1), axis=0)/len(level_preds) + 2 * self.alpha * self.w, functions
 
     #tested
     def learn_multi(self, img_data, functions):
+        print 'multi'
         ret = np.zeros((self.prune_tree_levels,self.n_features))
         if len(img_data.levels) >= 10:
             print img_data.img_nr, img_data.y, len(img_data.levels)
@@ -482,6 +487,7 @@ class SGD:
 
 
     def learn_old(self, img_data, functions):
+        print 'old'
         for level in img_data.levels:
             preds_level = self.predict_old(img_data, level)
             iep_level, _ = self.learner.iep(img_data, functions, level)
@@ -489,6 +495,7 @@ class SGD:
             self.predictor = IEP.IEP(self.w, 'prediction')
 
     def learn_ind(self, img_data, functions):
+        print 'ind'
         level_preds = self.predict_ind(img_data)
         iep_levels, _ = self.learner.get_iep_levels(img_data, [])
         return np.sum(2 * (np.array(level_preds) - img_data.y).reshape(-1,1) * iep_levels + 2 * self.alpha * self.w, axis=0), functions
@@ -520,4 +527,4 @@ class SGD:
     def learn_abs(self, img_data, functions):
         level_preds = self.predict_ind(img_data)
         iep_levels, _ = self.learner.get_iep_levels(img_data, functions)
-        return np.sum(np.array(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels), axis=0)/len(level_preds) + 2 * self.alpha * self.w, functions
+        return np.sum(np.abs(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels), axis=0)/len(level_preds) + 2 * self.alpha * self.w, functions
