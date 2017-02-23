@@ -456,10 +456,10 @@ class SGD:
         level_preds = self.predict_ind(img_data)
         iep_levels, _ = self.learner.get_iep_levels(img_data, functions)
         print np.array(np.array(level_preds) - img_data.y).reshape(-1,1)
-        print 2 * np.sum(np.array(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels).reshape(-1,1), axis=0)
+        #print 2 * np.sum(np.array(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels).reshape(-1,1), axis=0)
         print 2 * np.sum(np.array(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels).reshape(1,-1), axis=0)
         raw_input()
-        return 2 * np.sum(np.array(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels).reshape(-1,1), axis=0)/len(level_preds) + 2 * self.alpha * self.w, functions
+        return 2 * np.sum(np.array(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels).reshape(1,-1), axis=0)/len(level_preds) + 2 * self.alpha * self.w, functions
 
     #tested
     def learn_multi(self, img_data, functions):
