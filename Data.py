@@ -78,7 +78,9 @@ class Data:
                         for g_i in gr:
                             sum_tmp += get_overlap_ratio(g_i, is_i)
                         self.y_boxes.append(sum_tmp)
+                    print len(self.y_boxes)
                     self.X = np.array(self.y_boxes) + np.random.normal(0,1,len(self.y_boxes))
+                    print len(self.X)
                     assert self.num_features == 1
                 else:
                     self.X = np.append(self.X, intersection_features[:,0:num_features], axis=0)
