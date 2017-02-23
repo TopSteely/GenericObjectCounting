@@ -103,6 +103,7 @@ class SGD:
         else:
             _,fct = self.learner.get_iep_levels(img_data, {})
         for i_level,level_fct in enumerate(fct.values()):
+            print level_fct
             norm = len(level_fct)
             for fun in level_fct:
                 copy = deepcopy(level_fct)
@@ -113,6 +114,7 @@ class SGD:
                     loss += ((img_data.y - iep - window_pred) ** 2)
                 elif fun[0] == '-':
                     loss += ((img_data.y - iep + window_pred) ** 2)
+                print img_data.y, iep, window_pred, ((img_data.y - iep + window_pred) ** 2)
             print loss
             loss/= norm
             print loss
