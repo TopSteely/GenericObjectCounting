@@ -62,6 +62,14 @@ class SGD:
             self.method = self.learn_new
             self.loss = self.loss_new
             self.predict = self.predict_mean
+        elif mode == 'absolute':
+            self.method = self.learn_abs
+            self.loss = self.loss_abs
+            self.predict = self.predict_mean
+        elif mode == 'cons_pos':
+            self.method = self.learn_cons_pos
+            self.loss = self.loss_new
+            self.predict = self.predict_mean
         #blob dataset, have to save the data because of random bbox creation
         if dataset == 'blob':
             self.blobtraindata = []
@@ -110,7 +118,12 @@ class SGD:
             print loss
         loss/=len(fct)
         print loss
+        raw_input
         return loss + self.alpha * math.sqrt(np.dot(self.w,self.w))
+
+    def loss_abs(self, img_data):
+        level_preds, _ = self.predictor.get_iep_levels(img_data, {})
+        return np.mean(np.array(level_preds) - img_data.y) + self.alpha * math.sqrt(np.dot(self.w,self.w))
 
         
     def loss_mean(self, img_data):
