@@ -118,7 +118,7 @@ class SGD:
             print loss
         loss/=len(fct)
         print loss
-        raw_input
+        raw_input()
         return loss + self.alpha * math.sqrt(np.dot(self.w,self.w))
 
     def loss_abs(self, img_data):
@@ -369,12 +369,9 @@ class SGD:
                         self.w_update += upd
                     self.functions[img_nr] = fct
             self.samples_seen += 1
-            print i_img_nr
             if (i_img_nr + 1)%self.batch_size == 0:
                 self.update_self()
                 if debug:
-                    print 'loss per level all'
-                    raw_input()
                     tr_loss, te_loss = self.loss_per_level_all(instances, to)
                     train_losses = np.concatenate((train_losses,tr_loss.reshape(-1,1)), axis=1)
                     test_losses = np.concatenate((test_losses,te_loss.reshape(-1,1)), axis=1)

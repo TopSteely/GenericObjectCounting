@@ -32,7 +32,7 @@ def main():
 
     eta = math.pow(10,-3)
 
-    for tree_level_size in range(1,7):
+    for tree_level_size in range(2,7):
         #initialize
         print 'initializing', tree_level_size
         #sgd = SGD.SGD('max', category, tree_level_size, batch_size, math.pow(10,-4), 0.003, math.pow(10,-5))
