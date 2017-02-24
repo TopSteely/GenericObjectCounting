@@ -20,11 +20,11 @@ def main():
 
     pred_mode = 'new'
 
-    debug = True
+    debug = False
 
     batch_size = 7
 
-    epochs = 3
+    epochs = 20
 
     subsamples = 14
 
@@ -81,7 +81,14 @@ def main():
                         training_loss_old = np.concatenate((training_loss_old,tr_l_old), axis=1)#.reshape(-1,1)
                         validation_loss_old = np.concatenate((validation_loss_old,te_l_old), axis=1)#.reshape(-1,1)
                     else:
-                        sgd_dennis.learn(learn_mode)
+                        sgd_dennis.learn(learn_mode, subsamples)
+                        print sgd_dennis.w
+                        sgd_dennis_old.learn(learn_mode, subsamples)
+                        print sgd_dennis_old.w
+                        sgd_dennis_abs.learn(learn_mode, subsamples)
+                        print sgd_dennis_abs.w
+                        sgd_dennis_cons_pos.learn(learn_mode, subsamples)
+                        print sgd_dennis_cons_pos.w
                 if debug:
                     output_dennis.plot_train_val_loss(training_loss, validation_loss, eta, al_i)
             if not debug:

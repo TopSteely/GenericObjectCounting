@@ -335,7 +335,6 @@ class SGD:
         elif instances == 'category_levels':
             training_ims = self.load.category_train_with_levels[0:to]
             validation_ims = self.load.category_val_with_levels[0:to]
-        print self.version, training_ims, validation_ims
         for img_nr in training_ims:
             if self.n_features == 1:
                 img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features, True)
@@ -363,7 +362,6 @@ class SGD:
             training_data = self.load.category_train_with_levels
         subset = training_data[:to]
         #random.shuffle(subset)
-        print subset
         for i_img_nr, img_nr in enumerate(subset):
             start = time.time()
             if self.dataset == 'blob':
