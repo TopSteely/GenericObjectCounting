@@ -593,13 +593,14 @@ class SGD:
                 copy.remove(fun)
 
                 window_pred = self.predict_window(img_data, fun[1])
+                sign = 1.0 if window_pred == [0.] else np.sign(window_pred)
 
-                print window_pred, np.sign(window_pred), iep_with_func(self.w,img_data.X,copy), img_data.y
+                #print window_pred, sign, iep_with_func(self.w,img_data.X,copy), img_data.y
 
                 if fun[0] == '+':
-                    level_update += (window_pred + iep_with_func(self.w,img_data.X,copy) - img_data.y) * (iep_with_func(1.0,img_data.X,copy) + np.sign(window_pred) * img_data.X[fun[1]])
+                    level_update += (window_pred + iep_with_func(self.w,img_data.X,copy) - img_data.y) * (iep_with_func(1.0,img_data.X,copy) + sign * img_data.X[fun[1]])
                 elif fun[0] == '-':
-                    level_update += (-window_pred + iep_with_func(self.w,img_data.X,copy) - img_data.y) * (iep_with_func(1.0,img_data.X,copy) - np.sign(window_pred) * img_data.X[fun[1]])
+                    level_update += (-window_pred + iep_with_func(self.w,img_data.X,copy) - img_data.y) * (iep_with_func(1.0,img_data.X,copy) - sign * img_data.X[fun[1]])
             update += (level_update/len(level_fct))
 
         return 2 * update/len(fct) + 2 * self.alpha * self.w, fct
