@@ -32,7 +32,7 @@ def main():
 
     eta = math.pow(10,-2)
 
-    for tree_level_size in range(2,7):
+    for tree_level_size in range(3,7):
         #initialize
         print 'initializing', tree_level_size
         #sgd = SGD.SGD('max', category, tree_level_size, batch_size, math.pow(10,-4), 0.003, math.pow(10,-5))
@@ -47,6 +47,8 @@ def main():
             for gamma_i in [math.pow(10,-3)]:#,math.pow(10,-4),math.pow(10,-3),math.pow(10,-2)
                 training_loss = np.array([], dtype=np.int64).reshape(tree_level_size+1,0)
                 validation_loss = np.array([], dtype=np.int64).reshape(tree_level_size+1,0)
+                training_loss_old = np.array([], dtype=np.int64).reshape(tree_level_size+1,0)
+                validation_loss_old = np.array([], dtype=np.int64).reshape(tree_level_size+1,0)
                 #sgd_pascal = SGD.SGD('pascal', 'max', category, tree_level_size, batch_size, eta_i, gamma_i, al_i)
                 sgd_dennis = SGD.SGD('dennis', pred_mode, category, tree_level_size, batch_size, eta, gamma_i, al_i, feature_size)
                 sgd_dennis_old = SGD.SGD('dennis', 'mean', category, tree_level_size, batch_size, eta, gamma_i, al_i, feature_size)
@@ -78,8 +80,10 @@ def main():
                         print 'new', tr_l[-1], te_l[-1], mse_tr_old,mse_old, sgd_dennis_old.w
                         print 'abs', tr_l_abs[-1], te_l_abs[-1], mse_tr_abs,mse_abs, sgd_dennis_abs.w
                         print 'cons_pos', tr_l_cons_pos[-1], te_l_cons_pos[-1], mse_tr_cons_pos,mse_cons_pos, sgd_dennis_cons_pos.w
-                        #training_loss = np.concatenate((training_loss,tr_l), axis=1)#.reshape(-1,1)
-                        #validation_loss = np.concatenate((validation_loss,te_l), axis=1)#.reshape(-1,1)
+                        training_loss = np.concatenate((training_loss,tr_l), axis=1)#.reshape(-1,1)
+                        validation_loss = np.concatenate((validation_loss,te_l), axis=1)#.reshape(-1,1)
+                        training_loss_old = np.concatenate((training_loss_old,tr_l_old), axis=1)#.reshape(-1,1)
+                        validation_loss_old = np.concatenate((validation_loss_old,te_l_old), axis=1)#.reshape(-1,1)
                     else:
                         sgd_dennis.learn(learn_mode)
                 if debug:
