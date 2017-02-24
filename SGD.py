@@ -73,7 +73,7 @@ class SGD:
             self.method = self.learn_cons_pos
             self.loss = self.loss_cons_pos
             self.predict = self.predict_mean
-            print self.traindata[0].X[0]
+            print self.trainingdata[0].X[0]
             raw_input()
         else:
             print 'no method chosen'
