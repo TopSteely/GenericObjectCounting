@@ -394,18 +394,6 @@ class SGD:
                 self.update_self()
                 if debug:
                     tr_loss, te_loss = self.loss_per_level_all(instances, to)
-                    if self.version == 'mean':
-                        self.loss = self.loss_new
-                        tr_loss_tmp, te_loss_tmp = self.loss_per_level_all(instances, to)
-                        self.loss = self.loss_mean
-                        assert np.array_equal(tr_loss[:-1],tr_loss_tmp[:-1])
-                        assert np.array_equal(te_loss[:-1],te_loss_tmp[:-1])
-                    elif self.version == 'new':
-                        self.loss = self.loss_mean
-                        tr_loss_tmp, te_loss_tmp = self.loss_per_level_all(instances, to)
-                        self.loss = self.loss_new
-                        assert np.array_equal(tr_loss[:-1],tr_loss_tmp[:-1])
-                        assert np.array_equal(te_loss[:-1],te_loss_tmp[:-1])
                     train_losses = np.concatenate((train_losses,tr_loss.reshape(-1,1)), axis=1)
                     test_losses = np.concatenate((test_losses,te_loss.reshape(-1,1)), axis=1)
         if (i_img_nr + 1)%self.batch_size != 0:
