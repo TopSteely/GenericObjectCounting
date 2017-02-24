@@ -584,9 +584,8 @@ class SGD:
 
         # if function is empty run iep first, just to get function -> we need the patches for each level to learn
         if fct == {}:
-            eips,fct = self.learner.get_iep_levels(img_data, {})
+            _,fct = self.learner.get_iep_levels(img_data, {})
                 
-        print eips
         print img_data.X[0]
         for i_level,level_fct in enumerate(fct.values()):
             level_update = np.zeros(self.n_features)
