@@ -73,6 +73,8 @@ class SGD:
             self.method = self.learn_cons_pos
             self.loss = self.loss_cons_pos
             self.predict = self.predict_mean
+            print self.traindata[0].X[0]
+            raw_input()
         else:
             print 'no method chosen'
             exit()
@@ -584,9 +586,10 @@ class SGD:
 
         # if function is empty run iep first, just to get function -> we need the patches for each level to learn
         if fct == {}:
-            _,fct = self.learner.get_iep_levels(img_data, {})
+            eips,fct = self.learner.get_iep_levels(img_data, {})
                 
-
+        print ieps
+        print img_data.X
         for i_level,level_fct in enumerate(fct.values()):
             level_update = np.zeros(self.n_features)
             for fun in level_fct:
