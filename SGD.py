@@ -408,6 +408,8 @@ class SGD:
                         tr_loss_tmp, te_loss_tmp = self.loss_per_level_all(instances, to)
                         self.loss = self.loss_new
                         print tr_loss, te_loss,tr_loss_tmp, te_loss_tmp
+                        for t,t_tmp in zip(tr_loss,tr_loss_tmp):
+                            print t,t_tmp, t==t_tmp
                         assert np.array_equal(tr_loss,tr_loss_tmp)
                         assert np.array_equal(te_loss,te_loss_tmp)
                     train_losses = np.concatenate((train_losses,tr_loss.reshape(-1,1)), axis=1)
