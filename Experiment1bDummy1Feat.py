@@ -44,9 +44,9 @@ def main():
         valdata = []
         trainingdata = []
         for im in load_dennis.category_val[0:7]:
-            valdata.append(Data.Data(self.load, im, self.prune_tree_levels, self.scaler, self.n_features, True))
+            valdata.append(Data.Data(load_dennis, im, tree_level_size, None, 1, True))
         for im in load_dennis.category_train[0:7]:
-            trainingdata.append(Data.Data(self.load, im, self.prune_tree_levels, self.scaler, self.n_features, True))
+            trainingdata.append(Data.Data(load_dennis, im, tree_level_size, None, 1, True))
         
             
         # learn SGD
