@@ -599,7 +599,7 @@ class SGD:
                     level_update += (window_pred + iep_with_func(self.w,img_data.X,copy) - img_data.y) * (iep_with_func(1.0,img_data.X,copy) + np.sign(window_pred) * img_data.X[fun[1]])
                 elif fun[0] == '-':
                     level_update += (-window_pred + iep_with_func(self.w,img_data.X,copy) - img_data.y) * (iep_with_func(1.0,img_data.X,copy) - np.sign(window_pred) * img_data.X[fun[1]])
-
+            print level_update, level_fct
             update += (level_update/len(level_fct))
 
         return 2 * update/len(fct) + 2 * self.alpha * self.w, fct

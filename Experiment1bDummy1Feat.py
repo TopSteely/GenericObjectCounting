@@ -25,7 +25,7 @@ def main():
 
     batch_size = 7
 
-    epochs = 6
+    epochs = 2
 
     subsamples = 7
 
@@ -90,10 +90,10 @@ def main():
                     else:
                         sgd_dennis.learn(learn_mode, subsamples)
                         print sgd_dennis.w
-                        sgd_dennis_old.learn(learn_mode, subsamples)
-                        print sgd_dennis_old.w
-                        sgd_dennis_abs.learn(learn_mode, subsamples)
-                        print sgd_dennis_abs.w
+                        #sgd_dennis_old.learn(learn_mode, subsamples)
+                        #print sgd_dennis_old.w
+                        #sgd_dennis_abs.learn(learn_mode, subsamples)
+                        #print sgd_dennis_abs.w
                         sgd_dennis_cons_pos.learn(learn_mode, subsamples)
                         print sgd_dennis_cons_pos.w
                 if debug:
