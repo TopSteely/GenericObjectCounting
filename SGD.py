@@ -32,7 +32,6 @@ class SGD:
         self.alpha = alpha
         self.functions = {}
         self.scaler = None
-        print mode
         if mode == 'max':
             self.method = self.learn_max
             self.loss = self.loss_max
@@ -336,6 +335,7 @@ class SGD:
         elif instances == 'category_levels':
             training_ims = self.load.category_train_with_levels[0:to]
             validation_ims = self.load.category_val_with_levels[0:to]
+        print self.version, training_ims, validation_ims
         for img_nr in training_ims:
             if self.n_features == 1:
                 img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features, True)
@@ -362,7 +362,8 @@ class SGD:
         elif instances=='category_levels':
             training_data = self.load.category_train_with_levels
         subset = training_data[:to]
-        random.shuffle(subset)
+        #random.shuffle(subset)
+        print subset
         for i_img_nr, img_nr in enumerate(subset):
             start = time.time()
             if self.dataset == 'blob':
@@ -456,6 +457,7 @@ class SGD:
 
         
     def update_self(self):
+        print self.version, self.w_update
         self.updates_all = [np.mean(self.w_update)]
         if self.version == 'multi':
             self.w_multi -= (self.eta * self.w_update)

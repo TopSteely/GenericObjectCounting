@@ -60,13 +60,9 @@ def main():
                     #tr_l, te_l = sgd_dennis.learn('categories')
                     if debug:
                         tr_l, te_l = sgd_dennis.learn(learn_mode, subsamples, debug)
-                        print 'new done'
                         tr_l_old, te_l_old = sgd_dennis_old.learn(learn_mode, subsamples, debug)
-                        print 'old done'
                         tr_l_abs, te_l_abs = sgd_dennis_abs.learn(learn_mode, subsamples, debug)
-                        print 'abs done'
                         tr_l_cons_pos, te_l_cons_pos = sgd_dennis_cons_pos.learn(learn_mode, subsamples, debug)
-                        print 'cons pos done'
 
                         mse_tr,_, _ = sgd_dennis.evaluate('train_cat',subsamples)
                         mse,_, _ = sgd_dennis.evaluate('val_cat',subsamples)
