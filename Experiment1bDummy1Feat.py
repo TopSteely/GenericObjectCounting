@@ -57,10 +57,10 @@ def main():
                 training_loss_old = np.array([], dtype=np.int64).reshape(tree_level_size+1,0)
                 validation_loss_old = np.array([], dtype=np.int64).reshape(tree_level_size+1,0)
                 #sgd_pascal = SGD.SGD('pascal', 'max', category, tree_level_size, batch_size, eta_i, gamma_i, al_i)
-                sgd_dennis = SGD.SGD('dennis', pred_mode, category, tree_level_size, batch_size, eta, gamma_i, al_i, feature_size,trainingdata,valdata)
-                sgd_dennis_old = SGD.SGD('dennis', 'mean', category, tree_level_size, batch_size, eta, gamma_i, al_i, feature_size,trainingdata,valdata)
-                sgd_dennis_abs = SGD.SGD('dennis', 'abs', category, tree_level_size, batch_size, eta, gamma_i, al_i, feature_size,trainingdata,valdata)
-                sgd_dennis_cons_pos = SGD.SGD('dennis', 'cons_pos', category, tree_level_size, batch_size, eta, gamma_i, al_i, feature_size,trainingdata,valdata)
+                sgd_dennis = SGD.SGD('dennis', pred_mode, category, tree_level_size, batch_size, eta, gamma_i, al_i,trainingdata,valdata, feature_size)
+                sgd_dennis_old = SGD.SGD('dennis', 'mean', category, tree_level_size, batch_size, eta, gamma_i, al_i,trainingdata,valdata,feature_size)
+                sgd_dennis_abs = SGD.SGD('dennis', 'abs', category, tree_level_size, batch_size, eta, gamma_i, al_i,trainingdata,valdata,feature_size)
+                sgd_dennis_cons_pos = SGD.SGD('dennis', 'cons_pos', category, tree_level_size, batch_size, eta, gamma_i, al_i,trainingdata,valdata,feature_size)
                 print al_i, gamma_i
                 for epoch in range(epochs):
                     print 'epoch: ', epoch
