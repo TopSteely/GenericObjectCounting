@@ -83,8 +83,10 @@ def main():
                     else:
                         sgd_dennis.learn(learn_mode, subsamples)
                         print sgd_dennis.w
+                        raw_input()
                         sgd_dennis_old.learn(learn_mode, subsamples)
                         print sgd_dennis_old.w
+                        raw_input()
                         sgd_dennis_abs.learn(learn_mode, subsamples)
                         print sgd_dennis_abs.w
                         sgd_dennis_cons_pos.learn(learn_mode, subsamples)
