@@ -28,7 +28,7 @@ def main():
     epochs = 3
     print epochs
 
-    subsamples = 5
+    subsamples = 10
 
     feature_size = 4096
 
@@ -83,8 +83,8 @@ def main():
                 validation_loss = np.array([], dtype=np.int64).reshape(tree_level_size+1,0)
                 training_loss_old = np.array([], dtype=np.int64).reshape(tree_level_size+1,0)
                 validation_loss_old = np.array([], dtype=np.int64).reshape(tree_level_size+1,0)
-                mses_old = np.array([], dtype=np.int64).reshape(1,0)
-                mses = np.array([], dtype=np.int64).reshape(1,0)
+                mses_old = []
+                mses = []
                 #sgd_pascal = SGD.SGD('pascal', 'max', category, tree_level_size, batch_size, eta_i, gamma_i, al_i)
                 sgd_dennis = SGD.SGD('dennis', pred_mode, category, tree_level_size, batch_size, eta, gamma_i, al_i, feature_size)
                 sgd_dennis_old = SGD.SGD('dennis', 'mean', category, tree_level_size, batch_size, eta, gamma_i, al_i, feature_size)
@@ -98,10 +98,10 @@ def main():
                         tr_l, te_l, mse = sgd_dennis.learn(learn_mode, subsamples, debug)
                         training_loss = np.concatenate((training_loss,tr_l), axis=1)#.reshape(-1,1)
                         validation_loss = np.concatenate((validation_loss,te_l), axis=1)#.reshape(-1,1)
-                        mses = np.concatenate((mses,mse), axis=0)#.reshape(-1,1)
+                        mses.extend(mse)
                         training_loss_old = np.concatenate((training_loss_old,tr_l_old), axis=1)#.reshape(-1,1)
                         validation_loss_old = np.concatenate((validation_loss_old,te_l_old), axis=1)#.reshape(-1,1)
-                        mses_old = np.concatenate((mses_old,mse_old), axis=0)#.reshape(-1,1)
+                        mses_old.extend(mse_old)
                     else:
                         sgd_dennis_old.learn(learn_mode)
                         sgd_dennis.learn(learn_mode)

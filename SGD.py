@@ -372,7 +372,7 @@ class SGD:
     def learn(self, instances='all', to=-1, debug=False):
         train_losses = np.array([], dtype=np.int64).reshape(self.prune_tree_levels+1,0)
         test_losses = np.array([], dtype=np.int64).reshape(self.prune_tree_levels+1,0)
-        mses = np.array([], dtype=np.int64).reshape(1,0)
+        mses = []
         if instances=='all':
             training_data = self.load.training_numbers
         elif instances=='category':
@@ -418,7 +418,7 @@ class SGD:
                     tr_loss, te_loss, mse = self.loss_per_level_all(instances, to)
                     train_losses = np.concatenate((train_losses,tr_loss.reshape(-1,1)), axis=1)
                     test_losses = np.concatenate((test_losses,te_loss.reshape(-1,1)), axis=1)
-                    mses = np.concatenate((mses,mse.reshape(-1,1)), axis=1)
+                    mses.append(mse)
         if (i_img_nr + 1)%self.batch_size != 0:
             if self.version!='old':
                 self.update_self()
@@ -426,7 +426,7 @@ class SGD:
                 tr_loss, te_loss,mse = self.loss_per_level_all(instances, to)
                 train_losses = np.concatenate((train_losses,tr_loss.reshape(-1,1)), axis=1)
                 test_losses = np.concatenate((test_losses,te_loss.reshape(-1,1)), axis=1)
-                mses = np.concatenate((mses,mse.reshape(-1,1)), axis=1)
+                mses.append(mse)
         if debug:
     	   return train_losses, test_losses, mses
 
