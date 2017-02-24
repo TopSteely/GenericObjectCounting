@@ -17,13 +17,21 @@ class SGD:
         self.updates_all = []
         self.version = mode
         self.prune_tree_levels = prune_tree_levels
+        self.dataset = dataset
+        self.load = Input.Input(dataset, category, prune_tree_levels)
         self.n_features = num_features
+        self.scaler = None
+        if self.n_features == 1:
+            self.trainingdata = []
+            self.valdata = []
+            for im in self.load.category_val[0:7]:
+                self.valdata.append(Data.Data(self.load, im, self.prune_tree_levels, self.scaler, self.n_features, True))
+            for im in self.load.category_train[0:7]:
+                self.trainingdata.append(Data.Data(self.load, im, self.prune_tree_levels, self.scaler, self.n_features, True))
         self.w = np.zeros(self.n_features)#0.1 * np.random.rand(self.n_features)
         self.predictor = IEP.IEP(self.w, 'prediction')
         self.w_update = np.zeros(self.n_features)
         self.learner = IEP.IEP(1, 'learning')
-        self.dataset = dataset
-        self.load = Input.Input(dataset, category, prune_tree_levels)
         self.batch_size = batch_size
         self.samples_seen = 0
         self.eta = eta
@@ -31,7 +39,6 @@ class SGD:
         self.gamma = gamma
         self.alpha = alpha
         self.functions = {}
-        self.scaler = None
         if mode == 'max':
             self.method = self.learn_max
             self.loss = self.loss_max
@@ -232,13 +239,19 @@ class SGD:
             y_d = []
             preds_skl = []
         if mode == 'train_cat':
-            numbers = self.load.category_train[:to]
+            if self.n_features==1:
+                numbers=self.trainingdata
+            else:
+                numbers = self.load.category_train[:to]
         elif mode == 'train_all':
             numbers = self.load.training_numbers[:to]
         elif mode == 'test':
             numbers = self.load.test_numbers[:to]
         elif mode == 'val_cat':
-            numbers = self.load.category_val[:to]
+            if self.n_features==1:
+                numbers=self.valdata
+            else:
+                numbers = self.load.category_val[:to]
         elif mode == 'val_all':
             numbers = self.load.val_numbers[:to]
         elif mode == 'blobtrain':
@@ -259,7 +272,8 @@ class SGD:
                 img_data = b_data[i_img_nr]
             else:
                 if self.n_features == 1:
-                    img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features, True)
+                    #img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features, True)
+                    img_data = img_nr
                 else:
                     img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
             img_loss = (self.predict(img_data) - img_data.y) ** 2
@@ -330,21 +344,27 @@ class SGD:
             training_ims = self.training_numbers[0:to]
             validation_ims = self.val_numbers[0:to]
         elif instances == 'category':
-            training_ims = self.load.category_train[0:to]
-            validation_ims = self.load.category_val[0:to]
+            if self.n_features==1:
+                training_ims=self.trainingdata
+                validation_ims=self.valdata
+            else:
+                training_ims = self.load.category_train[0:to]
+                validation_ims = self.load.category_val[0:to]
         elif instances == 'category_levels':
             training_ims = self.load.category_train_with_levels[0:to]
             validation_ims = self.load.category_val_with_levels[0:to]
         for img_nr in training_ims:
             if self.n_features == 1:
-                img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features, True)
+                #img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features, True)
+                img_data = img_nr
             else:
                 img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
             tra_loss_temp[0:self.prune_tree_levels] += self.loss_per_level(img_data).reshape(self.prune_tree_levels,)
             tra_loss_temp[self.prune_tree_levels] += self.loss(img_data)
         for img_nr in validation_ims:
             if self.n_features == 1:
-                img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features, True)
+                #img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features, True)
+                img_data = img_nr
             else:
                 img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
             te_loss_temp[0:self.prune_tree_levels] += self.loss_per_level(img_data).reshape(self.prune_tree_levels,)
@@ -357,7 +377,10 @@ class SGD:
         if instances=='all':
             training_data = self.load.training_numbers
         elif instances=='category':
-            training_data = self.load.category_train
+            if self.n_features==1:
+                training_data=self.trainingdata
+            else:
+                training_data = self.load.category_train
         elif instances=='category_levels':
             training_data = self.load.category_train_with_levels
         subset = training_data[:to]
@@ -368,7 +391,8 @@ class SGD:
                 img_data = self.blobtraindata[i_img_nr]
             else:
                 if self.n_features == 1:
-                    img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features, True)
+                    #img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features, True)
+                    img_data = img_nr
                 else:
                     img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
                 if instances=='category_levels':
@@ -382,6 +406,7 @@ class SGD:
                 if self.version == 'old':
                     self.method(img_data, temp)
                 else:
+                    print i_img_nr, img_data.X
                     upd, fct = self.method(img_data, temp)
                     if self.version == 'multi':
                         self.w_update += upd
@@ -455,6 +480,7 @@ class SGD:
 
         
     def update_self(self):
+        print self.version ,self.w_update
         self.updates_all = [np.mean(self.w_update)]
         if self.version == 'multi':
             self.w_multi -= (self.eta * self.w_update)
