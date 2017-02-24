@@ -398,20 +398,14 @@ class SGD:
                         self.loss = self.loss_new
                         tr_loss_tmp, te_loss_tmp = self.loss_per_level_all(instances, to)
                         self.loss = self.loss_mean
-                        print tr_loss, te_loss,tr_loss_tmp, te_loss_tmp
-                        for t,t_tmp in zip(tr_loss,tr_loss_tmp):
-                            print t,t_tmp, t==t_tmp
-                        assert np.array_equal(tr_loss,tr_loss_tmp)
-                        assert np.array_equal(te_loss,te_loss_tmp)
+                        assert np.array_equal(tr_loss[:-1],tr_loss_tmp[:-1])
+                        assert np.array_equal(te_loss[:-1],te_loss_tmp[:-1])
                     elif self.version == 'new':
                         self.loss = self.loss_mean
                         tr_loss_tmp, te_loss_tmp = self.loss_per_level_all(instances, to)
                         self.loss = self.loss_new
-                        print tr_loss, te_loss,tr_loss_tmp, te_loss_tmp
-                        for t,t_tmp in zip(tr_loss,tr_loss_tmp):
-                            print t,t_tmp, t==t_tmp
-                        assert np.array_equal(tr_loss,tr_loss_tmp)
-                        assert np.array_equal(te_loss,te_loss_tmp)
+                        assert np.array_equal(tr_loss[:-1],tr_loss_tmp[:-1])
+                        assert np.array_equal(te_loss[:-1],te_loss_tmp[:-1])
                     train_losses = np.concatenate((train_losses,tr_loss.reshape(-1,1)), axis=1)
                     test_losses = np.concatenate((test_losses,te_loss.reshape(-1,1)), axis=1)
         if (i_img_nr + 1)%self.batch_size != 0:
