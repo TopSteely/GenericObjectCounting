@@ -25,7 +25,7 @@ def main():
 
     batch_size = 7
 
-    epochs = 20
+    epochs = 6
 
     subsamples = 7
 
@@ -43,9 +43,9 @@ def main():
         output_dennis = Output.Output('1feat_%s'%(pred_mode), category, tree_level_size, '1b')
         valdata = []
         trainingdata = []
-        for im in load_dennis.category_val[0:7]:
+        for im in load_dennis.category_val[0:subsamples]:
             valdata.append(Data.Data(load_dennis, im, tree_level_size, None, 1, True))
-        for im in load_dennis.category_train[0:7]:
+        for im in load_dennis.category_train[0:subsamples]:
             trainingdata.append(Data.Data(load_dennis, im, tree_level_size, None, 1, True))
         
             
@@ -90,10 +90,8 @@ def main():
                     else:
                         sgd_dennis.learn(learn_mode, subsamples)
                         print sgd_dennis.w
-                        raw_input()
                         sgd_dennis_old.learn(learn_mode, subsamples)
                         print sgd_dennis_old.w
-                        raw_input()
                         sgd_dennis_abs.learn(learn_mode, subsamples)
                         print sgd_dennis_abs.w
                         sgd_dennis_cons_pos.learn(learn_mode, subsamples)
