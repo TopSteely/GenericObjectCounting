@@ -63,7 +63,7 @@ class SGD:
             self.method = self.learn_new
             self.loss = self.loss_new
             self.predict = self.predict_mean
-        elif mode == 'absolute':
+        elif mode == 'abs':
             self.method = self.learn_abs
             self.loss = self.loss_abs
             self.predict = self.predict_mean
@@ -71,6 +71,9 @@ class SGD:
             self.method = self.learn_cons_pos
             self.loss = self.loss_cons_pos
             self.predict = self.predict_mean
+        else:
+            print 'no method chosen'
+            exit()
         #blob dataset, have to save the data because of random bbox creation
         if dataset == 'blob':
             self.blobtraindata = []
