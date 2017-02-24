@@ -555,7 +555,7 @@ class SGD:
         else:
             return np.sum(np.sign(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels), axis=0)/len(level_preds) + 2 * self.alpha * self.w, functions
 
-    def learn_cons_pos(self, img_data, functions):
+    def learn_cons_pos(self, img_data, function):
         update = np.zeros(self.n_features)
         fct = function
         level_norm = 0.0
