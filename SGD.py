@@ -13,7 +13,7 @@ from copy import deepcopy
 
 
 class SGD:
-    def __init__(self, dataset, mode, category, prune_tree_levels, batch_size, eta, gamma, alpha, num_features=1000):
+    def __init__(self, dataset, mode, category, prune_tree_levels, batch_size, eta, gamma, alpha, num_features=1000, traindata, valdata):
         self.updates_all = []
         self.version = mode
         self.prune_tree_levels = prune_tree_levels
@@ -22,12 +22,8 @@ class SGD:
         self.n_features = num_features
         self.scaler = None
         if self.n_features == 1:
-            self.trainingdata = []
-            self.valdata = []
-            for im in self.load.category_val[0:7]:
-                self.valdata.append(Data.Data(self.load, im, self.prune_tree_levels, self.scaler, self.n_features, True))
-            for im in self.load.category_train[0:7]:
-                self.trainingdata.append(Data.Data(self.load, im, self.prune_tree_levels, self.scaler, self.n_features, True))
+            self.trainingdata = traindata
+            self.valdata = valdata
         self.w = np.zeros(self.n_features)#0.1 * np.random.rand(self.n_features)
         self.predictor = IEP.IEP(self.w, 'prediction')
         self.w_update = np.zeros(self.n_features)

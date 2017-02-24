@@ -2,6 +2,7 @@ import sys
 import Input
 import Output
 import SGD
+import Data
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import SGDRegressor
 import math
@@ -40,6 +41,12 @@ def main():
         load_dennis = Input.Input('dennis',category,tree_level_size)
         #output_pascal = Output.Output('pascal_max', category, tree_level_size, '1b')
         output_dennis = Output.Output('1feat_%s'%(pred_mode), category, tree_level_size, '1b')
+        valdata = []
+        trainingdata = []
+        for im in load_dennis.category_val[0:7]:
+            valdata.append(Data.Data(self.load, im, self.prune_tree_levels, self.scaler, self.n_features, True))
+        for im in load_dennis.category_train[0:7]:
+            trainingdata.append(Data.Data(self.load, im, self.prune_tree_levels, self.scaler, self.n_features, True))
         
             
         # learn SGD
@@ -50,10 +57,10 @@ def main():
                 training_loss_old = np.array([], dtype=np.int64).reshape(tree_level_size+1,0)
                 validation_loss_old = np.array([], dtype=np.int64).reshape(tree_level_size+1,0)
                 #sgd_pascal = SGD.SGD('pascal', 'max', category, tree_level_size, batch_size, eta_i, gamma_i, al_i)
-                sgd_dennis = SGD.SGD('dennis', pred_mode, category, tree_level_size, batch_size, eta, gamma_i, al_i, feature_size)
-                sgd_dennis_old = SGD.SGD('dennis', 'mean', category, tree_level_size, batch_size, eta, gamma_i, al_i, feature_size)
-                sgd_dennis_abs = SGD.SGD('dennis', 'abs', category, tree_level_size, batch_size, eta, gamma_i, al_i, feature_size)
-                sgd_dennis_cons_pos = SGD.SGD('dennis', 'cons_pos', category, tree_level_size, batch_size, eta, gamma_i, al_i, feature_size)
+                sgd_dennis = SGD.SGD('dennis', pred_mode, category, tree_level_size, batch_size, eta, gamma_i, al_i, feature_size,trainingdata,valdata)
+                sgd_dennis_old = SGD.SGD('dennis', 'mean', category, tree_level_size, batch_size, eta, gamma_i, al_i, feature_size,trainingdata,valdata)
+                sgd_dennis_abs = SGD.SGD('dennis', 'abs', category, tree_level_size, batch_size, eta, gamma_i, al_i, feature_size,trainingdata,valdata)
+                sgd_dennis_cons_pos = SGD.SGD('dennis', 'cons_pos', category, tree_level_size, batch_size, eta, gamma_i, al_i, feature_size,trainingdata,valdata)
                 print al_i, gamma_i
                 for epoch in range(epochs):
                     print 'epoch: ', epoch
