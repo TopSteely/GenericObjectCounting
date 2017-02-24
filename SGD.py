@@ -404,7 +404,6 @@ class SGD:
                     self.method(img_data, temp)
                 else:
                     upd, fct = self.method(img_data, temp)
-                    print self.version, upd
                     if self.version == 'multi':
                         self.w_update += upd
                     else:

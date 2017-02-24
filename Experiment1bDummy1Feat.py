@@ -33,20 +33,20 @@ def main():
 
     eta = math.pow(10,-2)
 
+    print 'initializing', 6
+    #sgd = SGD.SGD('max', category, tree_level_size, batch_size, math.pow(10,-4), 0.003, math.pow(10,-5))
+    #load_pascal = Input.Input('pascal',category)
+    load_dennis = Input.Input('dennis',category,6)
+    #output_pascal = Output.Output('pascal_max', category, tree_level_size, '1b')
+    output_dennis = Output.Output('1feat_%s'%(pred_mode), category, 6, '1b')
+    valdata = []
+    trainingdata = []
+    for im in load_dennis.category_val[0:subsamples]:
+        valdata.append(Data.Data(load_dennis, im, 6, None, 1, True))
+    for im in load_dennis.category_train[0:subsamples]:
+        trainingdata.append(Data.Data(load_dennis, im, 6, None, 1, True))
+
     for tree_level_size in range(1,2):
-        #initialize
-        print 'initializing', tree_level_size
-        #sgd = SGD.SGD('max', category, tree_level_size, batch_size, math.pow(10,-4), 0.003, math.pow(10,-5))
-        #load_pascal = Input.Input('pascal',category)
-        load_dennis = Input.Input('dennis',category,tree_level_size)
-        #output_pascal = Output.Output('pascal_max', category, tree_level_size, '1b')
-        output_dennis = Output.Output('1feat_%s'%(pred_mode), category, tree_level_size, '1b')
-        valdata = []
-        trainingdata = []
-        for im in load_dennis.category_val[0:subsamples]:
-            valdata.append(Data.Data(load_dennis, im, tree_level_size, None, 1, True))
-        for im in load_dennis.category_train[0:subsamples]:
-            trainingdata.append(Data.Data(load_dennis, im, tree_level_size, None, 1, True))
         
             
         # learn SGD
