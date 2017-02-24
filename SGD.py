@@ -402,7 +402,7 @@ class SGD:
                 if self.version == 'old':
                     self.method(img_data, temp)
                 else:
-                    print i_img_nr, img_data.X
+                    print i_img_nr, img_data.X[0]
                     upd, fct = self.method(img_data, temp)
                     if self.version == 'multi':
                         self.w_update += upd
@@ -476,7 +476,6 @@ class SGD:
 
         
     def update_self(self):
-        print self.version ,self.w_update
         self.updates_all = [np.mean(self.w_update)]
         if self.version == 'multi':
             self.w_multi -= (self.eta * self.w_update)
