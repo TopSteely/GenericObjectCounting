@@ -477,7 +477,6 @@ class SGD:
 
         
     def update_self(self):
-        print self.version, self.w_update
         self.updates_all = [np.mean(self.w_update)]
         if self.version == 'multi':
             self.w_multi -= (self.eta * self.w_update)
@@ -593,6 +592,8 @@ class SGD:
                 copy.remove(fun)
 
                 window_pred = self.predict_window(img_data, fun[1])
+
+                #sign of 0 is 0, so function does never start since initial weight vector is zeros
                 sign = 1.0 if window_pred == [0.] else np.sign(window_pred)
 
                 #print window_pred, sign, iep_with_func(self.w,img_data.X,copy), img_data.y
