@@ -396,7 +396,6 @@ class SGD:
             if img_nr in self.functions:
                 img_functions = self.functions[img_nr]
                 upd,_ = self.method(img_data, img_functions)
-                print self.version, upd
                 self.w_update += upd
             else:
                 temp = {}
