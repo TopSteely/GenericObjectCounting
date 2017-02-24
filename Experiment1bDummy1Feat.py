@@ -23,11 +23,11 @@ def main():
 
     debug = False
 
-    batch_size = 5
+    batch_size = 2
 
-    epochs = 3
+    epochs = 1
 
-    subsamples = 15
+    subsamples = 2
 
     feature_size = 1
 
@@ -46,7 +46,7 @@ def main():
     for im in load_dennis.category_train[0:subsamples]:
         trainingdata.append(Data.Data(load_dennis, im, 6, None, 1, True))
 
-    for tree_level_size in range(2,4):
+    for tree_level_size in range(2,3):
         
             
         # learn SGD
@@ -92,10 +92,10 @@ def main():
                         print 'new',sgd_dennis.w
                         sgd_dennis_old.learn(learn_mode, subsamples)
                         print 'old',sgd_dennis_old.w
-                        sgd_dennis_abs.learn(learn_mode, subsamples)
-                        print 'abs',sgd_dennis_abs.w
-                        sgd_dennis_cons_pos.learn(learn_mode, subsamples)
-                        print 'cons_pos', sgd_dennis_cons_pos.w
+                        #sgd_dennis_abs.learn(learn_mode, subsamples)
+                        #print 'abs',sgd_dennis_abs.w
+                        #sgd_dennis_cons_pos.learn(learn_mode, subsamples)
+                        #print 'cons_pos', sgd_dennis_cons_pos.w
                 if debug:
                     output_dennis.plot_train_val_loss(training_loss, validation_loss, eta, al_i)
             if not debug:
