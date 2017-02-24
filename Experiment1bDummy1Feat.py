@@ -23,11 +23,11 @@ def main():
 
     debug = False
 
-    batch_size = 7
+    batch_size = 5
 
     epochs = 3
 
-    subsamples = 7
+    subsamples = 15
 
     feature_size = 1
 
@@ -46,7 +46,7 @@ def main():
     for im in load_dennis.category_train[0:subsamples]:
         trainingdata.append(Data.Data(load_dennis, im, 6, None, 1, True))
 
-    for tree_level_size in range(1,2):
+    for tree_level_size in range(2,4):
         
             
         # learn SGD
