@@ -455,7 +455,6 @@ class SGD:
 
         
     def update_self(self):
-        print self.version, self.w_update
         self.updates_all = [np.mean(self.w_update)]
         if self.version == 'multi':
             self.w_multi -= (self.eta * self.w_update)
