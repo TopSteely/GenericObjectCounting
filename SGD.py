@@ -586,7 +586,6 @@ class SGD:
         if fct == {}:
             _,fct = self.learner.get_iep_levels(img_data, {})
                 
-        print img_data.X[0]
         for i_level,level_fct in enumerate(fct.values()):
             level_update = np.zeros(self.n_features)
             for fun in level_fct:
@@ -595,11 +594,12 @@ class SGD:
 
                 window_pred = self.predict_window(img_data, fun[1])
 
+                print window_pred, np.sign(window_pred), iep_with_func(self.w,img_data.X,copy), img_data.y
+
                 if fun[0] == '+':
                     level_update += (window_pred + iep_with_func(self.w,img_data.X,copy) - img_data.y) * (iep_with_func(1.0,img_data.X,copy) + np.sign(window_pred) * img_data.X[fun[1]])
                 elif fun[0] == '-':
                     level_update += (-window_pred + iep_with_func(self.w,img_data.X,copy) - img_data.y) * (iep_with_func(1.0,img_data.X,copy) - np.sign(window_pred) * img_data.X[fun[1]])
-            print level_update, level_fct
             update += (level_update/len(level_fct))
 
         return 2 * update/len(fct) + 2 * self.alpha * self.w, fct
