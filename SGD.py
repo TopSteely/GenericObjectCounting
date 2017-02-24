@@ -336,6 +336,7 @@ class SGD:
     def loss_per_level_all(self, instances, to=-1):
         tra_loss_temp = np.zeros(self.prune_tree_levels+1)
         te_loss_temp = np.zeros(self.prune_tree_levels+1)
+        mse_te_temp = 0.0
         if instances == 'all':
             training_ims = self.training_numbers[0:to]
             validation_ims = self.val_numbers[0:to]
@@ -365,11 +366,13 @@ class SGD:
                 img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
             te_loss_temp[0:self.prune_tree_levels] += self.loss_per_level(img_data).reshape(self.prune_tree_levels,)
             te_loss_temp[self.prune_tree_levels] += self.loss(img_data)
-        return tra_loss_temp/len(self.load.category_train), te_loss_temp/len(self.load.category_val)
+            mse_te_temp += (self.predict(img_data) - img_data.y)**2
+        return tra_loss_temp/len(self.load.category_train), te_loss_temp/len(self.load.category_val), mse_te_temp/len(self.load.category_val)
         
     def learn(self, instances='all', to=-1, debug=False):
         train_losses = np.array([], dtype=np.int64).reshape(self.prune_tree_levels+1,0)
         test_losses = np.array([], dtype=np.int64).reshape(self.prune_tree_levels+1,0)
+        mses = np.array([], dtype=np.int64).reshape(1,0)
         if instances=='all':
             training_data = self.load.training_numbers
         elif instances=='category':
@@ -412,18 +415,20 @@ class SGD:
             if (i_img_nr + 1)%self.batch_size == 0:
                 self.update_self()
                 if debug:
-                    tr_loss, te_loss = self.loss_per_level_all(instances, to)
+                    tr_loss, te_loss, mse = self.loss_per_level_all(instances, to)
                     train_losses = np.concatenate((train_losses,tr_loss.reshape(-1,1)), axis=1)
                     test_losses = np.concatenate((test_losses,te_loss.reshape(-1,1)), axis=1)
+                    mses = np.concatenate((mses,mse.reshape(-1,1)), axis=1)
         if (i_img_nr + 1)%self.batch_size != 0:
             if self.version!='old':
                 self.update_self()
             if debug:
-                tr_loss, te_loss = self.loss_per_level_all(instances, to)
+                tr_loss, te_loss,mse = self.loss_per_level_all(instances, to)
                 train_losses = np.concatenate((train_losses,tr_loss.reshape(-1,1)), axis=1)
                 test_losses = np.concatenate((test_losses,te_loss.reshape(-1,1)), axis=1)
+                mses = np.concatenate((mses,mse.reshape(-1,1)), axis=1)
         if debug:
-    	   return train_losses, test_losses
+    	   return train_losses, test_losses, mses
 
 
     def learn_scipy(self, epochs, instances='all', with_constraints=False, to=-1, debug=False):

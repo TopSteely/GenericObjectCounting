@@ -30,6 +30,8 @@ class Output:
             self.classifier_path = '/var/node436/local/tstahl/models/classifier_%s.p'%(category)
         self.feat_var_path = '/var/node436/local/tstahl/plos/feat_var.png'
         self.loss_path = '/var/node436/local/tstahl/plos/loss_%s_%s_%s_%s_%s_%s.png'
+        self.compare_path = '/var/node436/local/tstahl/plos/compare_%s_%s_%s_%s_%s_%s.png'
+        
         self.best_path = '/var/node436/local/tstahl/plos/best_%s_%s_%s.png'
         self.upd_path = '/var/node436/local/tstahl/plos/upd_%s.png'
         self.upd_path_new = '/var/node436/local/tstahl/plos/upd_%s_new.png'
@@ -135,6 +137,29 @@ class Output:
                 ax[lvl].title.set_text("Loss for level %s"%(lvl))
         plt.legend('upper left')
         plt.savefig(self.loss_path%(self.experiment,self.prune_tree_levels,eta,self.category, alpha, self.mode))
+
+    def compare_train_val_loss(self, train, val, train_old, val_old, mses, mses_old, eta, alpha):
+        plt.clf()
+        f,ax = plt.subplots(self.prune_tree_levels+1)
+        for lvl in range(self.prune_tree_levels+1):
+            ax[lvl].plot(train[lvl], '-rx', label="training")
+            ax[lvl].plot(val[lvl], '-bx', label="validation")
+            ax[lvl].plot(train_old[lvl], '-ro', label="training")
+            ax[lvl].plot(val_old[lvl], '-bo', label="validation")
+            ax[lvl].tick_params(
+                axis='x',          # changes apply to the x-axis
+                which='both',      # both major and minor ticks are affected
+                bottom='off',      # ticks along the bottom edge are off
+                top='off',         # ticks along the top edge are off
+                labelbottom='off')
+            if lvl == self.prune_tree_levels:
+                ax[lvl].title.set_text("Mean and final loss")
+                ax[lvl].plot(mses, '-gx', label="mse")
+                ax[lvl].plot(mses_old, '-go', label="mse_old")
+            else:
+                ax[lvl].title.set_text("Loss for level %s"%(lvl))
+        #plt.legend('upper left')
+        plt.savefig(self.compare_path%(self.experiment,self.prune_tree_levels,eta,self.category, alpha, self.mode))
         
 
     def plot_best(self, level_preds, max_level_window):

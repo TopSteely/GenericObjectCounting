@@ -21,20 +21,20 @@ def main():
 
     pred_mode = 'new'
 
-    debug = False
+    debug = True
 
     batch_size = 5
 
-    epochs = 15
+    epochs = 3
     print epochs
 
-    subsamples = 10
+    subsamples = 5
 
     feature_size = 4096
 
     eta = math.pow(10,-5)
 
-    for tree_level_size in range(3,5):
+    for tree_level_size in range(3,4):
         #initialize
         print 'initializing', tree_level_size
         #sgd = SGD.SGD('max', category, tree_level_size, batch_size, math.pow(10,-4), 0.003, math.pow(10,-5))
@@ -81,6 +81,10 @@ def main():
             for gamma_i in [math.pow(10,-4)]:#,math.pow(10,-4),math.pow(10,-3),math.pow(10,-2)
                 training_loss = np.array([], dtype=np.int64).reshape(tree_level_size+1,0)
                 validation_loss = np.array([], dtype=np.int64).reshape(tree_level_size+1,0)
+                training_loss_old = np.array([], dtype=np.int64).reshape(tree_level_size+1,0)
+                validation_loss_old = np.array([], dtype=np.int64).reshape(tree_level_size+1,0)
+                mses_old = np.array([], dtype=np.int64).reshape(1,0)
+                mses = np.array([], dtype=np.int64).reshape(1,0)
                 #sgd_pascal = SGD.SGD('pascal', 'max', category, tree_level_size, batch_size, eta_i, gamma_i, al_i)
                 sgd_dennis = SGD.SGD('dennis', pred_mode, category, tree_level_size, batch_size, eta, gamma_i, al_i, feature_size)
                 sgd_dennis_old = SGD.SGD('dennis', 'mean', category, tree_level_size, batch_size, eta, gamma_i, al_i, feature_size)
@@ -90,17 +94,19 @@ def main():
                     print epoch,
                     #tr_l, te_l = sgd_dennis.learn('categories')
                     if debug:
-                        sgd_dennis_old.learn(learn_mode, subsamples)
-                        tr_l, te_l = sgd_dennis.learn(learn_mode, subsamples, debug)
+                        tr_l_old, te_l_old, mse_old = sgd_dennis_old.learn(learn_mode, subsamples, debug)
+                        tr_l, te_l, mse = sgd_dennis.learn(learn_mode, subsamples, debug)
                         training_loss = np.concatenate((training_loss,tr_l), axis=1)#.reshape(-1,1)
                         validation_loss = np.concatenate((validation_loss,te_l), axis=1)#.reshape(-1,1)
+                        mses = np.concatenate((mses,mse), axis=1)#.reshape(-1,1)
+                        training_loss_old = np.concatenate((training_loss_old,tr_l_old), axis=1)#.reshape(-1,1)
+                        validation_loss_old = np.concatenate((validation_loss_old,te_l_old), axis=1)#.reshape(-1,1)
+                        mses_old = np.concatenate((mses_old,mse_old), axis=1)#.reshape(-1,1)
                     else:
                         sgd_dennis_old.learn(learn_mode)
                         sgd_dennis.learn(learn_mode)
                 if debug:
-                    tr_l_sc, te_l_sc = sgd_dennis_scipy.learn_scipy(learn_mode, False, subsamples, debug)
-                    output_dennis.plot_train_val_loss(training_loss, validation_loss, eta, al_i)
-                    output_dennis_scipy.plot_train_val_loss(tr_l_sc, te_l_sc, eta, al_i)
+                    output_dennis.compare_train_val_loss(training_loss, validation_loss, training_loss_old, validation_loss_old, mses, mses_old, eta, al_i)
             if learn_mode == 'all':
                 mse,ae, mse_non_zero = sgd_dennis.evaluate('val_all')
                 mse_tr,ae_tr, mse_non_zero_tr = sgd_dennis.evaluate('train_all')
