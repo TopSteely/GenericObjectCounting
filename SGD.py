@@ -69,7 +69,7 @@ class SGD:
             self.predict = self.predict_mean
         elif mode == 'cons_pos':
             self.method = self.learn_cons_pos
-            self.loss = self.loss_new
+            self.loss = self.loss_cons_pos
             self.predict = self.predict_mean
         #blob dataset, have to save the data because of random bbox creation
         if dataset == 'blob':
@@ -111,6 +111,27 @@ class SGD:
                 copy.remove(fun)
                 iep = iep_with_func(self.w,img_data.X,copy)
                 window_pred = np.dot(self.w, img_data.X[fun[1]])
+                if fun[0] == '+':
+                    loss += ((img_data.y - iep - window_pred) ** 2)
+                elif fun[0] == '-':
+                    loss += ((img_data.y - iep + window_pred) ** 2)
+            level_loss += (loss/ norm)
+        return level_loss/len(fct) + self.alpha * math.sqrt(np.dot(self.w,self.w))
+
+    def loss_cons_pos(self, img_data):
+        level_loss = 0.0
+        if img_data.img_nr in self.functions:
+            fct = self.functions[img_data.img_nr]
+        else:
+            _,fct = self.learner.get_iep_levels(img_data, {})
+        for i_level,level_fct in enumerate(fct.values()):
+            loss = 0.0
+            norm = len(level_fct)
+            for fun in level_fct:
+                copy = deepcopy(level_fct)
+                copy.remove(fun)
+                iep = iep_with_func(self.w,img_data.X,copy)
+                window_pred = np.abs(np.dot(self.w, img_data.X[fun[1]]))
                 if fun[0] == '+':
                     loss += ((img_data.y - iep - window_pred) ** 2)
                 elif fun[0] == '-':
@@ -455,9 +476,10 @@ class SGD:
     def learn_mean(self, img_data, functions):
         level_preds = self.predict_ind(img_data)
         iep_levels, _ = self.learner.get_iep_levels(img_data, functions)
-        return 2 * np.sum(np.array(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels).reshape(-1,1), axis=0)/len(level_preds) + 2 * self.alpha * self.w, functions
-        #for 1 feat: return 2 * np.sum(np.array(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels).reshape(-1,1), axis=0)/len(level_preds) + 2 * self.alpha * self.w, functions
-        #else: return 2 * np.sum(np.array(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels), axis=0)/len(level_preds) + 2 * self.alpha * self.w, functions
+        if self.n_features == 1:
+            return 2 * np.sum(np.array(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels).reshape(-1,1), axis=0)/len(level_preds) + 2 * self.alpha * self.w, functions
+        else:
+            return 2 * np.sum(np.array(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels), axis=0)/len(level_preds) + 2 * self.alpha * self.w, functions
 
     #tested
     def learn_multi(self, img_data, functions):
@@ -509,21 +531,51 @@ class SGD:
             _,fct = self.learner.get_iep_levels(img_data, {})
                 
 
-        norm = 0.0
         for i_level,level_fct in enumerate(fct.values()):
+            level_update = np.zeros(self.n_features)
             norm += len(level_fct)
             for fun in level_fct:
                 copy = deepcopy(level_fct)
                 copy.remove(fun)
 
                 if fun[0] == '+':
-                    update += (self.predict_window(img_data, fun[1]) + iep_with_func(self.w,img_data.X,copy) - img_data.y) * (iep_with_func(1.0,img_data.X,copy) + img_data.X[fun[1]])
+                    level_update += (self.predict_window(img_data, fun[1]) + iep_with_func(self.w,img_data.X,copy) - img_data.y) * (iep_with_func(1.0,img_data.X,copy) + img_data.X[fun[1]])
                 elif fun[0] == '-':
-                    update += (-self.predict_window(img_data, fun[1]) + iep_with_func(self.w,img_data.X,copy) - img_data.y) * (iep_with_func(1.0,img_data.X,copy) -img_data.X[fun[1]])
-
-        return 2 * update/norm + 2 * self.alpha * self.w, fct
+                    level_update += (-self.predict_window(img_data, fun[1]) + iep_with_func(self.w,img_data.X,copy) - img_data.y) * (iep_with_func(1.0,img_data.X,copy) -img_data.X[fun[1]])
+            update += (level_update/len(level_fct))
+        return 2 * update/len(fct) + 2 * self.alpha * self.w, fct
 
     def learn_abs(self, img_data, functions):
         level_preds = self.predict_ind(img_data)
         iep_levels, _ = self.learner.get_iep_levels(img_data, functions)
-        return np.sum(np.abs(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels), axis=0)/len(level_preds) + 2 * self.alpha * self.w, functions
+        if self.n_features == 1:
+            return np.sum(np.sign(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels).reshape(-1,1), axis=0)/len(level_preds) + 2 * self.alpha * self.w, functions
+        else:
+            return np.sum(np.sign(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels), axis=0)/len(level_preds) + 2 * self.alpha * self.w, functions
+
+    def learn_cons_pos(self, img_data, functions):
+        update = np.zeros(self.n_features)
+        fct = function
+        level_norm = 0.0
+
+        # if function is empty run iep first, just to get function -> we need the patches for each level to learn
+        if fct == {}:
+            _,fct = self.learner.get_iep_levels(img_data, {})
+                
+
+        for i_level,level_fct in enumerate(fct.values()):
+            level_update = np.zeros(self.n_features)
+            for fun in level_fct:
+                copy = deepcopy(level_fct)
+                copy.remove(fun)
+
+                window_pred = self.predict_window(img_data, fun[1])
+
+                if fun[0] == '+':
+                    level_update += (window_pred + iep_with_func(self.w,img_data.X,copy) - img_data.y) * (iep_with_func(1.0,img_data.X,copy) + np.sign(window_pred) * img_data.X[fun[1]])
+                elif fun[0] == '-':
+                    level_update += (-window_pred + iep_with_func(self.w,img_data.X,copy) - img_data.y) * (iep_with_func(1.0,img_data.X,copy) - np.sign(window_pred) * img_data.X[fun[1]])
+
+            update += (level_update/len(level_fct))
+
+        return 2 * update/len(fct) + 2 * self.alpha * self.w, fct
