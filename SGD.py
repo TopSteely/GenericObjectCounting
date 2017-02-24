@@ -13,7 +13,7 @@ from copy import deepcopy
 
 
 class SGD:
-    def __init__(self, dataset, mode, category, prune_tree_levels, batch_size, eta, gamma, alpha, traindata, valdata,num_features=1000):
+    def __init__(self, dataset, mode, category, prune_tree_levels, batch_size, eta, gamma, alpha, num_features=1000):
         self.updates_all = []
         self.version = mode
         self.prune_tree_levels = prune_tree_levels
