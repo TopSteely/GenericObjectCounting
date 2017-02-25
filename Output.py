@@ -199,7 +199,7 @@ class Output:
                     plt.imshow(im_heat)
                     plt.savefig('/var/node436/local/tstahl/plos/im_heat%s.png'%(lvl))
                     plt.clf()
-                    im_heat[:,:,3] = 255 * np.ones((0:im.shape[1], 0:im.shape[0]))
+                    im_heat[:,:,3] = 255 * np.ones((im.shape[1], im.shape[0]))
                     plt.imshow(im_heat)
                     plt.savefig('/var/node436/local/tstahl/plos/im_heat_cp_%s.png'%(lvl))
                     plt.clf()
