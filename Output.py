@@ -188,8 +188,10 @@ class Output:
                 plt.clf()
                 if lvl > 0:
                     im_cut = avg_pixls[img_nr][lvl-1][0:im.shape[0],0:im.shape[1]]
+                    print im_cut.shape
                     im_heat = np.zeros((im.shape[0],im.shape[1],4))
                     im_heat[:,:,:3] = im
+                    print im_heat[:,:,3].shape
                     im_heat[:,:,3] = plt.cm.jet(im_cut)
                     plt.imshow(im_cut, cmap='hot')
                     print im.shape
