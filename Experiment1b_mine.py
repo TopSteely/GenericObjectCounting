@@ -42,7 +42,6 @@ def main():
         load_dennis = Input.Input('dennis',category,tree_level_size)
         #output_pascal = Output.Output('pascal_max', category, tree_level_size, '1b')
         output_dennis = Output.Output('dennis_%s'%(pred_mode), category, tree_level_size, '1b')
-        output_dennis_old = Output.Output('dennis_mean', category, tree_level_size, '1b')
         #learn scaler
         #scaler_pascal = StandardScaler()
         if learn_mode == 'all':
@@ -108,11 +107,11 @@ def main():
             elif learn_mode == 'category_levels':
                 mse,ae, mse_non_zero = sgd_dennis.evaluate('val_category_levels')
                 mse_tr,ae_tr, mse_non_zero_tr = sgd_dennis.evaluate('train_category_levels')
-                preds_d_d, y_d_d, level_pred_d_d, max_level_preds_d_d = sgd_dennis.evaluate('val_cat', subsamples, True)
+                preds_d_d, y_d_d, level_pred_d_d, max_level_preds_d_d = sgd_dennis.evaluate('val_category_levels', subsamples, True)
 
-            print "Eval loss train: ", al_i, mse_tr
-            print "Eval loss val: ", al_i, mse
-            output_dennis.plot_preds(preds_d_d, y_d_d, al_i, 'val_cat')
+            print "Eval loss train: ", al_i, mse_tr, ae_tr
+            print "Eval loss val: ", al_i, mse, ae
+            output_dennis.plot_preds(preds_d_d, y_d_d, al_i, 'val_category_levels')
             output_dennis.plot_best(level_pred_d_d, max_level_preds_d_d)
             #output_dennis.save(mse, ae, mse_non_zero, sgd_dennis, 'ind', al_i, learn_mode)
     print learn_mode, pred_mode, epochs,'with scaler', debug
