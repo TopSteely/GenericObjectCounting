@@ -215,14 +215,14 @@ class Output:
                     print plt.cm.binary(im_cut).shape
                     print plt.cm.gray(im_cut).shape
                     im_heat[:,:,3] = rgb2gray(tmp)
-                    plt.imshow(im_cut, cmap='hot')
+                    plt.imshow(im_heat, cmap='hot')
                     print im.shape
                     plt.axis('off')
                     #ax = plt.gca()
                     plt.colorbar()
                     plt.savefig(self.avg_path%(self.category,img_nr,lvl,al_i))
                     plt.clf()
-                    plt.imshow(im_cut, cmap='jet')
+                    plt.imshow(im_heat, cmap='jet')
                     plt.axis('off')
                     plt.colorbar()
                     plt.savefig(self.avg_path_%(self.category,img_nr,lvl,al_i))
