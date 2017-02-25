@@ -203,7 +203,7 @@ class Output:
                     plt.clf()
                     print plt.cm.binary(im_cut).shape
                     print plt.cm.gray(im_cut).shape
-                    im_heat[:,:,3] = plt.cm.binary(rgb2gray(tmp))
+                    im_heat[:,:,3] = rgb2gray(tmp)
                     plt.imshow(im_cut, cmap='hot')
                     print im.shape
                     plt.axis('off')
