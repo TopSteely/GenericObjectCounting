@@ -7,6 +7,14 @@ from copy import deepcopy
 import math
 
 
+def rgb2gray(rgb):
+
+    r, g, b = rgb[:,:,0], rgb[:,:,1], rgb[:,:,2]
+    gray = 0.2989 * r + 0.5870 * g + 0.1140 * b
+
+    return gray
+
+
 def lower_constraint(w,x,y,alpha,level_fcts):
     ret = 0.0
     for x_ in x:

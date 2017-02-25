@@ -6,6 +6,7 @@ from scipy.misc import imread
 from matplotlib.patches import Rectangle
 import numpy as np
 import pylab as pl
+from utils import rgb2gray
 
 
 class Output:
@@ -192,10 +193,17 @@ class Output:
                     im_heat = np.zeros((im.shape[0],im.shape[1],4))
                     im_heat[:,:,:3] = im
                     print im_heat[:,:,3].shape
-                    print plt.cm.jet(im_cut).shape
+                    tmp = plt.cm.jet(im_cut).shape
+                    plt.imshow(tmp)
+                    plt.savefig('/var/node436/local/tstahl/plos/colortmp.png')
+                    plt.clf()
+                    print tmp.shape, rgb2gray(tmp).shape
+                    plt.imshow(rgb2gray(tmp))
+                    plt.savefig('/var/node436/local/tstahl/plos/graytmp.png')
+                    plt.clf()
                     print plt.cm.binary(im_cut).shape
                     print plt.cm.gray(im_cut).shape
-                    im_heat[:,:,3] = plt.cm.binary(im_cut)
+                    im_heat[:,:,3] = plt.cm.binary(rgb2gray(tmp))
                     plt.imshow(im_cut, cmap='hot')
                     print im.shape
                     plt.axis('off')
