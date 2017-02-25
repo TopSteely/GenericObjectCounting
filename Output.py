@@ -193,7 +193,9 @@ class Output:
                     im_heat[:,:,:3] = im
                     print im_heat[:,:,3].shape
                     print plt.cm.jet(im_cut).shape
-                    im_heat[:,:,3] = plt.cm.jet(im_cut)
+                    print plt.cm.binary(im_cut).shape
+                    print plt.cm.gray(im_cut).shape
+                    im_heat[:,:,3] = plt.cm.binary(im_cut)
                     plt.imshow(im_cut, cmap='hot')
                     print im.shape
                     plt.axis('off')
