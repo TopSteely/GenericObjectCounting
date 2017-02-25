@@ -34,6 +34,7 @@ class Output:
         
         self.best_path = '/var/node436/local/tstahl/plos/best_%s_%s_%s_%s.png'
         self.avg_path = '/var/node436/local/tstahl/plos/avg_%s_%s_%s_%s.png'
+        self.avg_path_ = '/var/node436/local/tstahl/plos/htmp_%s_%s_%s_%s.png'
         self.upd_path = '/var/node436/local/tstahl/plos/upd_%s.png'
         self.upd_path_new = '/var/node436/local/tstahl/plos/upd_%s_new.png'
         
@@ -187,12 +188,21 @@ class Output:
                 plt.clf()
                 if lvl > 0:
                     im_cut = avg_pixls[img_nr][lvl-1][0:im.shape[0],0:im.shape[1]]
+                    im_heat = np.zeros((0:im.shape[0],0:im.shape[1],4))
+                    im_heat[:,:,:3] = im
+                    im_heat[:,:,4] = plt.cm.jet(im_cut)
                     plt.imshow(im_cut, cmap='hot')
                     print im.shape
                     plt.axis('off')
-                    ax = plt.gca()
-                    plt.colorbar(im_cut, ax=ax)
+                    #ax = plt.gca()
+                    plt.colorbar()
                     plt.savefig(self.avg_path%(self.category,img_nr,lvl,al_i))
+                    plt.clf()
+                    plt.imshow(im_cut, cmap='jet')
+                    plt.axis('off')
+                    plt.colorbar()
+                    plt.savefig(self.avg_path_%(self.category,img_nr,lvl,al_i))
+                    plt.clf()
 
     def plot_updates(self,updates1, updates2, updates3):
         plt.plot([upd[0] for upd in updates1], '-ro', label='old')
