@@ -186,7 +186,7 @@ class Output:
                 plt.savefig(self.best_path%(self.category,img_nr,lvl,al_i))
                 plt.clf()
                 if lvl > 0:
-                    im_cut = a[0:im.shape[0],0:im.shape[1]]
+                    im_cut = avg_pixls[img_nr][lvl-1][0:im.shape[0],0:im.shape[1]]
                     plt.imshow(im_cut, cmap='hot')
                     print im.shape
                     plt.axis('off')
