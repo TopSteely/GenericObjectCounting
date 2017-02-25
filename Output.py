@@ -189,13 +189,20 @@ class Output:
                 plt.clf()
                 if lvl > 0:
                     print lvl
-                    im_cut = avg_pixls[img_nr][lvl-1][0:im.shape[0],0:im.shape[1]]
+                    im_cut = avg_pixls[img_nr][lvl-1][0:im.shape[1],0:im.shape[0]]
                     plt.imshow(im_cut)
                     plt.savefig('/var/node436/local/tstahl/plos/avg%s.png'%(lvl))
                     plt.clf()
                     print im_cut.shape
                     im_heat = np.zeros((im.shape[0],im.shape[1],4))
                     im_heat[:,:,:3] = im
+                    plt.imshow(im_heat)
+                    plt.savefig('/var/node436/local/tstahl/plos/im_heat%s.png'%(lvl))
+                    plt.clf()
+                    im_heat[:,:,3] = 255 * np.ones((0:im.shape[1], 0:im.shape[0]))
+                    plt.imshow(im_heat)
+                    plt.savefig('/var/node436/local/tstahl/plos/im_heat_cp_%s.png'%(lvl))
+                    plt.clf()
                     print im_heat[:,:,3].shape
                     tmp = plt.cm.jet(im_cut)
                     plt.imshow(tmp)
