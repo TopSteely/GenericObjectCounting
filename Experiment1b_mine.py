@@ -25,10 +25,10 @@ def main():
 
     batch_size = 5
 
-    epochs = 5
+    epochs = 10
     print epochs
 
-    subsamples = 1
+    subsamples = 5
 
     feature_size = 4096
 

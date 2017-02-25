@@ -191,32 +191,24 @@ class Output:
                     print lvl
                     im_cut = avg_pixls[img_nr][lvl-1][0:im.shape[1],0:im.shape[0]].reshape(im.shape[0],im.shape[1])
                     plt.imshow(im_cut)
+                    plt.colorbar()
                     plt.savefig('/var/node436/local/tstahl/plos/avg%s.png'%(lvl))
                     plt.clf()
-                    print im_cut.shape
                     im_heat = np.zeros((im.shape[0],im.shape[1],4))
-                    im_heat[:,:,0:3] = im
-                    plt.imshow(im_heat)
-                    plt.savefig('/var/node436/local/tstahl/plos/im_heat.png')
-                    plt.clf()
+                    #norm?
                     im_heat[:,:,3] = 1 * np.ones((im.shape[0], im.shape[1]))
                     plt.imshow(im_heat)
                     plt.savefig('/var/node436/local/tstahl/plos/im_heat_cp.png')
                     plt.clf()
-                    print im_heat[:,:,3].shape
                     tmp = plt.cm.jet(im_cut)
                     plt.imshow(tmp)
                     plt.savefig('/var/node436/local/tstahl/plos/colortmp%s.png'%(lvl))
                     plt.clf()
-                    print tmp.shape, rgb2gray(tmp).shape
                     plt.imshow(rgb2gray(tmp))
                     plt.savefig('/var/node436/local/tstahl/plos/graytmp%s.png'%(lvl))
                     plt.clf()
-                    print plt.cm.binary(im_cut).shape
-                    print plt.cm.gray(im_cut).shape
                     im_heat[:,:,3] = rgb2gray(tmp)
                     plt.imshow(im_heat, cmap='hot')
-                    print im.shape
                     plt.axis('off')
                     #ax = plt.gca()
                     plt.colorbar()
