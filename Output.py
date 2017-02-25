@@ -192,6 +192,7 @@ class Output:
                     im_heat = np.zeros((im.shape[0],im.shape[1],4))
                     im_heat[:,:,:3] = im
                     print im_heat[:,:,3].shape
+                    print plt.cm.jet(im_cut).shape
                     im_heat[:,:,3] = plt.cm.jet(im_cut)
                     plt.imshow(im_cut, cmap='hot')
                     print im.shape
