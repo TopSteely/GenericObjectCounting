@@ -204,7 +204,7 @@ class Output:
                     plt.savefig('/var/node436/local/tstahl/plos/im_heat_cp_%s.png'%(lvl))
                     plt.clf()
                     print im_heat[:,:,3].shape
-                    tmp = plt.cm.jet(im_cut)
+                    tmp = plt.cm.jet(im_cut.reshape(im.shape[0],im.shape[1]))
                     plt.imshow(tmp)
                     plt.savefig('/var/node436/local/tstahl/plos/colortmp%s.png'%(lvl))
                     plt.clf()
