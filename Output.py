@@ -190,7 +190,8 @@ class Output:
                     plt.imshow(im_cut, cmap='hot')
                     print im.shape
                     plt.axis('off')
-                    plt.colorbar(im_cut)
+                    ax = plt.gca()
+                    plt.colorbar(im_cut, ax=ax)
                     plt.savefig(self.avg_path%(self.category,img_nr,lvl,al_i))
 
     def plot_updates(self,updates1, updates2, updates3):
