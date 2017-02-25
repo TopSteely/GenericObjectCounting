@@ -81,9 +81,6 @@ def main():
             for gamma_i in [math.pow(10,-4)]:#,math.pow(10,-4),math.pow(10,-3),math.pow(10,-2)
                 training_loss = np.array([], dtype=np.int64).reshape(tree_level_size+1,0)
                 validation_loss = np.array([], dtype=np.int64).reshape(tree_level_size+1,0)
-                training_loss_old = np.array([], dtype=np.int64).reshape(tree_level_size+1,0)
-                validation_loss_old = np.array([], dtype=np.int64).reshape(tree_level_size+1,0)
-                mses_old = []
                 mses = []
                 #sgd_pascal = SGD.SGD('pascal', 'max', category, tree_level_size, batch_size, eta_i, gamma_i, al_i)
                 sgd_dennis = SGD.SGD('dennis', pred_mode, category, tree_level_size, batch_size, eta, gamma_i, al_i, feature_size)
@@ -100,7 +97,7 @@ def main():
                         sgd_dennis_old.learn(learn_mode)
                         sgd_dennis.learn(learn_mode)
                 if debug:
-                    output_dennis.compare_train_val_loss(training_loss, validation_loss, training_loss_old, validation_loss_old, mses, mses_old, eta, al_i)
+                    output_dennis.plot_train_val_loss(training_loss, validation_loss, mses, eta, al_i)
             if learn_mode == 'all':
                 mse,ae, mse_non_zero = sgd_dennis.evaluate('val_all')
                 mse_tr,ae_tr, mse_non_zero_tr = sgd_dennis.evaluate('train_all')
