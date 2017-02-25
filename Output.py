@@ -33,6 +33,7 @@ class Output:
         self.compare_path = '/var/node436/local/tstahl/plos/compare_%s_%s_%s_%s_%s_%s.png'
         
         self.best_path = '/var/node436/local/tstahl/plos/best_%s_%s_%s_%s.png'
+        self.avg_path = '/var/node436/local/tstahl/plos/avg_%s_%s_%s_%s.png'
         self.upd_path = '/var/node436/local/tstahl/plos/upd_%s.png'
         self.upd_path_new = '/var/node436/local/tstahl/plos/upd_%s_new.png'
         
@@ -163,25 +164,34 @@ class Output:
         plt.savefig(self.compare_path%(self.experiment,self.prune_tree_levels,eta,self.category, alpha, self.mode))
         
 
-    def plot_best(self, level_preds, max_level_window, al_i):
+    def plot_best(self, level_preds, max_level_window, min_level_window, avg_pixls, al_i):
         #max_level_window = [img_data.boxes[ind],max_level_pred]
         for img_nr in level_preds.keys():
             # in case i want only imgs with levels higher than
             #if len(level_preds[i_img]) < 6:
             #        continue
             im = imread('/var/node436/local/tstahl/Images/'+ (format(img_nr, "06d")) +'.jpg')
-            for lvl,(lvl_pred,b_patch) in enumerate(zip(level_preds[img_nr], max_level_window[img_nr])):
+            for lvl,(lvl_pred,b_patch, m_patch) in enumerate(zip(level_preds[img_nr], max_level_window[img_nr], min_level_window[img_nr])):
                 coord_iep = b_patch[0]
+                coord_iep_ = m_patch[0]
                 plt.imshow(im)
                 plt.axis('off')
                 ax = plt.gca()
                 #ax.add_patch(Rectangle((int(coord[0]), int(coord[1])), int(coord[2] - coord[0]), int(coord[3] - coord[1]), edgecolor='black', facecolor='none'))
                 ax.add_patch(Rectangle((int(coord_iep[0]), int(coord_iep[1])), int(coord_iep[2] - coord_iep[0]), int(coord_iep[3] - coord_iep[1]), edgecolor='red', facecolor='none'))
-                ax.set_title('best Patch: %s\n IEP Level: %s'%(b_patch[1],lvl_pred))
+                ax.add_patch(Rectangle((int(coord_iep_[0]), int(coord_iep_[1])), int(coord_iep_[2] - coord_iep_[0]), int(coord_iep_[3] - coord_iep_[1]), edgecolor='green', facecolor='none'))
+                ax.set_title('best Patch: %s, worst Patch: %s\n IEP Level: %s'%(b_patch[1],m_patch[1],lvl_pred))
                 
             
                 plt.savefig(self.best_path%(self.category,img_nr,lvl,al_i))
                 plt.clf()
+                if lvl > 0:
+                    im_cut = a[0:im.shape[0],0:im.shape[1]]
+                    plt.imshow(im_cut, cmap='hot')
+                    print im.shape
+                    plt.axis('off')
+                    plt.colorbar(im_cut)
+                    plt.savefig(self.avg_path%(self.category,img_nr,lvl,al_i))
 
     def plot_updates(self,updates1, updates2, updates3):
         plt.plot([upd[0] for upd in updates1], '-ro', label='old')

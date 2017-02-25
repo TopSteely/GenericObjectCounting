@@ -25,10 +25,10 @@ def main():
 
     batch_size = 5
 
-    epochs = 10
+    epochs = 1
     print epochs
 
-    subsamples = 200
+    subsamples = 1
 
     feature_size = 4096
 
@@ -103,16 +103,16 @@ def main():
             elif learn_mode == 'category':
                 mse,ae, mse_non_zero = sgd_dennis.evaluate('val_cat')
                 mse_tr,ae_tr, mse_non_zero_tr = sgd_dennis.evaluate('train_cat')
-                preds_d_d, y_d_d, level_pred_d_d, max_level_preds_d_d = sgd_dennis.evaluate('val_cat', subsamples, True)
+                preds_d_d, y_d_d, level_pred_d_d, max_level_preds_d_d, min_level_preds_d_d, avg_pixls = sgd_dennis.evaluate('val_cat', subsamples, True)
             elif learn_mode == 'category_levels':
                 mse,ae, mse_non_zero = sgd_dennis.evaluate('val_category_levels')
                 mse_tr,ae_tr, mse_non_zero_tr = sgd_dennis.evaluate('train_category_levels')
-                preds_d_d, y_d_d, level_pred_d_d, max_level_preds_d_d = sgd_dennis.evaluate('val_category_levels', subsamples, True)
+                preds_d_d, y_d_d, level_pred_d_d, max_level_preds_d_d, min_level_preds_d_d, avg_pixls = sgd_dennis.evaluate('val_category_levels', subsamples, True)
 
             print "Eval loss train: ", al_i, mse_tr, ae_tr
             print "Eval loss val: ", al_i, mse, ae
             output_dennis.plot_preds(preds_d_d, y_d_d, al_i, 'val_category_levels')
-            output_dennis.plot_best(level_pred_d_d, max_level_preds_d_d)
+            output_dennis.plot_best(level_pred_d_d, max_level_preds_d_d, min_level_preds_d_d, avg_pixls)
             #output_dennis.save(mse, ae, mse_non_zero, sgd_dennis, 'ind', al_i, learn_mode)
     print learn_mode, pred_mode, epochs,'with scaler', debug
     
