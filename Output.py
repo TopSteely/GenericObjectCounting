@@ -189,7 +189,7 @@ class Output:
                 plt.clf()
                 if lvl > 0:
                     print lvl
-                    im_cut = avg_pixls[img_nr][lvl-1][0:im.shape[1],0:im.shape[0]]
+                    im_cut = avg_pixls[img_nr][lvl-1][0:im.shape[1],0:im.shape[0]].reshape(im.shape[0],im.shape[1])
                     plt.imshow(im_cut)
                     plt.savefig('/var/node436/local/tstahl/plos/avg%s.png'%(lvl))
                     plt.clf()
@@ -204,7 +204,7 @@ class Output:
                     plt.savefig('/var/node436/local/tstahl/plos/im_heat_cp_%s.png'%(lvl))
                     plt.clf()
                     print im_heat[:,:,3].shape
-                    tmp = plt.cm.jet(im_cut.reshape(im.shape[0],im.shape[1]))
+                    tmp = plt.cm.jet(im_cut)
                     plt.imshow(tmp)
                     plt.savefig('/var/node436/local/tstahl/plos/colortmp%s.png'%(lvl))
                     plt.clf()
