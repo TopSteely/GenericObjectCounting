@@ -119,7 +119,7 @@ class Output:
         plt.savefig(self.loss_path%(self.experiment,self.prune_tree_levels,eta,self.category, alpha))
         
 
-    def plot_train_val_loss(self, train, val, eta, alpha):
+    def plot_train_val_loss(self, train, val, mses, eta, alpha):
         plt.clf()
         f,ax = plt.subplots(self.prune_tree_levels+1)
         for lvl in range(self.prune_tree_levels+1):
@@ -133,6 +133,7 @@ class Output:
                 labelbottom='off')
             if lvl == self.prune_tree_levels:
                 ax[lvl].title.set_text("Mean and final loss")
+                ax[lvl].plot(mses, '-gx', label="mse")
             else:
                 ax[lvl].title.set_text("Loss for level %s"%(lvl))
         plt.legend('upper left')

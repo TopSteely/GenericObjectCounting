@@ -17,24 +17,24 @@ def main():
 #        exit()
     category = sys.argv[1]
 
-    learn_mode = 'category'
+    learn_mode = 'category_levels'
 
-    pred_mode = 'new'
+    pred_mode = 'mean'
 
     debug = True
 
     batch_size = 5
 
-    epochs = 3
+    epochs = 10
     print epochs
 
-    subsamples = 10
+    subsamples = 200
 
     feature_size = 4096
 
     eta = math.pow(10,-5)
 
-    for tree_level_size in range(3,4):
+    for tree_level_size in range(5,6):
         #initialize
         print 'initializing', tree_level_size
         #sgd = SGD.SGD('max', category, tree_level_size, batch_size, math.pow(10,-4), 0.003, math.pow(10,-5))
@@ -77,7 +77,7 @@ def main():
                 scaler_dennis = scaler_category
             
         # learn SGD
-        for al_i in [0.1,1,10,100]:#[math.pow(10,-4)]:#,math.pow(10,-2)
+        for al_i in [0.1,20,100]:#[math.pow(10,-4)]:#,math.pow(10,-2)
             for gamma_i in [math.pow(10,-4)]:#,math.pow(10,-4),math.pow(10,-3),math.pow(10,-2)
                 training_loss = np.array([], dtype=np.int64).reshape(tree_level_size+1,0)
                 validation_loss = np.array([], dtype=np.int64).reshape(tree_level_size+1,0)
@@ -87,21 +87,15 @@ def main():
                 mses = []
                 #sgd_pascal = SGD.SGD('pascal', 'max', category, tree_level_size, batch_size, eta_i, gamma_i, al_i)
                 sgd_dennis = SGD.SGD('dennis', pred_mode, category, tree_level_size, batch_size, eta, gamma_i, al_i, feature_size)
-                sgd_dennis_old = SGD.SGD('dennis', 'mean', category, tree_level_size, batch_size, eta, gamma_i, al_i, feature_size)
                 sgd_dennis.set_scaler(scaler_dennis)
-                sgd_dennis_old.set_scaler(scaler_dennis)
                 for epoch in range(epochs):
                     print epoch,
                     #tr_l, te_l = sgd_dennis.learn('categories')
                     if debug:
-                        tr_l_old, te_l_old, mse_old = sgd_dennis_old.learn(learn_mode, subsamples, debug)
                         tr_l, te_l, mse = sgd_dennis.learn(learn_mode, subsamples, debug)
                         training_loss = np.concatenate((training_loss,tr_l), axis=1)#.reshape(-1,1)
                         validation_loss = np.concatenate((validation_loss,te_l), axis=1)#.reshape(-1,1)
                         mses.extend(mse)
-                        training_loss_old = np.concatenate((training_loss_old,tr_l_old), axis=1)#.reshape(-1,1)
-                        validation_loss_old = np.concatenate((validation_loss_old,te_l_old), axis=1)#.reshape(-1,1)
-                        mses_old.extend(mse_old)
                     else:
                         sgd_dennis_old.learn(learn_mode)
                         sgd_dennis.learn(learn_mode)
@@ -110,26 +104,19 @@ def main():
             if learn_mode == 'all':
                 mse,ae, mse_non_zero = sgd_dennis.evaluate('val_all')
                 mse_tr,ae_tr, mse_non_zero_tr = sgd_dennis.evaluate('train_all')
-                mse_sc,_, _ = sgd_dennis_scipy.evaluate('val_all')
-                mse_tr_sc,_, _ = sgd_dennis_scipy.evaluate('train_all')
             elif learn_mode == 'category':
                 mse,ae, mse_non_zero = sgd_dennis.evaluate('val_cat')
                 mse_tr,ae_tr, mse_non_zero_tr = sgd_dennis.evaluate('train_cat')
-                mse_old,_, _ = sgd_dennis_old.evaluate('val_cat')
-                mse_tr_old,_, _ = sgd_dennis_old.evaluate('train_cat')
                 preds_d_d, y_d_d, level_pred_d_d, max_level_preds_d_d = sgd_dennis.evaluate('val_cat', subsamples, True)
-                preds_d_d_old, y_d_d_old, level_pred_d_d_old, max_level_preds_d_d_old = sgd_dennis_old.evaluate('val_cat', subsamples, True)
             elif learn_mode == 'category_levels':
                 mse,ae, mse_non_zero = sgd_dennis.evaluate('val_category_levels')
                 mse_tr,ae_tr, mse_non_zero_tr = sgd_dennis.evaluate('train_category_levels')
-                mse_sc,_, _ = sgd_dennis_scipy.evaluate('val_category_levels')
-                mse_tr_sc,_, _ = sgd_dennis_scipy.evaluate('train_category_levels')
+                preds_d_d, y_d_d, level_pred_d_d, max_level_preds_d_d = sgd_dennis.evaluate('val_cat', subsamples, True)
 
-            print "Eval loss train: ", al_i, mse_tr_old, mse_tr
-            print "Eval loss val: ", al_i, mse_old, mse
-            output_dennis.plot_preds(preds_d_d, y_d_d, al_i, 'val')
+            print "Eval loss train: ", al_i, mse_tr
+            print "Eval loss val: ", al_i, mse
+            output_dennis.plot_preds(preds_d_d, y_d_d, al_i, 'val_cat')
             output_dennis.plot_best(level_pred_d_d, max_level_preds_d_d)
-            output_dennis_old.plot_best(level_pred_d_d_old, max_level_preds_d_d_old)
             #output_dennis.save(mse, ae, mse_non_zero, sgd_dennis, 'ind', al_i, learn_mode)
     print learn_mode, pred_mode, epochs,'with scaler', debug
     
