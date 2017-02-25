@@ -188,18 +188,22 @@ class Output:
                 plt.savefig(self.best_path%(self.category,img_nr,lvl,al_i))
                 plt.clf()
                 if lvl > 0:
+                    print lvl
                     im_cut = avg_pixls[img_nr][lvl-1][0:im.shape[0],0:im.shape[1]]
+                    plt.imshow(im_cut)
+                    plt.savefig('/var/node436/local/tstahl/plos/avg%s.png'%(lvl))
+                    plt.clf()
                     print im_cut.shape
                     im_heat = np.zeros((im.shape[0],im.shape[1],4))
                     im_heat[:,:,:3] = im
                     print im_heat[:,:,3].shape
                     tmp = plt.cm.jet(im_cut)
                     plt.imshow(tmp)
-                    plt.savefig('/var/node436/local/tstahl/plos/colortmp.png')
+                    plt.savefig('/var/node436/local/tstahl/plos/colortmp%s.png'%(lvl))
                     plt.clf()
                     print tmp.shape, rgb2gray(tmp).shape
                     plt.imshow(rgb2gray(tmp))
-                    plt.savefig('/var/node436/local/tstahl/plos/graytmp.png')
+                    plt.savefig('/var/node436/local/tstahl/plos/graytmp%s.png'%(lvl))
                     plt.clf()
                     print plt.cm.binary(im_cut).shape
                     print plt.cm.gray(im_cut).shape
