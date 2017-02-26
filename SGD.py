@@ -322,14 +322,12 @@ class SGD:
 
                         all_patches = [a[1] for a in self.functions[img_nr][level]]
                         level_patch_preds = []
-                        print all_patches
                         for level_patch in all_patches:
                             pred = self.predict_window(img_data, level_patch)
                             level_patch_preds.append(pred)
                             coords = img_data.boxes[level_patch]
                             pixel_sum[coords[1]:coords[3],coords[0]:coords[2]] += pred
                             pixel_count[coords[1]:coords[3],coords[0]:coords[2]] += 1
-                            print level_patch, coords, pred
                         max_level_pred = np.max(level_patch_preds)
                         min_level_pred = np.min(level_patch_preds)
                         ind_max = all_patches[level_patch_preds.index(max_level_pred)]
