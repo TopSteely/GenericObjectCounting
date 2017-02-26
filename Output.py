@@ -187,12 +187,7 @@ class Output:
             
                 plt.savefig(self.best_path%(self.category,img_nr,lvl,al_i))
                 plt.clf()
-                print lvl, im.shape
                 im_cut = avg_pixls[img_nr][lvl]
-                plt.imshow(im_cut)
-                plt.colorbar()
-                plt.savefig('/var/node436/local/tstahl/plos/avg%s.png'%(lvl))
-                plt.clf()
                 tmp = plt.cm.jet(im_cut)
                 conv_temp = rgb2gray(tmp)
                 print 'max: ', np.max(conv_temp)
@@ -209,11 +204,6 @@ class Output:
                 im_heat[:,:,:3] = im
                 im_heat[:,:,3] = 255*conv_temp/np.max(conv_temp)
                 # colormap * np.max somehow, or npmax-npmin
-                plt.imshow(im_heat, cmap='jet')
-                plt.axis('off')
-                plt.colorbar()
-                plt.savefig(self.avg_path_%(self.category,img_nr,lvl,al_i))
-                plt.clf()
 
     def plot_updates(self,updates1, updates2, updates3):
         plt.plot([upd[0] for upd in updates1], '-ro', label='old')

@@ -17,18 +17,18 @@ def main():
 #        exit()
     category = sys.argv[1]
 
-    learn_mode = 'category'#category_levels
+    learn_mode = 'all'#category_levels
 
     pred_mode = 'mean'
 
-    debug = True
+    debug = False
 
     batch_size = 5
 
-    epochs = 10
+    epochs = 4
     print epochs
 
-    subsamples = 1
+    subsamples = 500
 
     feature_size = 4096
 
@@ -76,7 +76,7 @@ def main():
                 scaler_dennis = scaler_category
             
         # learn SGD
-        for al_i in [0.1]:#,20,100]:#[math.pow(10,-4)]:#,math.pow(10,-2)
+        for al_i in [0.1,20,100]:#[math.pow(10,-4)]:#,math.pow(10,-2)
             for gamma_i in [math.pow(10,-4)]:#,math.pow(10,-4),math.pow(10,-3),math.pow(10,-2)
                 training_loss = np.array([], dtype=np.int64).reshape(tree_level_size+1,0)
                 validation_loss = np.array([], dtype=np.int64).reshape(tree_level_size+1,0)

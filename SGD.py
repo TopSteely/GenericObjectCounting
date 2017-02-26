@@ -338,12 +338,6 @@ class SGD:
                         min_level_preds_d[img_data.img_nr].append([img_data.boxes[ind_min],min_level_pred])
                         avg_pixels[img_data.img_nr].append(pixel_sum/pixel_count)
                         im_cut = avg_pixels[img_nr][level]
-                        plt.clf()
-                        plt.imshow(im_cut)
-                        plt.colorbar()
-                        plt.savefig('/var/node436/local/tstahl/plos/avg_%s_%s.png'%(img_nr,level))
-                        plt.clf()
-                        raw_input()
         if debug:
             return preds_d, y_d, level_pred_d, max_level_preds_d, min_level_preds_d, avg_pixels
         return squared_error/len(numbers), error / len(numbers), non_zero_error / n_non_zero#skl_error/len(numbers),, self.eta
