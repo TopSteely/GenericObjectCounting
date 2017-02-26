@@ -331,7 +331,7 @@ class SGD:
                         max_level_preds_d[img_data.img_nr].append([img_data.boxes[ind_max],max_level_pred])
                         min_level_preds_d[img_data.img_nr].append([img_data.boxes[ind_min],min_level_pred])
                         avg_pixels[img_data.img_nr].append(pixel_sum/pixel_count)
-                        im_cut = avg_pixls[img_nr][level]
+                        im_cut = avg_pixels[img_nr][level]
                         plt.imshow(im_cut)
                         plt.colorbar()
                         plt.savefig('/var/node436/local/tstahl/plos/avg%s.png'%(level))
