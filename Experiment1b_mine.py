@@ -93,7 +93,6 @@ def main():
                         validation_loss = np.concatenate((validation_loss,te_l), axis=1)#.reshape(-1,1)
                         mses.extend(mse)
                     else:
-                        sgd_dennis_old.learn(learn_mode)
                         sgd_dennis.learn(learn_mode)
                 if debug:
                     output_dennis.plot_train_val_loss(training_loss, validation_loss, mses, eta, al_i)
