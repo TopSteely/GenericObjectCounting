@@ -196,6 +196,7 @@ class Output:
                     plt.clf()
                     im_heat = np.zeros((im.shape[0],im.shape[1],4))
                     #norm?
+                    im_heat[:,:,:3] = im
                     im_heat[:,:,3] = 1 * np.ones((im.shape[0], im.shape[1]))
                     plt.imshow(im_heat)
                     plt.savefig('/var/node436/local/tstahl/plos/im_heat_cp.png')
@@ -207,13 +208,14 @@ class Output:
                     plt.imshow(rgb2gray(tmp))
                     plt.savefig('/var/node436/local/tstahl/plos/graytmp%s.png'%(lvl))
                     plt.clf()
-                    im_heat[:,:,3] = rgb2gray(tmp)
+                    im_heat[:,:,3] = rgb2gray(tmp)#/255.0
                     plt.imshow(im_heat, cmap='hot')
                     plt.axis('off')
                     #ax = plt.gca()
                     plt.colorbar()
                     plt.savefig(self.avg_path%(self.category,img_nr,lvl,al_i))
                     plt.clf()
+                    im_heat[:,:,3] = rgb2gray(tmp)/255.0
                     plt.imshow(im_heat, cmap='jet')
                     plt.axis('off')
                     plt.colorbar()

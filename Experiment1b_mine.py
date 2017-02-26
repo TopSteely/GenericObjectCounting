@@ -17,7 +17,7 @@ def main():
 #        exit()
     category = sys.argv[1]
 
-    learn_mode = 'category_levels'
+    learn_mode = 'category'#category_levels
 
     pred_mode = 'mean'
 
@@ -28,7 +28,7 @@ def main():
     epochs = 10
     print epochs
 
-    subsamples = 5
+    subsamples = 1
 
     feature_size = 4096
 
