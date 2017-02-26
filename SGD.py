@@ -312,8 +312,8 @@ class SGD:
                     max_level_preds_d[img_data.img_nr] = []
                     min_level_preds_d[img_data.img_nr] = []
                     avg_pixels[img_data.img_nr] = []
-                    width = img_data.boxes[0][2]
-                    height = img_data.boxes[0][3]
+                    width = img_data.boxes[0][2] + 1
+                    height = img_data.boxes[0][3] + 1
                     for level in range(len(img_data.levels)):
                         pixel_sum = np.zeros((height,width))
                         pixel_count = np.zeros((height,width))
