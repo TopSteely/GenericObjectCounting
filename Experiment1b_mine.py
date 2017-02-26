@@ -17,18 +17,18 @@ def main():
 #        exit()
     category = sys.argv[1]
 
-    learn_mode = 'all'#category_levels
+    learn_mode = 'category'#category_levels
 
     pred_mode = 'mean'
 
-    debug = False
+    debug = True
 
     batch_size = 5
 
     epochs = 4
     print epochs
 
-    subsamples = 500
+    subsamples = 1
 
     feature_size = 4096
 
