@@ -1,3 +1,6 @@
+import matplotlib
+matplotlib.use('agg')
+
 import IEP
 import Input
 import numpy as np
@@ -9,6 +12,9 @@ import math
 from scipy.optimize import minimize
 from utils import iep_with_func, loss_new_scipy, lower_constraint, upper_constraint
 from copy import deepcopy
+
+
+import matplotlib.pyplot as plt
 
 
 
@@ -303,9 +309,9 @@ class SGD:
                     max_level_preds_d[img_data.img_nr] = []
                     min_level_preds_d[img_data.img_nr] = []
                     avg_pixels[img_data.img_nr] = []
-                    pixel_sum = np.zeros((1000,1000))
-                    pixel_count = np.zeros((1000,1000))
                     for level in range(len(img_data.levels)):
+                        pixel_sum = np.zeros((1000,1000))
+                        pixel_count = np.zeros((1000,1000))
                         #don't think iep(single patch is correct, it wasn't on dummy data)
                         #iep_patches = self.predictor.iep_single_patch(img_data, self.functions[img_nr][level],level)
 
@@ -314,10 +320,10 @@ class SGD:
                         for level_patch in all_patches:
                             pred = self.predict_window(img_data, level_patch)
                             level_patch_preds.append(pred)
-                            if level > 0:
-                                coords = img_data.boxes[level_patch]
-                                pixel_sum[coords[0]:coords[2],coords[1]:coords[3]] += pred
-                                pixel_count[coords[0]:coords[2],coords[1]:coords[3]] += 1
+                            coords = img_data.boxes[level_patch]
+                            pixel_sum[coords[0]:coords[2],coords[1]:coords[3]] += pred
+                            pixel_count[coords[0]:coords[2],coords[1]:coords[3]] += 1
+                            print level_patch, coords, pred
                         max_level_pred = np.max(level_patch_preds)
                         min_level_pred = np.min(level_patch_preds)
                         ind_max = all_patches[level_patch_preds.index(max_level_pred)]
@@ -325,6 +331,12 @@ class SGD:
                         max_level_preds_d[img_data.img_nr].append([img_data.boxes[ind_max],max_level_pred])
                         min_level_preds_d[img_data.img_nr].append([img_data.boxes[ind_min],min_level_pred])
                         avg_pixels[img_data.img_nr].append(pixel_sum/pixel_count)
+                        im_cut = avg_pixls[img_nr][level]
+                        plt.imshow(im_cut)
+                        plt.colorbar()
+                        plt.savefig('/var/node436/local/tstahl/plos/avg%s.png'%(level))
+                        plt.clf()
+                        raw_input()
         if debug:
             return preds_d, y_d, level_pred_d, max_level_preds_d, min_level_preds_d, avg_pixels
         return squared_error/len(numbers), error / len(numbers), non_zero_error / n_non_zero#skl_error/len(numbers),, self.eta

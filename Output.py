@@ -187,40 +187,39 @@ class Output:
             
                 plt.savefig(self.best_path%(self.category,img_nr,lvl,al_i))
                 plt.clf()
-                if lvl > 0:
-                    print lvl
-                    im_cut = avg_pixls[img_nr][lvl-1][0:im.shape[1],0:im.shape[0]].reshape(im.shape[0],im.shape[1])
-                    plt.imshow(im_cut)
-                    plt.colorbar()
-                    plt.savefig('/var/node436/local/tstahl/plos/avg%s.png'%(lvl))
-                    plt.clf()
-                    im_heat = np.zeros((im.shape[0],im.shape[1],4))
-                    #norm?
-                    im_heat[:,:,:3] = im
-                    im_heat[:,:,3] = 1 * np.ones((im.shape[0], im.shape[1]))
-                    plt.imshow(im_heat)
-                    plt.savefig('/var/node436/local/tstahl/plos/im_heat_cp.png')
-                    plt.clf()
-                    tmp = plt.cm.jet(im_cut)
-                    plt.imshow(tmp)
-                    plt.savefig('/var/node436/local/tstahl/plos/colortmp%s.png'%(lvl))
-                    plt.clf()
-                    plt.imshow(rgb2gray(tmp))
-                    plt.savefig('/var/node436/local/tstahl/plos/graytmp%s.png'%(lvl))
-                    plt.clf()
-                    im_heat[:,:,3] = rgb2gray(tmp)#/255.0
-                    plt.imshow(im_heat, cmap='hot')
-                    plt.axis('off')
-                    #ax = plt.gca()
-                    plt.colorbar()
-                    plt.savefig(self.avg_path%(self.category,img_nr,lvl,al_i))
-                    plt.clf()
-                    im_heat[:,:,3] = rgb2gray(tmp)/255.0
-                    plt.imshow(im_heat, cmap='jet')
-                    plt.axis('off')
-                    plt.colorbar()
-                    plt.savefig(self.avg_path_%(self.category,img_nr,lvl,al_i))
-                    plt.clf()
+                print lvl
+                im_cut = avg_pixls[img_nr][lvl][0:im.shape[1],0:im.shape[0]].reshape(im.shape[0],im.shape[1])
+                plt.imshow(im_cut)
+                plt.colorbar()
+                plt.savefig('/var/node436/local/tstahl/plos/avg%s.png'%(lvl))
+                plt.clf()
+                im_heat = np.zeros((im.shape[0],im.shape[1],4))
+                #norm?
+                im_heat[:,:,:3] = im
+                im_heat[:,:,3] = 1 * np.ones((im.shape[0], im.shape[1]))
+                plt.imshow(im_heat)
+                plt.savefig('/var/node436/local/tstahl/plos/im_heat_cp.png')
+                plt.clf()
+                tmp = plt.cm.jet(im_cut)
+                plt.imshow(tmp)
+                plt.savefig('/var/node436/local/tstahl/plos/colortmp%s.png'%(lvl))
+                plt.clf()
+                plt.imshow(rgb2gray(tmp))
+                plt.savefig('/var/node436/local/tstahl/plos/graytmp%s.png'%(lvl))
+                plt.clf()
+                im_heat[:,:,3] = rgb2gray(tmp)#/255.0
+                plt.imshow(im_heat, cmap='hot')
+                plt.axis('off')
+                #ax = plt.gca()
+                plt.colorbar()
+                plt.savefig(self.avg_path%(self.category,img_nr,lvl,al_i))
+                plt.clf()
+                im_heat[:,:,3] = rgb2gray(tmp)/255.0
+                plt.imshow(im_heat, cmap='jet')
+                plt.axis('off')
+                plt.colorbar()
+                plt.savefig(self.avg_path_%(self.category,img_nr,lvl,al_i))
+                plt.clf()
 
     def plot_updates(self,updates1, updates2, updates3):
         plt.plot([upd[0] for upd in updates1], '-ro', label='old')
