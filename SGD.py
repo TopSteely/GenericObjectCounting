@@ -340,7 +340,7 @@ class SGD:
                         plt.colorbar()
                         plt.savefig('/var/node436/local/tstahl/plos/avg_%s_%s.png'%(img_nr,level))
                         plt.clf()
-                        im_cut = avg_pixels[img_nr][level][0:500,0:332].reshape(332,500)
+                        im_cut = avg_pixels[img_nr][level][0:332,0:500]
                         plt.imshow(im_cut)
                         plt.colorbar()
                         plt.savefig('/var/node436/local/tstahl/plos/im_cut_%s_%s.png'%(img_nr,level))
