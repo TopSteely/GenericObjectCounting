@@ -193,31 +193,22 @@ class Output:
                 plt.colorbar()
                 plt.savefig('/var/node436/local/tstahl/plos/avg%s.png'%(lvl))
                 plt.clf()
-                im_heat = np.zeros((im.shape[0],im.shape[1],4))
-                #norm?
-                im_heat[:,:,:3] = im
-                im_heat[:,:,3] = 1 * np.ones((im.shape[0], im.shape[1]))
-                plt.imshow(im_heat)
-                plt.savefig('/var/node436/local/tstahl/plos/im_heat_cp.png')
-                plt.clf()
                 tmp = plt.cm.jet(im_cut)
-                plt.imshow(tmp)
-                plt.savefig('/var/node436/local/tstahl/plos/colortmp%s.png'%(lvl))
-                plt.clf()
-                plt.imshow(rgb2gray(tmp))
-                plt.savefig('/var/node436/local/tstahl/plos/graytmp%s.png'%(lvl))
-                plt.clf()
-                im_heat[:,:,3] = rgb2gray(tmp)#/255.0
-                plt.imshow(im_heat, cmap='hot')
+                conv_temp = rgb2gray(tmp)
+                print 'max: ', np.max(conv_temp)
+                im_heat = np.zeros((im.shape[0],im.shape[1],4))
+                im_heat[:,:,:3] = im
+                im_heat[:,:,3] = conv_temp/np.max(conv_temp)
+                # colormap * np.max somehow, or npmax-npmin
+                plt.imshow(im_heat, cmap='jet')
                 plt.axis('off')
-                #ax = plt.gca()
                 plt.colorbar()
                 plt.savefig(self.avg_path%(self.category,img_nr,lvl,al_i))
                 plt.clf()
-                conv_temp = rgb2gray(tmp)
-                print 'max: ', np.max(conv_temp)
-                im_heat[:,:,3] = conv_temp/np.max(conv_temp)
-                # colormap * np.max somehow
+                im_heat = np.zeros((im.shape[0],im.shape[1],4))
+                im_heat[:,:,:3] = im
+                im_heat[:,:,3] = 255*conv_temp/np.max(conv_temp)
+                # colormap * np.max somehow, or npmax-npmin
                 plt.imshow(im_heat, cmap='jet')
                 plt.axis('off')
                 plt.colorbar()

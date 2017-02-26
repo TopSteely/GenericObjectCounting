@@ -312,9 +312,11 @@ class SGD:
                     max_level_preds_d[img_data.img_nr] = []
                     min_level_preds_d[img_data.img_nr] = []
                     avg_pixels[img_data.img_nr] = []
+                    width = img_data.boxes[0][2]
+                    height = img_data.boxes[0][3]
                     for level in range(len(img_data.levels)):
-                        pixel_sum = np.zeros((1000,1000))
-                        pixel_count = np.zeros((1000,1000))
+                        pixel_sum = np.zeros((height,width))
+                        pixel_count = np.zeros((height,width))
                         #don't think iep(single patch is correct, it wasn't on dummy data)
                         #iep_patches = self.predictor.iep_single_patch(img_data, self.functions[img_nr][level],level)
 
@@ -325,8 +327,8 @@ class SGD:
                             pred = self.predict_window(img_data, level_patch)
                             level_patch_preds.append(pred)
                             coords = img_data.boxes[level_patch]
-                            pixel_sum[coords[0]:coords[2],coords[1]:coords[3]] += pred
-                            pixel_count[coords[0]:coords[2],coords[1]:coords[3]] += 1
+                            pixel_sum[coords[1]:coords[3],coords[0]:coords[2]] += pred
+                            pixel_count[coords[1]:coords[3],coords[0]:coords[2]] += 1
                             print level_patch, coords, pred
                         max_level_pred = np.max(level_patch_preds)
                         min_level_pred = np.min(level_patch_preds)
@@ -336,14 +338,11 @@ class SGD:
                         min_level_preds_d[img_data.img_nr].append([img_data.boxes[ind_min],min_level_pred])
                         avg_pixels[img_data.img_nr].append(pixel_sum/pixel_count)
                         im_cut = avg_pixels[img_nr][level]
+                        plt.clf()
                         plt.imshow(im_cut)
                         plt.colorbar()
                         plt.savefig('/var/node436/local/tstahl/plos/avg_%s_%s.png'%(img_nr,level))
                         plt.clf()
-                        im_cut = avg_pixels[img_nr][level][0:332,0:500]
-                        plt.imshow(im_cut)
-                        plt.colorbar()
-                        plt.savefig('/var/node436/local/tstahl/plos/im_cut_%s_%s.png'%(img_nr,level))
                         raw_input()
         if debug:
             return preds_d, y_d, level_pred_d, max_level_preds_d, min_level_preds_d, avg_pixels
