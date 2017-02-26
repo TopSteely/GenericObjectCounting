@@ -317,6 +317,7 @@ class SGD:
 
                         all_patches = [a[1] for a in self.functions[img_nr][level]]
                         level_patch_preds = []
+                        print all_patches
                         for level_patch in all_patches:
                             pred = self.predict_window(img_data, level_patch)
                             level_patch_preds.append(pred)
@@ -334,8 +335,12 @@ class SGD:
                         im_cut = avg_pixels[img_nr][level]
                         plt.imshow(im_cut)
                         plt.colorbar()
-                        plt.savefig('/var/node436/local/tstahl/plos/avg%s.png'%(level))
+                        plt.savefig('/var/node436/local/tstahl/plos/avg_%s_%s.png'%(img_nr,level))
                         plt.clf()
+                        im_cut = avg_pixls[img_nr][lvl][0:im.shape[1],0:im.shape[0]].reshape(im.shape[0],im.shape[1])
+                        plt.imshow(im_cut)
+                        plt.colorbar()
+                        plt.savefig('/var/node436/local/tstahl/plos/im_cut_%s_%s.png'%(img_nr,lvl))
                         raw_input()
         if debug:
             return preds_d, y_d, level_pred_d, max_level_preds_d, min_level_preds_d, avg_pixels

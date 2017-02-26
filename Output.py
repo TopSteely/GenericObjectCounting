@@ -214,7 +214,10 @@ class Output:
                 plt.colorbar()
                 plt.savefig(self.avg_path%(self.category,img_nr,lvl,al_i))
                 plt.clf()
-                im_heat[:,:,3] = rgb2gray(tmp)/255.0
+                conv_temp = rgb2gray(tmp)
+                print 'max: ', np.max(conv_temp)
+                im_heat[:,:,3] = conv_temp/np.max(conv_temp)
+                # colormap * np.max somehow
                 plt.imshow(im_heat, cmap='jet')
                 plt.axis('off')
                 plt.colorbar()
