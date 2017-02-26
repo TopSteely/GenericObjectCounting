@@ -188,7 +188,7 @@ class Output:
                 plt.savefig(self.best_path%(self.category,img_nr,lvl,al_i))
                 plt.clf()
                 print lvl, im.shape
-                im_cut = avg_pixls[img_nr][lvl][0:im.shape[0],0:im.shape[1]]
+                im_cut = avg_pixls[img_nr][lvl]
                 plt.imshow(im_cut)
                 plt.colorbar()
                 plt.savefig('/var/node436/local/tstahl/plos/avg%s.png'%(lvl))
