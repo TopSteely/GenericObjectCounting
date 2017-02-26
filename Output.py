@@ -201,9 +201,6 @@ class Output:
                 plt.colorbar()
                 plt.savefig(self.avg_path%(self.category,img_nr,lvl,al_i))
                 plt.clf()
-                im_heat = np.zeros((im.shape[0],im.shape[1],4))
-                im_heat[:,:,:3] = im
-                im_heat[:,:,3] = int(255*conv_temp/np.max(conv_temp))
                 # colormap * np.max somehow, or npmax-npmin
 
     def plot_updates(self,updates1, updates2, updates3):
