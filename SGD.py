@@ -269,6 +269,8 @@ class SGD:
         else:
             print 'wrong mode: ', mode
 
+        count_vis = 0
+
         for i_img_nr,img_nr in enumerate(numbers):
             if self.dataset == 'blob':
                 img_data = b_data[i_img_nr]
@@ -300,7 +302,8 @@ class SGD:
                 max_level_preds_d = {}
                 min_level_preds_d = {}
                 avg_pixels = {}
-                if i_img_nr < 10:
+                if count_vis < 10 and len(img_data.levels) > 3 and img_data.y > 1:
+                    count_vis += 1
                     if img_nr not in self.functions:
                         _,fct = self.learner.get_iep_levels(img_data, {})
                         self.functions[img_nr] = fct
@@ -340,7 +343,7 @@ class SGD:
                         im_cut = avg_pixels[img_nr][lvl][0:im.shape[1],0:im.shape[0]].reshape(im.shape[0],im.shape[1])
                         plt.imshow(im_cut)
                         plt.colorbar()
-                        plt.savefig('/var/node436/local/tstahl/plos/im_cut_%s_%s.png'%(img_nr,lvl))
+                        plt.savefig('/var/node436/local/tstahl/plos/im_cut_%s_%s.png'%(img_nr,level))
                         raw_input()
         if debug:
             return preds_d, y_d, level_pred_d, max_level_preds_d, min_level_preds_d, avg_pixels
