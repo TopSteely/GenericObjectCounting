@@ -21,7 +21,7 @@ def main():
 
     pred_mode = 'mean'
 
-    debug = True
+    debug = False
 
     batch_size = 5
 
@@ -34,7 +34,7 @@ def main():
 
     eta = math.pow(10,-5)
 
-    for tree_level_size in range(4,7):
+    for tree_level_size in range(5,7):
         #initialize
         print 'initializing', tree_level_size
         #sgd = SGD.SGD('max', category, tree_level_size, batch_size, math.pow(10,-4), 0.003, math.pow(10,-5))
