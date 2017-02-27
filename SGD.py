@@ -302,8 +302,8 @@ class SGD:
                 max_level_preds_d = {}
                 min_level_preds_d = {}
                 avg_pixels = {}
-                print len(img_data.levels), img_data.y
-                if count_vis < 10 and len(img_data.levels) >= 3 and img_data.y > 1:
+                if count_vis < 10 and len(img_data.levels) > 3 and img_data.y > 1:
+                    print img_data.img_nr,len(img_data.levels), img_data.y
                     count_vis += 1
                     if img_nr not in self.functions:
                         _,fct = self.learner.get_iep_levels(img_data, {})
@@ -337,7 +337,9 @@ class SGD:
                         min_level_preds_d[img_data.img_nr].append([img_data.boxes[ind_min],min_level_pred])
                         avg_pixels[img_data.img_nr].append(pixel_sum/pixel_count)
                         im_cut = avg_pixels[img_nr][level]
+                    print level_pred_d.keys()
         if debug:
+            print level_pred_d.keys()
             return preds_d, y_d, level_pred_d, max_level_preds_d, min_level_preds_d, avg_pixels
         return squared_error/len(numbers), error / len(numbers), non_zero_error / n_non_zero#skl_error/len(numbers),, self.eta
         
