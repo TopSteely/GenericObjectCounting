@@ -6,7 +6,7 @@ from scipy.misc import imread
 from matplotlib.patches import Rectangle
 import numpy as np
 import pylab as pl
-from utils import rgb2gray
+from utils import rgb2gray, transparent_cmap
 
 
 class Output:
