@@ -199,11 +199,10 @@ class Output:
                 #print 'max: ', np.max(conv_temp)
                 im_heat = np.zeros((im.shape[0],im.shape[1],4))
                 im_heat[:,:,:3] = im
-                print np.max(im_cut)
                 im_heat[:,:,3] = np.rint(255.0/ (im_cut + np.max(im_cut)))
-                print np.unique(im_heat[:,:,3])
                 # colormap * np.max somehow, or npmax-npmin
                 cb = ax.contourf(im_cut, 15, cmap=mycmap)
+                ax.axis('off')
                 plt.colorbar(cb)
                 plt.savefig(self.avg_path%(self.category,img_nr,lvl,al_i))
                 plt.clf()
