@@ -327,7 +327,6 @@ class SGD:
                             pred = self.predict_window(img_data, level_patch)
                             level_patch_preds.append(pred)
                             coords = img_data.boxes[level_patch]
-                            print coords, pred
                             pixel_sum[coords[1]:coords[3]+1,coords[0]:coords[2]+1] += pred
                             pixel_count[coords[1]:coords[3]+1,coords[0]:coords[2]+1] += 1
                         max_level_pred = np.max(level_patch_preds)
