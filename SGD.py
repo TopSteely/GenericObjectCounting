@@ -302,7 +302,8 @@ class SGD:
                 max_level_preds_d = {}
                 min_level_preds_d = {}
                 avg_pixels = {}
-                if count_vis < 10 and len(img_data.levels) > 3 and img_data.y > 1:
+                print len(img_data.levels), img_data.y
+                if count_vis < 10 and len(img_data.levels) >= 3 and img_data.y > 1:
                     count_vis += 1
                     if img_nr not in self.functions:
                         _,fct = self.learner.get_iep_levels(img_data, {})

@@ -25,7 +25,7 @@ def main():
 
     batch_size = 5
 
-    epochs = 5
+    epochs = 1
     print epochs
 
     subsamples = 2500
