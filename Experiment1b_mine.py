@@ -28,7 +28,7 @@ def main():
     epochs = 5
     print epochs
 
-    subsamples = 5
+    subsamples = 25
 
     feature_size = 4096
 
