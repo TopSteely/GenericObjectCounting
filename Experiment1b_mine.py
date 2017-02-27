@@ -111,6 +111,7 @@ def main():
             print "Eval loss train: ", al_i, mse_tr, ae_tr
             print "Eval loss val: ", al_i, mse, ae
             output_dennis.plot_preds(preds_d_d, y_d_d, al_i, 'val_category_levels')
+            print level_pred_d_d.keys()
             output_dennis.plot_best(level_pred_d_d, max_level_preds_d_d, min_level_preds_d_d, avg_pixls, al_i)
             #output_dennis.save(mse, ae, mse_non_zero, sgd_dennis, 'ind', al_i, learn_mode)
     print learn_mode, pred_mode, epochs,'with scaler', debug

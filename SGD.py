@@ -312,8 +312,8 @@ class SGD:
                     max_level_preds_d[img_data.img_nr] = []
                     min_level_preds_d[img_data.img_nr] = []
                     avg_pixels[img_data.img_nr] = []
-                    width = img_data.boxes[0][2] + 1
-                    height = img_data.boxes[0][3] + 1
+                    width = int(img_data.boxes[0][2] + 1)
+                    height = int(img_data.boxes[0][3] + 1)
                     for level in range(len(img_data.levels)):
                         pixel_sum = np.zeros((height,width))
                         pixel_count = np.zeros((height,width))
@@ -326,8 +326,8 @@ class SGD:
                             pred = self.predict_window(img_data, level_patch)
                             level_patch_preds.append(pred)
                             coords = img_data.boxes[level_patch]
-                            pixel_sum[coords[1]:coords[3]+1,coords[0]:coords[2]+1] += pred
-                            pixel_count[coords[1]:coords[3]+1,coords[0]:coords[2]+1] += 1
+                            pixel_sum[int(coords[1]):int(coords[3]+1),int(coords[0]):int(coords[2]+1)] += pred
+                            pixel_count[int(coords[1]):int(coords[3]+1),int(coords[0]):int(coords[2]+1)] += 1
                         max_level_pred = np.max(level_patch_preds)
                         min_level_pred = np.min(level_patch_preds)
                         ind_max = all_patches[level_patch_preds.index(max_level_pred)]
