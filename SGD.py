@@ -314,6 +314,7 @@ class SGD:
                     avg_pixels[img_data.img_nr] = []
                     width = img_data.boxes[0][2] + 1
                     height = img_data.boxes[0][3] + 1
+                    print width, height, img_data.y, mode
                     for level in range(len(img_data.levels)):
                         pixel_sum = np.zeros((height,width))
                         pixel_count = np.zeros((height,width))
