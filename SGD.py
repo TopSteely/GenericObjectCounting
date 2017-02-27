@@ -334,6 +334,8 @@ class SGD:
                         ind_min = all_patches[level_patch_preds.index(min_level_pred)]
                         max_level_preds_d[img_data.img_nr].append([img_data.boxes[ind_max],max_level_pred])
                         min_level_preds_d[img_data.img_nr].append([img_data.boxes[ind_min],min_level_pred])
+                        print np.unique(pixel_sum)
+                        print np.unique(pixel_count)
                         avg_pixels[img_data.img_nr].append(pixel_sum/pixel_count)
                         im_cut = avg_pixels[img_nr][level]
         if debug:
