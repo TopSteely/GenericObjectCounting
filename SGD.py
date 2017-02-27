@@ -270,6 +270,10 @@ class SGD:
             print 'wrong mode: ', mode
 
         count_vis = 0
+        level_pred_d = {}
+        max_level_preds_d = {}
+        min_level_preds_d = {}
+        avg_pixels = {}
 
         for i_img_nr,img_nr in enumerate(numbers):
             if self.dataset == 'blob':
@@ -298,10 +302,6 @@ class SGD:
                 else:
                     preds_d.append(self.predict(img_data))
                 y_d.append(img_data.y)
-                level_pred_d = {}
-                max_level_preds_d = {}
-                min_level_preds_d = {}
-                avg_pixels = {}
                 if count_vis < 10 and len(img_data.levels) > 3 and img_data.y > 1:
                     print img_data.img_nr,len(img_data.levels), img_data.y
                     count_vis += 1
