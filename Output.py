@@ -187,6 +187,12 @@ class Output:
             
                 plt.savefig(self.best_path%(self.category,img_nr,lvl,al_i))
                 plt.clf()
+
+                fig, ax = plt.subplots(1, 1)
+                ax.imshow(im)
+                #Use base cmap to create transparent
+                mycmap = transparent_cmap(plt.cm.Reds)
+
                 im_cut = avg_pixls[img_nr][lvl]
                 #tmp = plt.cm.jet(im_cut)
                 #conv_temp = rgb2gray(tmp)
@@ -197,9 +203,8 @@ class Output:
                 im_heat[:,:,3] = np.rint(255.0/ (im_cut + np.max(im_cut)))
                 print np.unique(im_heat[:,:,3])
                 # colormap * np.max somehow, or npmax-npmin
-                plt.imshow(im_heat, cmap='jet')
-                plt.axis('off')
-                plt.colorbar()
+                cb = ax.contourf(im_cut, 15, cmap=mycmap)
+                plt.colorbar(cb)
                 plt.savefig(self.avg_path%(self.category,img_nr,lvl,al_i))
                 plt.clf()
                 # colormap * np.max somehow, or npmax-npmin
