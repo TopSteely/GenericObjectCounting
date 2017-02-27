@@ -25,10 +25,10 @@ def main():
 
     batch_size = 5
 
-    epochs = 1
+    epochs = 4
     print epochs
 
-    subsamples = 2500
+    subsamples = 500
 
     feature_size = 4096
 
@@ -76,7 +76,7 @@ def main():
                 scaler_dennis = scaler_category
             
         # learn SGD
-        for al_i in [0.1]:#[math.pow(10,-4)]:#,math.pow(10,-2)
+        for al_i in [0.1,20,100]:#[math.pow(10,-4)]:#,math.pow(10,-2)
             for gamma_i in [math.pow(10,-4)]:#,math.pow(10,-4),math.pow(10,-3),math.pow(10,-2)
                 training_loss = np.array([], dtype=np.int64).reshape(tree_level_size+1,0)
                 validation_loss = np.array([], dtype=np.int64).reshape(tree_level_size+1,0)
@@ -99,6 +99,7 @@ def main():
             if learn_mode == 'all':
                 mse,ae, mse_non_zero = sgd_dennis.evaluate('val_all')
                 mse_tr,ae_tr, mse_non_zero_tr = sgd_dennis.evaluate('train_all')
+                preds_d_d, y_d_d, level_pred_d_d, max_level_preds_d_d, min_level_preds_d_d, avg_pixls = sgd_dennis.evaluate('val_all', subsamples, True)
             elif learn_mode == 'category':
                 mse,ae, mse_non_zero = sgd_dennis.evaluate('val_cat')
                 mse_tr,ae_tr, mse_non_zero_tr = sgd_dennis.evaluate('train_cat')
