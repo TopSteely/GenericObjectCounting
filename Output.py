@@ -188,6 +188,8 @@ class Output:
                 plt.savefig(self.best_path%(self.category,img_nr,lvl,al_i))
                 plt.clf()
                 im_cut = avg_pixls[img_nr][lvl]
+                print im_cut[0:5]
+                print np.unique(im_cut)
                 #tmp = plt.cm.jet(im_cut)
                 #conv_temp = rgb2gray(tmp)
                 #print 'max: ', np.max(conv_temp)
