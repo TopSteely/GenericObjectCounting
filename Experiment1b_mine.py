@@ -21,11 +21,11 @@ def main():
 
     pred_mode = 'mean'
 
-    debug = True
+    debug = False
 
     batch_size = 5
 
-    epochs = 3
+    epochs = 5
     print epochs
 
     subsamples = 500
