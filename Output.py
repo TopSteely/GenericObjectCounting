@@ -188,7 +188,7 @@ class Output:
                 plt.savefig(self.best_path%(self.category,img_nr,lvl,al_i))
                 plt.clf()
 
-                fig, ax = plt.subplots(1, 1)
+                ax = plt.gca()
                 ax.imshow(im)
                 #Use base cmap to create transparent
                 mycmap = transparent_cmap(plt.cm.Reds)
