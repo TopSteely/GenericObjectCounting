@@ -363,12 +363,12 @@ class SGD:
         te_loss_temp = np.zeros(self.prune_tree_levels+1)
         mse_te_temp = 0.0
         if instances == 'all':
-            training_ims = self.training_numbers[0:to]
-            validation_ims = self.val_numbers[0:to]
+            training_ims = self.load.training_numbers[0:to]
+            validation_ims = self.load.val_numbers[0:to]
         elif instances == 'category':
             if self.n_features==1:
-                training_ims=self.trainingdata
-                validation_ims=self.valdata
+                training_ims=self.load.trainingdata
+                validation_ims=self.load.valdata
             else:
                 training_ims = self.load.category_train[0:to]
                 validation_ims = self.load.category_val[0:to]
