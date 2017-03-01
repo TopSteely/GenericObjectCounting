@@ -19,7 +19,7 @@ def main():
 
     learn_mode = 'all'#category_levels
 
-    pred_mode = 'mean'
+    pred_mode = 'clipped'
 
     debug = False
 
