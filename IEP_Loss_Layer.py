@@ -1,4 +1,6 @@
 import caffe
+#https://deepsense.io/region-of-interest-pooling-explained/
+#i think fast and faster r-cnn make no sense
 
 
 class IEP_Loss_Layer(caffe.Layer):
