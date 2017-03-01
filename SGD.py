@@ -79,6 +79,10 @@ class SGD:
             self.method = self.learn_cons_pos
             self.loss = self.loss_cons_pos
             self.predict = self.predict_mean
+        elif mode == 'clipped':
+            self.method = self.learn_clipped
+            self.loss = self.loss_clipped
+            self.predict = self.predict_mean_clipped
         else:
             print 'no method chosen'
             exit()
@@ -159,6 +163,10 @@ class SGD:
         level_preds, _ = self.predictor.get_iep_levels(img_data, {})
         return np.mean(np.array(level_preds) - img_data.y)**2 + self.alpha * math.sqrt(np.dot(self.w,self.w))
 
+    def loss_clipped(self, img_data):
+        level_preds, _ = self.predictor.get_iep_levels(img_data, {}, True)
+        return np.mean(np.array(level_preds) - img_data.y)**2 + self.alpha * math.sqrt(np.dot(self.w,self.w))
+
     def loss_multi(self, img_data):
         level_preds = []
         for lvl in range(self.prune_tree_levels):
@@ -206,6 +214,13 @@ class SGD:
     def predict_ind(self, img_data):
         level_preds, _ = self.predictor.get_iep_levels(img_data, {})
         return level_preds
+
+    def predict_clipped(self, img_data):
+        level_preds, _ = self.predictor.get_iep_levels(img_data, {}, True)
+        return level_preds
+
+    def predict_mean_clipped(self, img_data):
+        return np.mean(self.predict_clipped(img_data))
 
     def predict_multi(self, img_data):
         preds = []
@@ -533,6 +548,7 @@ class SGD:
         else:
             return 2 * np.mean(np.array(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels), axis=0) + 2 * self.alpha * self.w, functions
 
+
     #tested
     def learn_multi(self, img_data, functions):
         print 'multi'
@@ -633,3 +649,12 @@ class SGD:
             update += (level_update/len(level_fct))
 
         return 2 * update/len(fct) + 2 * self.alpha * self.w, fct
+
+
+    def learn_clipped(self, img_data, functions):
+        level_preds = self.predict_clipped(img_data)
+        iep_levels, _ = self.learner.get_iep_levels(img_data, functions)
+        if self.n_features == 1:
+            return 2 * np.mean(np.array(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels).reshape(-1,1), axis=0) + 2 * self.alpha * self.w, functions
+        else:
+            return 2 * np.mean(np.array(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels), axis=0) + 2 * self.alpha * self.w, functions

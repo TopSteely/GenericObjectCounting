@@ -14,7 +14,7 @@ class IEP:
             self.w = 1
         
     #returns the cardinality of the union of sets
-    def iep(self, Data, function, level):
+    def iep(self, Data, function, level, clip):
         X = Data.X
         sets = Data.levels[level]
         coords = Data.boxes
@@ -29,13 +29,22 @@ class IEP:
 #                print 'root: ', sets[0], (X[sets[0]]==0).sum(), self.w
 #            else:
 #                print 'root: ', sets[0], (X[sets[0]]==0).sum(), self.w.sum(), len(self.w)
-            return np.dot(self.w,X[sets[0]]), function
+            if clip:
+                return max(0,np.dot(self.w,X[sets[0]])), function
+            else:
+                return np.dot(self.w,X[sets[0]]), function
         elif function != []:
             for fun in function:
                 if '+' in fun[0]:
-                    iep += np.dot(self.w,X[fun[1]])
+                    if clip:
+                        iep += max(0,np.dot(self.w,X[fun[1]]))
+                    else:
+                        iep += np.dot(self.w,X[fun[1]])
                 elif '-' in fun[0]:
-                    iep -= np.dot(self.w,X[fun[1]])
+                    if clip:
+                        iep -= max(0,np.dot(self.w,X[fun[1]]))
+                    else:
+                        iep -= np.dot(self.w,X[fun[1]])
                 else:
                     print 'wrong symbol 0', fun[0]
                     exit()
@@ -86,11 +95,17 @@ class IEP:
                              exit()
                          if len(base)%2==1:
                             #print '+', X[ind]
-                            iep += np.dot(self.w,X[ind])
+                            if clip:
+                                iep += max(0,np.dot(self.w,X[ind]))
+                            else:
+                                iep += np.dot(self.w,X[ind])
                             function.append(['+',ind])
                          elif len(base)%2==0:
                             #print '-', X[ind]
-                            iep -=  np.dot(self.w,X[ind])
+                            if clip:
+                                iep -=  max(0,np.dot(self.w,X[ind]))
+                            else:
+                                iep -=  np.dot(self.w,X[ind])
                             function.append(['-',ind])
                       else:
                          print 'IEP: intersection not found', I
@@ -102,13 +117,13 @@ class IEP:
                                          islice(cnbrs, i + 1, None))))
             return iep, function
             
-    def get_iep_levels(self, Data, functions):
+    def get_iep_levels(self, Data, functions, clip=False):
         iep_levels = []
         for level in Data.levels:
             if level in functions:
-                iep, function = self.iep(Data, functions[level], level)
+                iep, function = self.iep(Data, functions[level], level, clip)
             else:
-                iep, function = self.iep(Data, [], level)
+                iep, function = self.iep(Data, [], level, clip)
                 functions[level] = function
             iep_levels.append(iep)
         return iep_levels, functions
