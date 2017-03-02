@@ -19,7 +19,7 @@ def main():
 
     learn_mode = 'all'#category_levels
 
-    pred_mode = 'abs'
+    pred_mode = 'abs_clipped'
 
     debug = False
 
@@ -28,7 +28,7 @@ def main():
     epochs = 4
     print epochs
 
-    subsamples = 500
+    subsamples = 2500
 
     feature_size = 4096
 
@@ -85,7 +85,7 @@ def main():
                 sgd_dennis = SGD.SGD('dennis', pred_mode, category, tree_level_size, batch_size, eta, gamma_i, al_i, feature_size)
                 sgd_dennis.set_scaler(scaler_dennis)
                 for epoch in range(epochs):
-                    print epoch,
+                    print epoch
                     #tr_l, te_l = sgd_dennis.learn('categories')
                     if debug:
                         tr_l, te_l, mse = sgd_dennis.learn(learn_mode, subsamples, debug)

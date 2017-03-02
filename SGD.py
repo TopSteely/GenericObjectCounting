@@ -83,6 +83,10 @@ class SGD:
             self.method = self.learn_clipped
             self.loss = self.loss_clipped
             self.predict = self.predict_mean_clipped
+        elif mode == 'abs_clipped':
+            self.loss = loss_abs_clipped
+            self.method = self.learn_abs_clipped
+            self.predict = self.predict_mean_clipped
         else:
             print 'no method chosen'
             exit()
@@ -156,6 +160,11 @@ class SGD:
 
     def loss_abs(self, img_data):
         level_preds, _ = self.predictor.get_iep_levels(img_data, {})
+        return np.mean(np.abs(np.array(level_preds) - img_data.y)) + self.alpha * math.sqrt(np.dot(self.w,self.w))
+
+
+    def loss_abs_clipped(self, img_data):
+        level_preds, _ = self.predictor.get_iep_levels(img_data, {}, True)
         return np.mean(np.abs(np.array(level_preds) - img_data.y)) + self.alpha * math.sqrt(np.dot(self.w,self.w))
 
         
@@ -373,24 +382,20 @@ class SGD:
             te_loss_temp += self.loss(img_data)
         return tra_loss_temp/len(self.load.category_train), te_loss_temp/len(self.load.category_val)
 
-    def loss_per_level_all(self, instances, to=-1):
+    def loss_per_level_all(self, batch):
         tra_loss_temp = np.zeros(self.prune_tree_levels+1)
         te_loss_temp = np.zeros(self.prune_tree_levels+1)
         mse_te_temp = 0.0
         if instances == 'all':
-            training_ims = self.load.training_numbers[0:to]
-            validation_ims = self.load.val_numbers[0:to]
+            validation_ims = self.load.val_numbers[0:200]
         elif instances == 'category':
             if self.n_features==1:
-                training_ims=self.load.trainingdata
                 validation_ims=self.load.valdata
             else:
-                training_ims = self.load.category_train[0:to]
-                validation_ims = self.load.category_val[0:to]
+                validation_ims = self.load.category_val[0:200]
         elif instances == 'category_levels':
-            training_ims = self.load.category_train_with_levels[0:to]
-            validation_ims = self.load.category_val_with_levels[0:to]
-        for img_nr in training_ims:
+            validation_ims = self.load.category_val_with_levels[0:200]
+        for img_nr in batch:
             if self.n_features == 1:
                 #img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features, True)
                 img_data = img_nr
@@ -424,7 +429,9 @@ class SGD:
             training_data = self.load.category_train_with_levels
         subset = training_data[:to]
         #random.shuffle(subset)
+        batch = []
         for i_img_nr, img_nr in enumerate(subset):
+            batch.append(img_nr)
             start = time.time()
             if self.dataset == 'blob':
                 img_data = self.blobtraindata[i_img_nr]
@@ -455,7 +462,8 @@ class SGD:
             if (i_img_nr + 1)%self.batch_size == 0:
                 self.update_self()
                 if debug:
-                    tr_loss, te_loss, mse = self.loss_per_level_all(instances, to)
+                    tr_loss, te_loss, mse = self.loss_per_level_all(batch)
+                    batch = []
                     train_losses = np.concatenate((train_losses,tr_loss.reshape(-1,1)), axis=1)
                     test_losses = np.concatenate((test_losses,te_loss.reshape(-1,1)), axis=1)
                     mses.append(mse)
@@ -463,7 +471,8 @@ class SGD:
             if self.version!='old':
                 self.update_self()
             if debug:
-                tr_loss, te_loss,mse = self.loss_per_level_all(instances, to)
+                tr_loss, te_loss,mse = self.loss_per_level_all(batch)
+                batch = []
                 train_losses = np.concatenate((train_losses,tr_loss.reshape(-1,1)), axis=1)
                 test_losses = np.concatenate((test_losses,te_loss.reshape(-1,1)), axis=1)
                 mses.append(mse)
@@ -658,3 +667,11 @@ class SGD:
             return 2 * np.mean(np.array(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels).reshape(-1,1), axis=0) + 2 * self.alpha * self.w, functions
         else:
             return 2 * np.mean(np.array(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels), axis=0) + 2 * self.alpha * self.w, functions
+
+    def learn_abs_clipped(self, img_data, functions):
+        level_preds = self.predict_clipped(img_data)
+        iep_levels, _ = self.learner.get_iep_levels(img_data, functions)
+        if self.n_features == 1:
+            return np.sum(np.sign(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels).reshape(-1,1), axis=0)/len(level_preds) + 2 * self.alpha * self.w, functions
+        else:
+            return np.sum(np.sign(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels), axis=0)/len(level_preds) + 2 * self.alpha * self.w, functions
