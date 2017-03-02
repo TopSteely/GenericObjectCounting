@@ -84,7 +84,7 @@ class SGD:
             self.loss = self.loss_clipped
             self.predict = self.predict_mean_clipped
         elif mode == 'abs_clipped':
-            self.loss = loss_abs_clipped
+            self.loss = self.loss_abs_clipped
             self.method = self.learn_abs_clipped
             self.predict = self.predict_mean_clipped
         else:
