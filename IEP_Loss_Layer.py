@@ -1,33 +1,46 @@
 import caffe
 #https://deepsense.io/region-of-interest-pooling-explained/
 #i think fast and faster r-cnn make no sense
-
+DEBUG = True
 
 class IEP_Loss_Layer(caffe.Layer):
-	#http://stackoverflow.com/questions/41344168/what-is-a-python-layer-in-caffe/41481539#41481539
+  #http://stackoverflow.com/questions/41344168/what-is-a-python-layer-in-caffe/41481539#41481539
   def setup(self, bottom, top):
-  	#This method is called once when caffe builds the net. This 
- 	#function should check that number of inputs (len(bottom)) 
- 	#and number of outputs (len(top)) is as expected
+  #This method is called once when caffe builds the net. This 
+  #function should check that number of inputs (len(bottom)) 
+  #and number of outputs (len(top)) is as expected
     pass
 
   def reshape(self, bottom, top):
-  	#This method is called whenever caffe reshapes the net. This 
-  	#function should allocate the outputs (each of the top blobs). 
-  	#The outputs' shape is usually related to the bottoms' shape.
+    #This method is called whenever caffe reshapes the net. This 
+    #function should allocate the outputs (each of the top blobs). 
+    #The outputs' shape is usually related to the bottoms' shape.
     pass
 
   def forward(self, bottom, top):
+    # Algorithm:
+    #
+    # for each region:
+      # for each level region is part of:
+        #iep_level+-
+
+    # bottom:
+    # im_info = bottom[0]
+
+    # top[0] = patches
+    # top[1] = level_functions
   	#Implementing the forward pass from bottom to top
+    if DEBUG:
+      print bottom[0].data[0]
     pass
 
   def backward(self, top, propagate_down, bottom):
-  	#This method implements the backpropagation, it propagates the 
-  	#gradients from top to bottom. propagate_down is a Boolean vector 
-  	#of len(bottom) indicating to which of the bottoms the gradient 
-  	#should be propagated
-  	if len(set)%2==0:
-  		self.diff += bottom
-  	else:
-  		self.diff += bottom
+    #This method implements the backpropagation, it propagates the 
+    #gradients from top to bottom. propagate_down is a Boolean vector 
+    #of len(bottom) indicating to which of the bottoms the gradient 
+    #should be propagated
+    if len(set)%2==0:
+      self.diff += bottom
+    else:
+      self.diff += bottom
     pass
