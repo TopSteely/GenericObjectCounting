@@ -41,6 +41,7 @@ class SGD:
         self.gamma = gamma
         self.alpha = alpha
         self.functions = {}
+        self.clipped = False
         if mode == 'max':
             self.method = self.learn_max
             self.loss = self.loss_max
@@ -83,10 +84,12 @@ class SGD:
             self.method = self.learn_clipped
             self.loss = self.loss_clipped
             self.predict = self.predict_mean_clipped
+            self.clipped = True
         elif mode == 'abs_clipped':
             self.loss = self.loss_abs_clipped
             self.method = self.learn_abs_clipped
             self.predict = self.predict_mean_clipped
+            self.clipped = True
         else:
             print 'no method chosen'
             exit()
@@ -187,7 +190,7 @@ class SGD:
             level_preds.append(level_pred)
         return np.mean(np.array(level_preds) - img_data.y)**2 + self.alpha * math.sqrt(np.dot(self.w,self.w))
 
-    def loss_per_level(self, img_data):
+    def loss_per_level(self, img_data, clipped):
         if self.version == 'multi':
             level_preds = []
             for lvl in range(self.prune_tree_levels):
@@ -198,7 +201,7 @@ class SGD:
                     level_pred, _ = predictor.iep(img_data, [], lvl)
                 level_preds.append(level_pred)
         else:
-            level_preds, _ = self.predictor.get_iep_levels(img_data, {})
+            level_preds, _ = self.predictor.get_iep_levels(img_data, {}, clipped)
             # for images with less levels than prune_tree_levels, just append the last level
             if len(level_preds) < self.prune_tree_levels:
                 for missing in range(self.prune_tree_levels - len(level_preds)):
@@ -231,7 +234,9 @@ class SGD:
         return level_preds, functions
 
     def predict_mean_clipped(self, img_data):
-        return np.mean(self.predict_clipped(img_data))
+        print 'predict mean clipped: ', self.predict_clipped(img_data)
+        preds, _ = self.predict_clipped(img_data)
+        return np.mean(preds)
 
     def predict_multi(self, img_data):
         preds = []
@@ -384,7 +389,7 @@ class SGD:
             te_loss_temp += self.loss(img_data)
         return tra_loss_temp/len(self.load.category_train), te_loss_temp/len(self.load.category_val)
 
-    def loss_per_level_all(self, batch, instances):
+    def loss_per_level_all(self, batch, instances, clipped):
         tra_loss_temp = np.zeros(self.prune_tree_levels+1)
         te_loss_temp = np.zeros(self.prune_tree_levels+1)
         mse_te_temp = 0.0
@@ -403,7 +408,7 @@ class SGD:
                 img_data = img_nr
             else:
                 img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
-            tra_loss_temp[0:self.prune_tree_levels] += self.loss_per_level(img_data).reshape(self.prune_tree_levels,)
+            tra_loss_temp[0:self.prune_tree_levels] += self.loss_per_level(img_data, self.clipped).reshape(self.prune_tree_levels,)
             tra_loss_temp[self.prune_tree_levels] += self.loss(img_data)
         for img_nr in validation_ims:
             if self.n_features == 1:
@@ -411,7 +416,7 @@ class SGD:
                 img_data = img_nr
             else:
                 img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
-            te_loss_temp[0:self.prune_tree_levels] += self.loss_per_level(img_data).reshape(self.prune_tree_levels,)
+            te_loss_temp[0:self.prune_tree_levels] += self.loss_per_level(img_data, self.clipped).reshape(self.prune_tree_levels,)
             te_loss_temp[self.prune_tree_levels] += self.loss(img_data)
             mse_te_temp += (self.predict(img_data) - img_data.y)**2
         return tra_loss_temp/len(self.load.category_train), te_loss_temp/len(self.load.category_val), mse_te_temp/len(self.load.category_val)
@@ -459,7 +464,9 @@ class SGD:
                         self.w_update += upd
                     else:
                         self.w_update += upd
-                    self.functions[img_nr] = fct
+                    print 'function: ', fct
+                    if fct != []:
+                        self.functions[img_nr] = fct
             self.samples_seen += 1
             if (i_img_nr + 1)%self.batch_size == 0:
                 self.update_self()
@@ -681,6 +688,6 @@ class SGD:
         raw_input()
         iep_levels, _ = self.learner.get_iep_levels(img_data, functions)
         if self.n_features == 1:
-            return np.sum(np.sign(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels).reshape(-1,1), axis=0)/len(level_preds) + 2 * self.alpha * self.w, functions
+            return np.sum(np.sign(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels).reshape(-1,1), axis=0)/len(level_preds) + 2 * self.alpha * self.w, []
         else:
-            return np.sum(np.sign(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels), axis=0)/len(level_preds) + 2 * self.alpha * self.w, functions
+            return np.sum(np.sign(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels), axis=0)/len(level_preds) + 2 * self.alpha * self.w, []
