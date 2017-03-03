@@ -470,7 +470,7 @@ class SGD:
                 self.update_self()
                 if debug:
                     print len(batch)
-                    tr_loss, te_loss, mse = self.loss_per_level_all(batch, instances, self.clipped)
+                    #tr_loss, te_loss, mse = self.loss_per_level_all(batch, instances, self.clipped)
                     batch = []
                     train_losses = np.concatenate((train_losses,tr_loss.reshape(-1,1)), axis=1)
                     test_losses = np.concatenate((test_losses,te_loss.reshape(-1,1)), axis=1)
