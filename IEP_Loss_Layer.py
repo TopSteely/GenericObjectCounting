@@ -9,7 +9,6 @@ class IEP_Loss_Layer(caffe.Layer):
   #This method is called once when caffe builds the net. This 
   #function should check that number of inputs (len(bottom)) 
   #and number of outputs (len(top)) is as expected
-    pass
 
   def reshape(self, bottom, top):
     #This method is called whenever caffe reshapes the net. This 
@@ -20,19 +19,32 @@ class IEP_Loss_Layer(caffe.Layer):
   def forward(self, bottom, top):
     # Algorithm:
     #
-    # for each region:
-      # for each level region is part of:
-        #iep_level+-
+    # for each level:
+      # 
 
     # bottom:
-    # im_info = bottom[0]
+    # patches = bottom[0]
+    # level_functions = bottom[1]
+    # label = bottom[2]
+    iep = np.zeros(20) #one level iep for every class
+    patches_predictions = bottom[0].data
+    level_functions = bottom[1].data
+    labels = bottom[2] # shape 20 x 1
+    for level_funtion in level_functions:
+      level_iep = np.zeros(20) #one level iep for every class
+      for term in level_funtion:
+        if term[0] == '+':
+          level_iep += patches_predictions[term[0]]
+        else:
+          level_iep -= patches_predictions[term[0]]
+      iep += level_iep
+    top[0].data[...] = np.mean(iep - labels)
 
-    # top[0] = patches
-    # top[1] = level_functions
   	#Implementing the forward pass from bottom to top
     if DEBUG:
       print bottom[0].data[0]
-    pass
+      print bottom[1].data[0]
+      print top[0].data
 
   def backward(self, top, propagate_down, bottom):
     #This method implements the backpropagation, it propagates the 
