@@ -393,14 +393,14 @@ class SGD:
         te_loss_temp = np.zeros(self.prune_tree_levels+1)
         mse_te_temp = 0.0
         if instances == 'all':
-            validation_ims = self.load.val_numbers[0:200]
+            validation_ims = self.load.val_numbers[0:500]
         elif instances == 'category':
             if self.n_features==1:
                 validation_ims=self.load.valdata
             else:
-                validation_ims = self.load.category_val[0:200]
+                validation_ims = self.load.category_val[0:500]
         elif instances == 'category_levels':
-            validation_ims = self.load.category_val_with_levels[0:200]
+            validation_ims = self.load.category_val_with_levels[0:500]
         for img_nr in batch:
             if self.n_features == 1:
                 #img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features, True)
@@ -418,7 +418,7 @@ class SGD:
             te_loss_temp[0:self.prune_tree_levels] += self.loss_per_level(img_data, self.clipped).reshape(self.prune_tree_levels,)
             te_loss_temp[self.prune_tree_levels] += self.loss(img_data)
             mse_te_temp += (self.predict(img_data) - img_data.y)**2
-        return tra_loss_temp/len(batch), te_loss_temp/len(200), mse_te_temp/len(200)
+        return tra_loss_temp/len(batch), te_loss_temp/500, mse_te_temp/500
         
     def learn(self, instances='all', to=-1, debug=False):
         train_losses = np.array([], dtype=np.int64).reshape(self.prune_tree_levels+1,0)
@@ -470,16 +470,15 @@ class SGD:
                 self.update_self()
                 if debug:
                     print len(batch)
-                    #tr_loss, te_loss, mse = self.loss_per_level_all(batch, instances, self.clipped)
+                    tr_loss, te_loss, mse = self.loss_per_level_all(batch, instances, self.clipped)
                     batch = []
-                    #train_losses = np.concatenate((train_losses,tr_loss.reshape(-1,1)), axis=1)
-                    #test_losses = np.concatenate((test_losses,te_loss.reshape(-1,1)), axis=1)
-                    #mses.append(mse)
+                    train_losses = np.concatenate((train_losses,tr_loss.reshape(-1,1)), axis=1)
+                    test_losses = np.concatenate((test_losses,te_loss.reshape(-1,1)), axis=1)
+                    mses.append(mse)
         if (i_img_nr + 1)%self.batch_size != 0:
             if self.version!='old':
                 self.update_self()
             if debug:
-                print i_img_nr + 1, (i_img_nr + 1)%self.batch_size, len(batch)
                 tr_loss, te_loss,mse = self.loss_per_level_all(batch, instances, self.clipped)
                 batch = []
                 train_losses = np.concatenate((train_losses,tr_loss.reshape(-1,1)), axis=1)
