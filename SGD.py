@@ -474,7 +474,7 @@ class SGD:
                     batch = []
                     #train_losses = np.concatenate((train_losses,tr_loss.reshape(-1,1)), axis=1)
                     #test_losses = np.concatenate((test_losses,te_loss.reshape(-1,1)), axis=1)
-                    mses.append(mse)
+                    #mses.append(mse)
         if (i_img_nr + 1)%self.batch_size != 0:
             if self.version!='old':
                 self.update_self()
