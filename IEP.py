@@ -34,6 +34,9 @@ class IEP:
             else:
                 return np.dot(self.w,X[sets[0]]), function
         elif function != []:
+            if clip:
+                print 'never go here when clipped!!!!'
+                exit()
             for fun in function:
                 if '+' in fun[0]:
                     if clip:
@@ -97,16 +100,20 @@ class IEP:
                             #print '+', X[ind]
                             if clip:
                                 iep += max(0,np.dot(self.w,X[ind]))
+                                if np.dot(self.w,X[ind]) > 0:
+                                    function.append(['+',ind])
                             else:
                                 iep += np.dot(self.w,X[ind])
-                            function.append(['+',ind])
+                                function.append(['+',ind])
                          elif len(base)%2==0:
                             #print '-', X[ind]
                             if clip:
                                 iep -=  max(0,np.dot(self.w,X[ind]))
+                                if np.dot(self.w,X[ind]) > 0:
+                                    function.append(['-',ind])
                             else:
                                 iep -=  np.dot(self.w,X[ind])
-                            function.append(['-',ind])
+                                function.append(['-',ind])
                       else:
                          print 'IEP: intersection not found', I
                          exit()

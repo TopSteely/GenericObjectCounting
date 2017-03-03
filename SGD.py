@@ -30,7 +30,7 @@ class SGD:
         if self.n_features == 1:
             self.trainingdata = traindata
             self.valdata = valdata
-        self.w = np.zeros(self.n_features)#0.1 * np.random.rand(self.n_features)
+        self.w = 0.01 * np.ones(self.n_features)#0.1 * np.random.rand(self.n_features)
         self.predictor = IEP.IEP(self.w, 'prediction')
         self.w_update = np.zeros(self.n_features)
         self.learner = IEP.IEP(1, 'learning')
@@ -225,8 +225,10 @@ class SGD:
         return level_preds
 
     def predict_clipped(self, img_data):
-        level_preds, _ = self.predictor.get_iep_levels(img_data, {}, True)
-        return level_preds
+        # also returns the functions, because we need to include only patches that
+        # haven't been predicted zeros in gradient
+        level_preds, functions = self.predictor.get_iep_levels(img_data, {}, True)
+        return level_preds, functions
 
     def predict_mean_clipped(self, img_data):
         return np.mean(self.predict_clipped(img_data))
@@ -661,6 +663,7 @@ class SGD:
 
 
     def learn_clipped(self, img_data, functions):
+        # just predict clipped is not correct, also have to not use x_i in gradient if prediction is negative
         level_preds = self.predict_clipped(img_data)
         iep_levels, _ = self.learner.get_iep_levels(img_data, functions)
         if self.n_features == 1:
@@ -669,7 +672,13 @@ class SGD:
             return 2 * np.mean(np.array(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels), axis=0) + 2 * self.alpha * self.w, functions
 
     def learn_abs_clipped(self, img_data, functions):
-        level_preds = self.predict_clipped(img_data)
+        print functions
+        # just predict clipped is not correct, also have to not use x_i in gradient if prediction is negative
+        level_preds, functions = self.predict_clipped(img_data)
+        print img_data.levels
+        print functions
+        print level_preds
+        raw_input()
         iep_levels, _ = self.learner.get_iep_levels(img_data, functions)
         if self.n_features == 1:
             return np.sum(np.sign(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels).reshape(-1,1), axis=0)/len(level_preds) + 2 * self.alpha * self.w, functions
