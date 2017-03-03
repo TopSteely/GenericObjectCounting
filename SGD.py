@@ -464,14 +464,13 @@ class SGD:
                         self.w_update += upd
                     else:
                         self.w_update += upd
-                    print 'function: ', fct
                     if fct != []:
                         self.functions[img_nr] = fct
             self.samples_seen += 1
             if (i_img_nr + 1)%self.batch_size == 0:
                 self.update_self()
                 if debug:
-                    tr_loss, te_loss, mse = self.loss_per_level_all(batch, instances)
+                    tr_loss, te_loss, mse = self.loss_per_level_all(batch, instances, self.clipped)
                     batch = []
                     train_losses = np.concatenate((train_losses,tr_loss.reshape(-1,1)), axis=1)
                     test_losses = np.concatenate((test_losses,te_loss.reshape(-1,1)), axis=1)
@@ -480,7 +479,7 @@ class SGD:
             if self.version!='old':
                 self.update_self()
             if debug:
-                tr_loss, te_loss,mse = self.loss_per_level_all(batch, instances)
+                tr_loss, te_loss,mse = self.loss_per_level_all(batch, instances, self.clipped)
                 batch = []
                 train_losses = np.concatenate((train_losses,tr_loss.reshape(-1,1)), axis=1)
                 test_losses = np.concatenate((test_losses,te_loss.reshape(-1,1)), axis=1)
