@@ -30,7 +30,7 @@ class SGD:
         if self.n_features == 1:
             self.trainingdata = traindata
             self.valdata = valdata
-        self.w = 0.01 * np.ones(self.n_features)#0.1 * np.random.rand(self.n_features)
+        self.w = 0.001 * np.ones(self.n_features)#0.1 * np.random.rand(self.n_features)
         self.predictor = IEP.IEP(self.w, 'prediction')
         self.w_update = np.zeros(self.n_features)
         self.learner = IEP.IEP(1, 'learning')

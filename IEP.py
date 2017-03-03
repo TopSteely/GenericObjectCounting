@@ -24,11 +24,12 @@ class IEP:
             iep = 0
         if len(sets) == 1:
             if function == []:
-                function.append(['+',sets[0]])
-#            if np.all(self.w == 1):
-#                print 'root: ', sets[0], (X[sets[0]]==0).sum(), self.w
-#            else:
-#                print 'root: ', sets[0], (X[sets[0]]==0).sum(), self.w.sum(), len(self.w)
+                if clip:
+                    if np.dot(self.w,X[sets[0]]) > 0:
+                        function.append(['+',sets[0]])
+                else:
+                    function.append(['+',sets[0]])
+
             if clip:
                 return max(0,np.dot(self.w,X[sets[0]])), function
             else:
