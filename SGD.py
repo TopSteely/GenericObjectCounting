@@ -234,7 +234,6 @@ class SGD:
         return level_preds, functions
 
     def predict_mean_clipped(self, img_data):
-        print 'predict mean clipped: ', self.predict_clipped(img_data)
         preds, _ = self.predict_clipped(img_data)
         return np.mean(preds)
 
@@ -419,7 +418,7 @@ class SGD:
             te_loss_temp[0:self.prune_tree_levels] += self.loss_per_level(img_data, self.clipped).reshape(self.prune_tree_levels,)
             te_loss_temp[self.prune_tree_levels] += self.loss(img_data)
             mse_te_temp += (self.predict(img_data) - img_data.y)**2
-        return tra_loss_temp/len(self.load.category_train), te_loss_temp/len(self.load.category_val), mse_te_temp/len(self.load.category_val)
+        return tra_loss_temp/len(batch), te_loss_temp/len(200), mse_te_temp/len(200)
         
     def learn(self, instances='all', to=-1, debug=False):
         train_losses = np.array([], dtype=np.int64).reshape(self.prune_tree_levels+1,0)
