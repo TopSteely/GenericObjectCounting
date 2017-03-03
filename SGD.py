@@ -393,14 +393,14 @@ class SGD:
         te_loss_temp = np.zeros(self.prune_tree_levels+1)
         mse_te_temp = 0.0
         if instances == 'all':
-            validation_ims = self.load.val_numbers[0:500]
+            validation_ims = self.load.val_numbers[0:200]
         elif instances == 'category':
             if self.n_features==1:
                 validation_ims=self.load.valdata
             else:
-                validation_ims = self.load.category_val[0:500]
+                validation_ims = self.load.category_val[0:200]
         elif instances == 'category_levels':
-            validation_ims = self.load.category_val_with_levels[0:500]
+            validation_ims = self.load.category_val_with_levels[0:200]
         for img_nr in batch:
             if self.n_features == 1:
                 #img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features, True)
