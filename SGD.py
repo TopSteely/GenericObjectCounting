@@ -384,7 +384,7 @@ class SGD:
             te_loss_temp += self.loss(img_data)
         return tra_loss_temp/len(self.load.category_train), te_loss_temp/len(self.load.category_val)
 
-    def loss_per_level_all(self, batch):
+    def loss_per_level_all(self, batch, instances):
         tra_loss_temp = np.zeros(self.prune_tree_levels+1)
         te_loss_temp = np.zeros(self.prune_tree_levels+1)
         mse_te_temp = 0.0
@@ -464,7 +464,7 @@ class SGD:
             if (i_img_nr + 1)%self.batch_size == 0:
                 self.update_self()
                 if debug:
-                    tr_loss, te_loss, mse = self.loss_per_level_all(batch)
+                    tr_loss, te_loss, mse = self.loss_per_level_all(batch, instances)
                     batch = []
                     train_losses = np.concatenate((train_losses,tr_loss.reshape(-1,1)), axis=1)
                     test_losses = np.concatenate((test_losses,te_loss.reshape(-1,1)), axis=1)
@@ -473,7 +473,7 @@ class SGD:
             if self.version!='old':
                 self.update_self()
             if debug:
-                tr_loss, te_loss,mse = self.loss_per_level_all(batch)
+                tr_loss, te_loss,mse = self.loss_per_level_all(batch, instances)
                 batch = []
                 train_losses = np.concatenate((train_losses,tr_loss.reshape(-1,1)), axis=1)
                 test_losses = np.concatenate((test_losses,te_loss.reshape(-1,1)), axis=1)
