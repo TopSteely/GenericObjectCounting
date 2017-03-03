@@ -469,6 +469,7 @@ class SGD:
             if (i_img_nr + 1)%self.batch_size == 0:
                 self.update_self()
                 if debug:
+                    print len(batch)
                     tr_loss, te_loss, mse = self.loss_per_level_all(batch, instances, self.clipped)
                     batch = []
                     train_losses = np.concatenate((train_losses,tr_loss.reshape(-1,1)), axis=1)
@@ -478,6 +479,7 @@ class SGD:
             if self.version!='old':
                 self.update_self()
             if debug:
+                print i_img_nr + 1, (i_img_nr + 1)%self.batch_size, len(batch)
                 tr_loss, te_loss,mse = self.loss_per_level_all(batch, instances, self.clipped)
                 batch = []
                 train_losses = np.concatenate((train_losses,tr_loss.reshape(-1,1)), axis=1)
@@ -669,15 +671,14 @@ class SGD:
 
     def learn_clipped(self, img_data, functions):
         # just predict clipped is not correct, also have to not use x_i in gradient if prediction is negative
-        level_preds = self.predict_clipped(img_data)
+        level_preds, functions = self.predict_clipped(img_data)
         iep_levels, _ = self.learner.get_iep_levels(img_data, functions)
         if self.n_features == 1:
-            return 2 * np.mean(np.array(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels).reshape(-1,1), axis=0) + 2 * self.alpha * self.w, functions
+            return 2 * np.mean(np.array(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels).reshape(-1,1), axis=0) + 2 * self.alpha * self.w, []
         else:
-            return 2 * np.mean(np.array(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels), axis=0) + 2 * self.alpha * self.w, functions
+            return 2 * np.mean(np.array(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels), axis=0) + 2 * self.alpha * self.w, []
 
     def learn_abs_clipped(self, img_data, functions):
-        print functions
         # just predict clipped is not correct, also have to not use x_i in gradient if prediction is negative
         level_preds, functions = self.predict_clipped(img_data)
         iep_levels, _ = self.learner.get_iep_levels(img_data, functions)

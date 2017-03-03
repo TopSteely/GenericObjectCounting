@@ -21,14 +21,14 @@ def main():
 
     pred_mode = 'clipped'
 
-    debug = False
+    debug = True
 
     batch_size = 5
 
-    epochs = 3
+    epochs = 4
     print epochs
 
-    subsamples = 500
+    subsamples = 2500
 
     feature_size = 4096
 
