@@ -129,7 +129,6 @@ class IEP:
         iep_levels = []
         for level in Data.levels:
             if level in functions:
-                print Data.img_nr, level, functions[level]
                 iep, function = self.iep(Data, functions[level], level, clip)
             else:
                 iep, function = self.iep(Data, [], level, clip)
