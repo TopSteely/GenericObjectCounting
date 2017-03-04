@@ -128,7 +128,6 @@ class IEP:
     def get_iep_levels(self, Data, functions, clip=False):
         iep_levels = []
         for level in Data.levels:
-            print functions, level, level in functions
             if level in functions:
                 # if clip there might be all predictions < 0 and the derivative is just y
                 if functions[level] == []:
