@@ -680,7 +680,7 @@ class SGD:
         # just predict clipped is not correct, also have to not use x_i in gradient if prediction is negative
         level_preds, functions = self.predict_clipped(img_data)
         print functions
-        iep_levels, _ = self.learner.get_iep_levels(img_data, functions)
+        iep_levels, _ = self.learner.get_iep_levels(img_data, functions, True)
         print iep_levels[:][:5]
         raw_input()
 
