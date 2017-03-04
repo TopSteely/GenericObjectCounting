@@ -681,7 +681,7 @@ class SGD:
         level_preds, functions = self.predict_clipped(img_data)
         print functions
         iep_levels, _ = self.learner.get_iep_levels(img_data, functions)
-        print iep_levels
+        print iep_levels[:5]
         raw_input()
 
         if self.n_features == 1:

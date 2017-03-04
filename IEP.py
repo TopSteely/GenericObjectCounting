@@ -128,10 +128,11 @@ class IEP:
     def get_iep_levels(self, Data, functions, clip=False):
         iep_levels = []
         for level in Data.levels:
-            print 'functions: ', functions
             if level in functions:
-                print level, level in functions, functions[level], clip
-                iep, function = self.iep(Data, functions[level], level, clip)
+                if functions[level] = [] and clip:
+                    iep = np.ones(len(w))
+                else:
+                    iep, function = self.iep(Data, functions[level], level, clip)
             else:
                 iep, function = self.iep(Data, [], level, clip)
                 functions[level] = function
