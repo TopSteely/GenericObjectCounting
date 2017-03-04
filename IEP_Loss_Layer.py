@@ -17,11 +17,6 @@ class IEP_Loss_Layer(caffe.Layer):
     pass
 
   def forward(self, bottom, top):
-    # Algorithm:
-    #
-    # for each level:
-      # 
-
     # bottom:
     # patches = bottom[0]
     # level_functions = bottom[1]
@@ -29,13 +24,13 @@ class IEP_Loss_Layer(caffe.Layer):
     score = np.zeros(20) #one level iep for every class
     predictions = bottom[0].data
     level_functions = bottom[1].data
-    labels = bottom[2] # shape 20 x 1
+    labels = bottom[2].data # shape 20 x 1
     for level_funtion in level_functions:
       level_score = np.zeros(20) #one level iep for every class
       for term in level_funtion:
         if term[0] == '+':
           level_score += predictions[term[1]]
-        else:
+        elif term[0] == '-':
           level_score -= predictions[term[1]]
       score += level_score
     top[0].data[...] = np.mean(score - labels)
@@ -46,6 +41,7 @@ class IEP_Loss_Layer(caffe.Layer):
     #of len(bottom) indicating to which of the bottoms the gradient 
     #should be propagated
     diff = np.zeros(feature_size)
+    labels = bottom[2].data
     for level_funtion in level_functions:
       level_diff = np.zeros(feature_size)
       for term in level_funtion:
