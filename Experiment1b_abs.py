@@ -21,20 +21,20 @@ def main():
 
     pred_mode = 'abs_clipped'
 
-    debug = False
+    debug = True
 
     batch_size = 5
 
     epochs = 4
     print epochs
 
-    subsamples = 2500
+    subsamples = 50
 
     feature_size = 4096
 
     eta = math.pow(10,-5)
 
-    for tree_level_size in range(1,7):
+    for tree_level_size in range(4,7):
         #initialize
         print 'initializing', tree_level_size
         #sgd = SGD.SGD('max', category, tree_level_size, batch_size, math.pow(10,-4), 0.003, math.pow(10,-5))
@@ -97,16 +97,16 @@ def main():
                 if debug:
                     output_dennis.plot_train_val_loss(training_loss, validation_loss, mses, eta, al_i)
             if learn_mode == 'all':
-                mse,ae, mse_non_zero = sgd_dennis.evaluate('val_all')
-                mse_tr,ae_tr, mse_non_zero_tr = sgd_dennis.evaluate('train_all')
+                mse,ae, mse_non_zero = sgd_dennis.evaluate('val_all', subsamples)
+                mse_tr,ae_tr, mse_non_zero_tr = sgd_dennis.evaluate('train_all', subsamples)
                 preds_d_d, y_d_d, level_pred_d_d, max_level_preds_d_d, min_level_preds_d_d, avg_pixls = sgd_dennis.evaluate('val_all', subsamples, True)
             elif learn_mode == 'category':
-                mse,ae, mse_non_zero = sgd_dennis.evaluate('val_cat')
-                mse_tr,ae_tr, mse_non_zero_tr = sgd_dennis.evaluate('train_cat')
+                mse,ae, mse_non_zero = sgd_dennis.evaluate('val_cat', subsamples)
+                mse_tr,ae_tr, mse_non_zero_tr = sgd_dennis.evaluate('train_cat', subsamples)
                 preds_d_d, y_d_d, level_pred_d_d, max_level_preds_d_d, min_level_preds_d_d, avg_pixls = sgd_dennis.evaluate('val_cat', subsamples, True)
             elif learn_mode == 'category_levels':
-                mse,ae, mse_non_zero = sgd_dennis.evaluate('val_category_levels')
-                mse_tr,ae_tr, mse_non_zero_tr = sgd_dennis.evaluate('train_category_levels')
+                mse,ae, mse_non_zero = sgd_dennis.evaluate('val_category_levels', subsamples)
+                mse_tr,ae_tr, mse_non_zero_tr = sgd_dennis.evaluate('train_category_levels', subsamples)
                 preds_d_d, y_d_d, level_pred_d_d, max_level_preds_d_d, min_level_preds_d_d, avg_pixls = sgd_dennis.evaluate('val_category_levels', subsamples, True)
 
             print "Eval loss train: ", al_i, ae_tr
