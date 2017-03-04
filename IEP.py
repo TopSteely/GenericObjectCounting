@@ -129,7 +129,8 @@ class IEP:
         iep_levels = []
         for level in Data.levels:
             if level in functions:
-                if functions[level] = [] and clip:
+                # if clip there might be all predictions < 0 and the derivative is just y
+                if functions[level] == [] and clip:
                     iep = np.ones(len(w))
                 else:
                     iep, function = self.iep(Data, functions[level], level, clip)
