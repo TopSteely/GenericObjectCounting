@@ -538,6 +538,7 @@ class SGD:
         
     def update_self(self):
         self.updates_all = [np.mean(self.w_update)]
+        print self.w_update
         if self.version == 'multi':
             self.w_multi -= (self.eta * self.w_update)
             self.w_update = np.zeros((self.prune_tree_levels,self.n_features))

@@ -3,7 +3,7 @@ import caffe
 #i think fast and faster r-cnn make no sense
 DEBUG = True
 
-class Loss_Layer(caffe.Layer):
+class IepLayer(caffe.Layer):
   #http://stackoverflow.com/questions/41344168/what-is-a-python-layer-in-caffe/41481539#41481539
   def setup(self, bottom, top):
     #This method is called once when caffe builds the net. This 
@@ -31,9 +31,11 @@ class Loss_Layer(caffe.Layer):
     # level_functions = bottom[1]
     # label = bottom[2]
     iep = np.zeros(20) #one level iep for every class
-    patches_predictions = bottom[0].data
-    level_functions = bottom[1].data
-    labels = bottom[2] # shape 20 x 1
+    patches_predictions = bottom[1].data
+    labels = bottom[0].data # shape 20 x 1
+    print patches_predictions[0]
+    print labels
+    raw_input()
     for level_funtion in level_functions:
       level_iep = np.zeros(20) #one level iep for every class
       for term in level_funtion:
