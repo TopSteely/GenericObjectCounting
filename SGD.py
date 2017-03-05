@@ -686,6 +686,6 @@ class SGD:
         print img_data.y, level_preds
 
         if self.n_features == 1:
-            return np.sum(np.sign(-np.array(level_preds) + img_data.y).reshape(-1,1) * np.array(iep_levels).reshape(-1,1), axis=0)/len(level_preds) + 2 * self.alpha * self.w, []
+            return np.sum(np.sign(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels).reshape(-1,1), axis=0)/len(level_preds) + 2 * self.alpha * self.w, []
         else:
-            return np.sum(np.sign(-np.array(level_preds) + img_data.y).reshape(-1,1) * np.array(iep_levels), axis=0)/len(level_preds) + 2 * self.alpha * self.w, []
+            return np.sum(np.sign(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels), axis=0)/len(level_preds) + 2 * self.alpha * self.w, []
