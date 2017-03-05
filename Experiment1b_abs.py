@@ -23,12 +23,12 @@ def main():
 
     debug = False
 
-    batch_size = 15
+    batch_size = 1
 
     epochs = 4
     print epochs
 
-    subsamples = 75
+    subsamples = 15
 
     feature_size = 4096
 
