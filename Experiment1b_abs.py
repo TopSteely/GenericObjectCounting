@@ -19,7 +19,7 @@ def main():
 
     learn_mode = 'all'#category_levels
 
-    pred_mode = 'abs_clipped'
+    pred_mode = 'abs'
 
     debug = True
 
