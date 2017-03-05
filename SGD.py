@@ -539,6 +539,7 @@ class SGD:
     def update_self(self):
         self.updates_all = [np.mean(self.w_update)]
         print self.w_update
+        print np.where(self.w_update>0)
         if self.version == 'multi':
             self.w_multi -= (self.eta * self.w_update)
             self.w_update = np.zeros((self.prune_tree_levels,self.n_features))
@@ -683,6 +684,7 @@ class SGD:
         level_preds, functions = self.predict_clipped(img_data)
         iep_levels, _ = self.learner.get_iep_levels(img_data, functions)
         print img_data.y
+        print level_preds
 
         if self.n_features == 1:
             return np.sum(np.sign(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels).reshape(-1,1), axis=0)/len(level_preds) + 2 * self.alpha * self.w, []
