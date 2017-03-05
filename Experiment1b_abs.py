@@ -21,7 +21,7 @@ def main():
 
     pred_mode = 'abs_clipped'
 
-    debug = True
+    debug = False
 
     batch_size = 15
 
