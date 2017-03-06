@@ -51,7 +51,7 @@ def main():
         im_dict['boxes'] = img_data.boxes
         im_dict['labels'] = load_dennis.get_all_labels(img_nr)
         print im_dict['labels']
-        im_dict['functions'] = img_data.self.level_functions
+        im_dict['functions'] = img_data.level_functions
         print im_dict['functions']
         raw_input()
         train_mat.append(im_dict)
