@@ -120,6 +120,7 @@ class Data:
         print self.boxes.shape, len(temp), len(self.box_levels)
         self.box_levels.append(temp)
         print len(self.box_levels)
+        raw_input()
         #self.level_functions = get_level_functions(self.levels,self.boxes, prune_tree_levels)
 
         
