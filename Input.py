@@ -53,7 +53,7 @@ class Input:
 
     def get_all_labels(self, img_nr):
         cat = self.category
-        all_labels = [0]
+        all_labels = [0.0]
         for class_ in ['aeroplane', 'bicycle', 'bird', 'boat',
            'bottle', 'bus', 'car', 'cat', 'chair',
            'cow', 'diningtable', 'dog', 'horse',

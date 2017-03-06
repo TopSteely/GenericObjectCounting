@@ -99,8 +99,9 @@ class Data:
         for i in range(len(self.boxes)):
             for i_l,fl in enumerate(flevels):
                 if np.in1d(fl,i)[0]:
+                    print i, i_l
                     self.box_levels.append(i_l)
-                    
+
         
     def lookup_coords(self):
         #have to change level indexes because of rearranging in extraction
