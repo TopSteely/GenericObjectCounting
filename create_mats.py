@@ -51,8 +51,9 @@ def main():
         im_dict['boxes'] = img_data.boxes
         im_dict['labels'] = load_dennis.get_all_labels(img_nr)
         print im_dict['labels']
-        im_dict['functions'] = img_data.level_functions
+        im_dict['functions'] = img_data.box_levels
         print im_dict['functions']
+        assert len(img_data.box_levels ) == len(img_data.boxes)
         raw_input()
         #train_mat.append(im_dict)
         train_mat[i] = im_dict

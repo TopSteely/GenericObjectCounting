@@ -94,26 +94,32 @@ class Data:
                     assert self.num_features == 1
                 else:
                     self.boxes = np.array(self.boxes)
-        #learner = IEP.IEP(1, 'learning')
-        #_,function = learner.get_iep_levels(self, {})
-        #flevels = []
-        #for f in range(len(function)):
-        #    flevels.append([a[1] for a in function[f]])
-        #print 'flevels', flevels
-        #self.box_levels = []
-        #print len(self.boxes)
-        #print self.boxes
-        #for i in range(len(self.boxes)):
-        #    found = False
-        #    for i_l,fl in enumerate(flevels):
-        #        if i in fl:
-        #            #if found:
-        #                #print i 
-        #            found = True
-        #            self.box_levels.append([function[i_l][fl.index(i)][0],i_l])
-        #    if not found:
-        #        self.box_levels.append(['x', -1])
-        self.level_functions = get_level_functions(self.levels,self.boxes, prune_tree_levels)
+        learner = IEP.IEP(1, 'learning')
+        _,function = learner.get_iep_levels(self, {})
+        flevels = []
+        for f in range(len(function)):
+            flevels.append([a[1] for a in function[f]])
+        print 'flevels', flevels
+        self.box_levels = []
+        print len(self.boxes)
+        print self.boxes
+        temp = []
+        for i in range(len(self.boxes)):
+            found = False
+            for i_l,fl in enumerate(flevels):
+                if i in fl:
+                    if found:
+                        print i
+                        self.boxes.append(self.boxes[i])
+                        #have to put it at the end somehow
+                        temp.append([function[i_l][fl.index(i)][0],i_l])
+                    else:
+                        found = True
+                        self.box_levels.append([function[i_l][fl.index(i)][0],i_l])
+            if not found:
+                self.box_levels.append(['x', -1])
+        self.box_levels.append(temp)
+        #self.level_functions = get_level_functions(self.levels,self.boxes, prune_tree_levels)
 
         
     def lookup_coords(self):
