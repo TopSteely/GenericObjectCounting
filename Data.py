@@ -1,7 +1,7 @@
 from utils import create_tree_as_extracted, surface_area_old, sort_boxes, create_tree, get_overlap_ratio
 import numpy as np
 import time
-#import IEP
+import IEP
 import itertools
 from itertools import chain, islice
 import networkx as nx
