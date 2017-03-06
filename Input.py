@@ -63,7 +63,7 @@ class Input:
             l = self.get_label(img_nr)
             all_labels.append(l)
         self.category = cat
-        return all_labels
+        return np.array(all_labels)
         
 	#old
 #    def get_intersection_features(self, img_nr):
