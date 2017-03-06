@@ -34,10 +34,6 @@ def main():
 
     eta = math.pow(10,-4)
 
-    #initialize
-    print 'initializing', tree_level_size
-    #sgd = SGD.SGD('max', category, tree_level_size, batch_size, math.pow(10,-4), 0.003, math.pow(10,-5))
-    #load_pascal = Input.Input('pascal',category)
     load_dennis = Input.Input('dennis',category,3)
     #output_pascal = Output.Output('pascal_max', category, tree_level_size, '1b')
     output_dennis = Output.Output('dennis_%s'%(pred_mode), category, 3, '1b')
