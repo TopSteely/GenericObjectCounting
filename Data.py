@@ -6,7 +6,7 @@ import itertools
 from itertools import chain, islice
 import networkx as nx
 from collections import deque
-from utils import get_set_intersection
+from utils import get_set_intersection, get_intersection
 
 class Data:
     def __init__(self, load, img_nr, prune_tree_levels, scaler, num_features=4096, overlap_gt=False):
