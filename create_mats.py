@@ -44,7 +44,7 @@ def main():
     im_dict['boxes'] = []
     im_dict['labels'] = []
     im_dict['functions'] = []
-    for i,img_nr in enumerate(range(1,2)):
+    for i,img_nr in enumerate(range(1,4)):
         
         img_data = Data.Data(load_dennis, img_nr, 5, None)
         # we need: 
