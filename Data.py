@@ -99,10 +99,7 @@ class Data:
         flevels = []
         for f in range(len(function)):
             flevels.append([a[1] for a in function[f]])
-        print 'flevels', flevels
         self.box_levels = []
-        print len(self.boxes)
-        print self.boxes
         temp = []
         for i in range(len(self.boxes)):
             found = False
@@ -117,10 +114,7 @@ class Data:
                         self.box_levels.append([function[i_l][fl.index(i)][0],i_l])
             if not found:
                 self.box_levels.append(['x', -1])
-        print self.boxes.shape, len(temp), len(self.box_levels)
         self.box_levels.extend(temp)
-        print len(self.box_levels)
-        raw_input()
         #self.level_functions = get_level_functions(self.levels,self.boxes, prune_tree_levels)
 
         

@@ -38,7 +38,7 @@ def main():
     #output_pascal = Output.Output('pascal_max', category, tree_level_size, '1b')
     output_dennis = Output.Output('dennis_%s'%(pred_mode), category, 5, '1b')
     train_mat = {}
-    test_mat = {}
+    #test_mat = {}
     for i,img_nr in enumerate(range(1,2)):
         im_dict = {}
         img_data = Data.Data(load_dennis, img_nr, 5, None)
@@ -50,14 +50,11 @@ def main():
         im_dict['image'] = '/var/scratch/spintea/Repositories/ms-caffe/data/VOCdevkit2007/VOC2007/JPEGImages/%s.jpg'%(format(img_nr, "06d"))
         im_dict['boxes'] = img_data.boxes
         im_dict['labels'] = load_dennis.get_all_labels(img_nr)
-        print im_dict['labels']
         im_dict['functions'] = img_data.box_levels
-        print im_dict['functions']
         assert len(img_data.box_levels ) == len(img_data.boxes)
-        raw_input()
         #train_mat.append(im_dict)
-        train_mat[i] = im_dict
-    output_dennis.save_mat(train_mat,test_mat)
+        #train_mat[i] = im_dict
+    output_dennis.save_mat(im_dict,test_mat)
     
     
 if __name__ == "__main__":
