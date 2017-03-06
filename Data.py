@@ -1,7 +1,9 @@
 from utils import create_tree_as_extracted, surface_area_old, sort_boxes, create_tree, get_overlap_ratio
 import numpy as np
 import time
-import IEP
+#import IEP
+import itertools
+from itertools import chain, islice
 
 class Data:
     def __init__(self, load, img_nr, prune_tree_levels, scaler, num_features=4096, overlap_gt=False):
@@ -89,11 +91,11 @@ class Data:
                     assert self.num_features == 1
                 else:
                     self.boxes = np.array(self.boxes)
-        learner = IEP.IEP(1, 'learning')
-        _,function = learner.get_iep_levels(self, {})
-        flevels = []
-        for f in range(len(function)):
-            flevels.append([a[1] for a in function[f]])
+        #learner = IEP.IEP(1, 'learning')
+        #_,function = learner.get_iep_levels(self, {})
+        #flevels = []
+        #for f in range(len(function)):
+        #    flevels.append([a[1] for a in function[f]])
         #print 'flevels', flevels
         #self.box_levels = []
         #print len(self.boxes)
