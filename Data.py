@@ -100,7 +100,7 @@ class Data:
         print self.boxes
         for i in range(len(self.boxes)):
             for i_l,fl in enumerate(flevels):
-                if np.in1d(fl,i)[0]:
+                if i in fl:
                     print i, i_l
                     self.box_levels.append(i_l)
 
