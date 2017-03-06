@@ -111,7 +111,7 @@ class Data:
                     if found:
                         print i
                         print len(self.boxes), self.boxes.shape, self.boxes[i].reshape(1,4).shape
-                        self.boxes = np.concatenate((self.boxes,self.boxes[i].reshape(1,4)), axis=1)
+                        self.boxes = np.concatenate((self.boxes,self.boxes[i].reshape(1,4)), axis=0)
                         print len(self.boxes)
                         raw_input()
                         self.boxes.append(self.boxes[i])
