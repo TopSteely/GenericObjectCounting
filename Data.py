@@ -96,6 +96,8 @@ class Data:
             flevels.append([a[1] for a in function[f]])
         print 'flevels', flevels
         self.box_levels = []
+        print len(self.boxes)
+        print self.boxes
         for i in range(len(self.boxes)):
             for i_l,fl in enumerate(flevels):
                 if np.in1d(fl,i)[0]:
