@@ -113,7 +113,7 @@ class Data:
         #            self.box_levels.append([function[i_l][fl.index(i)][0],i_l])
         #    if not found:
         #        self.box_levels.append(['x', -1])
-        self.level_functions = get_level_functions(self.levels,self.boxes)
+        self.level_functions = get_level_functions(self.levels,self.boxes, prune_tree_levels)
 
         
     def lookup_coords(self):
@@ -127,10 +127,10 @@ class Data:
                 levels_corrected[level].append(new_idx)
         self.levels = levels_corrected
 
-def get_level_functions(levels,coords):
+def get_level_functions(levels,coords, tree_size):
   #get level_function
   # format for each level: 1 row plus patches, one row - patches, i hope 100 terms is enough
-  level_functions = np.zeros((3 * 2, 1000))
+  level_functions = np.zeros((tree_size * 2, 1000))
   for i_level in range(len(levels)):
     counter_plus = 0
     counter_minus = 0
