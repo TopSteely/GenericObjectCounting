@@ -104,7 +104,7 @@ class Data:
                 if i in fl:
                     found = True
                     print i, i_l, fl.index(i)
-                    self.box_levels.append(function[i_l][fl.index(i)])
+                    self.box_levels.append([function[i_l][fl.index(i)][0],i_l])
             if not found:
                 self.box_levels.append(['x', -1])
 
