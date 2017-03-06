@@ -56,7 +56,6 @@ def main():
         train_mat['labels'].append([load_dennis.get_all_labels(img_nr)])
         train_mat['functions'].append(img_data.box_levels)
         assert len(img_data.box_levels ) == len(img_data.boxes)
-    output_dennis.save_mat(train_mat,test_mat)
     for i,img_nr in enumerate(load_dennis.val_numbers):
         print img_nr
         img_data = Data.Data(load_dennis, img_nr, 20, None)
