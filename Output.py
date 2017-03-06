@@ -7,7 +7,7 @@ from matplotlib.patches import Rectangle
 import numpy as np
 import pylab as pl
 from utils import rgb2gray, transparent_cmap
-import scipy
+from scipy.io import savemat
 
 
 class Output:
@@ -229,5 +229,5 @@ class Output:
         plt.savefig(self.upd_path_new%(self.category))
 
     def save_mat(self,train_mat,test_mat):
-        scipy.io.savemat(self.train_mat_path, train_mat)
-        scipy.io.savemat(self.test_mat_path, test_mat)
+        savemat(self.train_mat_path, train_mat)
+        savemat(self.test_mat_path, test_mat)
