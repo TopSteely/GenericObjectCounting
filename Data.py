@@ -4,6 +4,7 @@ import time
 #import IEP
 import itertools
 from itertools import chain, islice
+import networkx as nx
 
 class Data:
     def __init__(self, load, img_nr, prune_tree_levels, scaler, num_features=4096, overlap_gt=False):
