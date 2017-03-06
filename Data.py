@@ -90,7 +90,7 @@ class Data:
                 else:
                     self.boxes = np.array(self.boxes)
         learner = IEP.IEP(1, 'learning')
-        _,function = learner.get_iep_levels(self, [])
+        _,function = learner.get_iep_levels(self, {})
         flevels = []
         for f in lev(function):
             flevels.append([a[1] for a in function[f]])
