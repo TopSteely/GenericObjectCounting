@@ -98,16 +98,16 @@ class Data:
         #self.box_levels = []
         #print len(self.boxes)
         #print self.boxes
-        for i in range(len(self.boxes)):
-            found = False
-            for i_l,fl in enumerate(flevels):
-                if i in fl:
-                    #if found:
-                        #print i 
-                    found = True
-                    self.box_levels.append([function[i_l][fl.index(i)][0],i_l])
-            if not found:
-                self.box_levels.append(['x', -1])
+        #for i in range(len(self.boxes)):
+        #    found = False
+        #    for i_l,fl in enumerate(flevels):
+        #        if i in fl:
+        #            #if found:
+        #                #print i 
+        #            found = True
+        #            self.box_levels.append([function[i_l][fl.index(i)][0],i_l])
+        #    if not found:
+        #        self.box_levels.append(['x', -1])
         self.level_functions = get_level_functions(self.levels,self.boxes)
 
         
