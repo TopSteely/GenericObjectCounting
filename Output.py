@@ -7,6 +7,7 @@ from matplotlib.patches import Rectangle
 import numpy as np
 import pylab as pl
 from utils import rgb2gray, transparent_cmap
+import scipy
 
 
 class Output:

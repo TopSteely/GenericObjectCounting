@@ -34,14 +34,14 @@ def main():
 
     eta = math.pow(10,-4)
 
-    load_dennis = Input.Input('dennis',category,3)
+    load_dennis = Input.Input('dennis',category,5)
     #output_pascal = Output.Output('pascal_max', category, tree_level_size, '1b')
-    output_dennis = Output.Output('dennis_%s'%(pred_mode), category, 3, '1b')
+    output_dennis = Output.Output('dennis_%s'%(pred_mode), category, 5, '1b')
     train_mat = []
     test_mat = []
     for img_nr in range(1,2):
         im_dict = {}
-        img_data = Data.Data(load_dennis, img_nr, 3, None)
+        img_data = Data.Data(load_dennis, img_nr, 5, None)
         # we need: 
             #'image': '/var/scratch/spintea/Repositories/ms-caffe/data/VOCdevkit2007/VOC2007/JPEGImages/000005.jpg'
             #'boxes' # (intersections)
