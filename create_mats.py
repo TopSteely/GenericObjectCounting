@@ -39,8 +39,13 @@ def main():
     output_dennis = Output.Output('dennis_%s'%(pred_mode), category, 5, '1b')
     train_mat = {}
     test_mat = {}
+    im_dict = {}
+    im_dict['image'] = []
+    im_dict['boxes'] = []
+    im_dict['labels'] = []
+    im_dict['functions'] = []
     for i,img_nr in enumerate(range(1,2)):
-        im_dict = {}
+        
         img_data = Data.Data(load_dennis, img_nr, 5, None)
         # we need: 
             #'image': '/var/scratch/spintea/Repositories/ms-caffe/data/VOCdevkit2007/VOC2007/JPEGImages/000005.jpg'
