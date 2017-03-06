@@ -38,7 +38,7 @@ def main():
     #output_pascal = Output.Output('pascal_max', category, tree_level_size, '1b')
     output_dennis = Output.Output('dennis_%s'%(pred_mode), category, 5, '1b')
     train_mat = {}
-    #test_mat = {}
+    test_mat = {}
     for i,img_nr in enumerate(range(1,2)):
         im_dict = {}
         img_data = Data.Data(load_dennis, img_nr, 5, None)
