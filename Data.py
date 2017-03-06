@@ -109,12 +109,7 @@ class Data:
             for i_l,fl in enumerate(flevels):
                 if i in fl:
                     if found:
-                        print i
-                        print len(self.boxes), self.boxes.shape, self.boxes[i].reshape(1,4).shape
                         self.boxes = np.concatenate((self.boxes,self.boxes[i].reshape(1,4)), axis=0)
-                        print len(self.boxes)
-                        raw_input()
-                        self.boxes.append(self.boxes[i])
                         #have to put it at the end somehow
                         temp.append([function[i_l][fl.index(i)][0],i_l])
                     else:
@@ -122,7 +117,9 @@ class Data:
                         self.box_levels.append([function[i_l][fl.index(i)][0],i_l])
             if not found:
                 self.box_levels.append(['x', -1])
+        print self.boxes.shape, len(temp), len(self.box_levels)
         self.box_levels.append(temp)
+        print len(self.box_levels)
         #self.level_functions = get_level_functions(self.levels,self.boxes, prune_tree_levels)
 
         
