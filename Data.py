@@ -108,12 +108,18 @@ class Data:
                     if found:
                         self.boxes = np.concatenate((self.boxes,self.boxes[i].reshape(1,4)), axis=0)
                         #have to put it at the end somehow
-                        temp.append([function[i_l][fl.index(i)][0],i_l])
+                        if function[i_l][fl.index(i)][0] == '+':
+                            temp.append([1,i_l])
+                        elif function[i_l][fl.index(i)][0] == '-':
+                            temp.append([-1,i_l])
                     else:
                         found = True
-                        self.box_levels.append([function[i_l][fl.index(i)][0],i_l])
+                        if function[i_l][fl.index(i)][0] == '+':
+                            self.box_levels.append([1,i_l])
+                        elif function[i_l][fl.index(i)][0] == '-':
+                            self.box_levels.append([-1,i_l])
             if not found:
-                self.box_levels.append(['x', -1])
+                self.box_levels.append([0, -1])
         self.box_levels.extend(temp)
         #self.level_functions = get_level_functions(self.levels,self.boxes, prune_tree_levels)
 
