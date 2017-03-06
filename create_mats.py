@@ -37,9 +37,9 @@ def main():
     load_dennis = Input.Input('dennis',category,5)
     #output_pascal = Output.Output('pascal_max', category, tree_level_size, '1b')
     output_dennis = Output.Output('dennis_%s'%(pred_mode), category, 5, '1b')
-    train_mat = []
-    test_mat = []
-    for img_nr in range(1,2):
+    train_mat = {}
+    test_mat = {}
+    for i,img_nr in enumerate(range(1,2)):
         im_dict = {}
         img_data = Data.Data(load_dennis, img_nr, 5, None)
         # we need: 
@@ -54,7 +54,8 @@ def main():
         im_dict['functions'] = img_data.level_functions
         print im_dict['functions']
         raw_input()
-        train_mat.append(im_dict)
+        #train_mat.append(im_dict)
+        train_mat[i] = im_dict
     output_dennis.save_mat(train_mat,test_mat)
     
     
