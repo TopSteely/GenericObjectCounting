@@ -53,8 +53,8 @@ def main():
         im_dict['functions'] = img_data.box_levels
         assert len(img_data.box_levels ) == len(img_data.boxes)
         #train_mat.append(im_dict)
-        #train_mat[i] = im_dict
-    output_dennis.save_mat(im_dict,test_mat)
+        train_mat['1'] = im_dict
+    output_dennis.save_mat(train_mat,test_mat)
     
     
 if __name__ == "__main__":
