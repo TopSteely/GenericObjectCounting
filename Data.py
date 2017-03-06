@@ -110,9 +110,10 @@ class Data:
                 if i in fl:
                     if found:
                         print i
+                        print len(self.boxes), self.boxes.shape, self.boxes[i].shape
+                        self.boxes = np.concatenate((self.boxes,self.boxes[i]), axis=1)
                         print len(self.boxes)
-                        self.boxes = np.concatenate((self.boxes,self.boxes[i]))
-                        print len(self.boxes)
+                        raw_input()
                         self.boxes.append(self.boxes[i])
                         #have to put it at the end somehow
                         temp.append([function[i_l][fl.index(i)][0],i_l])
