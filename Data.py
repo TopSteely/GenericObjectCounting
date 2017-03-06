@@ -118,7 +118,7 @@ class Data:
             if not found:
                 self.box_levels.append(['x', -1])
         print self.boxes.shape, len(temp), len(self.box_levels)
-        self.box_levels.append(temp)
+        self.box_levels.extend(temp)
         print len(self.box_levels)
         raw_input()
         #self.level_functions = get_level_functions(self.levels,self.boxes, prune_tree_levels)
