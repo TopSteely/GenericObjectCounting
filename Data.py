@@ -99,10 +99,14 @@ class Data:
         print len(self.boxes)
         print self.boxes
         for i in range(len(self.boxes)):
+            found = False
             for i_l,fl in enumerate(flevels):
                 if i in fl:
-                    print i, i_l
-                    self.box_levels.append(i_l)
+                    found = True
+                    print i, i_l, flevels.index(i)
+                    self.box_levels.append(function[i_l][flevels.index(i)])
+            if not found:
+                self.box_levels.append(['x', -1])
 
         
     def lookup_coords(self):
