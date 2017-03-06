@@ -52,9 +52,9 @@ def main():
             #'boxes' # (intersections)
             #labels
             #functions
-        im_dict['image'].append('/var/scratch/spintea/Repositories/ms-caffe/data/VOCdevkit2007/VOC2007/JPEGImages/%s.jpg'%(format(img_nr, "06d")))
+        im_dict['image'].append(['/var/scratch/spintea/Repositories/ms-caffe/data/VOCdevkit2007/VOC2007/JPEGImages/%s.jpg'%(format(img_nr, "06d"))])
         im_dict['boxes'].append(img_data.boxes)
-        im_dict['labels'].append(load_dennis.get_all_labels(img_nr))
+        im_dict['labels'].append([load_dennis.get_all_labels(img_nr)])
         im_dict['functions'].append(img_data.box_levels)
         assert len(img_data.box_levels ) == len(img_data.boxes)
         #train_mat.append(im_dict)
