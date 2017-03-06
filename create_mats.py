@@ -43,7 +43,7 @@ def main():
     train_mat['boxes'] = []
     train_mat['labels'] = []
     train_mat['functions'] = []
-    for i,img_nr in enumerate(load_dennis.training_numbers[0:3]):
+    for i,img_nr in enumerate(load_dennis.training_numbers):
         print img_nr
         img_data = Data.Data(load_dennis, img_nr, 20, None)
         # we need: 
@@ -60,7 +60,7 @@ def main():
     output_dennis.save_mat(train_mat,test_mat)
     for i,img_nr in enumerate(load_dennis.val_numbers):
         print img_nr
-        img_data = Data.Data(load_dennis, img_nr, 5, None)
+        img_data = Data.Data(load_dennis, img_nr, 20, None)
         # we need: 
             #'image': '/var/scratch/spintea/Repositories/ms-caffe/data/VOCdevkit2007/VOC2007/JPEGImages/000005.jpg'
             #'boxes' # (intersections)
@@ -78,7 +78,7 @@ def main():
     test_mat['functions'] = []
     for i,img_nr in enumerate(load_dennis.test_numbers):
         print img_nr
-        img_data = Data.Data(load_dennis, img_nr, 5, None)
+        img_data = Data.Data(load_dennis, img_nr, 20, None)
         # we need: 
             #'image': '/var/scratch/spintea/Repositories/ms-caffe/data/VOCdevkit2007/VOC2007/JPEGImages/000005.jpg'
             #'boxes' # (intersections)
