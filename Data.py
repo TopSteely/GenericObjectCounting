@@ -96,9 +96,11 @@ class Data:
             flevels.append([a[1] for a in function[f]])
         print 'flevels', flevels
         self.box_levels = []
-        for bb in self.boxes:
-            print np.where(bb in flevels)
-            self.box_levels.append(np.where(bb in flevels))
+        for i in range(len(self.boxes)):
+            for i_l,fl in enumerate(flevels):
+                if np.in1d(fl,i)[0]:
+                    self.box_levels.append(i_l)
+                    
         
     def lookup_coords(self):
         #have to change level indexes because of rearranging in extraction
