@@ -50,6 +50,20 @@ class Input:
             self.training_numbers, self.val_numbers = self.get_val_numbers(training_numbers_tmp)
             #self.category_train, self.category_val = self.get_category_imgs()
             #self.category_train_with_levels, self.category_val_with_levels = self.get_samples_with_number_of_levels(number_of_levels)
+
+    def get_all_labels(self, img_nr):
+        cat = self.category
+        all_labels = [0]
+        for class_ in ['aeroplane', 'bicycle', 'bird', 'boat',
+           'bottle', 'bus', 'car', 'cat', 'chair',
+           'cow', 'diningtable', 'dog', 'horse',
+           'motorbike', 'person', 'pottedplant',
+            'sheep', 'sofa', 'train', 'tvmonitor']:
+            self.category = class_
+            l = self.get_label(img_nr)
+            all_labels.append(l)
+        self.category = cat
+        return all_labels
         
 	#old
 #    def get_intersection_features(self, img_nr):

@@ -1,6 +1,7 @@
 from utils import create_tree_as_extracted, surface_area_old, sort_boxes, create_tree, get_overlap_ratio
 import numpy as np
 import time
+import IEP
 
 class Data:
     def __init__(self, load, img_nr, prune_tree_levels, scaler, num_features=4096, overlap_gt=False):
@@ -88,6 +89,16 @@ class Data:
                     assert self.num_features == 1
                 else:
                     self.boxes = np.array(self.boxes)
+        learner = IEP.IEP(1, 'learning')
+        _,function = learner.get_iep_levels(self, []):
+        flevels = []
+        for f in lev(function):
+            flevels.append([a[1] for a in function[f]])
+        print 'flevels', flevels
+        self.box_levels = []
+        for bb in self.boxes:
+            print np.where(bb in flevels)
+            self.box_levels.append(np.where(bb in flevels))
         
     def lookup_coords(self):
         #have to change level indexes because of rearranging in extraction
@@ -99,3 +110,4 @@ class Data:
                 new_idx = self.boxes.tolist().index(coord.tolist())
                 levels_corrected[level].append(new_idx)
         self.levels = levels_corrected
+

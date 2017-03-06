@@ -38,6 +38,8 @@ class Output:
         self.avg_path_ = '/var/node436/local/tstahl/plos/htmp_%s_%s_%s_%s.png'
         self.upd_path = '/var/node436/local/tstahl/plos/upd_%s.png'
         self.upd_path_new = '/var/node436/local/tstahl/plos/upd_%s_new.png'
+        self.train_mat_path = '/var/scratch/spintea/Repositories/ms-caffe/data/selective_search_data/voc_2007_train_toby.mat'
+        self.test_mat_path = '/var/scratch/spintea/Repositories/ms-caffe/data/selective_search_data/voc_2007_test_toby.mat'
         
     def dump_scaler(self, scaler):
         pickle.dump(scaler, open(self.scaler_path, "wb"))
@@ -224,3 +226,7 @@ class Output:
         #plt.plot(updates3, '-bo', label='dummy')
         #plt.legend()
         plt.savefig(self.upd_path_new%(self.category))
+
+    def save_mat(self,train_mat,test_mat):
+        scipy.io.savemat(self.train_mat_path, train_mat)
+        scipy.io.savemat(self.test_mat_path, test_mat)
