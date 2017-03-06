@@ -94,20 +94,21 @@ class Data:
         flevels = []
         for f in range(len(function)):
             flevels.append([a[1] for a in function[f]])
-        print 'flevels', flevels
-        self.box_levels = []
-        print len(self.boxes)
-        print self.boxes
+        #print 'flevels', flevels
+        #self.box_levels = []
+        #print len(self.boxes)
+        #print self.boxes
         for i in range(len(self.boxes)):
             found = False
             for i_l,fl in enumerate(flevels):
                 if i in fl:
-                    if found:
-                        print i 
+                    #if found:
+                        #print i 
                     found = True
                     self.box_levels.append([function[i_l][fl.index(i)][0],i_l])
             if not found:
                 self.box_levels.append(['x', -1])
+        self.level_functions = get_level_functions(self.levels,self.boxes)
 
         
     def lookup_coords(self):
@@ -121,3 +122,67 @@ class Data:
                 levels_corrected[level].append(new_idx)
         self.levels = levels_corrected
 
+def get_level_functions(levels,coords):
+  #get level_function
+  # format for each level: 1 row plus patches, one row - patches, i hope 100 terms is enough
+  level_functions = np.zeros((3 * 2, 1000))
+  for i_level in range(len(levels)):
+    counter_plus = 0
+    counter_minus = 0
+    sets = levels[i_level]
+    level_coords = []
+    for i in levels[i_level]:
+          level_coords.append(coords[i])
+    combinations = list(itertools.combinations(sets, 2))
+    overlaps = nx.Graph()
+    for comb in combinations:
+          set_ = []
+          for c in comb:
+              set_.append(coords[c])
+          I = get_set_intersection(set_)
+          if I != []:
+              overlaps.add_edges_from([comb])
+    index = {}
+    nbrs = {}
+    for u in overlaps:
+        index[u] = len(index)
+        # Neighbors of u that appear after u in the iteration order of G.
+        nbrs[u] = {v for v in overlaps[u] if v not in index}
+
+
+    queue = deque(([u], sorted(nbrs[u], key=index.__getitem__)) for u in overlaps)
+    # Loop invariants:
+    # 1. len(base) is nondecreasing.
+    # 2. (base + cnbrs) is sorted with respect to the iteration order of G.
+    # 3. cnbrs is a set of common neighbors of nodes in base.
+    while queue:
+        base, cnbrs = map(list, queue.popleft())
+        I = [0,0,1000,1000]
+        for c in base:
+            if I != []:
+               I = get_intersection(coords[c], I)
+        if I != [] and I[1] != I[3] and I[0]!=I[2]:
+              if I in np.array(coords):
+                 ind = [list(c) for c in coords].index(I)
+                 if len(base)%2==1:
+                    level_functions[2*i_level,counter_plus] = ind
+                    counter_plus += 1
+                    if counter_plus > 999:
+                        print 'more than 1000 terms'
+                        exit()
+                 elif len(base)%2==0:
+                    level_functions[2*i_level+1,counter_minus] = ind
+                    counter_minus += 1
+                    if counter_minus > 999:
+                        print 'more than 1000 terms'
+                        exit()
+
+              else:
+                 print 'IEP: intersection not found', I
+                 exit()
+        for i, u in enumerate(cnbrs):
+            # Use generators to reduce memory consumption.
+            queue.append((chain(base, [u]),
+                          filter(nbrs[u].__contains__,
+                                 islice(cnbrs, i + 1, None))))
+  return level_functions                
