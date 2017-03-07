@@ -34,7 +34,7 @@ def main():
 
     eta = math.pow(10,-4)
 
-    for tree_level_size in range(1,7):
+    for tree_level_size in range(7,10):
         #initialize
         print 'initializing', tree_level_size
         #sgd = SGD.SGD('max', category, tree_level_size, batch_size, math.pow(10,-4), 0.003, math.pow(10,-5))
@@ -113,7 +113,7 @@ def main():
             print "Eval loss val: ", al_i, ae
             output_dennis.plot_preds(preds_d_d, y_d_d, al_i, 'val_category_levels')
             output_dennis.plot_best(level_pred_d_d, max_level_preds_d_d, min_level_preds_d_d, avg_pixls, al_i)
-            #output_dennis.save(mse, ae, mse_non_zero, sgd_dennis, 'ind', al_i, learn_mode)
+            output_dennis.save_w(mse, sgd_dennis, eta, al_i, learn_mode)
     print learn_mode, pred_mode, epochs,'with scaler', debug
     
     

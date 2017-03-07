@@ -22,7 +22,7 @@ class Output:
         self.npe_path = "/home/tstahl/plot/%s_%s_npe_%s_%s.p"
         self.model_path = "/var/node436/local/tstahl/models/%s_%s_%s_%s_%s_%s_%s.p"
         self.plot_path = "/var/node436/local/tstahl/plos/%s_%s_%s.png"
-        self.preds_plot_path = "/var/node436/local/tstahl/plos/preds_%s_%s_%s_%s.png"
+        self.preds_plot_path = "/var/node436/local/tstahl/plos/preds_%s_%s_%s_%s_%s.png"
         self.image_path = "/var/node436/local/tstahl/Images/%s.jpg"
         self.scaler_path = '/var/node436/local/tstahl/models/scaler_dennis.p'
         if mode.startswith('dennis'):
@@ -54,11 +54,15 @@ class Output:
         
         
     def save(self, mse_level, ae_level, nn, sgd, eta0, alpha, learn_mode):
-        pickle.dump(mse_level, open( self.mse_path%(self.experiment, self.mode, self.category, self.prune_tree_levels, eta0, alpha, learn_mode), "wb" ))
-        pickle.dump(ae_level, open( self.ae_path%(self.experiment, self.mode, self.category, self.prune_tree_levels, eta0, alpha, learn_mode), "wb" ))
-        pickle.dump(nn, open( self.nn_path%(self.experiment, self.mode, self.category, self.prune_tree_levels, eta0, alpha, learn_mode), "wb" ))
+        #pickle.dump(mse_level, open( self.mse_path%(self.experiment, self.mode, self.category, self.prune_tree_levels, eta0, alpha, learn_mode), "wb" ))
+        #pickle.dump(ae_level, open( self.ae_path%(self.experiment, self.mode, self.category, self.prune_tree_levels, eta0, alpha, learn_mode), "wb" ))
+        #pickle.dump(nn, open( self.nn_path%(self.experiment, self.mode, self.category, self.prune_tree_levels, eta0, alpha, learn_mode), "wb" ))
         pickle.dump(sgd.w, open( self.model_path%(self.experiment, self.mode, self.category, self.prune_tree_levels, eta0, alpha, learn_mode), "wb" ))
         #pickle.dump(num_per_image, open( self.npe_path%(self.experiment, self.mode, self.category, self.prune_tree_levels), "wb" ))
+
+    def save_w(self,sgd, eta0, alpha, learn_mode):
+        pickle.dump(sgd.w, open( self.model_path%(self.experiment, self.mode, self.category, self.prune_tree_levels, eta0, alpha, learn_mode), "wb" ))
+        
         
     def plot_preds(self, preds, y, alpha, dataset):
         if self.mode.endswith('multi'):
@@ -86,11 +90,11 @@ class Output:
             plt.plot(range(len(preds)), preds, 'ro',label='prediction')
             plt.plot(range(len(preds)), y, 'y*',label='target')
             plt.ylabel('y')
-            plt.ylim([-1,len(preds)+1])
+            plt.ylim([-1,max(max(preds,y))+1])
             plt.xlim([-1,len(preds)+1])
             plt.legend(loc='upper center')
             plt.title('%s'%(alpha))
-        plt.savefig(self.preds_plot_path%(self.mode,alpha,self.category, dataset))     
+        plt.savefig(self.preds_plot_path%(self.mode,alpha,self.category, dataset, self.prune_tree_levels))     
         
     def plot_level_boxes(self, rects, img_nr):
         colors = ['red','blue','green']
