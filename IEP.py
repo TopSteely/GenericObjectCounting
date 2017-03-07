@@ -131,7 +131,7 @@ class IEP:
             if level in functions:
                 # if clip there might be all predictions < 0 and the derivative is just y
                 if functions[level] == []:
-                    iep = Data.y * np.ones(len(Data.X[0]))
+                    iep = np.zeros(len(Data.X[0]))
                 else:
                     iep, function = self.iep(Data, functions[level], level, clip)
             else:
