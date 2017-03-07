@@ -54,12 +54,10 @@ def main():
     error_mean_nn = np.zeros(21)
     error_mean_mean_nn = np.zeros(21)
     occurances = np.zeros(21)
-    for i,img_nr in enumerate(load_dennis.val_numbers[0:5]):
+    for i,img_nr in enumerate(load_dennis.val_numbers[0:55]):
         img_data = Data.Data(load_dennis, img_nr, 20, None)
         labels = load_dennis.get_all_labels(img_nr)
         classes = np.where(labels>0)[0]
-        print labels
-        print classes
         error_0_nn[classes] += np.abs(labels[classes])
         error_1_nn[classes] += np.abs(labels[classes] - 1)
         error_mean_nn[classes] += np.abs(labels[classes] - mean_labels[classes])
@@ -69,7 +67,6 @@ def main():
         error_1 += np.abs(labels - 1)
         error_mean += np.abs(labels - mean_labels)
         error_mean_mean += np.abs(labels - mean_mean_labels)
-        print error_1_nn
         print occurances
     print 'error baseline 0: ', np.mean(error_0[1:]/len(load_dennis.val_numbers)), np.mean(error_0_nn[1:]/occurances[1:])
     print 'error baseline 1: ', np.mean(error_1[1:]/len(load_dennis.val_numbers)), np.mean(error_1_nn[1:]/occurances[1:])
