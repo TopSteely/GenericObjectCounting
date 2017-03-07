@@ -59,9 +59,9 @@ def main():
         labels = load_dennis.get_all_labels(img_nr)
         classes = np.where(labels>0)[0]
         error_0_nn[classes] += np.abs(labels[classes])
-        error_1_nn = np.abs(labels[classes] - 1)
-        error_mean_nn = np.abs(labels[classes] - mean_labels[classes])
-        error_mean_mean_nn = np.abs(labels[classes] - mean_mean_labels)
+        error_1_nn[classes] += np.abs(labels[classes] - 1)
+        error_mean_nn[classes] += np.abs(labels[classes] - mean_labels[classes])
+        error_mean_mean_nn[classes] += np.abs(labels[classes] - mean_mean_labels)
         occurances[classes] += 1
         error_0 += np.abs(labels)
         error_1 += np.abs(labels - 1)
