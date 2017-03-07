@@ -49,6 +49,10 @@ def main():
     error_1 = np.zeros(21)
     error_mean = np.zeros(21)
     error_mean_mean = np.zeros(21)
+    error_0_nn = np.zeros(21)
+    error_1_nn = np.zeros(21)
+    error_mean_nn = np.zeros(21)
+    error_mean_mean_nn = np.zeros(21)
     occurances = np.zeros(21)
     for i,img_nr in enumerate(load_dennis.val_numbers):
         img_data = Data.Data(load_dennis, img_nr, 20, None)
@@ -58,6 +62,9 @@ def main():
         print error_0
         print error_0[classes], np.abs(labels[classes])
         error_0[classes] += np.abs(labels[classes])
+        error_1_nn = np.abs(labels[classes] - 1)
+        error_mean_nn = np.abs(labels[classes] - mean_labels[classes])
+        error_mean_mean_nn = np.abs(labels[classes] - mean_mean_labels)
         print error_0
         occurances[classes] += 1
         print occurances
@@ -66,10 +73,10 @@ def main():
         error_1 += np.abs(labels - 1)
         error_mean += np.abs(labels - mean_labels)
         error_mean_mean += np.abs(labels - mean_mean_labels)
-    print 'error baseline 0: ', np.mean(error_0/len(load_dennis.val_numbers))
-    print 'error baseline 1: ', np.mean(error_1/len(load_dennis.val_numbers))
-    print 'error baseline mean: ', np.mean(error_mean/len(load_dennis.val_numbers))
-    print 'error baseline mean_mean: ', np.mean(error_mean_mean/len(load_dennis.val_numbers))
+    print 'error baseline 0: ', np.mean(error_0[1:20]/len(load_dennis.val_numbers)), np.mean(error_0_nn[1:20]/occurances)
+    print 'error baseline 1: ', np.mean(error_1[1:20]/len(load_dennis.val_numbers)), np.mean(error_1_nn[1:20]/occurances)
+    print 'error baseline mean: ', np.mean(error_mean[1:20]/len(load_dennis.val_numbers)), np.mean(error_mean_nn[1:20]/occurances)
+    print 'error baseline mean_mean: ', np.mean(error_mean_mean[1:20]/len(load_dennis.val_numbers)), np.mean(error_mean_mean_nn[1:20]/occurances)
     
     
 if __name__ == "__main__":
