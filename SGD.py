@@ -322,7 +322,7 @@ class SGD:
             squared_error += img_loss.reshape(-1,)
             error += abs(self.predict(img_data) - img_data.y).reshape(-1,)
             if img_data.y > 0:
-                non_zero_error += img_loss.reshape(-1,)
+                non_zero_error += error
                 n_non_zero += 1
             if debug:
                 #skl_error += (self.sgd.predict(img_data.X[img_data.levels[0][0]].reshape(1, -1)) - img_data.y)**2

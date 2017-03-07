@@ -41,6 +41,9 @@ class Output:
         self.upd_path_new = '/var/node436/local/tstahl/plos/upd_%s_new.png'
         self.train_mat_path = '/var/scratch/spintea/Repositories/ms-caffe/data/selective_search_data/voc_2007_train_toby.mat'
         self.test_mat_path = '/var/scratch/spintea/Repositories/ms-caffe/data/selective_search_data/voc_2007_test_toby.mat'
+        self.preds_path = "/var/node436/local/tstahl/preds/%s_%s_%s_%s_%s_%s_%s.p"
+        self.label_path = "/var/node436/local/tstahl/labels/%s_%s_%s_%s_%s_%s_%s.p"
+
         
     def dump_scaler(self, scaler):
         pickle.dump(scaler, open(self.scaler_path, "wb"))
@@ -60,8 +63,10 @@ class Output:
         pickle.dump(sgd.w, open( self.model_path%(self.experiment, self.mode, self.category, self.prune_tree_levels, eta0, alpha, learn_mode), "wb" ))
         #pickle.dump(num_per_image, open( self.npe_path%(self.experiment, self.mode, self.category, self.prune_tree_levels), "wb" ))
 
-    def save_w(self,sgd, eta0, alpha, learn_mode):
+    def save_w(self,sgd,preds,y, eta0, alpha, learn_mode):
         pickle.dump(sgd.w, open( self.model_path%(self.experiment, self.mode, self.category, self.prune_tree_levels, eta0, alpha, learn_mode), "wb" ))
+        pickle.dump(preds, open( self.preds_path%(self.experiment, self.mode, self.category, self.prune_tree_levels, eta0, alpha, learn_mode), "wb" ))
+        pickle.dump(y, open( self.label_path%(self.experiment, self.mode, self.category, self.prune_tree_levels, eta0, alpha, learn_mode), "wb" ))
         
         
     def plot_preds(self, preds, y, alpha, dataset):
