@@ -58,6 +58,9 @@ def main():
         img_data = Data.Data(load_dennis, img_nr, 20, None)
         labels = load_dennis.get_all_labels(img_nr)
         classes = np.where(labels>0)[0]
+        print labels
+        print classes
+        print error_1_nn
         error_0_nn[classes] += np.abs(labels[classes])
         error_1_nn[classes] += np.abs(labels[classes] - 1)
         error_mean_nn[classes] += np.abs(labels[classes] - mean_labels[classes])
