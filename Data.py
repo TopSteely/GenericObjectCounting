@@ -94,33 +94,35 @@ class Data:
                     assert self.num_features == 1
                 else:
                     self.boxes = np.array(self.boxes)
-        learner = IEP.IEP(1, 'learning')
-        _,function = learner.get_iep_levels(self, {})
-        flevels = []
-        for f in range(len(function)):
-            flevels.append([a[1] for a in function[f]])
-        self.box_levels = []
-        temp = []
-        for i in range(len(self.boxes)):
-            found = False
-            for i_l,fl in enumerate(flevels):
-                if i in fl:
-                    if found:
-                        self.boxes = np.concatenate((self.boxes,self.boxes[i].reshape(1,4)), axis=0)
-                        #have to put it at the end somehow
-                        if function[i_l][fl.index(i)][0] == '+':
-                            temp.append([1,i_l])
-                        elif function[i_l][fl.index(i)][0] == '-':
-                            temp.append([-1,i_l])
-                    else:
-                        found = True
-                        if function[i_l][fl.index(i)][0] == '+':
-                            self.box_levels.append([1,i_l])
-                        elif function[i_l][fl.index(i)][0] == '-':
-                            self.box_levels.append([-1,i_l])
-            if not found:
-                self.box_levels.append([0, -1])
-        self.box_levels.extend(temp)
+
+        #this is just for create_mats.py
+        #learner = IEP.IEP(1, 'learning')
+        #_,function = learner.get_iep_levels(self, {})
+        #flevels = []
+        #for f in range(len(function)):
+        #    flevels.append([a[1] for a in function[f]])
+        #self.box_levels = []
+        #temp = []
+        #for i in range(len(self.boxes)):
+        #    found = False
+        #    for i_l,fl in enumerate(flevels):
+        #        if i in fl:
+        #            if found:
+        #                self.boxes = np.concatenate((self.boxes,self.boxes[i].reshape(1,4)), axis=0)
+        #                #have to put it at the end somehow
+        #                if function[i_l][fl.index(i)][0] == '+':
+        #                    temp.append([1,i_l])
+        #                elif function[i_l][fl.index(i)][0] == '-':
+        #                    temp.append([-1,i_l])
+        #            else:
+        #                found = True
+        #                if function[i_l][fl.index(i)][0] == '+':
+        #                    self.box_levels.append([1,i_l])
+        #                elif function[i_l][fl.index(i)][0] == '-':
+        #                    self.box_levels.append([-1,i_l])
+        #    if not found:
+        #        self.box_levels.append([0, -1])
+        #self.box_levels.extend(temp)
         #self.level_functions = get_level_functions(self.levels,self.boxes, prune_tree_levels)
 
         
