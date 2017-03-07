@@ -61,7 +61,7 @@ def main():
         print classes
         print error_0
         print error_0[classes], np.abs(labels[classes])
-        error_0[classes] += np.abs(labels[classes])
+        error_0_nn[classes] += np.abs(labels[classes])
         error_1_nn = np.abs(labels[classes] - 1)
         error_mean_nn = np.abs(labels[classes] - mean_labels[classes])
         error_mean_mean_nn = np.abs(labels[classes] - mean_mean_labels)
