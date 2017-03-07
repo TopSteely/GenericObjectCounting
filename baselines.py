@@ -56,7 +56,7 @@ def main():
         classes = np.where(labels>0)[0]
         print classes
         print error_0
-        print error_0[classes], np.abs(lables[classes])
+        print error_0[classes], np.abs(labels[classes])
         error_0[classes] += np.abs(labels[classes])
         print error_0
         occurances[classes] += 1
