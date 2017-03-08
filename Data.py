@@ -137,7 +137,6 @@ class Data:
         print self.box_levels[-5:]
         raw_input()
         print temp1
-        print self.boxes.shape,np.array(temp1).shape
         self.boxes = np.concatenate((self.boxes,np.array(temp1)),axis=0)
         print 'double: ', double
         #self.level_functions = get_level_functions(self.levels,self.boxes, prune_tree_levels)

@@ -66,6 +66,11 @@ def main():
         patches = img_data.gt_overlaps
         print patches[0]
         print patches.shape
+        for i_lf, lf in enumerate(level_functions[-10:]):
+            if (level_functions[:,:]==[1,level_index]).all(axis=1):
+                print i_lf,lf
+            elif (level_functions[:,:]==[-1,level_index]).all(axis=1):
+                print i_lf,lf
         for level_index in range(levels):
             plus_boxes = np.where((level_functions[:,:]==[1,level_index]).all(axis=1))[0]
             minus_boxes = np.where((level_functions[:,:]==[-1,level_index]).all(axis=1))[0]
@@ -74,7 +79,6 @@ def main():
             for c in range(num_classes):
                 level_iep[c] = np.sum(patches[plus_boxes,c],axis=0)
                 if len(minus_boxes)>0:
-                    #level_iep = np.sum( -1. * np.multiply(patches[minus_boxes],w),axis=0)
                     level_iep[c] += np.sum(-1 * patches[minus_boxes,c],axis=0)
             iep[level_index,:] = level_iep
         labels = load_dennis.get_all_labels(img_nr)
