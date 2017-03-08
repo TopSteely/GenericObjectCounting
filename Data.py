@@ -54,6 +54,8 @@ class Data:
                 self.G.remove_nodes_from(levels[level])
             else:
                 nr_levels_covered = level
+        print nr_levels_covered
+        raw_input()
         levels = {k: levels[k] for k in range(0,nr_levels_covered + 1)}
         # prune levels, speedup + performance 
         levels_tmp = {k:v for k,v in levels.iteritems() if k<prune_tree_levels}
@@ -133,7 +135,6 @@ class Data:
             if not found:
                 self.box_levels.append([0, -1])
         self.box_levels.extend(temp)
-        raw_input()
         print temp1
         print self.boxes.shape,np.array(temp1).shape
         self.boxes = np.concatenate((self.boxes,np.array(temp1)),axis=0)
