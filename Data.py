@@ -121,27 +121,28 @@ class Data:
                         #have to put it at the end somehow
                         if function[i_l][fl.index(i)][0] == '+':
                             if len(np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0])%2==0:
+                                print len(np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0]), len(np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0])
                                 #temp.append([0, -1])
-                                continue
                             else:
                                 temp.append([1,i_l])
                                 temp1.append(self.boxes[i])
                         elif function[i_l][fl.index(i)][0] == '-':
                             if len(np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0])%2==0:
-                                continue
+                                print len(np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0]), len(np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0])
                             else:
                                 temp.append([-1,i_l])
                                 temp1.append(self.boxes[i])
                     else:
                         if function[i_l][fl.index(i)][0] == '+':
-                            print np.any(np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0])
                             if len(np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0])%2==0:
+                                print len(np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0]), len(np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0])
                                 self.box_levels.append([0, -1])
                             else:
                                 self.box_levels.append([1,i_l])
                                 found = True
                         elif function[i_l][fl.index(i)][0] == '-':
                             if len(np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0])%2==0:
+                                print len(np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0]), len(np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0])
                                 self.box_levels.append([0, -1])
                             else:
                                 self.box_levels.append([-1,i_l])

@@ -57,6 +57,7 @@ def main():
         train_mat['labels'].append([load_dennis.get_all_labels(img_nr)])
         train_mat['functions'].append(img_data.box_levels)
         train_mat['overlaps'].append(img_data.gt_overlaps)
+        print len(img_data.box_levels), len(img_data.boxes)
         assert len(img_data.box_levels ) == len(img_data.boxes)
         #test data:
         level_functions = np.array(img_data.box_levels)
