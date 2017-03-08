@@ -39,9 +39,9 @@ class Output:
         self.avg_path_ = '/var/node436/local/tstahl/plos/htmp_%s_%s_%s_%s.png'
         self.upd_path = '/var/node436/local/tstahl/plos/upd_%s.png'
         self.upd_path_new = '/var/node436/local/tstahl/plos/upd_%s_new.png'
-        self.train_mat_path = '/var/scratch/spintea/Repositories/ms-caffe/data/selective_search_data/voc_2007_train_toby.mat'
+        #self.train_mat_path = '/var/scratch/spintea/Repositories/ms-caffe/data/selective_search_data/voc_2007_train_toby.mat'
         self.train_mat_path = '/var/scratch/spintea/Repositories/ms-caffe/data/selective_search_data/voc_2007_train_1D.mat'
-        self.test_mat_path = '/var/scratch/spintea/Repositories/ms-caffe/data/selective_search_data/voc_2007_test_toby.mat'
+        #self.test_mat_path = '/var/scratch/spintea/Repositories/ms-caffe/data/selective_search_data/voc_2007_test_toby.mat'
         self.test_mat_path = '/var/scratch/spintea/Repositories/ms-caffe/data/selective_search_data/voc_2007_test_1D.mat'
         self.preds_path = "/var/node436/local/tstahl/preds/%s_%s_%s_%s_%s_%s_%s.p"
         self.label_path = "/var/node436/local/tstahl/labels/%s_%s_%s_%s_%s_%s_%s.p"

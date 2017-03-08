@@ -126,7 +126,6 @@ class Data:
         self.box_levels.extend(temp)
         self.level_functions = get_level_functions(self.levels,self.boxes, prune_tree_levels)
 
-        print load.get_all_labels(self.img_nr)
 
         gts = load.get_all_gts(self.img_nr)
         self.gt_overlaps = np.zeros((len(self.boxes),21))
@@ -136,8 +135,6 @@ class Data:
                 for gt in gts[cls_]:
                     overlap_cls += get_overlap_ratio(gt, b)
                 self.gt_overlaps[i_b,i_cls+1] = overlap_cls
-        print self.gt_overlaps[1,:]
-        raw_input()
 
         
     def lookup_coords(self):
