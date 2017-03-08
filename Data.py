@@ -134,7 +134,7 @@ class Data:
             for i_cls,cls_ in enumerate(gts):
                 overlap_cls = 0.0
                 for gt in gts[cls_]:
-                    overlap_cls += get_overlap_ratio(g_i, b_i)
+                    overlap_cls += get_overlap_ratio(gt, b)
                 self.gt_overlaps[i_b,i_cls] = overlap_cls
             print self.gt_overlaps[i_b,:]
             raw_input()
