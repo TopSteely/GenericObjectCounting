@@ -82,13 +82,15 @@ def main():
         labels = load_dennis.get_all_labels(img_nr)
         print labels
         print iep
-        print patches[np.array(img_data.level_functions)[:,4]]
-        test_1 = np.sum(np.array(patches)[np.array(img_data.level_functions)],axis=0)
-        test_2 = np.sum(np.array(patches)[np.array(img_data.level_functions)],axis=0)
-        print test_1
-        print test_2
-        print test_1-test_2
+        iep_3 = 0.0
+        for flfl in img_data.level_functions[4]:
+            if flfl > 0:
+                iep_3 += patches[flfl][7]
+        for flfl in img_data.level_functions[5]:
+            if flfl > 0:
+                iep_3 -= patches[flfl][7]
         #assert np.array_equal(iep,labels)
+        print iep_3
         raw_input()
 #    for i,img_nr in enumerate(load_dennis.val_numbers):
 #        print img_nr
