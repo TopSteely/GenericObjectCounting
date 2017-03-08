@@ -28,7 +28,7 @@ def main():
     epochs = 4
     print epochs
 
-    subsamples = 10
+    subsamples = 2500
 
     feature_size = 4096
 
@@ -93,7 +93,7 @@ def main():
                         validation_loss = np.concatenate((validation_loss,te_l), axis=1)#.reshape(-1,1)
                         mses.extend(mse)
                     else:
-                        sgd_dennis.learn(learn_mode, subsamples)
+                        sgd_dennis.learn(learn_mode)
                 if debug:
                     output_dennis.plot_train_val_loss(training_loss, validation_loss, mses, eta, al_i)
             if learn_mode == 'all':
