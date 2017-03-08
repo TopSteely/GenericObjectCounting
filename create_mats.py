@@ -78,8 +78,12 @@ def main():
             print plus_boxes, minus_boxes
             for c in range(num_classes):
                 level_iep[c] = np.sum(patches[plus_boxes,c],axis=0)
+                if c==7:
+                    print level_iep[c]
                 if len(minus_boxes)>0:
                     level_iep[c] += np.sum(-1 * patches[minus_boxes,c],axis=0)
+                if c==7:
+                    print level_iep[c]
             iep[level_index,:] = level_iep
         labels = load_dennis.get_all_labels(img_nr)
         print labels
