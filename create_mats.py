@@ -65,6 +65,7 @@ def main():
         iep = np.zeros((levels,num_classes))
         patches = img_data.gt_overlaps
         print patches.shape
+        print img_data.level_functions[5][:20]
         for level_index in range(levels):
             plus_boxes = np.where((level_functions[:,:]==[1,level_index]).all(axis=1))[0]
             minus_boxes = np.where((level_functions[:,:]==[-1,level_index]).all(axis=1))[0]
