@@ -124,7 +124,7 @@ class Data:
                             temp.append([1,i_l])
                         elif function[i_l][fl.index(i)][0] == '-':
                             temp.append([-1,i_l])
-                        temp
+                        print temp
                         raw_input()
                     else:
                         found = True
