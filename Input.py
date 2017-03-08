@@ -68,14 +68,14 @@ class Input:
     def get_all_gts(self, img_nr):
         cat = self.category
         all_gts = {}
-        for class_ in ['aeroplane', 'bicycle', 'bird', 'boat',
+        for i_c,class_ in enumerate(['aeroplane', 'bicycle', 'bird', 'boat',
            'bottle', 'bus', 'car', 'cat', 'chair',
            'cow', 'diningtable', 'dog', 'horse',
            'motorbike', 'person', 'pottedplant',
-            'sheep', 'sofa', 'train', 'tvmonitor']:
+            'sheep', 'sofa', 'train', 'tvmonitor']):
             self.category = class_
             l = self.get_gts(img_nr)
-            all_gts[class_] = l
+            all_gts[i_c] = l
         self.category = cat
         return all_gts
         
