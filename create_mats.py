@@ -66,8 +66,7 @@ def main():
         patches = img_data.gt_overlaps
         print patches[0]
         print patches.shape
-        for i_lf, lf in enumerate(level_functions[-10:]):
-            print level_functions[i_lf,0]
+        for i_lf, lf in enumerate(level_functions):
             if (level_functions[i_lf,0]==1):
                 print i_lf,lf
             elif (level_functions[i_lf,0]==-1):
