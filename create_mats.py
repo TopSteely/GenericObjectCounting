@@ -82,7 +82,7 @@ def main():
         labels = load_dennis.get_all_labels(img_nr)
         print labels
         print iep
-        print patches[np.array(img_data.level_functions)[4][0:5]]
+        print patches[np.array(img_data.level_functions)[:,4]]
         test_1 = np.sum(np.array(patches)[np.array(img_data.level_functions)],axis=0)
         test_2 = np.sum(np.array(patches)[np.array(img_data.level_functions)],axis=0)
         print test_1
