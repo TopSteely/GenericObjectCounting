@@ -106,7 +106,7 @@ class Data:
         temp = []
         temp1 = []
         double = 0.0
-        l_boxes = len(boxes)
+        l_boxes = len(self.boxes)
         level_len = np.zeros(len(flevels))
         for i in range(len(self.boxes)):
             found = False
