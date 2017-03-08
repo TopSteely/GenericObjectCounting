@@ -354,7 +354,7 @@ def surface_area(boxes, boxes_level):
     
 def surface_area_old(boxes, boxes_level):
     print boxes[boxes_level]
-    print boxes[boxes_level].dytpy
+    print boxes[boxes_level].dytpe
     print boxes[boxes_level][:,2]
     return (np.max(boxes[boxes_level][:,2]) - np.min(boxes[boxes_level][:,0])) * (np.max(boxes[boxes_level][:,3]) - np.min(boxes[boxes_level][:,1]))
     if len(boxes_level) == 1:
