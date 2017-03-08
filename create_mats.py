@@ -46,7 +46,7 @@ def main():
     train_mat['overlaps'] = []
     for i,img_nr in enumerate(load_dennis.training_numbers[:50]):
         print img_nr
-        img_data = Data.Data(load_dennis, img_nr, 3, None)
+        img_data = Data.Data(load_dennis, img_nr, 20, None)
         # we need: 
             #'image': '/var/scratch/spintea/Repositories/ms-caffe/data/VOCdevkit2007/VOC2007/JPEGImages/000005.jpg'
             #'boxes' # (intersections)
@@ -78,7 +78,8 @@ def main():
         labels = load_dennis.get_all_labels(img_nr)
         print labels
         print iep
-        assert np.array_equal(iep ,labels)
+        for iep_ in iep:
+            assert np.array_equal(iep_ ,labels)
         raw_input()
 #    for i,img_nr in enumerate(load_dennis.val_numbers):
 #        print img_nr
