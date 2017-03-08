@@ -44,7 +44,7 @@ def main():
     train_mat['labels'] = []
     train_mat['functions'] = []
     train_mat['overlaps'] = []
-    for i,img_nr in enumerate(load_dennis.training_numbers):
+    for i,img_nr in enumerate(load_dennis.training_numbers[0:50]):
         print i, img_nr
         img_data = Data.Data(load_dennis, img_nr, 20, None)
         # we need: 
@@ -99,7 +99,7 @@ def main():
     test_mat['labels'] = []
     test_mat['functions'] = []
     test_mat['overlaps'] = []
-    for i,img_nr in enumerate(load_dennis.test_numbers):
+    for i,img_nr in enumerate(load_dennis.test_numbers[0:50]):
         print img_nr
         img_data = Data.Data(load_dennis, img_nr, 20, None)
         # we need: 
