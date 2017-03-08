@@ -45,10 +45,7 @@ def main():
     train_mat['functions'] = []
     train_mat['overlaps'] = []
     for i,img_nr in enumerate(load_dennis.training_numbers[:50]):
-        if img_nr != 122:
-            continue
-        print i
-        print img_nr
+        print i, img_nr
         img_data = Data.Data(load_dennis, img_nr, 20, None)
         # we need: 
             #'image': '/var/scratch/spintea/Repositories/ms-caffe/data/VOCdevkit2007/VOC2007/JPEGImages/000005.jpg'
@@ -60,15 +57,15 @@ def main():
         train_mat['labels'].append([load_dennis.get_all_labels(img_nr)])
         train_mat['functions'].append(img_data.box_levels)
         train_mat['overlaps'].append(img_data.gt_overlaps)
-        print len(img_data.box_levels), len(img_data.boxes)
+        #print len(img_data.box_levels), len(img_data.boxes)
         assert len(img_data.box_levels ) == len(img_data.boxes)
         #test data:
         level_functions = np.array(img_data.box_levels)
         levels = int(np.amax(level_functions[:,1],axis=0)) + 1
         num_classes = 21
         iep = np.zeros((levels,num_classes))
-        print img_data.level_functions[8][0:30]
-        print img_data.level_functions[9][0:30]
+        #print img_data.level_functions[8][0:30]
+        #print img_data.level_functions[9][0:30]
         patches = img_data.gt_overlaps
         for level_index in range(levels):
             plus_boxes = np.where((level_functions[:,:]==[1,level_index]).all(axis=1))[0]
