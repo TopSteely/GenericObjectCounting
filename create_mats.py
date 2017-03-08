@@ -93,6 +93,7 @@ def main():
                 iep_3 -= patches[flfl][7]
                 minusses += patches[flfl][7]
         #assert np.array_equal(iep,labels)
+        print minusses
         print iep_3
         raw_input()
 #    for i,img_nr in enumerate(load_dennis.val_numbers):
