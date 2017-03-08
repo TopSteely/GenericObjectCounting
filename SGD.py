@@ -31,7 +31,6 @@ class SGD:
             self.trainingdata = traindata
             self.valdata = valdata
         self.w = 0.001 * np.ones(self.n_features)#0.1 * np.random.rand(self.n_features)
-        print self.w
         self.predictor = IEP.IEP(self.w, 'prediction')
         self.w_update = np.zeros(self.n_features)
         self.learner = IEP.IEP(1, 'learning')
@@ -325,6 +324,7 @@ class SGD:
             if img_data.y > 0:
                 non_zero_error += error
                 n_non_zero += 1
+                print error, non_zero_error, n_non_zero
             if debug:
                 #skl_error += (self.sgd.predict(img_data.X[img_data.levels[0][0]].reshape(1, -1)) - img_data.y)**2
                 if self.version == 'multi':
@@ -369,7 +369,7 @@ class SGD:
                         im_cut = avg_pixels[img_nr][level]
         if debug:
             return preds_d, y_d, level_pred_d, max_level_preds_d, min_level_preds_d, avg_pixels
-        return squared_error/len(numbers), error / len(numbers), non_zero_error / n_non_zero#skl_error/len(numbers),, self.eta
+        return squared_error/len(numbers), error / len(numbers), non_zero_error / n_non_zero
         
         
     def loss_all(self, to=-1):
