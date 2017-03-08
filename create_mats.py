@@ -64,7 +64,7 @@ def main():
         num_classes = 21
         iep = np.zeros((levels,num_classes))
         patches = img_data.gt_overlaps
-        print patches[0]
+        print patches[552]
         print patches.shape
         for i_lf, lf in enumerate(level_functions):
             if (level_functions[i_lf,0]==1):
