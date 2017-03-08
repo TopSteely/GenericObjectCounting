@@ -67,11 +67,6 @@ def main():
         print img_data.boxes[552], img_data.boxes[8]
         print patches[552], patches[8]
         print patches.shape
-        for i_lf, lf in enumerate(level_functions):
-            if (level_functions[i_lf,0]==1):
-                print i_lf,lf
-            elif (level_functions[i_lf,0]==-1):
-                print i_lf,lf
         for level_index in range(levels):
             plus_boxes = np.where((level_functions[:,:]==[1,level_index]).all(axis=1))[0]
             minus_boxes = np.where((level_functions[:,:]==[-1,level_index]).all(axis=1))[0]
