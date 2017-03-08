@@ -74,7 +74,7 @@ class Input:
            'motorbike', 'person', 'pottedplant',
             'sheep', 'sofa', 'train', 'tvmonitor']:
             self.category = class_
-            l = self.get_gt(img_nr)
+            l = self.get_gts(img_nr)
             all_gts[class_] = l
         self.category = cat
         return all_gts
