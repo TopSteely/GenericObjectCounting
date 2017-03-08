@@ -150,7 +150,7 @@ class Data:
             if not found:
                 self.box_levels.append([0, -1])
         self.box_levels.extend(temp)
-        print np.array(temp1).shape,self.boxes.shape
+        print np.array(temp1).shape,self.boxes.shape, np.array(temp).shape
         self.boxes = np.concatenate((self.boxes,np.array(temp1)),axis=0)
         print self.boxes.shape
         print 'double: ', double
