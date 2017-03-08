@@ -113,7 +113,7 @@ class Data:
                     if found:
                         double += 1
                         #self.boxes = np.concatenate((self.boxes,self.boxes[i].reshape(1,4)), axis=0)
-                        temp1.append(self.boxes[i].reshape(1,4))
+                        temp1.append(self.boxes[i])
                         #have to put it at the end somehow
                         if function[i_l][fl.index(i)][0] == '+':
                             temp.append([1,i_l])
@@ -129,7 +129,7 @@ class Data:
                 self.box_levels.append([0, -1])
         self.box_levels.extend(temp)
         print self.boxes.shape,np.array(temp1).shape
-        self.boxes = np.concatenate((self.boxes,np.array(temp1)),axis=0)
+        self.boxes = np.concatenate((self.boxes,np.array(temp1)),axis=1)
         print 'double: ', double
         #self.level_functions = get_level_functions(self.levels,self.boxes, prune_tree_levels)
 
