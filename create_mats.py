@@ -44,7 +44,7 @@ def main():
     train_mat['labels'] = []
     train_mat['functions'] = []
     train_mat['overlaps'] = []
-    for i,img_nr in enumerate(load_dennis.training_numbers[0:50]):
+    for i,img_nr in enumerate(load_dennis.training_numbers):
         print i, img_nr
         img_data = Data.Data(load_dennis, img_nr, 20, None)
         # we need: 
@@ -79,27 +79,27 @@ def main():
         labels = load_dennis.get_all_labels(img_nr)
         #for iep_ in iep:
             #assert np.array_equal(iep_ ,labels)
-#    for i,img_nr in enumerate(load_dennis.val_numbers):
-#        print img_nr
-#        img_data = Data.Data(load_dennis, img_nr, 20, None)
-#        # we need: 
-#            #'image': '/var/scratch/spintea/Repositories/ms-caffe/data/VOCdevkit2007/VOC2007/JPEGImages/000005.jpg'
-#            #'boxes' # (intersections)
-#            #labels
-#            #functions
-#        train_mat['image'].append('/var/scratch/spintea/Repositories/ms-caffe/data/VOCdevkit2007/VOC2007/JPEGImages/%s.jpg'%(format(img_nr, "06d")))
-#        train_mat['boxes'].append(img_data.boxes)
-#        train_mat['labels'].append([load_dennis.get_all_labels(img_nr)])
-#        train_mat['functions'].append(img_data.box_levels)
-#        train_mat['overlaps'].append()
-#        assert len(img_data.box_levels ) == len(img_data.boxes)
+    for i,img_nr in enumerate(load_dennis.val_numbers):
+        print img_nr
+        img_data = Data.Data(load_dennis, img_nr, 20, None)
+        # we need: 
+            #'image': '/var/scratch/spintea/Repositories/ms-caffe/data/VOCdevkit2007/VOC2007/JPEGImages/000005.jpg'
+            #'boxes' # (intersections)
+            #labels
+            #functions
+        train_mat['image'].append('/var/scratch/spintea/Repositories/ms-caffe/data/VOCdevkit2007/VOC2007/JPEGImages/%s.jpg'%(format(img_nr, "06d")))
+        train_mat['boxes'].append(img_data.boxes)
+        train_mat['labels'].append([load_dennis.get_all_labels(img_nr)])
+        train_mat['functions'].append(img_data.box_levels)
+        train_mat['overlaps'].append(img_data.gt_overlaps)
+        assert len(img_data.box_levels ) == len(img_data.boxes)
 
     test_mat['image'] = []
     test_mat['boxes'] = []
     test_mat['labels'] = []
     test_mat['functions'] = []
     test_mat['overlaps'] = []
-    for i,img_nr in enumerate(load_dennis.test_numbers[0:50]):
+    for i,img_nr in enumerate(load_dennis.test_numbers):
         print img_nr
         img_data = Data.Data(load_dennis, img_nr, 20, None)
         # we need: 
