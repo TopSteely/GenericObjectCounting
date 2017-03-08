@@ -86,9 +86,12 @@ def main():
         for flfl in img_data.level_functions[4]:
             if flfl > 0:
                 iep_3 += patches[flfl][7]
+        print iep_3
+        minusses = 0.0
         for flfl in img_data.level_functions[5]:
             if flfl > 0:
                 iep_3 -= patches[flfl][7]
+                minusses += patches[flfl][7]
         #assert np.array_equal(iep,labels)
         print iep_3
         raw_input()
