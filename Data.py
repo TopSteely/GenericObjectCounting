@@ -95,6 +95,7 @@ class Data:
                 else:
                     self.boxes = np.array(self.boxes)
 
+        print 'starting getting gt data'
         #this is just for create_mats.py
         learner = IEP.IEP(1, 'learning')
         _,function = learner.get_iep_levels(self, {})
