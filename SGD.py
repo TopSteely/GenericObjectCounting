@@ -31,6 +31,7 @@ class SGD:
             self.trainingdata = traindata
             self.valdata = valdata
         self.w = 0.001 * np.ones(self.n_features)#0.1 * np.random.rand(self.n_features)
+        print self.w
         self.predictor = IEP.IEP(self.w, 'prediction')
         self.w_update = np.zeros(self.n_features)
         self.learner = IEP.IEP(1, 'learning')
