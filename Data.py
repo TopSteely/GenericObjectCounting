@@ -136,7 +136,7 @@ class Data:
                         if function[i_l][fl.index(i)][0] == '+':
                             if i == 372:
                                 print i,i_l, np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0], np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0]
-                            if len(np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0]) != len(np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0]) and len(np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0])>0:
+                            if len(np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0]) != len(np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0]) and len(np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0])>0:
                                 if i == 372:
                                     print i,i_l, '1'
                                 self.box_levels.append([1,i_l])
@@ -151,7 +151,7 @@ class Data:
                         elif function[i_l][fl.index(i)][0] == '-':
                             if i == 372:
                                 print i,i_l, '1'
-                            if len(np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0]) != len(np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0])  and len(np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0])>0:
+                            if len(np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0]) != len(np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0])  and len(np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0])>0:
                                 if i == 372:
                                     print i,i_l, '3'
                                 self.box_levels.append([-1,i_l])
