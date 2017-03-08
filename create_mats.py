@@ -36,7 +36,7 @@ def main():
 
     load_dennis = Input.Input('dennis',category,20)
     #output_pascal = Output.Output('pascal_max', category, tree_level_size, '1b')
-    output_dennis = Output.Output('dennis_%s'%(pred_mode), category, 3, '1b')
+    output_dennis = Output.Output('dennis_%s'%(pred_mode), category, 20, '1b')
     train_mat = {}
     test_mat = {}
     train_mat['image'] = []
@@ -44,7 +44,7 @@ def main():
     train_mat['labels'] = []
     train_mat['functions'] = []
     train_mat['overlaps'] = []
-    for i,img_nr in enumerate(load_dennis.training_numbers[:50]):
+    for i,img_nr in enumerate(load_dennis.training_numbers):
         print i, img_nr
         img_data = Data.Data(load_dennis, img_nr, 20, None)
         # we need: 
@@ -70,7 +70,6 @@ def main():
         for level_index in range(levels):
             plus_boxes = np.where((level_functions[:,:]==[1,level_index]).all(axis=1))[0]
             minus_boxes = np.where((level_functions[:,:]==[-1,level_index]).all(axis=1))[0]
-            print plus_boxes,minus_boxes
             level_iep = np.zeros(21)
             for c in range(num_classes):
                 level_iep[c] = np.sum(patches[plus_boxes,c],axis=0)
@@ -78,11 +77,8 @@ def main():
                     level_iep[c] += np.sum(-1 * patches[minus_boxes,c],axis=0)
             iep[level_index,:] = level_iep
         labels = load_dennis.get_all_labels(img_nr)
-        print labels
-        print iep
         #for iep_ in iep:
             #assert np.array_equal(iep_ ,labels)
-        raw_input()
 #    for i,img_nr in enumerate(load_dennis.val_numbers):
 #        print img_nr
 #        img_data = Data.Data(load_dennis, img_nr, 20, None)
@@ -103,7 +99,7 @@ def main():
     test_mat['labels'] = []
     test_mat['functions'] = []
     test_mat['overlaps'] = []
-    for i,img_nr in enumerate(load_dennis.test_numbers[0:50]):
+    for i,img_nr in enumerate(load_dennis.test_numbers):
         print img_nr
         img_data = Data.Data(load_dennis, img_nr, 20, None)
         # we need: 
