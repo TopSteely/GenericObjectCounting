@@ -131,8 +131,8 @@ class Data:
                         found = True
 
                         if function[i_l][fl.index(i)][0] == '+':
-                            print np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0]
-                            if np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0]:
+                            print np.any(np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0])
+                            if np.any(np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0]):
                                 self.box_levels.append([0, -1])
                             else:
                                 self.box_levels.append([1,i_l])
