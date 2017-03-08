@@ -104,11 +104,13 @@ class Data:
             flevels.append([a[1] for a in function[f]])
         self.box_levels = []
         temp = []
+        double = 0.0
         for i in range(len(self.boxes)):
             found = False
             for i_l,fl in enumerate(flevels):
                 if i in fl:
                     if found:
+                        double += 1
                         self.boxes = np.concatenate((self.boxes,self.boxes[i].reshape(1,4)), axis=0)
                        #have to put it at the end somehow
                         if function[i_l][fl.index(i)][0] == '+':
@@ -120,10 +122,11 @@ class Data:
                         if function[i_l][fl.index(i)][0] == '+':
                             self.box_levels.append([1,i_l])
                         elif function[i_l][fl.index(i)][0] == '-':
-                           self.box_levels.append([-1,i_l])
+                            self.box_levels.append([-1,i_l])
             if not found:
                 self.box_levels.append([0, -1])
         self.box_levels.extend(temp)
+        print 'double: ', double
         #self.level_functions = get_level_functions(self.levels,self.boxes, prune_tree_levels)
 
 
@@ -133,7 +136,7 @@ class Data:
             for i_cls,cls_ in enumerate(gts):
                 overlap_cls = 0.0
                 for gt in gts[cls_]:
-                    overlap_cls += get_overlap_ratio(b, gt)
+                    overlap_cls += get_overlap_ratio(gt, b)
                 self.gt_overlaps[i_b,i_cls+1] = overlap_cls
 
         
