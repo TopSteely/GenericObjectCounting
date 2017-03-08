@@ -105,7 +105,7 @@ class Data:
         temp = []
         for i in range(len(self.boxes)):
             found = False
-           for i_l,fl in enumerate(flevels):
+            for i_l,fl in enumerate(flevels):
                 if i in fl:
                     if found:
                         self.boxes = np.concatenate((self.boxes,self.boxes[i].reshape(1,4)), axis=0)
