@@ -46,7 +46,7 @@ def main():
     train_mat['overlaps'] = []
     for i,img_nr in enumerate(load_dennis.training_numbers[:50]):
         print img_nr
-        img_data = Data.Data(load_dennis, img_nr, 20, None)
+        img_data = Data.Data(load_dennis, img_nr, 3, None)
         # we need: 
             #'image': '/var/scratch/spintea/Repositories/ms-caffe/data/VOCdevkit2007/VOC2007/JPEGImages/000005.jpg'
             #'boxes' # (intersections)
@@ -68,6 +68,7 @@ def main():
         for level_index in range(levels):
             plus_boxes = np.where((level_functions[:,:]==[1,level_index]).all(axis=1))[0]
             minus_boxes = np.where((level_functions[:,:]==[-1,level_index]).all(axis=1))[0]
+            print plus_boxes,minus_boxes
             level_iep = np.zeros(21)
             for c in range(num_classes):
                 level_iep[c] = np.sum(patches[plus_boxes,c],axis=0)
