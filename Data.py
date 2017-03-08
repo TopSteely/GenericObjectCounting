@@ -132,9 +132,7 @@ class Data:
                             self.box_levels.append([-1,i_l])
             if not found:
                 self.box_levels.append([0, -1])
-        print self.box_levels
         self.box_levels.extend(temp)
-        print self.box_levels
         raw_input()
         print temp1
         print self.boxes.shape,np.array(temp1).shape
