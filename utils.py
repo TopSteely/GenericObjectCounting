@@ -110,7 +110,7 @@ def create_tree(boxes):
                 #print 'surface area of box == 0', i
                 continue
             possible_parents = []
-            for ii,box_ in enumerate(boxes[i+1]):
+            for ii,box_ in enumerate(boxes[i+1:]):
                 if get_overlap_ratio(box, box_) == 1 and np.any(box != box_):
                     possible_parents.append(ii)
                     #print i, '-', ii
