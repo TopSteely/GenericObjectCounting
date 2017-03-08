@@ -112,7 +112,7 @@ class Data:
                 if i in fl:
                     if found:
                         double += 1
-                        print i, i_l
+                        print i, i_l, self.boxes[i]
                         #self.boxes = np.concatenate((self.boxes,self.boxes[i].reshape(1,4)), axis=0)
                         temp1.append(self.boxes[i])
                         #have to put it at the end somehow
@@ -129,6 +129,7 @@ class Data:
             if not found:
                 self.box_levels.append([0, -1])
         self.box_levels.extend(temp)
+        print temp1
         print self.boxes.shape,np.array(temp1).shape
         self.boxes = np.concatenate((self.boxes,np.array(temp1)),axis=0)
         print 'double: ', double
