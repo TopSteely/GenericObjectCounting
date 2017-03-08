@@ -353,7 +353,7 @@ def surface_area(boxes, boxes_level):
     return surface_area
     
 def surface_area_old(boxes, boxes_level):
-    return (np.max(np.array(boxes)[np.array(boxes_level),2]) - np.min(np.array(boxes)[np.array(boxes_level),0])) * (np.max(np.array(boxes)[np.array(boxes_level),3]) - np.min(np.array(boxes)[np.array(boxes_level),1]))
+    #return (np.max(np.array(boxes)[np.array(boxes_level),2]) - np.min(np.array(boxes)[np.array(boxes_level),0])) * (np.max(np.array(boxes)[np.array(boxes_level),3]) - np.min(np.array(boxes)[np.array(boxes_level),1]))
     if len(boxes_level) == 1:
         I = boxes[boxes_level[0]]
         return (I[3]-I[1])*(I[2]-I[0])
