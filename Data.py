@@ -57,11 +57,11 @@ class Data:
                 nr_levels_covered = level
         levels = {k: levels[k] for k in range(0,nr_levels_covered + 1)}
         print levels.keys()
-        raw_input()
         # prune levels, speedup + performance 
         levels_tmp = {k:v for k,v in levels.iteritems() if k<prune_tree_levels}
         levels_gone = {k:v for k,v in levels.iteritems() if k>=prune_tree_levels}
         self.levels = levels_tmp
+        print self.levels.keys()
         #prune tree as well, for patches training
         for trash_level in levels_gone.values():
             self.G.remove_nodes_from(trash_level)
