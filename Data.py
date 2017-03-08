@@ -116,7 +116,6 @@ class Data:
                     if found:
                         # append afterwards so functions and boxes are in same order
                         double += 1
-                        print i, i_l, self.boxes[i]
                         #self.boxes = np.concatenate((self.boxes,self.boxes[i].reshape(1,4)), axis=0)
                         #have to put it at the end somehow
                         if function[i_l][fl.index(i)][0] == '+':
@@ -134,33 +133,23 @@ class Data:
                                 temp1.append(self.boxes[i])
                     else:
                         if function[i_l][fl.index(i)][0] == '+':
-                            if i == 372:
-                                print i,i_l, np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0], np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0]
                             if len(np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0]) != len(np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0]) and len(np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0])>0:
-                                if i == 372:
-                                    print i,i_l, '1'
                                 self.box_levels.append([1,i_l])
                                 #print i, i_l, np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0], np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0]
                                 #raw_input()
                                 found = True
                             else:
-                                if i == 372:
-                                    print i,i_l, '2'
+                                print 'skipping', i
                                 self.box_levels.append([0, -1])
                                 found = True
                         elif function[i_l][fl.index(i)][0] == '-':
-                            if i == 372:
-                                print i,i_l, '1'
                             if len(np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0]) != len(np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0])  and len(np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0])>0:
-                                if i == 372:
-                                    print i,i_l, '3'
                                 self.box_levels.append([-1,i_l])
                                 #print i, i_l, np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0], np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0]
                                 #raw_input()
                                 found = True
                             else:
-                                if i == 372:
-                                    print i,i_l, '4'
+                                print 'skipping', i
                                 self.box_levels.append([0, -1])
                                 found = True
             if not found:
