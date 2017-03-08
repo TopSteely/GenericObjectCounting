@@ -78,8 +78,8 @@ def main():
         labels = load_dennis.get_all_labels(img_nr)
         print labels
         print iep
-        for iep_ in iep:
-            assert np.array_equal(iep_ ,labels)
+        #for iep_ in iep:
+            #assert np.array_equal(iep_ ,labels)
         raw_input()
 #    for i,img_nr in enumerate(load_dennis.val_numbers):
 #        print img_nr
