@@ -28,13 +28,13 @@ def main():
     epochs = 4
     print epochs
 
-    subsamples = 50
+    subsamples = 10
 
     feature_size = 4096
 
     eta = math.pow(10,-5)
 
-    for tree_level_size in range(1,10):
+    for tree_level_size in range(1,12):
         #initialize
         print 'initializing', tree_level_size
         #sgd = SGD.SGD('max', category, tree_level_size, batch_size, math.pow(10,-4), 0.003, math.pow(10,-5))
