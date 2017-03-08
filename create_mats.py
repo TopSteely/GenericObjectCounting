@@ -64,8 +64,6 @@ def main():
         num_classes = 21
         iep = np.zeros((levels,num_classes))
         patches = img_data.gt_overlaps
-        print img_data.boxes[552], img_data.boxes[8]
-        print patches[552], patches[8]
         print patches.shape
         for level_index in range(levels):
             plus_boxes = np.where((level_functions[:,:]==[1,level_index]).all(axis=1))[0]
@@ -84,6 +82,11 @@ def main():
         labels = load_dennis.get_all_labels(img_nr)
         print labels
         print iep
+        test_1 = np.sum(patches[img_data.level_functions[4,:]],axis=0)
+        test_2 = np.sum(patches[img_data.level_functions[5,:]],axis=0)
+        print test_1
+        print test_2
+        print test_1-test_2
         #assert np.array_equal(iep,labels)
         raw_input()
 #    for i,img_nr in enumerate(load_dennis.val_numbers):
