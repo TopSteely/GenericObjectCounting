@@ -353,10 +353,10 @@ def surface_area(boxes, boxes_level):
     return surface_area
     
 def surface_area_old(boxes, boxes_level):
-    print boxes[boxes_level]
-    print boxes[boxes_level].dytpe
-    print boxes[boxes_level][:,2]
-    return (np.max(boxes[boxes_level][:,2]) - np.min(boxes[boxes_level][:,0])) * (np.max(boxes[boxes_level][:,3]) - np.min(boxes[boxes_level][:,1]))
+    print boxes[np.array(boxes_level,astype=int32)]
+    print boxes[np.array(boxes_level,astype=int32)].dytpe
+    print boxes[np.array(boxes_level,astype=int32)][:,2]
+    return (np.max(boxes[np.array(boxes_level,astype=int32)][:,2]) - np.min(boxes[np.array(boxes_level,astype=int32)][:,0])) * (np.max(boxes[np.array(boxes_level,astype=int32)][:,3]) - np.min(boxes[np.array(boxes_level,astype=int32)][:,1]))
     if len(boxes_level) == 1:
         I = boxes[boxes_level[0]]
         return (I[3]-I[1])*(I[2]-I[0])
