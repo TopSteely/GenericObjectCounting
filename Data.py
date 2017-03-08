@@ -169,7 +169,8 @@ class Data:
         self.box_levels.extend(temp)
         print np.array(self.box_levels).shape
         print np.array(temp1).shape,self.boxes.shape, np.array(temp).shape
-        self.boxes = np.concatenate((self.boxes,np.array(temp1)),axis=0)
+        if len(temp1)>0:
+            self.boxes = np.concatenate((self.boxes,np.array(temp1)),axis=0)
         print self.boxes.shape
         print 'double: ', double
         #self.level_functions = get_level_functions(self.levels,self.boxes, prune_tree_levels)
