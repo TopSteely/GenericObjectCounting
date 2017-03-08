@@ -136,18 +136,20 @@ class Data:
                         if function[i_l][fl.index(i)][0] == '+':
                             if len(np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0]) != len(np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0]) and len(np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0])>0:
                                 print len(np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0]), len(np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0])
-                                #self.box_levels.append([0, -1])
+                                self.box_levels.append([0, -1])
                                 print i, i_l, np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0], np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0]
                                 raw_input()
+                                found = True
                             else:
                                 self.box_levels.append([1,i_l])
                                 found = True
                         elif function[i_l][fl.index(i)][0] == '-':
                             if len(np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0]) != len(np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0])  and len(np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0])>0:
                                 print len(np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0]), len(np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0])
-                                #self.box_levels.append([0, -1])
+                                self.box_levels.append([0, -1])
                                 print i, i_l, np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0], np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0]
                                 raw_input()
+                                found = True
                             else:
                                 self.box_levels.append([-1,i_l])
                                 found = True
