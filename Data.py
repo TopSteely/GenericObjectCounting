@@ -137,6 +137,8 @@ class Data:
                             if len(np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0])%2==0:
                                 print len(np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0]), len(np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0])
                                 self.box_levels.append([0, -1])
+                                print i, i_l, np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0], np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0]
+                                raw_input()
                             else:
                                 self.box_levels.append([1,i_l])
                                 found = True
@@ -144,6 +146,8 @@ class Data:
                             if len(np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0])%2==0:
                                 print len(np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0]), len(np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0])
                                 self.box_levels.append([0, -1])
+                                print i, i_l, print i, i_l, np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0], np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0]
+                                raw_input()
                             else:
                                 self.box_levels.append([-1,i_l])
                                 found = True
