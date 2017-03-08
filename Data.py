@@ -108,7 +108,7 @@ class Data:
         double = 0.0
         l_boxes = len(self.boxes)
         level_len = np.zeros(len(flevels))
-        for i in range(len(self.boxes[371:373])):
+        for i in range(len(self.boxes)):
             found = False
             for i_l,fl in enumerate(flevels):
                 if i in fl:
@@ -129,7 +129,6 @@ class Data:
 
                         if function[i_l][fl.index(i)][0] == '+':
                             print i,i_l,np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0]
-                            raw_input()
                             if np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0]:
                                 print i
                                 raw_input()
