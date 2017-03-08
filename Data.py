@@ -54,8 +54,6 @@ class Data:
                 self.G.remove_nodes_from(levels[level])
             else:
                 nr_levels_covered = level
-        print nr_levels_covered
-        raw_input()
         levels = {k: levels[k] for k in range(0,nr_levels_covered + 1)}
         # prune levels, speedup + performance 
         levels_tmp = {k:v for k,v in levels.iteritems() if k<prune_tree_levels}
@@ -126,6 +124,8 @@ class Data:
                             temp.append([1,i_l])
                         elif function[i_l][fl.index(i)][0] == '-':
                             temp.append([-1,i_l])
+                        temp
+                        raw_input()
                     else:
                         found = True
                         if function[i_l][fl.index(i)][0] == '+':
