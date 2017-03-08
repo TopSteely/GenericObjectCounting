@@ -104,6 +104,7 @@ class Data:
             flevels.append([a[1] for a in function[f]])
         self.box_levels = []
         temp = []
+        temp1 = []
         double = 0.0
         for i in range(len(self.boxes)):
             found = False
@@ -111,8 +112,9 @@ class Data:
                 if i in fl:
                     if found:
                         double += 1
-                        self.boxes = np.concatenate((self.boxes,self.boxes[i].reshape(1,4)), axis=0)
-                       #have to put it at the end somehow
+                        #self.boxes = np.concatenate((self.boxes,self.boxes[i].reshape(1,4)), axis=0)
+                        temp1.append(self.boxes[i].reshape(1,4))
+                        #have to put it at the end somehow
                         if function[i_l][fl.index(i)][0] == '+':
                             temp.append([1,i_l])
                         elif function[i_l][fl.index(i)][0] == '-':
@@ -126,6 +128,7 @@ class Data:
             if not found:
                 self.box_levels.append([0, -1])
         self.box_levels.extend(temp)
+        self.boxes = np.concatenate((self.boxes,temp1),axis=0)
         print 'double: ', double
         #self.level_functions = get_level_functions(self.levels,self.boxes, prune_tree_levels)
 
