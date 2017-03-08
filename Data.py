@@ -129,7 +129,8 @@ class Data:
                         if function[i_l][fl.index(i)][0] == '+':
                             if function[i_l][fl.index(i)][0] == '-':
                                 self.box_levels.append([0, -1])
-                            self.box_levels.append([1,i_l])
+                            else:
+                                self.box_levels.append([1,i_l])
                         elif function[i_l][fl.index(i)][0] == '-':
                             self.box_levels.append([-1,i_l])
             if not found:
