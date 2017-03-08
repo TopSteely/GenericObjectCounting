@@ -28,11 +28,11 @@ def main():
     epochs = 4
     print epochs
 
-    subsamples = 2500
+    subsamples = 15
 
     feature_size = 4096
 
-    eta = math.pow(10,-5)
+    eta = math.pow(10,-4)
 
     for tree_level_size in range(1,12):
         #initialize
@@ -93,7 +93,7 @@ def main():
                         validation_loss = np.concatenate((validation_loss,te_l), axis=1)#.reshape(-1,1)
                         mses.extend(mse)
                     else:
-                        sgd_dennis.learn(learn_mode)
+                        sgd_dennis.learn(learn_mode, subsamples)
                 if debug:
                     output_dennis.plot_train_val_loss(training_loss, validation_loss, mses, eta, al_i)
             if learn_mode == 'all':
