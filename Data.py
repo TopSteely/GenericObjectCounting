@@ -136,8 +136,8 @@ class Data:
                 for gt in gts[cls_]:
                     overlap_cls += get_overlap_ratio(gt, b)
                 self.gt_overlaps[i_b,i_cls+1] = overlap_cls
-            print self.gt_overlaps[i_b,:]
-            raw_input()
+        print self.gt_overlaps[1,:]
+        raw_input()
 
         
     def lookup_coords(self):
