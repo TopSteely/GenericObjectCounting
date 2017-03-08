@@ -28,11 +28,11 @@ def main():
     epochs = 4
     print epochs
 
-    subsamples = 15
+    subsamples = 2500
 
     feature_size = 4096
 
-    eta = math.pow(10,-4)
+    eta = math.pow(10,-5)
 
     for tree_level_size in range(1,12):
         #initialize

@@ -321,7 +321,7 @@ class SGD:
             #had to .reshape(-1,) for 'multi', does it work for mean?
             squared_error += img_loss.reshape(-1,)
             error += abs(self.predict(img_data) - img_data.y).reshape(-1,)
-            print self.predict(img_data), img_data.y, abs(self.predict(img_data) - img_data.y)
+            #print self.predict(img_data), img_data.y, abs(self.predict(img_data) - img_data.y)
             if img_data.y > 0:
                 non_zero_error += abs(self.predict(img_data) - img_data.y).reshape(-1,)
                 n_non_zero += 1
