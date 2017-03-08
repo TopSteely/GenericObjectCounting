@@ -119,14 +119,14 @@ class Data:
                         #self.boxes = np.concatenate((self.boxes,self.boxes[i].reshape(1,4)), axis=0)
                         #have to put it at the end somehow
                         if function[i_l][fl.index(i)][0] == '+':
-                            if len(np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0]) != len(np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0])  and len(np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0])>0:
+                            if len(np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0]) != len(np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0])  and len(np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0])>0:
                                 #temp.append([0, -1])
                                 double
                             else:
                                 temp.append([1,i_l])
                                 temp1.append(self.boxes[i])
                         elif function[i_l][fl.index(i)][0] == '-':
-                            if len(np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0]) != len(np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0])  and len(np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0])>0:
+                            if len(np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0]) != len(np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0])  and len(np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0])>0:
                                 double
                             else:
                                 temp.append([-1,i_l])
