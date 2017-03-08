@@ -46,7 +46,7 @@ def main():
     train_mat['overlaps'] = []
     for i,img_nr in enumerate(load_dennis.training_numbers[:50]):
         print img_nr
-        img_data = Data.Data(load_dennis, img_nr, 20, None)
+        img_data = Data.Data(load_dennis, img_nr, 3, None)
         # we need: 
             #'image': '/var/scratch/spintea/Repositories/ms-caffe/data/VOCdevkit2007/VOC2007/JPEGImages/000005.jpg'
             #'boxes' # (intersections)
