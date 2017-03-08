@@ -120,24 +120,32 @@ class Data:
                         #self.boxes = np.concatenate((self.boxes,self.boxes[i].reshape(1,4)), axis=0)
                         #have to put it at the end somehow
                         if function[i_l][fl.index(i)][0] == '+':
-                            if np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0]:
-                                temp.append([0, -1])
+                            if len(np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0])%2==0:
+                                #temp.append([0, -1])
+                                continue
                             else:
                                 temp.append([1,i_l])
                                 temp1.append(self.boxes[i])
                         elif function[i_l][fl.index(i)][0] == '-':
-                            temp.append([-1,i_l])
+                            if len(np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0])%2==0:
+                                continue
+                            else:
+                                temp.append([-1,i_l])
+                                temp1.append(self.boxes[i])
                     else:
-                        found = True
-
                         if function[i_l][fl.index(i)][0] == '+':
                             print np.any(np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0])
-                            if np.any(np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0]):
+                            if len(np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0])%2==0:
                                 self.box_levels.append([0, -1])
                             else:
                                 self.box_levels.append([1,i_l])
+                                found = True
                         elif function[i_l][fl.index(i)][0] == '-':
-                            self.box_levels.append([-1,i_l])
+                            if len(np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0])%2==0:
+                                self.box_levels.append([0, -1])
+                            else:
+                                self.box_levels.append([-1,i_l])
+                                found = True
             if not found:
                 self.box_levels.append([0, -1])
         self.box_levels.extend(temp)
