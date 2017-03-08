@@ -129,6 +129,7 @@ class Data:
         print load.get_all_labels(self.img_nr)
 
         gts = load.get_all_gts(self.img_nr)
+        print gts.keys()
         self.gt_overlaps = np.zeros((len(self.boxes),20))
         for i_b,b in enumerate(self.boxes):
             for i_cls,cls_ in enumerate(gts):
