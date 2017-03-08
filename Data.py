@@ -128,9 +128,9 @@ class Data:
                         found = True
 
                         if function[i_l][fl.index(i)][0] == '+':
-                            print i,i_l,np.where(function[i_l] == ['-',i].all(axis=1))[0]
+                            print i,i_l,np.where((function[i_l] == ['-',i]).all(axis=1))[0]
                             raw_input()
-                            if np.where(function[i_l] == ['-',i].all(axis=1))[0]:
+                            if np.where((function[i_l] == ['-',i]).all(axis=1))[0]:
                                 print i
                                 raw_input()
                                 self.box_levels.append([0, -1])
