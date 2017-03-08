@@ -124,8 +124,6 @@ class Data:
                             temp.append([1,i_l])
                         elif function[i_l][fl.index(i)][0] == '-':
                             temp.append([-1,i_l])
-                        print temp
-                        raw_input()
                     else:
                         found = True
                         if function[i_l][fl.index(i)][0] == '+':
@@ -134,7 +132,10 @@ class Data:
                             self.box_levels.append([-1,i_l])
             if not found:
                 self.box_levels.append([0, -1])
+        print temp
         self.box_levels.extend(temp)
+        print self.box_levels[-5:]
+        raw_input()
         print temp1
         print self.boxes.shape,np.array(temp1).shape
         self.boxes = np.concatenate((self.boxes,np.array(temp1)),axis=0)
