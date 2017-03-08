@@ -124,7 +124,7 @@ class Data:
             if not found:
                 self.box_levels.append([0, -1])
         self.box_levels.extend(temp)
-        self.level_functions = get_level_functions(self.levels,self.boxes, prune_tree_levels)
+        #self.level_functions = get_level_functions(self.levels,self.boxes, prune_tree_levels)
 
 
         gts = load.get_all_gts(self.img_nr)
