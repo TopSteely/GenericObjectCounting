@@ -64,6 +64,20 @@ class Input:
             all_labels.append(l)
         self.category = cat
         return np.array(all_labels)
+
+    def get_all_gts(self, img_nr):
+        cat = self.category
+        all_gts = {}
+        for class_ in ['aeroplane', 'bicycle', 'bird', 'boat',
+           'bottle', 'bus', 'car', 'cat', 'chair',
+           'cow', 'diningtable', 'dog', 'horse',
+           'motorbike', 'person', 'pottedplant',
+            'sheep', 'sofa', 'train', 'tvmonitor']:
+            self.category = class_
+            l = self.get_gt(img_nr)
+            all_gts[class_] = l
+        self.category = cat
+        return all_gts
         
 	#old
 #    def get_intersection_features(self, img_nr):

@@ -96,34 +96,47 @@ class Data:
                     self.boxes = np.array(self.boxes)
 
         #this is just for create_mats.py
-        #learner = IEP.IEP(1, 'learning')
-        #_,function = learner.get_iep_levels(self, {})
-        #flevels = []
-        #for f in range(len(function)):
-        #    flevels.append([a[1] for a in function[f]])
-        #self.box_levels = []
-        #temp = []
-        #for i in range(len(self.boxes)):
-        #    found = False
-        #    for i_l,fl in enumerate(flevels):
-        #        if i in fl:
-        #            if found:
-        #                self.boxes = np.concatenate((self.boxes,self.boxes[i].reshape(1,4)), axis=0)
-        #                #have to put it at the end somehow
-        #                if function[i_l][fl.index(i)][0] == '+':
-        #                    temp.append([1,i_l])
-        #                elif function[i_l][fl.index(i)][0] == '-':
-        #                    temp.append([-1,i_l])
-        #            else:
-        #                found = True
-        #                if function[i_l][fl.index(i)][0] == '+':
-        #                    self.box_levels.append([1,i_l])
-        #                elif function[i_l][fl.index(i)][0] == '-':
-        #                    self.box_levels.append([-1,i_l])
-        #    if not found:
-        #        self.box_levels.append([0, -1])
-        #self.box_levels.extend(temp)
-        #self.level_functions = get_level_functions(self.levels,self.boxes, prune_tree_levels)
+        learner = IEP.IEP(1, 'learning')
+        _,function = learner.get_iep_levels(self, {})
+        flevels = []
+        for f in range(len(function)):
+            flevels.append([a[1] for a in function[f]])
+        self.box_levels = []
+        temp = []
+        for i in range(len(self.boxes)):
+            found = False
+           for i_l,fl in enumerate(flevels):
+                if i in fl:
+                    if found:
+                        self.boxes = np.concatenate((self.boxes,self.boxes[i].reshape(1,4)), axis=0)
+                       #have to put it at the end somehow
+                        if function[i_l][fl.index(i)][0] == '+':
+                            temp.append([1,i_l])
+                       elif function[i_l][fl.index(i)][0] == '-':
+                            temp.append([-1,i_l])
+                    else:
+                        found = True
+                        if function[i_l][fl.index(i)][0] == '+':
+                            self.box_levels.append([1,i_l])
+                        elif function[i_l][fl.index(i)][0] == '-':
+                           self.box_levels.append([-1,i_l])
+            if not found:
+                self.box_levels.append([0, -1])
+        self.box_levels.extend(temp)
+        self.level_functions = get_level_functions(self.levels,self.boxes, prune_tree_levels)
+
+        print load.get_all_labels(self.img_nr)
+
+        gts = load.get_all_gts(self.img_nr)
+        self.gt_overlaps = np.zeros((len(self.boxes),20))
+        for i_b,b in enumerate(self.boxes):
+            for i_cls,cls_ in enumerate(gts):
+                overlap_cls = 0.0
+                for gt in gts[cls_]:
+                    overlap_cls += get_overlap_ratio(g_i, b_i)
+                self.gt_overlaps[i_b,i_cls] = overlap_cls
+            print self.gt_overlaps[i_b,:]
+            raw_input()
 
         
     def lookup_coords(self):

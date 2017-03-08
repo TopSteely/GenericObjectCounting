@@ -43,6 +43,7 @@ def main():
     train_mat['boxes'] = []
     train_mat['labels'] = []
     train_mat['functions'] = []
+    train_mat['overlaps'] = []
     for i,img_nr in enumerate(load_dennis.training_numbers):
         print img_nr
         img_data = Data.Data(load_dennis, img_nr, 20, None)
@@ -55,6 +56,7 @@ def main():
         train_mat['boxes'].append(img_data.boxes)
         train_mat['labels'].append([load_dennis.get_all_labels(img_nr)])
         train_mat['functions'].append(img_data.box_levels)
+        train_mat['overlaps'].append()
         assert len(img_data.box_levels ) == len(img_data.boxes)
     for i,img_nr in enumerate(load_dennis.val_numbers):
         print img_nr
@@ -68,12 +70,14 @@ def main():
         train_mat['boxes'].append(img_data.boxes)
         train_mat['labels'].append([load_dennis.get_all_labels(img_nr)])
         train_mat['functions'].append(img_data.box_levels)
+        train_mat['overlaps'].append()
         assert len(img_data.box_levels ) == len(img_data.boxes)
 
     test_mat['image'] = []
     test_mat['boxes'] = []
     test_mat['labels'] = []
     test_mat['functions'] = []
+    test_mat['overlaps'] = []
     for i,img_nr in enumerate(load_dennis.test_numbers):
         print img_nr
         img_data = Data.Data(load_dennis, img_nr, 20, None)
@@ -87,6 +91,7 @@ def main():
         test_mat['labels'].append([load_dennis.get_all_labels(img_nr)])
         test_mat['functions'].append(img_data.box_levels)
         assert len(img_data.box_levels ) == len(img_data.boxes)
+        test_mat['overlaps'].append()
     output_dennis.save_mat(train_mat,test_mat)
     
     
