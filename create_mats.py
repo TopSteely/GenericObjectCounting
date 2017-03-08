@@ -59,7 +59,7 @@ def main():
         train_mat['overlaps'].append(img_data.gt_overlaps)
         assert len(img_data.box_levels ) == len(img_data.boxes)
         #test data:
-        level_functions = img_data.box_levels
+        level_functions = np.array(img_data.box_levels)
         levels = int(np.amax(level_functions[:,1],axis=0))
         num_classes = 21
         iep = np.zeros((levels,num_classes))
