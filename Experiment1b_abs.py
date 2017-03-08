@@ -97,9 +97,9 @@ def main():
                 if debug:
                     output_dennis.plot_train_val_loss(training_loss, validation_loss, mses, eta, al_i)
             if learn_mode == 'all':
-                mse,ae, ae_non_zero = sgd_dennis.evaluate('val_all', subsamples)
+                #mse,ae, ae_non_zero = sgd_dennis.evaluate('val_all', subsamples)
                 mse_tr,ae_tr, ae_non_zero_tr = sgd_dennis.evaluate('train_all', subsamples)
-                preds_d_d, y_d_d, level_pred_d_d, max_level_preds_d_d, min_level_preds_d_d, avg_pixls = sgd_dennis.evaluate('val_all', subsamples, True)
+                preds_d_d, y_d_d, level_pred_d_d, max_level_preds_d_d, min_level_preds_d_d, avg_pixls, mse,ae, ae_non_zero = sgd_dennis.evaluate('val_all', subsamples, True)
             elif learn_mode == 'category':
                 mse,ae, ae_non_zero = sgd_dennis.evaluate('val_cat', subsamples)
                 mse_tr,ae_tr, ae_non_zero_tr = sgd_dennis.evaluate('train_cat', subsamples)
