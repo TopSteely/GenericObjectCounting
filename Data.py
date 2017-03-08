@@ -118,20 +118,20 @@ class Data:
                         double += 1
                         print i, i_l, self.boxes[i]
                         #self.boxes = np.concatenate((self.boxes,self.boxes[i].reshape(1,4)), axis=0)
-                        temp1.append(self.boxes[i])
                         #have to put it at the end somehow
                         if function[i_l][fl.index(i)][0] == '+':
-                            temp.append([1,i_l])
-                        if function[i_l][fl.index(i)][0] == '-':
+                            if np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0]:
+                                temp.append([0, -1])
+                            else:
+                                temp.append([1,i_l])
+                                temp1.append(self.boxes[i])
+                        elif function[i_l][fl.index(i)][0] == '-':
                             temp.append([-1,i_l])
                     else:
                         found = True
 
                         if function[i_l][fl.index(i)][0] == '+':
-                            print i,i_l,np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0]
                             if np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0]:
-                                print i
-                                raw_input()
                                 self.box_levels.append([0, -1])
                             else:
                                 self.box_levels.append([1,i_l])

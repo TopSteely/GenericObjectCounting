@@ -46,7 +46,7 @@ def main():
     train_mat['overlaps'] = []
     for i,img_nr in enumerate(load_dennis.training_numbers[:50]):
         print img_nr
-        img_data = Data.Data(load_dennis, img_nr, 3, None)
+        img_data = Data.Data(load_dennis, img_nr, 20, None)
         # we need: 
             #'image': '/var/scratch/spintea/Repositories/ms-caffe/data/VOCdevkit2007/VOC2007/JPEGImages/000005.jpg'
             #'boxes' # (intersections)
@@ -64,39 +64,19 @@ def main():
         num_classes = 21
         iep = np.zeros((levels,num_classes))
         patches = img_data.gt_overlaps
-        print patches.shape
-        print img_data.level_functions[4][:20]
-        print img_data.level_functions[5][:20]
         for level_index in range(levels):
             plus_boxes = np.where((level_functions[:,:]==[1,level_index]).all(axis=1))[0]
             minus_boxes = np.where((level_functions[:,:]==[-1,level_index]).all(axis=1))[0]
             level_iep = np.zeros(21)
-            print plus_boxes, minus_boxes
             for c in range(num_classes):
                 level_iep[c] = np.sum(patches[plus_boxes,c],axis=0)
-                if c==7:
-                    print level_iep[c]
                 if len(minus_boxes)>0:
                     level_iep[c] += np.sum(-1 * patches[minus_boxes,c],axis=0)
-                if c==7:
-                    print level_iep[c]
             iep[level_index,:] = level_iep
         labels = load_dennis.get_all_labels(img_nr)
         print labels
         print iep
-        iep_3 = 0.0
-        for flfl in img_data.level_functions[4]:
-            if flfl > 0:
-                iep_3 += patches[flfl][7]
-        print iep_3
-        minusses = 0.0
-        for flfl in img_data.level_functions[5]:
-            if flfl > 0:
-                iep_3 -= patches[flfl][7]
-                minusses += patches[flfl][7]
-        #assert np.array_equal(iep,labels)
-        print minusses
-        print iep_3
+        assert np.array_equal(iep ,labels)
         raw_input()
 #    for i,img_nr in enumerate(load_dennis.val_numbers):
 #        print img_nr
