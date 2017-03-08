@@ -71,7 +71,7 @@ def main():
             level_iep = np.zeros(21)
             print plus_boxes, minus_boxes
             for c in range(num_classes):
-                level_iep[c] = np.sum(patches[plus_boxes,c,:]),axis=0)
+                level_iep[c] = np.sum(patches[plus_boxes,c,:],axis=0)
                 if len(minus_boxes)>0:
                     #level_iep = np.sum( -1. * np.multiply(patches[minus_boxes],w),axis=0)
                     level_iep[c] += np.sum(-1 * patches[minus_boxes,c,:],axis=0)
