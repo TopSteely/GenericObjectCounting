@@ -112,6 +112,7 @@ class Data:
                 if i in fl:
                     if found:
                         double += 1
+                        print i, i_l
                         #self.boxes = np.concatenate((self.boxes,self.boxes[i].reshape(1,4)), axis=0)
                         temp1.append(self.boxes[i])
                         #have to put it at the end somehow
