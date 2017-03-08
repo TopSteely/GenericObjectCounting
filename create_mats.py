@@ -44,7 +44,7 @@ def main():
     train_mat['labels'] = []
     train_mat['functions'] = []
     train_mat['overlaps'] = []
-    for i,img_nr in enumerate(load_dennis.training_numbers[:100]):
+    for i,img_nr in enumerate(load_dennis.training_numbers[:50]):
         print img_nr
         img_data = Data.Data(load_dennis, img_nr, 20, None)
         # we need: 
@@ -78,7 +78,7 @@ def main():
     test_mat['labels'] = []
     test_mat['functions'] = []
     test_mat['overlaps'] = []
-    for i,img_nr in enumerate(load_dennis.test_numbers[0:100]):
+    for i,img_nr in enumerate(load_dennis.test_numbers[0:50]):
         print img_nr
         img_data = Data.Data(load_dennis, img_nr, 20, None)
         # we need: 
@@ -91,7 +91,7 @@ def main():
         test_mat['labels'].append([load_dennis.get_all_labels(img_nr)])
         test_mat['functions'].append(img_data.box_levels)
         assert len(img_data.box_levels ) == len(img_data.boxes)
-        test_mat['overlaps'].append()
+        test_mat['overlaps'].append(img_data.gt_overlaps)
     output_dennis.save_mat(train_mat,test_mat)
     
     
