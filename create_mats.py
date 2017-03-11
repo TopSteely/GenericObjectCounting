@@ -63,11 +63,9 @@ def main():
         elif dataset == 'mscoco':
             train_mat['image'].append('/var/node436/local/tstahl/mscoco/train2014/%s.jpg'%(format(img_nr, "012d")))
         train_mat['boxes'].append(img_data.boxes)
-        print [load_dennis.get_all_labels(img_nr, 'train')]
         train_mat['labels'].append([load_dennis.get_all_labels(img_nr, 'train')])
         train_mat['functions'].append(img_data.box_levels)
         #train_mat['overlaps'].append(img_data.gt_overlaps)
-        print len(img_data.box_levels), len(img_data.boxes)
         assert len(img_data.box_levels ) == len(img_data.boxes)
         #test data:
         level_functions = np.array(img_data.box_levels)
@@ -97,7 +95,10 @@ def main():
             #'boxes' # (intersections)
             #labels
             #functions
-        train_mat['image'].append('/var/scratch/spintea/Repositories/ms-caffe/data/VOCdevkit2007/VOC2007/JPEGImages/%s.jpg'%(format(img_nr, "06d")))
+        if dataset == 'dennis':
+            train_mat['image'].append('/var/scratch/spintea/Repositories/ms-caffe/data/VOCdevkit2007/VOC2007/JPEGImages/%s.jpg'%(format(img_nr, "06d")))
+        elif dataset == 'mscoco':
+            train_mat['image'].append('/var/node436/local/tstahl/mscoco/train2014/%s.jpg'%(format(img_nr, "012d")))
         train_mat['boxes'].append(img_data.boxes)
         train_mat['labels'].append([load_dennis.get_all_labels(img_nr)])
         train_mat['functions'].append(img_data.box_levels)
@@ -117,7 +118,10 @@ def main():
             #'boxes' # (intersections)
             #labels
             #functions
-        test_mat['image'].append('/var/scratch/spintea/Repositories/ms-caffe/data/VOCdevkit2007/VOC2007/JPEGImages/%s.jpg'%(format(img_nr, "06d")))
+        if dataset == 'dennis':
+            train_mat['image'].append('/var/scratch/spintea/Repositories/ms-caffe/data/VOCdevkit2007/VOC2007/JPEGImages/%s.jpg'%(format(img_nr, "06d")))
+        elif dataset == 'mscoco':
+            train_mat['image'].append('/var/node436/local/tstahl/mscoco/train2014/%s.jpg'%(format(img_nr, "012d")))
         test_mat['boxes'].append(img_data.boxes)
         test_mat['labels'].append([load_dennis.get_all_labels(img_nr)])
         test_mat['functions'].append(img_data.box_levels)
