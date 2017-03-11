@@ -35,7 +35,7 @@ class Data:
         if load.mode == 'dennis':
             self.tree_boxes,self.X = sort_boxes(self.tree_boxes, self.X)
         elif load.mode == 'mscoco':
-            self.boxes = self.sort_boxes_only(self.boxes)
+            self.boxes = sort_boxes_only(self.boxes)
 
         if overlap_gt:
             self.y_boxes = []
