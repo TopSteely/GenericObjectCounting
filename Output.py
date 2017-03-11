@@ -247,3 +247,4 @@ class Output:
     def save_mat(self,train_mat,test_mat):
         savemat(self.train_mat_path, train_mat)
         savemat(self.test_mat_path, test_mat)
+        print 'saved to ', self.train_mat_path, self.test_mat_path
