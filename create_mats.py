@@ -44,7 +44,7 @@ def main():
     train_mat['boxes'] = []
     train_mat['labels'] = []
     train_mat['functions'] = []
-    train_mat['overlaps'] = []
+    #train_mat['overlaps'] = []
     if dataset == 'dennis':
         train = load_dennis.training_numbers
     elif dataset == 'mscoco':
@@ -66,7 +66,7 @@ def main():
         print [load_dennis.get_all_labels(img_nr, 'train')]
         train_mat['labels'].append([load_dennis.get_all_labels(img_nr, 'train')])
         train_mat['functions'].append(img_data.box_levels)
-        train_mat['overlaps'].append(img_data.gt_overlaps)
+        #train_mat['overlaps'].append(img_data.gt_overlaps)
         print len(img_data.box_levels), len(img_data.boxes)
         assert len(img_data.box_levels ) == len(img_data.boxes)
         #test data:
@@ -101,14 +101,14 @@ def main():
         train_mat['boxes'].append(img_data.boxes)
         train_mat['labels'].append([load_dennis.get_all_labels(img_nr)])
         train_mat['functions'].append(img_data.box_levels)
-        train_mat['overlaps'].append(img_data.gt_overlaps)
+        #train_mat['overlaps'].append(img_data.gt_overlaps)
         assert len(img_data.box_levels ) == len(img_data.boxes)
 
     test_mat['image'] = []
     test_mat['boxes'] = []
     test_mat['labels'] = []
     test_mat['functions'] = []
-    test_mat['overlaps'] = []
+    #test_mat['overlaps'] = []
     for i,img_nr in enumerate(load_dennis.test_numbers):
         print img_nr
         img_data = Data.Data(load_dennis, img_nr, 20, None)
@@ -122,7 +122,7 @@ def main():
         test_mat['labels'].append([load_dennis.get_all_labels(img_nr)])
         test_mat['functions'].append(img_data.box_levels)
         assert len(img_data.box_levels ) == len(img_data.boxes)
-        test_mat['overlaps'].append(img_data.gt_overlaps)
+        #test_mat['overlaps'].append(img_data.gt_overlaps)
     output_dennis.save_mat(train_mat,test_mat)
     
     
