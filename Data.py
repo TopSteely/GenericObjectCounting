@@ -79,7 +79,7 @@ class Data:
 #                intersection_coords.append(self.boxes[patch])
 
             for level in levels:
-                intersections_level = extract_coords(self.levelslevels[level], self.boxes)
+                intersections_level = extract_coords(self.levels[level], self.boxes)
 #                intersection_coords.extend([pruned_boxes[ll] for ll in levels[level]])
                 #for i_coo in intersection_coords:
                 intersection_coords.extend(intersections_level)
