@@ -76,10 +76,10 @@ class Input:
         elif self.mode == 'mscoco':
             for class_ in self.classes:
                 if mode == 'train':
-                    ann_id = self.coco_train_set.getAnnIds(imgIds=img_nr,catIds=self.coco_set.getCatIds(catNms=[class_]), iscrowd=None)
+                    ann_id = self.coco_train_set.getAnnIds(imgIds=img_nr,catIds=self.coco_train_set.getCatIds(catNms=[class_]), iscrowd=None)
                     annos = self.coco_train_set.loadAnns(ann_id)
                 elif mode == 'test':
-                    ann_id = self.coco_val_set.getAnnIds(imgIds=img_nr,catIds=self.coco_set.getCatIds(catNms=[class_]), iscrowd=None)
+                    ann_id = self.coco_val_set.getAnnIds(imgIds=img_nr,catIds=self.coco_train_set.getCatIds(catNms=[class_]), iscrowd=None)
                     annos = self.coco_val_set.loadAnns(ann_id)
                 all_labels.append(len(annos))
         return np.array(all_labels)
