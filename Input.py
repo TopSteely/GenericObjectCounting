@@ -219,6 +219,7 @@ class Input:
         if self.mode == 'dennis':
             if os.path.isfile(self.coord_path%(format(img_nr, "06d"))):
                 ret = np.loadtxt(self.coord_path%(format(img_nr, "06d")), delimiter=',')
+                return ret
         elif self.mode == 'mscoco':
             if os.path.isfile(self.coord_path%(format(img_nr, "012d"))):
                 ret = np.loadtxt(self.coord_path%(format(img_nr, "012d")), delimiter=',')
@@ -228,6 +229,7 @@ class Input:
                     return ret
             else:
                 print img_nr,
+                return []
 
     def get_coords_tree(self, img_nr):
         if os.path.isfile(self.coord_tree_path%(format(img_nr, "06d"))):
