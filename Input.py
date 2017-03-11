@@ -64,7 +64,7 @@ class Input:
             #self.category_train, self.category_val = self.get_category_imgs()
             #self.category_train_with_levels, self.category_val_with_levels = self.get_samples_with_number_of_levels(number_of_levels)
 
-    def get_all_labels(self, img_nr):
+    def get_all_labels(self, img_nr, mode):
         all_labels = [0.0]
         if self.mode == 'dennis':
             cat = self.category
@@ -75,8 +75,12 @@ class Input:
             self.category = cat
         elif self.mode == 'mscoco':
             for class_ in self.classes:
-                ann_id = self.coco_set.getAnnIds(imgIds=img_nr,catIds=self.coco_set.getCatIds(catNms=[class_]), iscrowd=None)
-                annos = self.coco_set.loadAnns(ann_id)
+                if mode == 'train':
+                    ann_id = self.coco_train_set.getAnnIds(imgIds=img_nr,catIds=self.coco_set.getCatIds(catNms=[class_]), iscrowd=None)
+                    annos = self.coco_train_set.loadAnns(ann_id)
+                elif mode == 'test':
+                    ann_id = self.coco_val_set.getAnnIds(imgIds=img_nr,catIds=self.coco_set.getCatIds(catNms=[class_]), iscrowd=None)
+                    annos = self.coco_val_set.loadAnns(ann_id)
                 all_labels.append(len(annos))
         return np.array(all_labels)
 
