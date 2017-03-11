@@ -26,7 +26,7 @@ class Input:
             self.feature_path = 'bla'
             self.coco_train_set = COCO('/var/node436/local/tstahl/annotations/instances_train2014.json')
             self.coco_val_set = COCO('/var/node436/local/tstahl/annotations/instances_train2014.json')
-            self.classes = self.coco_train_set.loadCats(coco_train_set.getCatIds())
+            self.classes = self.coco_train_set.loadCats(self.coco_train_set.getCatIds())
             print self.classes
             raw_input()
         elif self.mode == 'trancos':
