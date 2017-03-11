@@ -44,7 +44,7 @@ class Output:
             #self.train_mat_path = '/var/scratch/spintea/Repositories/ms-caffe/data/selective_search_data/voc_2007_train_1D.mat'
             self.test_mat_path = '/var/scratch/spintea/Repositories/ms-caffe/data/selective_search_data/voc_2007_test_toby.mat'
             #self.test_mat_path = '/var/scratch/spintea/Repositories/ms-caffe/data/selective_search_data/voc_2007_test_1D.mat'
-        elif self.mode == 'mscoco':
+        elif self.mode.startswith('mscoco'):
             self.train_mat_path = '/var/scratch/spintea/Repositories/ms-caffe/data/selective_search_data/mscoco_train_toby.mat'
             self.test_mat_path = '/var/scratch/spintea/Repositories/ms-caffe/data/selective_search_data/mscoco_test_toby.mat'
             
