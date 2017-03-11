@@ -1,4 +1,4 @@
-from utils import create_tree_as_extracted, surface_area_old, sort_boxes, create_tree, get_overlap_ratio, sort_boxes_only
+from utils import create_tree_as_extracted, surface_area_old, sort_boxes, create_tree, get_overlap_ratio, sort_boxes_only, extract_coords
 import numpy as np
 import time
 import IEP
@@ -54,9 +54,6 @@ class Data:
         start = time.time()
         if load.mode == 'dennis':
             self.boxes = self.tree_boxes
-        elif load.mode == 'mscoco':
-            self.tree_boxes = np.array(self.boxes)
-            self.boxes = np.array(self.boxes)
         #prune tree to only have levels which fully cover the image, tested
         total_size = surface_area_old(self.tree_boxes, levels[0])
         for level in levels:
@@ -75,6 +72,24 @@ class Data:
         for trash_level in levels_gone.values():
             self.G.remove_nodes_from(trash_level)
 
+        if load.mode == 'mscoco':
+            intersection_coords = []
+#            for patch in self.G.nodes():
+#                intersection_coords.append(self.boxes[patch])
+
+            for level in levels:
+                intersections_level = extract_coords(self.levelslevels[level], self.boxes)
+#                intersection_coords.extend([pruned_boxes[ll] for ll in levels[level]])
+                #for i_coo in intersection_coords:
+                intersection_coords.extend(intersections_level)
+            a = np.array(intersection_coords)
+            #print a
+            unique_coords = np.unique(a.view(np.dtype((np.void, a.dtype.itemsize*a.shape[1])))).view(a.dtype).reshape(-1, a.shape[1])
+            print len(self.boxes)
+            self.boxes = np.concatenate((self.boxes,unique_coords))
+            print len(self.boxes)
+            self.tree_boxes = np.array(self.boxes)
+            #self.boxes = np.array(self.boxes)
             
         self.debug_tmp = []
         for n in self.G.nodes():
