@@ -50,7 +50,7 @@ def main():
     elif dataset == 'mscoco':
         train = load_dennis.coco_train_set.getImgIds()#catNms=load_dennis.classes
     print train[0:5], len(train)
-    for i,img_nr in enumerate(train[0:5]):
+    for i,img_nr in enumerate(train):
         print i, img_nr
         img_data = Data.Data(load_dennis, img_nr, 20, None)
         # we need: 
@@ -118,7 +118,7 @@ def main():
     elif dataset == 'mscoco':
         test = load_dennis.coco_val_set.getImgIds()
 
-    for i,img_nr in enumerate(test[0:5]):
+    for i,img_nr in enumerate(test):
         print i,img_nr
         img_data = Data.Data(load_dennis, img_nr, 20, None)
         # we need: 
