@@ -124,7 +124,6 @@ class Input:
 
 
     def get_gts(self, img_nr):
-        (format(img_nr, "012d"))
         gr = []
         if os.path.isfile('/var/node436/local/tstahl/GroundTruth/%s/%s.txt'%(self.category,format(img_nr, "06d"))):
             gr = pd.read_csv('/var/node436/local/tstahl/GroundTruth/%s/%s.txt'%(self.category,format(img_nr, "06d")), header=None, delimiter=",").values
@@ -213,8 +212,12 @@ class Input:
             return [x for x in train_imgs if x not in eval_images], eval_images
     
     def get_coords(self, img_nr):
-        if os.path.isfile(self.coord_path%(format(img_nr, "06d"))):
-            ret = np.loadtxt(self.coord_path%(format(img_nr, "06d")), delimiter=',')
+        if self.mode == 'dennis:'
+            if os.path.isfile(self.coord_path%(format(img_nr, "06d"))):
+                ret = np.loadtxt(self.coord_path%(format(img_nr, "06d")), delimiter=',')
+        elif self.mode == 'mscoco':
+            if os.path.isfile(self.coord_path%(format(img_nr, "012d"))):
+                ret = np.loadtxt(self.coord_path%(format(img_nr, "012d")), delimiter=',')
             if isinstance(ret[0], np.float64):
                 return np.array([ret])
             else:

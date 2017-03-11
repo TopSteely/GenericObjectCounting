@@ -37,7 +37,7 @@ def main():
 
     load_dennis = Input.Input(dataset,category,20)
     #output_pascal = Output.Output('pascal_max', category, tree_level_size, '1b')
-    output_dennis = Output.Output('%_%s'%(dataset,pred_mode), category, 20, '1b')
+    output_dennis = Output.Output('%s_%s'%(dataset,pred_mode), category, 20, '1b')
     train_mat = {}
     test_mat = {}
     train_mat['image'] = []
@@ -49,6 +49,7 @@ def main():
         train = load_dennis.training_numbers
     elif dataset == 'mscoco':
         train = self.coco_train_set.getCatIds(catNms=self.classes)
+    print train[0:5]
     for i,img_nr in enumerate(train):
         print i, img_nr
         img_data = Data.Data(load_dennis, img_nr, 20, None)
@@ -57,7 +58,10 @@ def main():
             #'boxes' # (intersections)
             #labels
             #functions
-        train_mat['image'].append('/var/scratch/spintea/Repositories/ms-caffe/data/VOCdevkit2007/VOC2007/JPEGImages/%s.jpg'%(format(img_nr, "06d")))
+        if dataset == 'dennis':
+            train_mat['image'].append('/var/scratch/spintea/Repositories/ms-caffe/data/VOCdevkit2007/VOC2007/JPEGImages/%s.jpg'%(format(img_nr, "06d")))
+        elif dataset == 'mscoco':
+            train_mat['image'].append('/var/node436/local/tstahl/mscoco/train2014/%s.jpg'%(format(img_nr, "012d")))
         train_mat['boxes'].append(img_data.boxes)
         print [load_dennis.get_all_labels(img_nr)]
         train_mat['labels'].append([load_dennis.get_all_labels(img_nr)])
