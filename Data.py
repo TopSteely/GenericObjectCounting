@@ -56,6 +56,7 @@ class Data:
             self.boxes = self.tree_boxes
         elif load.mode == 'mscoco':
             self.tree_boxes = np.array(self.boxes)
+            self.boxes = np.array(self.boxes)
         #prune tree to only have levels which fully cover the image, tested
         total_size = surface_area_old(self.tree_boxes, levels[0])
         for level in levels:
