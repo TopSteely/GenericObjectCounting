@@ -64,7 +64,7 @@ def main():
             train_mat['image'].append('/var/node436/local/tstahl/mscoco/train2014/%s.jpg'%(format(img_nr, "012d")))
         train_mat['boxes'].append(img_data.boxes)
         print [load_dennis.get_all_labels(img_nr)]
-        train_mat['labels'].append([load_dennis.get_all_labels(img_nr)])
+        train_mat['labels'].append([load_dennis.get_all_labels(img_nr, 'train')])
         train_mat['functions'].append(img_data.box_levels)
         train_mat['overlaps'].append(img_data.gt_overlaps)
         print len(img_data.box_levels), len(img_data.boxes)
