@@ -5,6 +5,7 @@ import pandas as pd
 import pickle
 from scipy.misc import imread
 from utils import extract_coords
+from .pycocotools.coco import COCO
 import random
 #import cv2
 
@@ -18,9 +19,14 @@ class Input:
             self.label_path = 'bla'
             self.feature_path = 'bla'
         elif self.mode == 'mscoco':
-            self.coord_path = 'bla'
+            self.coord_path = '/var/node436/local/tstahl/mscoco/SS_Boxes/%s.txt'
             self.label_path = 'bla'
             self.feature_path = 'bla'
+            self.coco_train_set = COCO('/var/node436/local/tstahl/annotations/instances_train2014.json')
+            self.coco_val_set = COCO('/var/node436/local/tstahl/annotations/instances_train2014.json')
+            self.classes = self.coco_train_set.loadCats(coco.getCatIds())
+            print self.classes
+            raw_input()
         elif self.mode == 'trancos':
             self.coord_path = 'bla'
             self.label_path = 'bla'
@@ -45,38 +51,46 @@ class Input:
                 self.scaler_path = '/var/node436/local/tstahl/models/scaler_dennis.p'
                 self.scaler_category_path = '/var/node436/local/tstahl/models/scaler_%s_dennis.p'%(category)
                 self.classifier_path = '/var/node436/local/tstahl/models/classifier_%s.p'%(category)
-            #todo: could be safed
-            self.test_numbers, training_numbers_tmp = self.get_training_numbers()
-            self.training_numbers, self.val_numbers = self.get_val_numbers(training_numbers_tmp)
+                self.classes = ['aeroplane', 'bicycle', 'bird', 'boat',
+           'bottle', 'bus', 'car', 'cat', 'chair',
+           'cow', 'diningtable', 'dog', 'horse',
+           'motorbike', 'person', 'pottedplant',
+            'sheep', 'sofa', 'train', 'tvmonitor']
+                self.test_numbers, training_numbers_tmp = self.get_training_numbers()
+                self.training_numbers, self.val_numbers = self.get_val_numbers(training_numbers_tmp)
             #self.category_train, self.category_val = self.get_category_imgs()
             #self.category_train_with_levels, self.category_val_with_levels = self.get_samples_with_number_of_levels(number_of_levels)
 
     def get_all_labels(self, img_nr):
-        cat = self.category
         all_labels = [0.0]
-        for class_ in ['aeroplane', 'bicycle', 'bird', 'boat',
-           'bottle', 'bus', 'car', 'cat', 'chair',
-           'cow', 'diningtable', 'dog', 'horse',
-           'motorbike', 'person', 'pottedplant',
-            'sheep', 'sofa', 'train', 'tvmonitor']:
-            self.category = class_
-            l = self.get_label(img_nr)
-            all_labels.append(l)
-        self.category = cat
+        if self.mode == 'dennis':
+            cat = self.category
+            for class_ in self.classes:
+                self.category = class_
+                l = self.get_label(img_nr)
+                all_labels.append(l)
+            self.category = cat
+        elif self.mode == 'mscoco':
+            for class_ in self.classes:
+                ann_id = self.coco_set.getAnnIds(imgIds=img_nr,catIds=self.coco_set.getCatIds(catNms=[class_]), iscrowd=None)
+                annos = self.coco_set.loadAnns(ann_id)
+                all_labels.append(len(annos))
         return np.array(all_labels)
 
     def get_all_gts(self, img_nr):
-        cat = self.category
         all_gts = {}
-        for i_c,class_ in enumerate(['aeroplane', 'bicycle', 'bird', 'boat',
-           'bottle', 'bus', 'car', 'cat', 'chair',
-           'cow', 'diningtable', 'dog', 'horse',
-           'motorbike', 'person', 'pottedplant',
-            'sheep', 'sofa', 'train', 'tvmonitor']):
-            self.category = class_
-            l = self.get_gts(img_nr)
-            all_gts[i_c] = l
-        self.category = cat
+        if self.mode == 'dennis':
+            cat = self.category
+            for i_c,class_ in enumerate(self.classes):
+                self.category = class_
+                l = self.get_gts(img_nr)
+                all_gts[i_c] = l
+            self.category = cat
+        elif self.mode == 'mscoco':
+            for i_c,class_ in enumerate(self.classes):
+                ann_id = self.coco_set.getAnnIds(imgIds=img_nr,catIds=self.coco_set.getCatIds(catNms=[class_]), iscrowd=None)
+                annos = self.coco_set.loadAnns(ann_id)
+                all_gts[i_c] = len(annos)
         return all_gts
         
 	#old
@@ -107,6 +121,7 @@ class Input:
 
 
     def get_gts(self, img_nr):
+        (format(img_nr, "012d"))
         gr = []
         if os.path.isfile('/var/node436/local/tstahl/GroundTruth/%s/%s.txt'%(self.category,format(img_nr, "06d"))):
             gr = pd.read_csv('/var/node436/local/tstahl/GroundTruth/%s/%s.txt'%(self.category,format(img_nr, "06d")), header=None, delimiter=",").values

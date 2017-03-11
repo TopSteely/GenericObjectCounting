@@ -21,12 +21,13 @@ def main():
 
     pred_mode = 'abs'
 
+    dataset = 'mscoco'#'dennis'
+
     debug = False
 
     batch_size = 5
 
     epochs = 4
-    print epochs
 
     subsamples = 2500
 
@@ -34,9 +35,9 @@ def main():
 
     eta = math.pow(10,-4)
 
-    load_dennis = Input.Input('dennis',category,20)
+    load_dennis = Input.Input(dataset,category,20)
     #output_pascal = Output.Output('pascal_max', category, tree_level_size, '1b')
-    output_dennis = Output.Output('dennis_%s'%(pred_mode), category, 20, '1b')
+    output_dennis = Output.Output('%_%s'%(dataset,pred_mode), category, 20, '1b')
     train_mat = {}
     test_mat = {}
     train_mat['image'] = []
@@ -44,7 +45,11 @@ def main():
     train_mat['labels'] = []
     train_mat['functions'] = []
     train_mat['overlaps'] = []
-    for i,img_nr in enumerate(load_dennis.training_numbers):
+    if dataset == 'dennis':
+        train = load_dennis.training_numbers
+    elif dataset == 'mscoco':
+        train = self.coco_train_set.getCatIds(catNms=self.classes)
+    for i,img_nr in enumerate(train):
         print i, img_nr
         img_data = Data.Data(load_dennis, img_nr, 20, None)
         # we need: 
@@ -54,10 +59,11 @@ def main():
             #functions
         train_mat['image'].append('/var/scratch/spintea/Repositories/ms-caffe/data/VOCdevkit2007/VOC2007/JPEGImages/%s.jpg'%(format(img_nr, "06d")))
         train_mat['boxes'].append(img_data.boxes)
+        print [load_dennis.get_all_labels(img_nr)]
         train_mat['labels'].append([load_dennis.get_all_labels(img_nr)])
         train_mat['functions'].append(img_data.box_levels)
         train_mat['overlaps'].append(img_data.gt_overlaps)
-        #print len(img_data.box_levels), len(img_data.boxes)
+        print len(img_data.box_levels), len(img_data.boxes)
         assert len(img_data.box_levels ) == len(img_data.boxes)
         #test data:
         level_functions = np.array(img_data.box_levels)

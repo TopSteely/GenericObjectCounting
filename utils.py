@@ -289,6 +289,14 @@ def sort_boxes(boxes, X):
         sorted_boxes.append(boxes[i])
         sorted_features.append(X[i])
     return sorted_boxes, sorted_features
+
+def sort_boxes_only(boxes):
+    sorted_boxes = []
+    decorated = [((box[3]-box[1])*(box[2]-box[0]), i) for i, box in enumerate(boxes)]
+    decorated.sort()
+    for box, i in reversed(decorated):
+        sorted_boxes.append(boxes[i])
+    return sorted_boxes
     
 def get_set_intersection(set_):
     intersection = get_intersection(set_[0], set_[1])
