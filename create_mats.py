@@ -62,14 +62,15 @@ def main():
             train_mat['image'].append('/var/scratch/spintea/Repositories/ms-caffe/data/VOCdevkit2007/VOC2007/JPEGImages/%s.jpg'%(format(img_nr, "06d")))
         elif dataset == 'mscoco':
             train_mat['image'].append('/var/node436/local/tstahl/mscoco/train2014/%s.jpg'%(format(img_nr, "012d")))
-        train_mat['boxes'].append(img_data.boxes)
-        train_mat['labels'].append([load_dennis.get_all_labels(img_nr, 'train')])
-        train_mat['functions'].append(img_data.box_levels)
-        #train_mat['overlaps'].append(img_data.gt_overlaps)
-        assert len(img_data.box_levels ) == len(img_data.boxes)
-        #test data:
-        level_functions = np.array(img_data.box_levels)
-        levels = int(np.amax(level_functions[:,1],axis=0)) + 1
+        if img_data.boxes != []:
+            train_mat['boxes'].append(img_data.boxes)
+            train_mat['labels'].append([load_dennis.get_all_labels(img_nr, 'train')])
+            train_mat['functions'].append(img_data.box_levels)
+            #train_mat['overlaps'].append(img_data.gt_overlaps)
+            assert len(img_data.box_levels ) == len(img_data.boxes)
+            #test data:
+            level_functions = np.array(img_data.box_levels)
+            levels = int(np.amax(level_functions[:,1],axis=0)) + 1
         #num_classes = 21
         #iep = np.zeros((levels,num_classes))
         #print img_data.level_functions[8][0:30]

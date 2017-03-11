@@ -226,6 +226,8 @@ class Input:
                     return np.array([ret])
                 else:
                     return ret
+            else:
+                print img_nr,
 
     def get_coords_tree(self, img_nr):
         if os.path.isfile(self.coord_tree_path%(format(img_nr, "06d"))):
