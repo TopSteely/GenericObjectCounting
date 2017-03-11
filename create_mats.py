@@ -72,21 +72,21 @@ def main():
         #test data:
         level_functions = np.array(img_data.box_levels)
         levels = int(np.amax(level_functions[:,1],axis=0)) + 1
-        num_classes = 21
-        iep = np.zeros((levels,num_classes))
+        #num_classes = 21
+        #iep = np.zeros((levels,num_classes))
         #print img_data.level_functions[8][0:30]
         #print img_data.level_functions[9][0:30]
-        patches = img_data.gt_overlaps
-        for level_index in range(levels):
-            plus_boxes = np.where((level_functions[:,:]==[1,level_index]).all(axis=1))[0]
-            minus_boxes = np.where((level_functions[:,:]==[-1,level_index]).all(axis=1))[0]
-            level_iep = np.zeros(21)
-            for c in range(num_classes):
-                level_iep[c] = np.sum(patches[plus_boxes,c],axis=0)
-                if len(minus_boxes)>0:
-                    level_iep[c] += np.sum(-1 * patches[minus_boxes,c],axis=0)
-            iep[level_index,:] = level_iep
-        labels = load_dennis.get_all_labels(img_nr)
+        #patches = img_data.gt_overlaps
+        #for level_index in range(levels):
+        #    plus_boxes = np.where((level_functions[:,:]==[1,level_index]).all(axis=1))[0]
+        #    minus_boxes = np.where((level_functions[:,:]==[-1,level_index]).all(axis=1))[0]
+        #    level_iep = np.zeros(21)
+        #    for c in range(num_classes):
+        #        level_iep[c] = np.sum(patches[plus_boxes,c],axis=0)
+        #        if len(minus_boxes)>0:
+        #            level_iep[c] += np.sum(-1 * patches[minus_boxes,c],axis=0)
+        #    iep[level_index,:] = level_iep
+        #labels = load_dennis.get_all_labels(img_nr)
         #for iep_ in iep:
             #assert np.array_equal(iep_ ,labels)
     for i,img_nr in enumerate(load_dennis.val_numbers):
