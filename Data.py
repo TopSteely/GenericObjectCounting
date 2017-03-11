@@ -86,6 +86,7 @@ class Data:
                     intersection_coords.extend(intersections_level)
                 a = np.array(intersection_coords)
                 #print a
+                print len(a)
                 unique_coords = np.unique(a.view(np.dtype((np.void, a.dtype.itemsize*a.shape[1])))).view(a.dtype).reshape(-1, a.shape[1])
                 self.boxes = np.concatenate((self.boxes,unique_coords))
                 self.tree_boxes = np.array(self.boxes)
