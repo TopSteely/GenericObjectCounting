@@ -1,5 +1,6 @@
 name: "ResNet-50"
 force_backward: true
+
 layer {
   name: 'data'
   type: 'Python'
@@ -7,6 +8,7 @@ layer {
   top: 'rois'
   top: 'labels'
   top: 'functions'
+#  top: 'overlaps'
   python_param {
     module: 'roi_data_layer.layer_toby'
     layer: 'RoIDataLayer'
@@ -3637,20 +3639,39 @@ layer {
 #  propagate_down: true
 #}
 
+#### BN ######################
+layer {
+  name: "bn"
+  bottom: 'psroipooled_cls_rois'
+  top: "roipooled_cls_bn"
+  type: "BatchNorm"
+  param {
+    lr_mult: 0
+  }
+  param {
+    lr_mult: 0
+  }
+  param {
+    lr_mult: 0
+  }
+}
+
 layer {
   name: 'iep'
   type: 'Python'
-  bottom: 'psroipooled_cls_rois'
+# bottom: 'psroipooled_cls_rois'
+  bottom: "roipooled_cls_bn"
   bottom: 'functions'
+# bottom: 'overlaps'
   top: 'iep'
   python_param {
     module: 'roi_data_layer.iep_toby'
     layer: 'IepLayer'
-    param_str: "7"
+    param_str: "{'num_dims': 7, 'alpha':0.0001}"
   }
   param {
     lr_mult: 1.0
-    decay_mult: 1.0
+    decay_mult: 0.0
   }
   propagate_down: true
   propagate_down: false
