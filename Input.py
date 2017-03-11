@@ -222,10 +222,10 @@ class Input:
         elif self.mode == 'mscoco':
             if os.path.isfile(self.coord_path%(format(img_nr, "012d"))):
                 ret = np.loadtxt(self.coord_path%(format(img_nr, "012d")), delimiter=',')
-            if isinstance(ret[0], np.float64):
-                return np.array([ret])
-            else:
-                return ret
+                if isinstance(ret[0], np.float64):
+                    return np.array([ret])
+                else:
+                    return ret
 
     def get_coords_tree(self, img_nr):
         if os.path.isfile(self.coord_tree_path%(format(img_nr, "06d"))):
