@@ -90,6 +90,15 @@ class SGD:
             self.method = self.learn_abs_clipped
             self.predict = self.predict_mean_clipped
             self.clipped = True
+        elif mode == 'sum_im':
+            self.method = self.learn_sum_image_boxes
+            self.loss = self.loss_sum_image_boxes
+            self.predict = self.predict_sum_image_boxes
+        elif mode == 'sum_lev':
+            self.method = self.learn_sum_level_boxes
+            self.loss = self.loss_sum_level_boxes
+            self.predict = self.predict_sum_level_boxes
+            
         else:
             print 'no method chosen'
             exit()
@@ -114,6 +123,18 @@ class SGD:
 
     def set_scaler(self, scaler):
         self.scaler = scaler
+
+    def loss_sum_image_boxes(self, img_data):
+        sum_preds = np.sum(np.dot(self.w, img_data.X))
+        return abs(sum_preds - img_data.y) + self.alpha * math.sqrt(np.dot(self.w,self.w))
+
+    def loss_sum_level_boxes(self, img_data):
+        sums = []
+        for level in img_data.levels:
+            preds_boxes = np.array(img_data.levels[level])
+            level_sum = np.sum(np.dot(self.w,img_data.X[preds_boxes]))
+            sums.append(level_sum)
+        return np.mean(np.abs(np.array(sums) - img_data.y)) + self.alpha * math.sqrt(np.dot(self.w,self.w))
         
     def loss_max(self, img_data):
         level_preds, _ = self.predictor.get_iep_levels(img_data, [])
@@ -207,6 +228,18 @@ class SGD:
                 for missing in range(self.prune_tree_levels - len(level_preds)):
                     level_preds.append(level_preds[-1])
         return (np.array(level_preds) - img_data.y)**2 + self.alpha * math.sqrt(np.dot(self.w,self.w))
+
+    def predict_sum_image_boxes(self, img_data):
+        sum_preds = np.sum(np.dot(self.w, img_data.X))
+        return sum_preds
+
+    def predict_sum_level_boxes(self, img_data):
+        sums = []
+        for level in img_data.levels:
+            preds_boxes = np.array(img_data.levels[level])
+            level_sum = np.sum(np.dot(self.w,img_data.X[preds_boxes]))
+            sums.append(level_sum)
+        return np.mean(sums)
 
     def predict_window(self, img_data, ind):
         return np.dot(self.w, img_data.X[ind])
@@ -689,3 +722,28 @@ class SGD:
             return np.sum(np.sign(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels).reshape(-1,1), axis=0)/len(level_preds) + 2 * self.alpha * self.w, []
         else:
             return np.sum(np.sign(np.array(level_preds) - img_data.y).reshape(-1,1) * np.array(iep_levels), axis=0)/len(level_preds) + 2 * self.alpha * self.w, []
+
+
+    def learn_sum_image_boxes(self, img_data, functions):
+        preds = np.dot(self.w, img_data.X)
+        sum_preds = np.sum(np.dot(self.w, img_data.X))
+        print preds[0],sum_preds, img_data.y
+        if self.n_features == 1:
+            return sign(sum_preds - img_data.y) * np.sum(img_data.X,axis=0) + 2 * self.alpha * self.w, []
+        else:
+            return sign(sum_preds - img_data.y) * np.sum(img_data.X,axis=0) + 2 * self.alpha * self.w, []
+
+    def learn_sum_level_boxes(self, img_data, functions):
+        preds = np.dot(self.w, img_data.X)
+        sum_preds = np.sum(np.dot(self.w, img_data.X))
+        sum_im = np.zeros(self.n_features)
+        for level in img_data.levels:
+            preds_boxes = np.array(img_data.levels[level])
+            level_sum = np.sum(np.dot(self.w,img_data.X[preds_boxes]))
+            print preds_boxes, level_sum
+            sum_im += sign(level_sum - img_data.y) * np.sum(img_data.X[preds_boxes],axis=0)
+        print preds[0],sum_preds, img_data.y
+        if self.n_features == 1:
+            return np.mean(sum_im) + 2 * self.alpha * self.w, []
+        else:
+            return np.mean(sum_im) + 2 * self.alpha * self.w, []
