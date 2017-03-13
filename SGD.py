@@ -734,7 +734,7 @@ class SGD:
             return (np.sign(sum_preds - img_data.y) * np.sum(img_data.X,axis=0))/len(img_data.X) + 2 * self.alpha * self.w, []
 
     def learn_sum_level_boxes(self, img_data, functions):
-        preds = np.dot(self.w, img_data.X)
+        preds = np.dot(img_data.X,self.w)
         sum_preds = np.sum(np.dot(img_data.X,self.w))
         sum_im = np.zeros(self.n_features)
         for level in img_data.levels:
@@ -742,7 +742,7 @@ class SGD:
             level_sum = np.sum(np.dot(img_data.X[preds_boxes],self.w))
             print preds_boxes, level_sum
             sum_im += np.sign(level_sum - img_data.y) * np.sum(img_data.X[preds_boxes],axis=0)
-        print preds[0],sum_preds, img_data.y
+        print sum_preds, img_data.y
         if self.n_features == 1:
             return np.mean(sum_im) + 2 * self.alpha * self.w, []
         else:
