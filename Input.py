@@ -342,3 +342,14 @@ class Input:
         for level_numbers in levels.values():
             intersection_coords.extend(extract_coords(level_numbers, boxes))
         return np.array(intersection_coords)
+
+    def get_grid(self, img_nr):
+        feat = []
+        for grid in ['12','22','44']:
+            if os.path.isfile('/var/node436/local/tstahl/Dummy/%sx%s.txt'%(grid,format(img_nr, "02d"))):
+                ret = np.loadtxt('/var/node436/local/tstahl/Dummy/%sx%s.txt'%(grid,format(img_nr, "02d")), delimiter=',')
+                feat = np.vstack((feat,ret))
+        if os.path.isfile('/var/node436/local/tstahl/Dummy/%s3x3.txt'%(format(img_nr, "02d"))):
+            ret = np.loadtxt('/var/node436/local/tstahl/Dummy/%s3x3.txt'%(format(img_nr, "02d")), delimiter=',')
+            feat = np.vstack((feat,ret))
+        return feat
