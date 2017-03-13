@@ -21,14 +21,14 @@ def main():
 
     pred_mode = 'sum_lev'
 
-    debug = True
+    debug = False
 
     batch_size = 5
 
-    epochs = 10
+    epochs = 2
     print epochs
 
-    subsamples = 30
+    subsamples = 5
 
     feature_size = 4096
 
