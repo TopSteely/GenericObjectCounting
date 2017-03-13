@@ -346,12 +346,10 @@ class Input:
     def get_grid(self, img_nr):
         feat = np.array([], dtype=np.int64).reshape(0,4096)
         for grid in ['12','22','44']:
-            print '/var/node436/local/tstahl/Hard_partitioned_Features/new_Features/%sx%s.txt'%(grid,format(img_nr, "06d"))
             if os.path.isfile('/var/node436/local/tstahl/Hard_partitioned_Features/new_Features/%sx%s.txt'%(grid,format(img_nr, "06d"))):
                 ret = np.loadtxt('/var/node436/local/tstahl/Hard_partitioned_Features/new_Features/%sx%s.txt'%(grid,format(img_nr, "06")), delimiter=',')
                 print ret.shape, feat.shape
                 feat = np.vstack((feat,ret))
-        print '/var/node436/local/tstahl/Hard_partitioned_Features/%s3x3.txt'%(format(img_nr, "06d"))
         if os.path.isfile('/var/node436/local/tstahl/Hard_partitioned_Features/%s3x3.txt'%(format(img_nr, "06d"))):
             ret = np.loadtxt('/var/node436/local/tstahl/Hard_partitioned_Features/%s3x3.txt'%(format(img_nr, "06d")), delimiter=',')
             feat = np.vstack((feat,ret))
