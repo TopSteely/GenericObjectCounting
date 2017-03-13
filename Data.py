@@ -26,7 +26,7 @@ class Data:
                 self.boxes = self.gt_fs
                 self.levels = {0: range(len(self.gt_fs))}
             else:
-                elif num_features != 4096:
+                if num_features != 4096:
                     features_temp = []
                     for p in self.X:
                         features_temp.append(p[0:num_features])
