@@ -79,7 +79,8 @@ class Data:
                         sa = surface_area_old(self.tree_boxes, levels[level])
                         sa_co = sa/total_size
                         if sa_co != 1.0:
-                            self.G.remove_nodes_from(levels[level])
+                            if load.mode != 'gt':
+                                self.G.remove_nodes_from(levels[level])
                         else:
                             nr_levels_covered = level
                     levels = {k: levels[k] for k in range(0,nr_levels_covered + 1)}
