@@ -147,9 +147,7 @@ class Data:
                     #this is just for create_mats.py
                 if load.mode == 'mscoco' or load.mode == 'trancos'  or load.mode == 'gt':
                     learner = IEP.IEP(1, 'learning')
-                    print self.levels
                     _,function = learner.get_iep_levels(self, {})
-                    print function
                     flevels = []
                     for f in range(len(function)):
                         flevels.append([a[1] for a in function[f]])

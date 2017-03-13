@@ -67,19 +67,10 @@ def main():
                 train_mat['image'].append('/var/node436/local/tstahl/mscoco/train2014/%s.jpg'%(format(img_nr, "012d")))
             elif dataset == 'trancos':
                 train_mat['image'].append('/var/node436/local/tstahl/TRANCOS_v3/1-%s.jpg'%(format(img_nr, "06d")))
-            if dataset == 'gt':
-                train_mat['boxes'].append(load_dennis.get_all_gts(img_nr))
-            else:
-                train_mat['boxes'].append(img_data.boxes)
+            train_mat['boxes'].append(img_data.boxes)
             train_mat['labels'].append([load_dennis.get_all_labels(img_nr, 'train')])
-            if dataset == 'gt':
-                train_mat
-            else:
-                train_mat['functions'].append(img_data.box_levels)
+            train_mat['functions'].append(img_data.box_levels)
             #train_mat['overlaps'].append(img_data.gt_overlaps)
-            print img_data.box_levels
-            print img_data.boxes
-            raw_input()
             assert len(img_data.box_levels ) == len(img_data.boxes)
             #test data:
             #level_functions = np.array(img_data.box_levels)
@@ -119,7 +110,7 @@ def main():
                 #test data:
                 level_functions = np.array(img_data.box_levels)
                 levels = int(np.amax(level_functions[:,1],axis=0)) + 1
-    if dataset == 'dennis' or dataset == 'grid':
+    if dataset == 'dennis' or dataset == 'grid' or dataset == 'gt':
         for i,img_nr in enumerate(load_dennis.val_numbers):
             print img_nr
             img_data = Data.Data(load_dennis, img_nr, 20, None)
@@ -128,7 +119,7 @@ def main():
                 #'boxes' # (intersections)
                 #labels
                 #functions
-            if dataset == 'dennis' or dataset == 'grid':
+            if dataset == 'dennis' or dataset == 'grid' or dataset == 'gt':
                 train_mat['image'].append('/var/scratch/spintea/Repositories/ms-caffe/data/VOCdevkit2007/VOC2007/JPEGImages/%s.jpg'%(format(img_nr, "06d")))
             elif dataset == 'mscoco':
                 train_mat['image'].append('/var/node436/local/tstahl/mscoco/train2014/%s.jpg'%(format(img_nr, "012d")))
@@ -144,7 +135,7 @@ def main():
     test_mat['functions'] = []
     #test_mat['overlaps'] = []
 
-    if dataset == 'dennis' or dataset == 'grid':
+    if dataset == 'dennis' or dataset == 'grid' or dataset == 'gt':
         test = load_dennis.test_numbers
     elif dataset == 'mscoco':
         test = load_dennis.coco_val_set.getImgIds()
@@ -159,7 +150,7 @@ def main():
             #'boxes' # (intersections)
             #labels
             #functions
-        if dataset == 'dennis' or dataset == 'grid':
+        if dataset == 'dennis' or dataset == 'grid' or dataset == 'gt':
             train_mat['image'].append('/var/scratch/spintea/Repositories/ms-caffe/data/VOCdevkit2007/VOC2007/JPEGImages/%s.jpg'%(format(img_nr, "06d")))
         elif dataset == 'mscoco':
             train_mat['image'].append('/var/node436/local/tstahl/mscoco/train2014/%s.jpg'%(format(img_nr, "012d")))

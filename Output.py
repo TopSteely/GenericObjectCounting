@@ -248,6 +248,7 @@ class Output:
 
     def save_mat(self,train_mat,test_mat, dataset):
         print self.train_mat_path%(dataset), self.test_mat_path%(dataset)
+        raw_input()
         savemat(self.train_mat_path%(dataset), train_mat)
         savemat(self.test_mat_path%(dataset), test_mat)
         print 'saved to ', self.train_mat_path%(dataset), self.test_mat_path%(dataset)
