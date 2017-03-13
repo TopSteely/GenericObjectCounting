@@ -73,7 +73,7 @@ def main():
                 train_mat['boxes'].append(img_data.boxes)
             train_mat['labels'].append([load_dennis.get_all_labels(img_nr, 'train')])
             if dataset == 'gt':
-
+                train_mat
             else:
                 train_mat['functions'].append(img_data.box_levels)
             #train_mat['overlaps'].append(img_data.gt_overlaps)
