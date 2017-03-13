@@ -14,12 +14,14 @@ class Data:
         if load.mode != 'mscoco' and load.mode != 'trancos' and load.mode != 'grid':
             self.y = load.get_label(img_nr)
         if load.mode == 'grid' or grid:
-            self.X = load.get_grid(img_nr)
-            self.levels = {0: [0], 1: [1,2], 2: range(3,7), 3: range(23,32), 4: range(7,23)}
-            self.boxes = load.get_grid_coords(img_nr)
-            self.levels = {0: [0], 1: [1,2], 2: range(3,7), 3: range(7,16), 4: range(17,32)} #for count net
-            self.box_levels = np.ones((32,2))
-            self.box_levels[:,1] = np.arange(32)
+            if grid:
+                self.X = load.get_grid(img_nr)
+                self.levels = {0: [0], 1: [1,2], 2: range(3,7), 3: range(23,32), 4: range(7,23)}
+            else:
+                self.boxes = load.get_grid_coords(img_nr)
+                self.levels = {0: [0], 1: [1,2], 2: range(3,7), 3: range(7,16), 4: range(17,32)} #for count net
+                self.box_levels = np.ones((32,2))
+                self.box_levels[:,1] = np.arange(32)
         else:
             self.boxes = load.get_coords(img_nr)
             if load.mode == 'gt':
