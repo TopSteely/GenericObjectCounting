@@ -23,11 +23,11 @@ class Data:
             if load.mode == 'gt':
                 gts = load.get_all_gts(img_nr)
                 self.boxes = np.array(self.boxes[0])
-                for gt in gts:
-                    if gts[gt] != []:
-                        self.boxes = np.vstack((self.boxes,np.array(gts[gt])))
+                for gt_ in gts:
+                    if gts[gt_] != []:
+                        self.boxes = np.vstack((self.boxes,np.array(gts[gt_])))
                 self.levels = {0:[0], 1: range(1,len(self.boxes))}
-                print self.levels
+                print self.levels, self.boxes
             if self.boxes != []:
                 if load.mode == 'dennis':
                     self.X = load.get_features(img_nr)
