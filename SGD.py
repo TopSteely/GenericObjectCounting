@@ -426,7 +426,7 @@ class SGD:
         tra_loss_temp = np.zeros(self.prune_tree_levels+1)
         te_loss_temp = np.zeros(self.prune_tree_levels+1)
         mse_te_temp = 0.0
-        to = 75
+        to = 15
         if instances == 'all':
             validation_ims = self.load.val_numbers[0:to]
         elif instances == 'category':
