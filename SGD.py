@@ -478,7 +478,8 @@ class SGD:
         subset = training_data[:to]
         #random.shuffle(subset)
         batch = []
-        for i_img_nr, img_nr in [2764,2765]:#enumerate(subset):
+        for img_nr in [2764,2765]:#enumerate(subset):i_img_nr
+            i_img_nr = 0
             batch.append(img_nr)
             start = time.time()
             if self.dataset == 'blob':
