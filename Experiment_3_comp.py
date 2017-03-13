@@ -23,7 +23,7 @@ def main():
 
     debug = True
 
-    batch_size = 15
+    batch_size = 5
 
     epochs = 10
     print epochs
@@ -32,7 +32,7 @@ def main():
 
     feature_size = 4096
 
-    eta = math.pow(10,-3)
+    eta = math.pow(10,-4)
 
     for tree_level_size in range(1,2):
         #initialize
