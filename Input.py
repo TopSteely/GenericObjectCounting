@@ -18,7 +18,7 @@ class Input:
         self.category = category
         if self.mode == 'grid':
             self.coord_path = '/var/node436/local/tstahl/Coords_prop_windows/%s.txt'
-            self.label_path = 'bla'
+            self.label_path = '/var/node436/local/tstahl/Coords_prop_windows/Labels/Labels/%s_%s_partial.txt'
             self.feature_path = 'bla'
             self.test_numbers, training_numbers_tmp = self.get_training_numbers()
             self.training_numbers, self.val_numbers = self.get_val_numbers(training_numbers_tmp)
