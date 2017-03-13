@@ -98,6 +98,8 @@ class SGD:
             self.method = self.learn_sum_level_boxes
             self.loss = self.loss_sum_level_boxes
             self.predict = self.predict_sum_level_boxes
+        elif mode == 'grid':
+            print 'grid'
             
         else:
             print 'no method chosen'
