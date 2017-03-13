@@ -741,8 +741,6 @@ class SGD:
             level_sum = np.sum(np.dot(img_data.X[preds_boxes],self.w))
             sum_ += level_sum
             sum_im += np.sign(level_sum - img_data.y) * np.sum(img_data.X[preds_boxes],axis=0)
-        print sum_im,sum_im/len(img_data.levels)
-        raw_input()
         print sum_, img_data.y
         if self.n_features == 1:
             return sum_im/len(img_data.levels) + 2 * self.alpha * self.w, []
