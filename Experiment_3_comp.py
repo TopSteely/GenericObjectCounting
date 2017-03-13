@@ -19,7 +19,7 @@ def main():
 
     learn_mode = 'all'#category_levels
 
-    pred_mode = 'sum_im'
+    pred_mode = 'sum_lev'
 
     debug = False
 
@@ -28,7 +28,7 @@ def main():
     epochs = 4
     print epochs
 
-    subsamples = 5
+    subsamples = 15
 
     feature_size = 4096
 
@@ -111,8 +111,8 @@ def main():
 
             print "Eval loss train: ", al_i, ae_tr, ae_non_zero_tr
             print "Eval loss val: ", al_i, ae, ae_non_zero
-            output_dennis.plot_preds(preds_d_d, y_d_d, al_i, 'val_category_levels')
-            output_dennis.plot_best(level_pred_d_d, max_level_preds_d_d, min_level_preds_d_d, avg_pixls, al_i)
+            #output_dennis.plot_preds(preds_d_d, y_d_d, al_i, 'val_category_levels')
+            #output_dennis.plot_best(level_pred_d_d, max_level_preds_d_d, min_level_preds_d_d, avg_pixls, al_i)
             output_dennis.save_w(sgd_dennis, preds_d_d, y_d_d, eta, al_i, learn_mode)
     print learn_mode, pred_mode, epochs,'with scaler', debug
     
