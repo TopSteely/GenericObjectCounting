@@ -20,12 +20,15 @@ class Data:
             #self.levels = {0: [0], 1: [1,2], 2: range(3,7), 3: range(7,16), 4: range(17,32)} #for count net
         else:
             self.boxes = load.get_coords(img_nr)
+            print load.mode
             if load.mode == 'gt':
                 gts = load.get_all_gts(img_nr)
+                print gts
                 self.boxes = self.boxes[0]
                 for gt in gts:
                     print self.boxes.shape, gts[gt], gts[gt].shape
                     self.boxes = np.hstack((self.boxes,gts[gt]))
+            raw_input()
             if self.boxes != []:
                 if load.mode == 'dennis':
                     self.X = load.get_features(img_nr)
