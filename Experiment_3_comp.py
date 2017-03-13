@@ -32,7 +32,7 @@ def main():
 
     feature_size = 4096
 
-    eta = math.pow(10,-4)
+    eta = math.pow(10,-5)
 
     for tree_level_size in range(8,9):
         #initialize
