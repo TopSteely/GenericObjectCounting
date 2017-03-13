@@ -348,7 +348,7 @@ class Input:
         for grid in ['12','22','44']:
             print '/var/node436/local/tstahl/Hard_partitioned_Features/new_Features/%sx%s.txt'%(grid,format(img_nr, "06d"))
             if os.path.isfile('/var/node436/local/tstahl/Hard_partitioned_Features/new_Features/%sx%s.txt'%(grid,format(img_nr, "06d"))):
-                ret = np.loadtxt('/var/node436/local/tstahl/Hard_partitioned_Features/new_Features/%sx%s.txt'%(grid,format(img_nr, "026")), delimiter=',')
+                ret = np.loadtxt('/var/node436/local/tstahl/Hard_partitioned_Features/new_Features/%sx%s.txt'%(grid,format(img_nr, "06")), delimiter=',')
                 feat = np.vstack((feat,ret))
         print '/var/node436/local/tstahl/Hard_partitioned_Features/%s3x3.txt'%(format(img_nr, "06d"))
         if os.path.isfile('/var/node436/local/tstahl/Hard_partitioned_Features/%s3x3.txt'%(format(img_nr, "06d"))):
