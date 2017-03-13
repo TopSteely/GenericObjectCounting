@@ -21,7 +21,7 @@ def main():
 
     pred_mode = 'sum_lev'
 
-    debug = False
+    debug = True
 
     batch_size = 5
 
