@@ -91,7 +91,7 @@ class Input:
 
     def get_all_gts(self, img_nr):
         all_gts = {}
-        if self.mode == 'dennis':
+        if self.mode == 'dennis' or self.mode == 'gt':
             cat = self.category
             for i_c,class_ in enumerate(self.classes):
                 self.category = class_
