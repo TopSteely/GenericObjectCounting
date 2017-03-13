@@ -748,8 +748,9 @@ class SGD:
         for level in img_data.levels:
             preds_boxes = np.array(img_data.levels[level])
             print img_data.levels[level], preds_boxes
-            print preds_boxes.dtype
+            print preds_boxes.dtype, img_data.X.type
             print img_data.X[preds_boxes]
+
             level_sum = np.sum(np.dot(img_data.X[preds_boxes],self.w))
             sum_ += level_sum
             sum_im += np.sign(level_sum - img_data.y) * np.sum(img_data.X[preds_boxes],axis=0)
