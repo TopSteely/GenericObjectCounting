@@ -125,14 +125,14 @@ class SGD:
         self.scaler = scaler
 
     def loss_sum_image_boxes(self, img_data):
-        sum_preds = np.sum(np.dot(self.w, img_data.X))
+        sum_preds = np.sum(np.dot(img_data.X, self.w))
         return abs(sum_preds - img_data.y) + self.alpha * math.sqrt(np.dot(self.w,self.w))
 
     def loss_sum_level_boxes(self, img_data):
         sums = []
         for level in img_data.levels:
             preds_boxes = np.array(img_data.levels[level])
-            level_sum = np.sum(np.dot(self.w,img_data.X[preds_boxes]))
+            level_sum = np.sum(np.dot(img_data.X[preds_boxes],self.w))
             sums.append(level_sum)
         return np.mean(np.abs(np.array(sums) - img_data.y)) + self.alpha * math.sqrt(np.dot(self.w,self.w))
         
@@ -230,14 +230,14 @@ class SGD:
         return (np.array(level_preds) - img_data.y)**2 + self.alpha * math.sqrt(np.dot(self.w,self.w))
 
     def predict_sum_image_boxes(self, img_data):
-        sum_preds = np.sum(np.dot(self.w, img_data.X))
+        sum_preds = np.sum(np.dot(img_data.X,self.w))
         return sum_preds
 
     def predict_sum_level_boxes(self, img_data):
         sums = []
         for level in img_data.levels:
             preds_boxes = np.array(img_data.levels[level])
-            level_sum = np.sum(np.dot(self.w,img_data.X[preds_boxes]))
+            level_sum = np.sum(np.dot(img_data.X[preds_boxes],self.w))
             sums.append(level_sum)
         return np.mean(sums)
 
