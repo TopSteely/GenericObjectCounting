@@ -87,7 +87,8 @@ class Data:
                     # prune levels, speedup + performance 
                     levels_tmp = {k:v for k,v in levels.iteritems() if k<prune_tree_levels}
                     levels_gone = {k:v for k,v in levels.iteritems() if k>=prune_tree_levels}
-                    self.levels = levels_tmp
+                    if load.mode != 'gt':
+                        self.levels = levels_tmp
                     #prune tree as well, for patches training
                     for trash_level in levels_gone.values():
                         self.G.remove_nodes_from(trash_level)
