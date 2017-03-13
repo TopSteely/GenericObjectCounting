@@ -131,6 +131,7 @@ class Data:
                                 assert self.num_features == 1
                             else:
                                 self.boxes = np.array(self.boxes)
+                                self.X = np.array(self.X)
 
                     #print 'starting getting gt data'
                     #this is just for create_mats.py
