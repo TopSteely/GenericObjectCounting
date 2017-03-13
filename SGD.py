@@ -243,7 +243,7 @@ class SGD:
             preds_boxes = np.array(img_data.levels[level])
             level_sum = np.sum(np.dot(img_data.X[preds_boxes],self.w))
             sums.append(level_sum)
-        return np.mean(sums)
+        return sums
 
     def predict_window(self, img_data, ind):
         return np.dot(self.w, img_data.X[ind])
