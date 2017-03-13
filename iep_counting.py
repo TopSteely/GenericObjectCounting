@@ -54,12 +54,10 @@ class IepLayer(caffe.Layer):
 
     self.boxpred = class_boxpred	
 
-#    if cfg.TEST.BOX_IEP:
+    if cfg.TEST.BOX_IEP:
         # Write box predictions and iep(box) to file
-#        rois = bottom[3].data[:,:,0,0]
-#        print rois
-        #box_predictions = 
-        
+        rois = bottom[3].data[:,:,0,0]
+        max_box_preds = get_max_preds(level_functions, patches, rois, self.num_classes, self.blobs[0].data)
 
     # The loss should give back 4 numbers (1 per level and each gets multiplied with its own loss).
     top[0].reshape(*(iep.shape))
@@ -159,3 +157,20 @@ def get_ieps_backward(patches, level_functions, perlevel_perclass_loss, w_shape,
     # Normalize by the number of levels
     dw = dw / float(levels)
     return dw_perbox, dw
+
+
+    def get_max_preds(level_functions, patches, rois, num_classes, w):
+        levels = int(np.amax(level_functions[:,1,0,0],axis=0))+1
+        max_pred_of_level = np.zeros((num_classes, levels, 5))
+        for level_index in range(levels):
+            level_boxes = np.where((level_functions[:,:,:,0]==[:,level_index]).all(axis=1))[0]
+            for c in range(num_classes):
+                w_class = w[c]
+                class_boxpred = np.dot(patches[level_boxes,c,:],w_class)
+                max_ind = np.argmax(class_boxpred)
+                max_pred_of_level[c,level_index,0:4] = rois[level_boxes[max_ind]]
+                max_pred_of_level[c,level_index,4]   = class_boxpred[max_ind]
+
+                #iep_box_predictions
+
+        return max_pred_of_level
