@@ -114,9 +114,6 @@ class Data:
                         self.tree_boxes = np.array(self.boxes)
                         #self.boxes = np.array(self.boxes)
                         
-                    self.debug_tmp = []
-                    for n in self.G.nodes():
-                        self.debug_tmp.append(self.tree_boxes[n])
                     if load.mode == 'pascal':
                         self.lookup_coords()
                     elif load.mode == 'dennis':
