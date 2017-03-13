@@ -370,7 +370,7 @@ class SGD:
                 else:
                     preds_d.append(self.predict(img_data))
                 y_d.append(img_data.y)
-                if count_vis < 10 and len(img_data.levels) > 3 and img_data.y > 1 and self.mode != 'grid':
+                if count_vis < 10 and len(img_data.levels) > 3 and img_data.y > 1 and self.version != 'grid':
                     count_vis += 1
                     if img_nr not in self.functions:
                         _,fct = self.learner.get_iep_levels(img_data, {})
