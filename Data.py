@@ -17,7 +17,9 @@ class Data:
             self.X = load.get_grid(img_nr)
             self.levels = {0: [0], 1: [1,2], 2: range(3,7), 3: range(23,32), 4: range(7,23)}
             self.boxes = load.get_grid_coords(img_nr)
-            #self.levels = {0: [0], 1: [1,2], 2: range(3,7), 3: range(7,16), 4: range(17,32)} #for count net
+            self.levels = {0: [0], 1: [1,2], 2: range(3,7), 3: range(7,16), 4: range(17,32)} #for count net
+            self.box_levels = np.ones((32,2))
+            self.box_levels[:,1] = np.arange(32)
         else:
             self.boxes = load.get_coords(img_nr)
             if load.mode == 'gt':
