@@ -226,12 +226,12 @@ class SGD:
                     level_pred, _ = predictor.iep(img_data, [], lvl)
                 level_preds.append(level_pred)
         else:
-            level_preds, _ = self.predictor.get_iep_levels(img_data, {}, clipped)
+            level_preds, _ = self.predict(img_data)
             # for images with less levels than prune_tree_levels, just append the last level
             if len(level_preds) < self.prune_tree_levels:
                 for missing in range(self.prune_tree_levels - len(level_preds)):
                     level_preds.append(level_preds[-1])
-        return (np.array(level_preds) - img_data.y)**2 + self.alpha * math.sqrt(np.dot(self.w,self.w))
+        return (np.abs(level_preds) - img_data.y) + self.alpha * math.sqrt(np.dot(self.w,self.w))
 
     def predict_sum_image_boxes(self, img_data):
         sum_preds = np.sum(np.dot(img_data.X,self.w))
@@ -456,7 +456,7 @@ class SGD:
                 img_data = Data.Data(self.load, img_nr, self.prune_tree_levels, self.scaler, self.n_features)
             te_loss_temp[0:self.prune_tree_levels] += self.loss_per_level(img_data, self.clipped).reshape(self.prune_tree_levels,)
             te_loss_temp[self.prune_tree_levels] += self.loss(img_data)
-            mse_te_temp += (self.predict(img_data) - img_data.y)**2
+            mse_te_temp += np.abs(self.predict(img_data) - img_data.y)
         return tra_loss_temp/len(batch), te_loss_temp/to, mse_te_temp/to
         
     def learn(self, instances='all', to=-1, debug=False):
