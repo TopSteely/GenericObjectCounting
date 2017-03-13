@@ -363,8 +363,7 @@ class Input:
 
     def get_grid_coords(self, img_nr):
         tmp = self.get_coords(img_nr)
-        print tmp
-        grid_coords = tmp[0]
+        feat = tmp[0]
         #full,1x2,2x2,3x3,4x4
         for grid in ['1x2','2x2','3x3','4x4']:
             if os.path.isfile('/var/node436/local/tstahl/Hard_partitioned_Coords/%s%s.txt'%(format(img_nr, "06d"),grid)):
@@ -373,3 +372,4 @@ class Input:
             else:
                 print 'grid coords not found for ', img_nr
                 exit()
+        return feat
