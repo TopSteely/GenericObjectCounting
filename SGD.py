@@ -228,9 +228,12 @@ class SGD:
         else:
             level_preds = self.predict(img_data)
             # for images with less levels than prune_tree_levels, just append the last level
-            if len(level_preds) < self.prune_tree_levels:
-                for missing in range(self.prune_tree_levels - len(level_preds)):
-                    level_preds.append(level_preds[-1])
+            if isinstance(level_preds, float):
+                return (np.abs(level_preds) - img_data.y) + self.alpha * math.sqrt(np.dot(self.w,self.w))
+            else:
+                if len(level_preds) < self.prune_tree_levels:
+                    for missing in range(self.prune_tree_levels - len(level_preds)):
+                        level_preds.append(level_preds[-1])
         return (np.abs(level_preds) - img_data.y) + self.alpha * math.sqrt(np.dot(self.w,self.w))
 
     def predict_sum_image_boxes(self, img_data):
