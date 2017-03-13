@@ -5,9 +5,9 @@ import pandas as pd
 import pickle
 from scipy.misc import imread
 from utils import extract_coords
-import sys
-sys.path.append('/var/scratch/tstahl/source')
-from pycocotools.coco import COCO
+#import sys
+#sys.path.append('/var/scratch/tstahl/source')
+#from pycocotools.coco import COCO
 import random
 #import cv2
 
