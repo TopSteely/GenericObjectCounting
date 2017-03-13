@@ -31,8 +31,6 @@ class Data:
                     self.X = load.get_features(img_nr)
                 elif load.mode == 'mscoco' or load.mode == 'trancos':
                     self.X = np.zeros((5000,num_features))
-                else:
-
                 self.num_features = num_features
                 if gt:
                     self.gr = load.get_gts(img_nr)
