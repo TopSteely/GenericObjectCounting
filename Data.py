@@ -34,12 +34,13 @@ class Data:
                 elif load.mode == 'mscoco' or load.mode == 'trancos'  or load.mode == 'gt':
                     self.X = np.zeros((5000,num_features))
                 self.num_features = num_features
+                print 'a', self.levels
                 if gt:
                     self.gr = load.get_gts(img_nr)
                     self.gt_f = load.get_get_features(img_nr)
                     self.levels = {0: range(len(self.gr))}
                 else:
-                    print self.levels
+                    print 'b',self.levels
                     if num_features != 4096:
                         features_temp = []
                         for p in self.X:
