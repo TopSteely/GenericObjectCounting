@@ -11,7 +11,7 @@ from utils import get_set_intersection, get_intersection
 class Data:
     def __init__(self, load, img_nr, prune_tree_levels, scaler, num_features=4096, overlap_gt=False, grid=False, gt=False):
         self.img_nr = img_nr
-        if load.mode != 'mscoco' and load.mode != 'trancos':
+        if load.mode != 'mscoco' and load.mode != 'trancos' and load.mode != 'grid':
             self.y = load.get_label(img_nr)
         if grid:
             self.X = load.get_grid(img_nr)
