@@ -3,6 +3,8 @@ import caffe
 import numpy as np
 import copy
 import yaml
+if cfg.TEST.BOX_IEP:
+    import pickle
 DEBUG = False
 
 class IepLayer(caffe.Layer):
@@ -58,6 +60,9 @@ class IepLayer(caffe.Layer):
         # Write box predictions and iep(box) to file
         rois = bottom[3].data[:,:,0,0]
         max_box_preds = get_max_preds(level_functions, patches, rois, self.num_classes, self.blobs[0].data)
+        with open('/var/scratch/spintea/Repositories/ms-caffe/output/visualization/%s.pickle'%(image_nr),'wb') as handle:
+            pickle.dump(max_box_preds,handle)
+
 
     # The loss should give back 4 numbers (1 per level and each gets multiplied with its own loss).
     top[0].reshape(*(iep.shape))
