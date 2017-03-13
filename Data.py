@@ -27,6 +27,7 @@ class Data:
                     if gts[gt] != []:
                         self.boxes = np.vstack((self.boxes,np.array(gts[gt])))
                 self.levels = {0:[0], 1: range(1,len(self.boxes))}
+                print self.levels
             if self.boxes != []:
                 if load.mode == 'dennis':
                     self.X = load.get_features(img_nr)
@@ -98,7 +99,7 @@ class Data:
             #            for patch in self.G.nodes():
             #                intersection_coords.append(self.boxes[patch])
 
-                        for level in levels:
+                        for level in self.levels:
                             intersections_level = extract_coords(self.levels[level], self.boxes)
             #                intersection_coords.extend([pruned_boxes[ll] for ll in levels[level]])
                             #for i_coo in intersection_coords:
