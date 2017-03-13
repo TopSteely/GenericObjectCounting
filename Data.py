@@ -148,6 +148,7 @@ class Data:
                 if load.mode == 'mscoco' or load.mode == 'trancos'  or load.mode == 'gt':
                     learner = IEP.IEP(1, 'learning')
                     _,function = learner.get_iep_levels(self, {})
+                    print function
                     flevels = []
                     for f in range(len(function)):
                         flevels.append([a[1] for a in function[f]])
