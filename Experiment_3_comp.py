@@ -19,7 +19,7 @@ def main():
 
     learn_mode = 'all'#category_levels
 
-    pred_mode = 'sum_lev'
+    pred_mode = 'sum_im'
 
     debug = True
 
