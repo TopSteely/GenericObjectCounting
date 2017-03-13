@@ -247,6 +247,7 @@ class Output:
         plt.savefig(self.upd_path_new%(self.category))
 
     def save_mat(self,train_mat,test_mat, dataset):
+        print self.train_mat_path%(dataset), self.test_mat_path%(dataset)
         savemat(self.train_mat_path%(dataset), train_mat)
         savemat(self.test_mat_path%(dataset), test_mat)
-        print 'saved to ', self.train_mat_path, self.test_mat_path
+        print 'saved to ', self.train_mat_path%(dataset), self.test_mat_path%(dataset)

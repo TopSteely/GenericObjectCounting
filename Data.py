@@ -20,7 +20,6 @@ class Data:
             #self.levels = {0: [0], 1: [1,2], 2: range(3,7), 3: range(7,16), 4: range(17,32)} #for count net
         else:
             self.boxes = load.get_coords(img_nr)
-            print load.mode
             if load.mode == 'gt':
                 gts = load.get_all_gts(img_nr)
                 self.boxes = np.array(self.boxes[0])
