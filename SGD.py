@@ -233,7 +233,7 @@ class SGD:
             else:
                 if len(level_preds) < self.prune_tree_levels:
                     for missing in range(self.prune_tree_levels - len(level_preds)):
-                        level_preds.append(level_preds[-1])
+                        level_preds = np.vstack((level_preds,level_preds[-1]))
         return (np.abs(level_preds) - img_data.y) + self.alpha * math.sqrt(np.dot(self.w,self.w))
 
     def predict_sum_image_boxes(self, img_data):
