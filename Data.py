@@ -31,7 +31,7 @@ class Data:
             if self.boxes != []:
                 if load.mode == 'dennis':
                     self.X = load.get_features(img_nr)
-                elif load.mode == 'mscoco' or load.mode == 'trancos':
+                elif load.mode == 'mscoco' or load.mode == 'trancos'  or load.mode == 'gt':
                     self.X = np.zeros((5000,num_features))
                 self.num_features = num_features
                 if gt:
