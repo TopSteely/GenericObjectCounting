@@ -13,10 +13,8 @@ class Data:
         self.img_nr = img_nr
         self.y = load.get_label(img_nr)
         if grid:
-            self.grid = load.get_grid(img_nr)
-            print len(self.grid)
+            self.X = load.get_grid(img_nr)
             self.levels = {0: [0], 1: [1,2], 2: range(3,7), 3: range(23,32), 4: range(7,23)}
-            print [len(x) for x in self.levels.values()]
         else:
             self.boxes = load.get_coords(img_nr)
             if self.boxes != []:
