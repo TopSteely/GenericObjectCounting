@@ -27,20 +27,18 @@ class Data:
                     if gts[gt_] != []:
                         self.boxes = np.vstack((self.boxes,np.array(gts[gt_])))
                 self.levels = {0:[0], 1: range(1,len(self.boxes))}
-                print self.levels, self.boxes
+                self.tree_boxes = self.boxes
             if self.boxes != []:
                 if load.mode == 'dennis':
                     self.X = load.get_features(img_nr)
                 elif load.mode == 'mscoco' or load.mode == 'trancos'  or load.mode == 'gt':
                     self.X = np.zeros((5000,num_features))
                 self.num_features = num_features
-                print 'a', self.levels
                 if gt:
                     self.gr = load.get_gts(img_nr)
                     self.gt_f = load.get_get_features(img_nr)
                     self.levels = {0: range(len(self.gr))}
                 else:
-                    print 'b',self.levels
                     if num_features != 4096:
                         features_temp = []
                         for p in self.X:
@@ -67,7 +65,6 @@ class Data:
                                 sum_tmp += get_overlap_ratio(g_i, b_i)
                             self.y_boxes.append(sum_tmp)
 
-                    print self.levels
                     #self.G, levels = create_tree_as_extracted(self.tree_boxes)
                     if load.mode == 'dennis':
                         self.G, levels = create_tree(self.tree_boxes)
