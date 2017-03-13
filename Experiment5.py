@@ -19,9 +19,9 @@ def main():
 
     learn_mode = 'all'#category_levels
 
-    pred_mode = 'sum_im'
+    pred_mode = 'abs'
 
-    debug = True
+    debug = False
 
     batch_size = 5
 
