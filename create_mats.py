@@ -21,7 +21,7 @@ def main():
 
     pred_mode = 'abs'
 
-    dataset = 'grid'#'dennis'
+    dataset = 'gt'#'dennis'
 
     debug = False
 
