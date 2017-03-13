@@ -478,8 +478,7 @@ class SGD:
         subset = training_data[:to]
         #random.shuffle(subset)
         batch = []
-        for img_nr in [2764,2765]:#enumerate(subset):i_img_nr
-            i_img_nr = 0
+        for i_img_nr,img_nr in enumerate(subset):
             batch.append(img_nr)
             start = time.time()
             if self.dataset == 'blob':
@@ -747,9 +746,6 @@ class SGD:
         sum_im = np.zeros(self.n_features)
         for level in img_data.levels:
             preds_boxes = np.array(img_data.levels[level])
-            print img_data.levels[level], preds_boxes
-            print preds_boxes.dtype, img_data.X.dtype
-            print img_data.X[preds_boxes]
 
             level_sum = np.sum(np.dot(img_data.X[preds_boxes],self.w))
             sum_ += level_sum
