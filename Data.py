@@ -28,8 +28,8 @@ class Data:
                 for gt in gts:
                     print self.boxes
                     print self.boxes.shape, gts[gt], np.array(gts[gt]).shape
-                    #if gts[gt] != []:
-                    self.boxes = np.vstack((self.boxes,np.array(gts[gt])))
+                    if gts[gt] != []:
+                        self.boxes = np.vstack((self.boxes,np.array(gts[gt])))
             raw_input()
             if self.boxes != []:
                 if load.mode == 'dennis':
