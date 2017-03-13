@@ -67,7 +67,7 @@ class Input:
 
     def get_all_labels(self, img_nr, mode):
         all_labels = [0.0]
-        if self.mode == 'dennis':
+        if self.mode == 'dennis' or self.mode == 'gt' or self.mode == 'grid':
             cat = self.category
             for class_ in self.classes:
                 self.category = class_
