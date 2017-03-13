@@ -47,7 +47,9 @@ class Output:
         elif self.mode.startswith('mscoco'):
             self.train_mat_path = '/var/scratch/spintea/Repositories/ms-caffe/data/selective_search_data/mscoco_train_toby.mat'
             self.test_mat_path = '/var/scratch/spintea/Repositories/ms-caffe/data/selective_search_data/mscoco_test_toby.mat'
-            
+        else:
+            self.train_mat_path = '/var/scratch/spintea/Repositories/ms-caffe/data/selective_search_data/voc_2007_train_%s.mat'
+            self.test_mat_path = '/var/scratch/spintea/Repositories/ms-caffe/data/selective_search_data/voc_2007_test_%s.mat'
         self.preds_path = "/var/node436/local/tstahl/preds/%s_%s_%s_%s_%s_%s_%s.p"
         self.label_path = "/var/node436/local/tstahl/labels/%s_%s_%s_%s_%s_%s_%s.p"
 
@@ -244,7 +246,7 @@ class Output:
         #plt.legend()
         plt.savefig(self.upd_path_new%(self.category))
 
-    def save_mat(self,train_mat,test_mat):
-        savemat(self.train_mat_path, train_mat)
-        savemat(self.test_mat_path, test_mat)
+    def save_mat(self,train_mat,test_mat, dataset):
+        savemat(self.train_mat_path%(dataset), train_mat)
+        savemat(self.test_mat_path%(dataset), test_mat)
         print 'saved to ', self.train_mat_path, self.test_mat_path

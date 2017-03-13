@@ -47,7 +47,6 @@ class IepLayer(caffe.Layer):
         patches = bottom[0].data
         patches = patches.reshape(patches.shape[0], patches.shape[1], patches.shape[2] * patches.shape[3]) 	
 
-    #print '[IEP] patches forward', patches[1,0,:], patches.shape
     level_functions = bottom[1].data
     #raw_input()
 
@@ -164,18 +163,18 @@ def get_ieps_backward(patches, level_functions, perlevel_perclass_loss, w_shape,
     return dw_perbox, dw
 
 
-    def get_max_preds(level_functions, patches, rois, num_classes, w):
-        levels = int(np.amax(level_functions[:,1,0,0],axis=0))+1
-        max_pred_of_level = np.zeros((num_classes, levels, 5))
-        for level_index in range(levels):
-            level_boxes = np.where((level_functions[:,:,:,0]==[:,level_index]).all(axis=1))[0]
-            for c in range(num_classes):
-                w_class = w[c]
-                class_boxpred = np.dot(patches[level_boxes,c,:],w_class)
-                max_ind = np.argmax(class_boxpred)
-                max_pred_of_level[c,level_index,0:4] = rois[level_boxes[max_ind]]
-                max_pred_of_level[c,level_index,4]   = class_boxpred[max_ind]
+def get_max_preds(level_functions, patches, rois, num_classes, w):
+    levels = int(np.amax(level_functions[:,1,0,0],axis=0))+1
+    max_pred_of_level = np.zeros((num_classes, levels, 5))
+    for level_index in range(levels):
+        level_boxes = np.where((level_functions[:,:,:,0]==[:,level_index]).all(axis=1))[0]
+        for c in range(num_classes):
+            w_class = w[c]
+            class_boxpred = np.dot(patches[level_boxes,c,:],w_class)
+            max_ind = np.argmax(class_boxpred)
+            max_pred_of_level[c,level_index,0:4] = rois[level_boxes[max_ind]]
+            max_pred_of_level[c,level_index,4]   = class_boxpred[max_ind]
 
-                #iep_box_predictions
+            #iep_box_predictions
 
-        return max_pred_of_level
+    return max_pred_of_level

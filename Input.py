@@ -29,9 +29,8 @@ class Input:
             cats = self.coco_train_set.loadCats(self.coco_train_set.getCatIds())
             self.classes = [cat['name'] for cat in cats]
             print self.classes
-            raw_input()
         elif self.mode == 'trancos':
-            self.coord_path = 'bla'
+            self.coord_path = '/var/node436/local/tstahl/TRANCOS_v3/TRANCOS/SS_Boxes'
             self.label_path = 'bla'
             self.feature_path = 'bla'
         elif self.mode == 'blob':
@@ -82,6 +81,12 @@ class Input:
                     ann_id = self.coco_val_set.getAnnIds(imgIds=img_nr,catIds=self.coco_train_set.getCatIds(catNms=[class_]), iscrowd=None)
                     annos = self.coco_val_set.loadAnns(ann_id)
                 all_labels.append(len(annos))
+
+        elif self.mode == 'trancos':
+            with open('/var/node436/local/tstahl/TRANCOS_v3/images/image-%s-%s.txt'%(i_mode,format(img_nr, "06d"))) as f:
+                for i, l in enumerate(f):
+                    pass
+            return np.array([i + 1])
         return np.array(all_labels)
 
     def get_all_gts(self, img_nr):
@@ -353,3 +358,14 @@ class Input:
             ret = np.loadtxt('/var/node436/local/tstahl/Hard_partitioned_Features/%s3x3.txt'%(format(img_nr, "06d")), delimiter=',')
             feat = np.vstack((feat,ret))
         return feat
+
+    def get_grid_coords(self, img_nr):
+        grid_coords = get_coords(self, img_nr)[0]
+        #full,1x2,2x2,3x3,4x4
+        for grid in ['1x2','2x2','3x3','4x4']:
+            if os.path.isfile('/var/node436/local/tstahl/Hard_partitioned_Coords/%s%s.txt'%(format(img_nr, "06d"),grid)):
+                ret = np.loadtxt('/var/node436/local/tstahl/Hard_partitioned_Coords/%s%s.txt'%(format(img_nr, "06"),grid), delimiter=',')
+                feat = np.vstack((feat,ret))
+            else:
+                print 'grid coords not found for ', img_nr
+                exit()
