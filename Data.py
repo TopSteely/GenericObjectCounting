@@ -23,14 +23,11 @@ class Data:
             print load.mode
             if load.mode == 'gt':
                 gts = load.get_all_gts(img_nr)
-                print gts
                 self.boxes = np.array(self.boxes[0])
                 for gt in gts:
-                    print self.boxes
-                    print self.boxes.shape, gts[gt], np.array(gts[gt]).shape
                     if gts[gt] != []:
                         self.boxes = np.vstack((self.boxes,np.array(gts[gt])))
-            raw_input()
+                self.levels = {0:[0], 1: range(1,len(self.boxes))}
             if self.boxes != []:
                 if load.mode == 'dennis':
                     self.X = load.get_features(img_nr)
@@ -95,7 +92,7 @@ class Data:
                     for trash_level in levels_gone.values():
                         self.G.remove_nodes_from(trash_level)
 
-                    if load.mode == 'mscoco' or load.mode == 'trancos':
+                    if load.mode == 'mscoco' or load.mode == 'trancos' or load.mode == 'gt':
                         intersection_coords = []
             #            for patch in self.G.nodes():
             #                intersection_coords.append(self.boxes[patch])
@@ -149,7 +146,7 @@ class Data:
 
                     #print 'starting getting gt data'
                     #this is just for create_mats.py
-                if load.mode == 'mscoco' or load.mode == 'trancos':
+                if load.mode == 'mscoco' or load.mode == 'trancos'  or load.mode == 'gt':
                     learner = IEP.IEP(1, 'learning')
                     _,function = learner.get_iep_levels(self, {})
                     flevels = []
