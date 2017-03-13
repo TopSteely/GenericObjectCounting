@@ -26,9 +26,9 @@ class Data:
                 print gts
                 self.boxes = np.array(self.boxes[0])
                 for gt in gts:
+                    print self.boxes
                     print self.boxes.shape, gts[gt], gts[gt].shape
                     self.boxes = np.hstack((self.boxes,np.array(gts[gt])))
-                    print self.boxes
             raw_input()
             if self.boxes != []:
                 if load.mode == 'dennis':
