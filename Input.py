@@ -344,7 +344,7 @@ class Input:
         return np.array(intersection_coords)
 
     def get_grid(self, img_nr):
-        feat = get_features(img_nr)[0]
+        feat = self.get_features(img_nr)[0]
         for grid in ['12','22','44']:
             if os.path.isfile('/var/node436/local/tstahl/Hard_partitioned_Features/new_Features/%sx%s.txt'%(grid,format(img_nr, "06d"))):
                 ret = np.loadtxt('/var/node436/local/tstahl/Hard_partitioned_Features/new_Features/%sx%s.txt'%(grid,format(img_nr, "06")), delimiter=',')
