@@ -137,11 +137,8 @@ class Input:
     def get_get_features(self, img_nr):
         gr_f = []
         if os.path.isfile('/var/node436/local/tstahl/Features_groundtruth/Features_ground_truth/%s/%s.txt'%(self.category,format(img_nr, "06d"))):
-            gr = pd.read_csv('/var/node436/local/tstahl/Features_groundtruth/Features_ground_truth/%s/%s.txt'%(self.category,format(img_nr, "06d")), header=None, delimiter=",").values
-        else:
-            print 'no gt'
-            exit()
-        return gr
+            gr_f = pd.read_csv('/var/node436/local/tstahl/Features_groundtruth/Features_ground_truth/%s/%s.txt'%(self.category,format(img_nr, "06d")), header=None, delimiter=",").values
+        return gr_f
 
 
 
