@@ -17,7 +17,7 @@ class Input:
         self.mode = mode
         self.category = category
         if self.mode == 'grid':
-            self.coord_path = 'bla'
+            self.coord_path = '/var/node436/local/tstahl/Coords_prop_windows/%s.txt'
             self.label_path = 'bla'
             self.feature_path = 'bla'
             self.test_numbers, training_numbers_tmp = self.get_training_numbers()
@@ -230,7 +230,7 @@ class Input:
             return [x for x in train_imgs if x not in eval_images], eval_images
     
     def get_coords(self, img_nr):
-        if self.mode == 'dennis'  or self.mode == 'gt':
+        if self.mode == 'dennis'  or self.mode == 'gt' or self.mode == 'grid':
             if os.path.isfile(self.coord_path%(format(img_nr, "06d"))):
                 ret = np.loadtxt(self.coord_path%(format(img_nr, "06d")), delimiter=',')
                 return ret
@@ -363,6 +363,7 @@ class Input:
 
     def get_grid_coords(self, img_nr):
         tmp = self.get_coords(img_nr)
+        print tmp
         grid_coords = tmp[0]
         #full,1x2,2x2,3x3,4x4
         for grid in ['1x2','2x2','3x3','4x4']:
