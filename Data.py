@@ -20,9 +20,8 @@ class Data:
                 self.X = np.zeros((5000,num_features))
             self.num_features = num_features
             self.gr = load.get_gts(img_nr)
-            self.X = load.get_get_features(img_nr)
-            self.boxes = self.gt_fs
-            self.levels = {0: range(len(self.gt_fs))}
+            self.gt_f = load.get_get_features(img_nr)
+            self.levels = {0: range(len(self.gr))}
             if num_features != 4096:
                 features_temp = []
                 for p in self.X:
