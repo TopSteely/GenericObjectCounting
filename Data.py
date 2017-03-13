@@ -27,7 +27,7 @@ class Data:
                 self.boxes = np.array(self.boxes[0])
                 for gt in gts:
                     print self.boxes
-                    print self.boxes.shape, gts[gt], gts[gt].shape
+                    print self.boxes.shape, gts[gt], np.array(gts[gt]).shape
                     self.boxes = np.hstack((self.boxes,np.array(gts[gt])))
             raw_input()
             if self.boxes != []:
