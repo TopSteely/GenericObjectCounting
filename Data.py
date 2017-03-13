@@ -13,7 +13,7 @@ class Data:
         self.img_nr = img_nr
         if load.mode != 'mscoco' and load.mode != 'trancos' and load.mode != 'grid':
             self.y = load.get_label(img_nr)
-        if grid:
+        if load.mode == 'grid' or grid:
             self.X = load.get_grid(img_nr)
             self.levels = {0: [0], 1: [1,2], 2: range(3,7), 3: range(23,32), 4: range(7,23)}
             self.boxes = load.get_grid_coords(img_nr)
