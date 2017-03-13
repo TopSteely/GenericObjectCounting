@@ -75,25 +75,24 @@ class Data:
                     if load.mode == 'dennis':
                         self.boxes = self.tree_boxes
                     #prune tree to only have levels which fully cover the image, tested
-                    total_size = surface_area_old(self.tree_boxes, levels[0])
-                    for level in levels:
-                        sa = surface_area_old(self.tree_boxes, levels[level])
-                        sa_co = sa/total_size
-                        if sa_co != 1.0:
-                            if load.mode != 'gt':
-                                self.G.remove_nodes_from(levels[level])
-                        else:
-                            nr_levels_covered = level
-                    levels = {k: levels[k] for k in range(0,nr_levels_covered + 1)}
-                    # prune levels, speedup + performance 
-                    levels_tmp = {k:v for k,v in levels.iteritems() if k<prune_tree_levels}
-                    levels_gone = {k:v for k,v in levels.iteritems() if k>=prune_tree_levels}
-                    print self.levels
+                    if load.mode != 'gt':
+                        total_size = surface_area_old(self.tree_boxes, levels[0])
+                        for level in levels:
+                            sa = surface_area_old(self.tree_boxes, levels[level])
+                            sa_co = sa/total_size
+                            if sa_co != 1.0:
+                                    self.G.remove_nodes_from(levels[level])
+                            else:
+                                nr_levels_covered = level
+                        levels = {k: levels[k] for k in range(0,nr_levels_covered + 1)}
+                        # prune levels, speedup + performance 
+                        levels_tmp = {k:v for k,v in levels.iteritems() if k<prune_tree_levels}
+                        levels_gone = {k:v for k,v in levels.iteritems() if k>=prune_tree_levels}
                     if load.mode != 'gt':
                         self.levels = levels_tmp
-                    #prune tree as well, for patches training
-                    for trash_level in levels_gone.values():
-                        self.G.remove_nodes_from(trash_level)
+                        #prune tree as well, for patches training
+                        for trash_level in levels_gone.values():
+                            self.G.remove_nodes_from(trash_level)
 
                     if load.mode == 'mscoco' or load.mode == 'trancos' or load.mode == 'gt':
                         intersection_coords = []
