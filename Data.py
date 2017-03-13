@@ -11,6 +11,9 @@ from utils import get_set_intersection, get_intersection
 class Data:
     def __init__(self, load, img_nr, prune_tree_levels, scaler, num_features=4096, overlap_gt=False):
 	#print img_nr
+        self.grid = get_grid(img_nr)
+        print self.grid
+        print self.grid.shape
         self.img_nr = img_nr
         self.boxes = load.get_coords(img_nr)
         if self.boxes != []:

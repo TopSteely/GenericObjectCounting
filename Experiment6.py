@@ -19,7 +19,7 @@ def main():
 
     learn_mode = 'all'#category_levels
 
-    pred_mode = 'abs'
+    pred_mode = 'grid'
 
     debug = False
 
