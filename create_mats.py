@@ -21,7 +21,7 @@ def main():
 
     pred_mode = 'abs'
 
-    dataset = 'gt'#'dennis'
+    dataset = 'grid'#'dennis'
 
     debug = False
 
@@ -142,7 +142,7 @@ def main():
     elif dataset == 'trancos':
         test = range(424)
 
-    for i,img_nr in enumerate(test[:-1]):
+    for i,img_nr in enumerate(test):
         print i,img_nr
         img_data = Data.Data(load_dennis, img_nr, 20, None)
         # we need: 
