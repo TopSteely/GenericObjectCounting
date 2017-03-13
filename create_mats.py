@@ -58,11 +58,13 @@ def main():
             #'boxes' # (intersections)
             #labels
             #functions
-        if dataset == 'dennis':
-            train_mat['image'].append('/var/scratch/spintea/Repositories/ms-caffe/data/VOCdevkit2007/VOC2007/JPEGImages/%s.jpg'%(format(img_nr, "06d")))
-        elif dataset == 'mscoco':
-            train_mat['image'].append('/var/node436/local/tstahl/mscoco/train2014/%s.jpg'%(format(img_nr, "012d")))
         if img_data.boxes != []:
+            if dataset == 'dennis':
+                train_mat['image'].append('/var/scratch/spintea/Repositories/ms-caffe/data/VOCdevkit2007/VOC2007/JPEGImages/%s.jpg'%(format(img_nr, "06d")))
+            elif dataset == 'mscoco':
+                train_mat['image'].append('/var/node436/local/tstahl/mscoco/train2014/%s.jpg'%(format(img_nr, "012d")))
+            elif dataset == 'trancos':
+                train_mat['image'].append('/var/node436/local/tstahl/TRANCOS_v3/1-%s.jpg'%(format(img_nr, "06d")))
             train_mat['boxes'].append(img_data.boxes)
             train_mat['labels'].append([load_dennis.get_all_labels(img_nr, 'train')])
             train_mat['functions'].append(img_data.box_levels)

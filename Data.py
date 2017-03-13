@@ -135,7 +135,7 @@ class Data:
 
                     #print 'starting getting gt data'
                     #this is just for create_mats.py
-                    if False:
+                    if True:
                         learner = IEP.IEP(1, 'learning')
                         _,function = learner.get_iep_levels(self, {})
                         flevels = []

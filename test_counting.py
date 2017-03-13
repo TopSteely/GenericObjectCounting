@@ -256,11 +256,16 @@ def test_net(net, max_per_image=400, thresh=-np.inf, vis=False):
     output_dir = get_output_dir(imdb, net)
     print '{:d} roidb entries'.format(len(roidb))
     roidb = roidb[0]
+    num_images = roidb[0][0]['labels'].shape[1]
     #print net.params['iep'][0].data
     
     # print "conv:", net.params['conv_new_1'][0].data
     #roidb = roidb[0:1000]
-    error = np.zeros(20)
+    error_per_level = np.zeros((num_images,20))
+    levels = np.zeros((num_images,20))
+    error_per_objects = np.zeros((num_images,8))#0,1,2,3,4,5,5+,10+
+    occurances = np.zeros((num_images,8))#0,1,2,3,4,5,5+,10+
+    error = np.zeros(num_images)
     max_patches = 0
     for image_input in roidb:
 	# TODO:
@@ -296,9 +301,12 @@ def test_net(net, max_per_image=400, thresh=-np.inf, vis=False):
         pred = np.mean(scores['iep'][:,:],axis=0)
         labels = image_input['labels'][0,:,0,0]
         error += np.abs(pred - labels)
+        error_per_level, levels, error_per_objects, occurances = get_errors(scores, labels, error_per_level, levels, error_per_objects, occurances)
     print 'evaluated', len(roidb)
     print 'class error: ', error/float(len(roidb))
     print 'Mean error: ', np.mean(error/float(len(roidb)))
+    print 'error per num object: ', error_per_objects/occurances
+    print 'error per level: ', error_per_level/levels
 
 
 def net_predict(image_input, data_blob, net):
@@ -325,3 +333,24 @@ def net_predict(image_input, data_blob, net):
 	#print '>>> iep: ', net.blobs['iep'].data
 	#print 'scores: ',scores
 	return scores
+
+def get_errors(scores, labels, error_per_level, levels, error_per_objects, occurances):
+    error_per_level[:scores['iep'].shape[0]] += np.abs(scores['iep'][:,:] - np.repeat(labels, scores['iep'].shape[0], axis = 0))
+    levels[:scores['iep'].shape[0]] += 1
+    error_per_objects[np.where(labels==0)[0],0] += np.sum(pred[np.where(labels==0)[0],:] - labels[np.where(labels==0)[0]])
+    occurances[np.where(labels==0)[0],0] += labels[np.where(labels==0)[0]]
+    error_per_objects[np.where(labels==1)[0],1] += np.sum(pred[np.where(labels==1)[0],:] - labels[np.where(labels==1)[0]])
+    occurances[np.where(labels==1)[0],1] += labels[np.where(labels==1)[0]]
+    error_per_objects[np.where(labels==2)[0],2] += np.sum(pred[np.where(labels==2)[0],:] - labels[np.where(labels==2)[0]])
+    occurances[np.where(labels==2)[0],2] += labels[np.where(labels==2)[0]]
+    error_per_objects[np.where(labels==3)[0],3] += np.sum(pred[np.where(labels==3)[0],:] - labels[np.where(labels==3)[0]])
+    occurances[np.where(labels==3)[0],3] += labels[np.where(labels==3)[0]]
+    error_per_objects[np.where(labels==4)[0],4] += np.sum(pred[np.where(labels==4)[0],:] - labels[np.where(labels==4)[0]])
+    occurances[np.where(labels==4)[0],4] += labels[np.where(labels==4)[0]]
+    error_per_objects[np.where(labels==5)[0],5] += np.sum(pred[np.where(labels==5)[0],:] - labels[np.where(labels==5)[0]])
+    occurances[np.where(labels==5)[0],5] += labels[np.where(labels==5)[0]]
+    error_per_objects[np.where(labels>5) & np.where(labels<=10)[0],6] += np.sum(pred[np.where(labels>5) & np.where(labels<=10)[0],:] - labels[np.where(labels>5) & np.where(labels<=10)[0]])
+    occurances[np.where(labels>5) & np.where(labels<=10)[0],6] += labels[np.where(labels>5) & np.where(labels<=10)[0]]
+    error_per_objects[np.where(labels>10)[0],7] += np.sum(pred[np.where(labels>10)[0],:] - labels[np.where(labels>10)[0]])
+    occurances[np.where(labels>10)[0],7] += labels[np.where(labels>10)[0]]
+    return error_per_level, levels, error_per_objects, occurances
