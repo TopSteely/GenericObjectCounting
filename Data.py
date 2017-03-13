@@ -39,6 +39,7 @@ class Data:
                     self.gt_f = load.get_get_features(img_nr)
                     self.levels = {0: range(len(self.gr))}
                 else:
+                    print self.levels
                     if num_features != 4096:
                         features_temp = []
                         for p in self.X:
@@ -65,6 +66,7 @@ class Data:
                                 sum_tmp += get_overlap_ratio(g_i, b_i)
                             self.y_boxes.append(sum_tmp)
 
+                    print self.levels
                     #self.G, levels = create_tree_as_extracted(self.tree_boxes)
                     if load.mode == 'dennis':
                         self.G, levels = create_tree(self.tree_boxes)
