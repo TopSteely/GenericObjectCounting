@@ -226,7 +226,7 @@ class SGD:
                     level_pred, _ = predictor.iep(img_data, [], lvl)
                 level_preds.append(level_pred)
         else:
-            level_preds, _ = self.predict(img_data)
+            level_preds = self.predict(img_data)
             # for images with less levels than prune_tree_levels, just append the last level
             if len(level_preds) < self.prune_tree_levels:
                 for missing in range(self.prune_tree_levels - len(level_preds)):
