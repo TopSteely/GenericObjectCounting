@@ -736,7 +736,6 @@ class SGD:
     def learn_sum_image_boxes(self, img_data, functions):
         preds = np.dot( img_data.X,self.w)
         sum_preds = np.sum(np.dot(img_data.X, self.w))
-        print preds[0],sum_preds, img_data.y
         if self.n_features == 1:
             return np.sign(sum_preds - img_data.y) * np.sum(img_data.X,axis=0) + 2 * self.alpha * self.w, []
         else:
