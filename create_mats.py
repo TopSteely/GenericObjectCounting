@@ -178,7 +178,7 @@ def main():
     elif dataset == 'trancos':
         test = range(1,422)
 
-    for i,img_nr in enumerate(test[0:4]):
+    for i,img_nr in enumerate(test):
         print i,img_nr
         if dataset == 'trancos':
             img_data = Data.Data(load_dennis, img_nr, 20, None, 3)

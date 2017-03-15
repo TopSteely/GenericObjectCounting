@@ -258,4 +258,4 @@ class Output:
             #savemat(self.train_mat_path%(dataset,level_size), train_mat)
         #if test_mat != []:
             #savemat(self.test_mat_path%(dataset,level_size), test_mat)
-        print 'saved to ', self.train_mat_path%(dataset,level_size), self.test_mat_path%(dataset,level_size)
+        print 'saved to ', self.train_mat_path%(dataset,level_size), self.test_mat_path
