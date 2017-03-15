@@ -43,7 +43,7 @@ class Data:
             if self.boxes != [] and prune_tree_levels > 1:
                 if load.mode == 'dennis':
                     self.X = load.get_features(img_nr)
-                elif load.mode == 'mscoco' or load.mode == 'trancos'  or load.mode == 'gt':
+                elif load.mode == 'mscoco' or load.mode == 'trancos'  or load.mode == 'gt'  or load.mode == 'level':
                     self.X = np.zeros((5000,num_features))
                 self.num_features = num_features
                 if gt:
@@ -62,7 +62,7 @@ class Data:
                     start = time.time()
                     #self.tree_boxes = load.get_coords_tree(img_nr)
                     #print len(self.tree_boxes), len(self.tree_boxes[0])
-                    if load.mode == 'dennis':
+                    if load.mode == 'dennis'  or load.mode == 'level':
                         self.tree_boxes = load.get_coords_tree(img_nr)
                         self.tree_boxes,self.X = sort_boxes(self.tree_boxes, self.X)
                     elif load.mode == 'mscoco' or load.mode == 'trancos':
@@ -78,13 +78,13 @@ class Data:
                             self.y_boxes.append(sum_tmp)
 
                     #self.G, levels = create_tree_as_extracted(self.tree_boxes)
-                    if load.mode == 'dennis' or load.mode == 'lvl':
+                    if load.mode == 'dennis' or load.mode == 'level':
                         self.G, levels = create_tree(self.tree_boxes)
                     elif load.mode == 'mscoco' or load.mode == 'trancos':
                         self.G, levels = create_tree(self.boxes)
                     #print "tree", (time.time() - start)
                     start = time.time()
-                    if load.mode == 'dennis':
+                    if load.mode == 'dennis' or load.mode == 'level':
                         self.boxes = self.tree_boxes
                     #prune tree to only have levels which fully cover the image, tested
                     if load.mode != 'gt' and load.mode != 'sum':
@@ -154,10 +154,17 @@ class Data:
                             else:
                                 self.boxes = np.array(self.boxes)
                                 self.X = np.array(self.X)
-
+                    if load.mode == 'level':
+                        self.box_levels = np.zeros((len(self.boxes),2))
+                        
+                        for level in self.levels:
+                            
+                            self.box_levels[self.levels[level],:] = [1,level]
+                            
+                            
                     #print 'starting getting gt data'
                     #this is just for create_mats.py
-                if load.mode == 'mscoco' or load.mode == 'trancos'  or load.mode == 'gt' or load.mode == 'lvl':
+                if load.mode == 'mscoco' or load.mode == 'trancos'  or load.mode == 'gt':
                     learner = IEP.IEP(1, 'learning')
                     _,function = learner.get_iep_levels(self, {})
                     flevels = []

@@ -21,7 +21,7 @@ def main():
 
     pred_mode = 'abs'
 
-    dataset = 'mscoco'#'dennis'
+    dataset = 'level'#'dennis'
 
     debug = False
 
@@ -54,8 +54,8 @@ def main():
     elif dataset == 'trancos':
         train = range(1,404)
     print train[0:5], len(train)
-    from_ = 0
-    to_ = 5
+    from_ = 81000
+    to_ = -1
     for i,img_nr in enumerate(train[from_:to_]):
         print i, img_nr
         if dataset == 'trancos':
@@ -71,7 +71,10 @@ def main():
             if dataset == 'dennis' or dataset == 'grid' or dataset == 'gt' or dataset == 'sum' or dataset == 'level':
                 train_mat['image'].append('/var/scratch/spintea/Repositories/ms-caffe/data/VOCdevkit2007/VOC2007/JPEGImages/%s.jpg'%(format(img_nr, "06d")))
             elif dataset == 'mscoco':
-                print img_nr, load_dennis.get_all_labels(img_nr, 'train')
+                #print img_nr, load_dennis.get_all_labels(img_nr, 'train'),[load_dennis.classes[i-1] for i in np.where(load_dennis.get_all_labels(img_nr, 'train')>0)[0]]
+                #print len(load_dennis.classes)
+                #print len(load_dennis.get_all_labels(img_nr, 'train'))
+                print load_dennis.get_all_labels(img_nr, 'train').dtype
                 train_mat['image'].append('/var/node436/local/tstahl/mscoco/train2014/%s.jpg'%(format(img_nr, "012d")))
             elif dataset == 'trancos':
                 train_mat['image'].append('/var/node436/local/tstahl/TRANCOS_v3/1-%s.jpg'%(format(img_nr, "06d")))
@@ -94,6 +97,8 @@ def main():
                 train_mat['functions'].append(img_data.box_levels)
                 #train_mat['overlaps'].append(img_data.gt_overlaps)
                 assert len(img_data.box_levels ) == len(img_data.boxes)
+            #print train_mat
+            #raw_input()
             #test data:
             #level_functions = np.array(img_data.box_levels)
             #levels = int(np.amax(level_functions[:,1],axis=0)) + 1
@@ -203,7 +208,7 @@ def main():
             test_mat['functions'].append(img_data.box_levels)
             assert len(img_data.box_levels ) == len(img_data.boxes)
         #test_mat['overlaps'].append(img_data.gt_overlaps)
-    output_dennis.save_mat(train_mat,test_mat, dataset, level_size)
+    output_dennis.save_mat(train_mat,test_mat, dataset, level_size, from_,to_)
     
     
 if __name__ == "__main__":

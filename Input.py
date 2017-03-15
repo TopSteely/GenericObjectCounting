@@ -214,7 +214,7 @@ class Input:
         return tr_images, te_images
                 
     def get_training_numbers(self):     
-        if self.mode == 'pascal' or self.mode == 'dennis' or self.mode == 'gt' or self.mode == 'grid' or self.mode == 'sum':
+        if self.mode == 'pascal' or self.mode == 'dennis' or self.mode == 'gt' or self.mode == 'grid' or self.mode == 'sum'  or self.mode == 'level':
             file = open('/var/scratch/tstahl/IO/test.txt')
             test_imgs = []
             train_imgs = []
