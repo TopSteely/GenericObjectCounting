@@ -46,7 +46,7 @@ class Output:
             #self.test_mat_path = '/var/scratch/spintea/Repositories/ms-caffe/data/selective_search_data/voc_2007_test_1D.mat'
         elif self.mode.startswith('mscoco'):
             self.train_mat_path = '/var/scratch/spintea/Repositories/ms-caffe/data/selective_search_data/mscoco_train_toby%s_%s.mat'
-            self.test_mat_path = '/var/scratch/spintea/Repositories/ms-caffe/data/selective_search_data/mscoco_test_toby%s_%s.mat'
+            self.test_mat_path = '/var/scratch/spintea/Repositories/ms-caffe/data/selective_search_data/mscoco_test_toby.mat'
         else:
             self.train_mat_path = '/var/scratch/spintea/Repositories/ms-caffe/data/selective_search_data/voc_2007_train_%s_%s.mat'
             self.test_mat_path = '/var/scratch/spintea/Repositories/ms-caffe/data/selective_search_data/voc_2007_test_%s_%s.mat'
@@ -252,7 +252,7 @@ class Output:
         if dataset == 'mscoco':
 #           print 
            savemat(self.train_mat_path%(from_,to_), train_mat)
-#           savemat(self.test_mat_path, test_mat)
+           savemat(self.test_mat_path, test_mat)
         if train_mat != []:
             savemat(self.train_mat_path%(dataset,level_size), train_mat)
         if test_mat != []:

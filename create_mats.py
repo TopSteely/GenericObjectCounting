@@ -50,7 +50,8 @@ def main():
     if dataset == 'dennis' or dataset == 'grid' or dataset == 'gt' or dataset == 'sum'or dataset == 'level':
         train = load_dennis.training_numbers
     elif dataset == 'mscoco':
-        train = load_dennis.coco_train_set.getImgIds()#catNms=load_dennis.classes
+        #train = load_dennis.coco_train_set.getImgIds()#catNms=load_dennis.classes
+        'not getting mscoc train'
     elif dataset == 'trancos':
         train = range(1,404)
     print train[0:5], len(train)
