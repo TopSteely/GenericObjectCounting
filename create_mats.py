@@ -210,7 +210,7 @@ def main():
             test_mat['functions'].append(img_data.box_levels)
             assert len(img_data.box_levels ) == len(img_data.boxes)
         #test_mat['overlaps'].append(img_data.gt_overlaps)
-    output_dennis.save_mat(train_mat,test_mat, dataset, level_size, from_,to_)
+    output_dennis.save_mat(train_mat,test_mat, dataset, from_,to_, level_size)
     
     
 if __name__ == "__main__":
