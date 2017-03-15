@@ -32,7 +32,7 @@ class Data:
                 print t_set, self.boxes
             else:
                 self.boxes = load.get_coords(img_nr)
-            if False:
+            if True:
                 if load.mode == 'gt':
                     gts = load.get_all_gts(img_nr)
                     self.boxes = np.array(self.boxes[0])
