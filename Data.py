@@ -32,6 +32,7 @@ class Data:
                 print t_set, self.boxes
             else:
                 self.boxes = load.get_coords(img_nr)
+                self.box_levels = []
             if False:
                 if load.mode == 'gt':
                     gts = load.get_all_gts(img_nr)
