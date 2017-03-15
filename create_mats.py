@@ -189,7 +189,7 @@ def main():
             #'boxes' # (intersections)
             #labels
             #functions
-        if img_data.boxes != []:
+        if img_data.box_levels != []:
             if dataset == 'dennis' or dataset == 'grid' or dataset == 'gt' or dataset == 'sum'or dataset == 'level':
                 test_mat['image'].append('/var/scratch/spintea/Repositories/ms-caffe/data/VOCdevkit2007/VOC2007/JPEGImages/%s.jpg'%(format(img_nr, "06d")))
             elif dataset == 'mscoco':
