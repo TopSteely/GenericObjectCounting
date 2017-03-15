@@ -9,8 +9,9 @@ from collections import deque
 from utils import get_set_intersection, get_intersection
 
 class Data:
-    def __init__(self, load, img_nr, prune_tree_levels, scaler, num_features=4096, overlap_gt=False, grid=False, gt=False):
+    def __init__(self, load, img_nr, prune_tree_levels, scaler, t_set=0,num_features=4096, overlap_gt=False, grid=False, gt=False):
         self.img_nr = img_nr
+        
         if load.mode != 'mscoco' and load.mode != 'trancos' and load.mode != 'grid':
             self.y = load.get_label(img_nr)
         if load.mode == 'grid' or grid:
@@ -21,9 +22,16 @@ class Data:
                 self.boxes = load.get_grid_coords(img_nr)
                 self.levels = {0: [0], 1: [1,2], 2: range(3,7), 3: range(7,16), 4: range(17,32)} #for count net
                 self.box_levels = np.ones((32,2))
-                self.box_levels[:,1] = np.arange(32)
+                self.box_levels[:,1] = np.array([0,1,1,2,2,2,2,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4])#np.arange(32)
+                #print self.box_levels
+                #print len(self.box_levels)
+                #raw_input()
         else:
-            self.boxes = load.get_coords(img_nr)
+            if load.mode == 'trancos':
+                self.boxes = load.get_coords(img_nr,t_set)
+                print t_set, self.boxes
+            else:
+                self.boxes = load.get_coords(img_nr)
             if load.mode == 'gt':
                 gts = load.get_all_gts(img_nr)
                 self.boxes = np.array(self.boxes[0])
@@ -32,7 +40,7 @@ class Data:
                         self.boxes = np.vstack((self.boxes,np.array(gts[gt_])))
                 self.levels = {0:[0], 1: range(1,len(self.boxes))}
                 self.tree_boxes = self.boxes
-            if self.boxes != []:
+            if self.boxes != [] and prune_tree_levels > 1:
                 if load.mode == 'dennis':
                     self.X = load.get_features(img_nr)
                 elif load.mode == 'mscoco' or load.mode == 'trancos'  or load.mode == 'gt':
@@ -70,7 +78,7 @@ class Data:
                             self.y_boxes.append(sum_tmp)
 
                     #self.G, levels = create_tree_as_extracted(self.tree_boxes)
-                    if load.mode == 'dennis':
+                    if load.mode == 'dennis' or load.mode == 'lvl':
                         self.G, levels = create_tree(self.tree_boxes)
                     elif load.mode == 'mscoco' or load.mode == 'trancos':
                         self.G, levels = create_tree(self.boxes)
@@ -79,7 +87,7 @@ class Data:
                     if load.mode == 'dennis':
                         self.boxes = self.tree_boxes
                     #prune tree to only have levels which fully cover the image, tested
-                    if load.mode != 'gt':
+                    if load.mode != 'gt' and load.mode != 'sum':
                         total_size = surface_area_old(self.tree_boxes, levels[0])
                         for level in levels:
                             sa = surface_area_old(self.tree_boxes, levels[level])
@@ -92,7 +100,7 @@ class Data:
                         # prune levels, speedup + performance 
                         levels_tmp = {k:v for k,v in levels.iteritems() if k<prune_tree_levels}
                         levels_gone = {k:v for k,v in levels.iteritems() if k>=prune_tree_levels}
-                    if load.mode != 'gt':
+                    if load.mode != 'gt' and load.mode != 'sum':
                         self.levels = levels_tmp
                         #prune tree as well, for patches training
                         for trash_level in levels_gone.values():
@@ -149,7 +157,7 @@ class Data:
 
                     #print 'starting getting gt data'
                     #this is just for create_mats.py
-                if load.mode == 'mscoco' or load.mode == 'trancos'  or load.mode == 'gt':
+                if load.mode == 'mscoco' or load.mode == 'trancos'  or load.mode == 'gt' or load.mode == 'lvl':
                     learner = IEP.IEP(1, 'learning')
                     _,function = learner.get_iep_levels(self, {})
                     flevels = []

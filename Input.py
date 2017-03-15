@@ -5,9 +5,9 @@ import pandas as pd
 import pickle
 from scipy.misc import imread
 from utils import extract_coords
-#import sys
-#sys.path.append('/var/scratch/tstahl/source')
-#from pycocotools.coco import COCO
+import sys
+sys.path.append('/var/scratch/tstahl/source')
+from pycocotools.coco import COCO
 #import random
 #import cv2
 
@@ -37,7 +37,7 @@ class Input:
             self.classes = [cat['name'] for cat in cats]
             print self.classes
         elif self.mode == 'trancos':
-            self.coord_path = '/var/node436/local/tstahl/TRANCOS_v3/TRANCOS/SS_Boxes'
+            self.coord_path = '/var/node436/local/tstahl/TRANCOS_v3/TRANCOS/SS_Boxes/%s-%s.txt'
             self.label_path = 'bla'
             self.feature_path = 'bla'
         elif self.mode == 'blob':
@@ -50,7 +50,7 @@ class Input:
                 self.feature_path = '/var/node436/local/tstahl/new_Resnet_features/2nd/1-%s.csv'
                 self.coord_tree_path = '/var/node436/local/tstahl/Coords_prop_windows/%s.txt'
                 self.scaler_category_path = '/var/node436/local/tstahl/models/scaler_%s_pascal.p'%(category)
-            elif self.mode == 'dennis' or self.mode == 'gt':
+            elif self.mode == 'dennis' or self.mode == 'gt' or self.mode == 'sum'  or self.mode == 'level':
                 self.coord_path =  '/var/node436/local/tstahl/Coords_prop_windows/%s.txt'
                 self.coord_tree_path = '/var/node436/local/tstahl/Coords_prop_windows/%s.txt'
                 self.label_path =  '/var/node436/local/tstahl/Coords_prop_windows/Labels/Labels/%s_%s_partial.txt'
@@ -72,7 +72,7 @@ class Input:
 
     def get_all_labels(self, img_nr, mode):
         all_labels = [0.0]
-        if self.mode == 'dennis' or self.mode == 'gt' or self.mode == 'grid':
+        if self.mode == 'dennis' or self.mode == 'gt' or self.mode == 'grid'  or self.mode == 'level'  or self.mode == 'sum':
             cat = self.category
             for class_ in self.classes:
                 self.category = class_
@@ -90,7 +90,7 @@ class Input:
                 all_labels.append(len(annos))
 
         elif self.mode == 'trancos':
-            with open('/var/node436/local/tstahl/TRANCOS_v3/images/image-%s-%s.txt'%(i_mode,format(img_nr, "06d"))) as f:
+            with open('/var/node436/local/tstahl/TRANCOS_v3/images/image-%s-%s.txt'%(mode,format(img_nr, "06d"))) as f:
                 for i, l in enumerate(f):
                     pass
             return np.array([i + 1])
@@ -214,7 +214,7 @@ class Input:
         return tr_images, te_images
                 
     def get_training_numbers(self):     
-        if self.mode == 'pascal' or self.mode == 'dennis' or self.mode == 'gt' or self.mode == 'grid':
+        if self.mode == 'pascal' or self.mode == 'dennis' or self.mode == 'gt' or self.mode == 'grid' or self.mode == 'sum':
             file = open('/var/scratch/tstahl/IO/test.txt')
             test_imgs = []
             train_imgs = []
@@ -226,7 +226,7 @@ class Input:
             return test_imgs, train_imgs
         
     def get_val_numbers(self, train_imgs):
-        if self.mode == 'pascal' or self.mode == 'dennis' or self.mode == 'gt' or self.mode == 'grid':
+        if self.mode == 'pascal' or self.mode == 'dennis' or self.mode == 'gt' or self.mode == 'grid' or self.mode == 'sum' or self.mode == 'level':
             file = open('/var/scratch/tstahl/IO/val.txt', 'r')
             eval_images = []
             for line in file:
@@ -234,8 +234,8 @@ class Input:
                 eval_images.append(im_nr)
             return [x for x in train_imgs if x not in eval_images], eval_images
     
-    def get_coords(self, img_nr):
-        if self.mode == 'dennis'  or self.mode == 'gt' or self.mode == 'grid':
+    def get_coords(self, img_nr,t_set=0):
+        if self.mode == 'dennis'  or self.mode == 'gt' or self.mode == 'grid'  or self.mode == 'sum' or self.mode == 'level':
             if os.path.isfile(self.coord_path%(format(img_nr, "06d"))):
                 ret = np.loadtxt(self.coord_path%(format(img_nr, "06d")), delimiter=',')
                 return ret
@@ -249,6 +249,14 @@ class Input:
             else:
                 print img_nr,
                 return []
+        elif self.mode == 'trancos':
+            print self.coord_path%(t_set,format(img_nr, "06d"))
+            if os.path.isfile(self.coord_path%(t_set,format(img_nr, "06d"))):
+                ret = np.loadtxt(self.coord_path%(t_set,format(img_nr, "06d")), delimiter=',')
+                if isinstance(ret[0], np.float64):
+                    return np.array([ret])
+                else:
+                    return ret
 
     def get_coords_tree(self, img_nr):
         if os.path.isfile(self.coord_tree_path%(format(img_nr, "06d"))):
