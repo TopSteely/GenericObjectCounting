@@ -32,7 +32,7 @@ class Input:
             self.label_path = 'bla'
             self.feature_path = 'bla'
             self.coco_train_set = COCO('/var/node436/local/tstahl/annotations/instances_train2014.json')
-            self.coco_val_set = COCO('/var/node436/local/tstahl/annotations/instances_train2014.json')
+            self.coco_val_set = COCO('/var/node436/local/tstahl/annotations/instances_val2014.json')
             cats = self.coco_train_set.loadCats(self.coco_train_set.getCatIds())
             self.classes = [cat['name'] for cat in cats]
             print self.classes

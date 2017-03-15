@@ -21,7 +21,7 @@ def main():
 
     pred_mode = 'abs'
 
-    dataset = 'level'#'dennis'
+    dataset = 'mscoco'#'dennis'
 
     debug = False
 
@@ -54,7 +54,6 @@ def main():
         'not getting mscoc train'
     elif dataset == 'trancos':
         train = range(1,404)
-    print train[0:5], len(train)
     from_ = 81000
     to_ = -1
     if dataset != 'mscoco':
@@ -179,7 +178,7 @@ def main():
     elif dataset == 'trancos':
         test = range(1,422)
 
-    for i,img_nr in enumerate(test):
+    for i,img_nr in enumerate(test[0:4]):
         print i,img_nr
         if dataset == 'trancos':
             img_data = Data.Data(load_dennis, img_nr, 20, None, 3)
