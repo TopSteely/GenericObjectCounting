@@ -178,6 +178,7 @@ def main():
     elif dataset == 'trancos':
         test = range(1,422)
 
+    missing = []
     for i,img_nr in enumerate(test):
         print i,img_nr
         if dataset == 'trancos':
@@ -189,6 +190,9 @@ def main():
             #'boxes' # (intersections)
             #labels
             #functions
+
+        if img_data.boxes == []:
+            missing.append(img_nr)
         if img_data.box_levels != []:
             if dataset == 'dennis' or dataset == 'grid' or dataset == 'gt' or dataset == 'sum'or dataset == 'level':
                 test_mat['image'].append('/var/scratch/spintea/Repositories/ms-caffe/data/VOCdevkit2007/VOC2007/JPEGImages/%s.jpg'%(format(img_nr, "06d")))
@@ -212,7 +216,7 @@ def main():
                 assert len(img_data.box_levels ) == len(img_data.boxes)
             #test_mat['overlaps'].append(img_data.gt_overlaps)
     output_dennis.save_mat(train_mat,test_mat, dataset, from_,to_, level_size)
-    
+    print missing
     
 if __name__ == "__main__":
     main()
