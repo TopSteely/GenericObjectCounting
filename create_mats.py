@@ -189,27 +189,28 @@ def main():
             #'boxes' # (intersections)
             #labels
             #functions
-        if dataset == 'dennis' or dataset == 'grid' or dataset == 'gt' or dataset == 'sum'or dataset == 'level':
-            test_mat['image'].append('/var/scratch/spintea/Repositories/ms-caffe/data/VOCdevkit2007/VOC2007/JPEGImages/%s.jpg'%(format(img_nr, "06d")))
-        elif dataset == 'mscoco':
-            test_mat['image'].append('/var/node436/local/tstahl/mscoco/train2014/%s.jpg'%(format(img_nr, "012d")))
-        elif dataset == 'trancos':
-            test_mat['image'].append('/var/node436/local/tstahl/TRANCOS_v3/3-%s.jpg'%(format(img_nr, "06d")))
-        if level_size == 1:
-                img_data.boxes = [img_data.boxes[0]]
-                img_data.box_levels = [np.array([1,0])]
-        #print img_data.boxes
-        #print img_data.box_levels
+        if img_data.boxes != []:
+            if dataset == 'dennis' or dataset == 'grid' or dataset == 'gt' or dataset == 'sum'or dataset == 'level':
+                test_mat['image'].append('/var/scratch/spintea/Repositories/ms-caffe/data/VOCdevkit2007/VOC2007/JPEGImages/%s.jpg'%(format(img_nr, "06d")))
+            elif dataset == 'mscoco':
+                test_mat['image'].append('/var/node436/local/tstahl/mscoco/train2014/%s.jpg'%(format(img_nr, "012d")))
+            elif dataset == 'trancos':
+                test_mat['image'].append('/var/node436/local/tstahl/TRANCOS_v3/3-%s.jpg'%(format(img_nr, "06d")))
+            if level_size == 1:
+                    img_data.boxes = [img_data.boxes[0]]
+                    img_data.box_levels = [np.array([1,0])]
+            #print img_data.boxes
+            #print img_data.box_levels
 
-        test_mat['boxes'].append(img_data.boxes)
-        if dataset == 'trancos':
-            test_mat['labels'].append([load_dennis.get_all_labels(img_nr, 3)])
-        else:
-            test_mat['labels'].append([load_dennis.get_all_labels(img_nr, 'test')])
-        if dataset != 'sum':
-            test_mat['functions'].append(img_data.box_levels)
-            assert len(img_data.box_levels ) == len(img_data.boxes)
-        #test_mat['overlaps'].append(img_data.gt_overlaps)
+            test_mat['boxes'].append(img_data.boxes)
+            if dataset == 'trancos':
+                test_mat['labels'].append([load_dennis.get_all_labels(img_nr, 3)])
+            else:
+                test_mat['labels'].append([load_dennis.get_all_labels(img_nr, 'test')])
+            if dataset != 'sum':
+                test_mat['functions'].append(img_data.box_levels)
+                assert len(img_data.box_levels ) == len(img_data.boxes)
+            #test_mat['overlaps'].append(img_data.gt_overlaps)
     output_dennis.save_mat(train_mat,test_mat, dataset, from_,to_, level_size)
     
     
