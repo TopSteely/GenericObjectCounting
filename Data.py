@@ -45,7 +45,7 @@ class Data:
                     if load.mode == 'dennis':
                         self.X = load.get_features(img_nr)
                     elif load.mode == 'mscoco' or load.mode == 'trancos'  or load.mode == 'gt'  or load.mode == 'level':
-                        self.X = np.zeros((5000,num_features))
+                        self.X = np.zeros((15000,num_features))
                     self.num_features = num_features
                     if gt:
                         self.gr = load.get_gts(img_nr)

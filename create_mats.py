@@ -179,7 +179,7 @@ def main():
         test = range(1,422)
 
     missing = []
-    for i,img_nr in enumerate(test):
+    for i,img_nr in enumerate(test[from_:to_]):
         print i,img_nr
         if dataset == 'trancos':
             img_data = Data.Data(load_dennis, img_nr, 20, None, 3)
