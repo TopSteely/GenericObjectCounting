@@ -251,7 +251,7 @@ class Output:
         #raw_input()
         if dataset == 'mscoco':
 #           print 
-#           savemat(self.train_mat_path%(from_,to_), train_mat)
+           savemat(self.train_mat_path%(from_,to_), train_mat)
            print self.test_mat_path%(from_,to_)
            savemat(self.test_mat_path%(from_,to_), test_mat)
         #if train_mat != []:

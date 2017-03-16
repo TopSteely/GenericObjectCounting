@@ -50,13 +50,13 @@ def main():
     if dataset == 'dennis' or dataset == 'grid' or dataset == 'gt' or dataset == 'sum'or dataset == 'level':
         train = load_dennis.training_numbers
     elif dataset != 'mscoco':
-        #train = load_dennis.coco_train_set.getImgIds()#catNms=load_dennis.classes
+        train = load_dennis.coco_train_set.getImgIds()#catNms=load_dennis.classes
         'not getting mscoc train'
     elif dataset == 'trancos':
         train = range(1,404)
-    from_ = 30000
-    to_ = 41000
-    if dataset != 'mscoco':
+    from_ = 10000
+    to_ = 15000
+    if dataset == 'mscoco':
         for i,img_nr in enumerate(train[from_:to_]):
             print i, img_nr
             if dataset == 'trancos':
