@@ -18,7 +18,7 @@ with open('/var/scratch/spintea/Repositories/ms-caffe/output/visualization/iep24
 
 print max_box.shape, iep_box.shape,iep.shape
 
-im = imread('/var/node436/local/tstahl/Images/000248.jpg')
+im = imread('/var/node436/local/tstahl/Images/%s.jpg'%(format(45, "06d")))
 for lvl in range(1,iep.shape[0]):
 	for i_c, class_ in enumerate(['aeroplane', 'bicycle', 'bird', 'boat',
            'bottle', 'bus', 'car', 'cat', 'chair',
