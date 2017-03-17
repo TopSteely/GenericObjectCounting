@@ -15,12 +15,16 @@ for method in methods:
 
 print scores
 
-x = range(len(scores['counting']))
+x = np.arange(len(scores['counting']))
 
 ax = plt.subplot(111)
-ax.bar(x-0.2, scores[methods[0]],width=0.2,color='b',align='center')
-ax.bar(x, scores[methods[1]],width=0.2,color='g',align='center')
-ax.bar(x+0.2, scores[methods[2]],width=0.2,color='r',align='center')
+ax.bar(x-0.4, scores[methods[0]],width=0.2,color='r',align='center')
+ax.bar(x-0.2, scores[methods[1]],width=0.2,color='b',align='center')
+ax.bar(x, scores[methods[2]],width=0.2,color='g',align='center')
+ax.bar(x+0.2, scores[methods[3]],width=0.2,color='m',align='center')
+ax.bar(x+0.4, scores[methods[4]],width=0.2,color='c',align='center')
+ax.bar(x+0.6, scores[methods[5]],width=0.2,color='y',align='center')
+
 
 plt.legend()
 plt.title('Error per level')
@@ -33,10 +37,15 @@ for method in methods:
     with open('/var/scratch/spintea/Repositories/ms-caffe/output/visualization/error_per_object_%s.pickle'%(method),'rb') as handle:
         scores['method'] = error_per_level
 
+x = np.arange(len(scores['counting']))
+
 ax = plt.subplot(111)
-ax.bar(x-0.2, scores[methods[0]],width=0.2,color='b',align='center')
-ax.bar(x, scores[methods[1]],width=0.2,color='g',align='center')
-ax.bar(x+0.2, scores[methods[2]],width=0.2,color='r',align='center')
+ax.bar(x-0.4, scores[methods[0]],width=0.2,color='r',align='center')
+ax.bar(x-0.2, scores[methods[1]],width=0.2,color='b',align='center')
+ax.bar(x, scores[methods[2]],width=0.2,color='g',align='center')
+ax.bar(x+0.2, scores[methods[3]],width=0.2,color='m',align='center')
+ax.bar(x+0.4, scores[methods[4]],width=0.2,color='c',align='center')
+ax.bar(x+0.6, scores[methods[5]],width=0.2,color='y',align='center')
 
 plt.legend()
 ax = plt.gca()
