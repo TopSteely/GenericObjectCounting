@@ -14,6 +14,8 @@ error0 = np.zeros(80)
 error1 = np.zeros(80)
 error_mean = np.zeros(80)
 
+print error_mean
+
 for i,img_nr in enumerate(test):
 	y = load_dennis.get_all_labels(img_nr, 'test')
 	error0 = np.abs(y)
