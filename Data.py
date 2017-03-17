@@ -179,50 +179,81 @@ class Data:
                         level_len = np.zeros(len(flevels))
                         for i in range(len(self.boxes)):
                             found = False
-                            for i_l,fl in enumerate(flevels):
-                                if i in fl:
-                                    level_len[i_l] += 1
-                                    if found:
-                                        # append afterwards so functions and boxes are in same order
-                                        double += 1
-                                        #self.boxes = np.concatenate((self.boxes,self.boxes[i].reshape(1,4)), axis=0)
-                                        #have to put it at the end somehow
-                                        if function[i_l][fl.index(i)][0] == '+':
-                                            if len(np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0]) != len(np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0])  and len(np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0])>0:
-                                                #temp.append([0, -1])
-                                                temp.append([1,i_l])
-                                                temp1.append(self.boxes[i])
-                                            else:
-                                                double
-                                        elif function[i_l][fl.index(i)][0] == '-':
-                                            if len(np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0]) != len(np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0])  and len(np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0])>0:
-                                                temp.append([-1,i_l])
-                                                temp1.append(self.boxes[i])
-                                            else:
-                                                double
-                                    else:
-                                        if function[i_l][fl.index(i)][0] == '+':
-                                            if len(np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0]) != len(np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0]) and len(np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0])>0:
-                                                self.box_levels.append([1,i_l])
-                                                #print i, i_l, np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0], np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0]
-                                                #raw_input()
-                                                found = True
-                                            else:
-                                                #print 'skipping', i
-                                                self.box_levels.append([0, -1])
-                                                found = True
-                                        elif function[i_l][fl.index(i)][0] == '-':
-                                            if len(np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0]) != len(np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0])  and len(np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0])>0:
-                                                self.box_levels.append([-1,i_l])
-                                                #print i, i_l, np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0], np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0]
-                                                #raw_input()
-                                                found = True
-                                            else:
-                                                #print 'skipping', i
-                                                self.box_levels.append([0, -1])
-                                                found = True
+                            overlap_half = True
+                            if i != 0:
+                                if True:
+                                    overlap_half = False
+                                    for i_l,fl in enumerate(flevels):
+                                        if i in fl:
+                                            for ii in self.levels[i_f]:
+                                                # first see if it overlaps with any >0.5
+                                                if get_overlap_ratio(self.boxes[i], self.boxes[i_l])>0.5:
+                                                    overlap_half = True
+                                            if not overlap_half:
+                                                self.levels[i_l].remove(i)
+                            if overlap_half:
+                                for i_l,fl in enumerate(flevels):
+                                    if i in fl:
+                                        level_len[i_l] += 1
+                                        if found:
+                                            # append afterwards so functions and boxes are in same order
+                                            double += 1
+                                            #self.boxes = np.concatenate((self.boxes,self.boxes[i].reshape(1,4)), axis=0)
+                                            #have to put it at the end somehow
+                                            if function[i_l][fl.index(i)][0] == '+':
+                                                if len(np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0]) != len(np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0])  and len(np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0])>0:
+                                                    #temp.append([0, -1])
+                                                    temp.append([1,i_l])
+                                                    temp1.append(self.boxes[i])
+                                                else:
+                                                    double
+                                            elif function[i_l][fl.index(i)][0] == '-':
+                                                if len(np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0]) != len(np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0])  and len(np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0])>0:
+                                                    temp.append([-1,i_l])
+                                                    temp1.append(self.boxes[i])
+                                                else:
+                                                    double
+                                        else:
+                                            if function[i_l][fl.index(i)][0] == '+':
+                                                if len(np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0]) != len(np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0]) and len(np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0])>0:
+                                                    self.box_levels.append([1,i_l])
+                                                    #print i, i_l, np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0], np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0]
+                                                    #raw_input()
+                                                    found = True
+                                                else:
+                                                    #print 'skipping', i
+                                                    self.box_levels.append([0, -1])
+                                                    found = True
+                                            elif function[i_l][fl.index(i)][0] == '-':
+                                                if len(np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0]) != len(np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0])  and len(np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0])>0:
+                                                    self.box_levels.append([-1,i_l])
+                                                    #print i, i_l, np.where((np.array(function[i_l]) == ['-',i]).all(axis=1))[0], np.where((np.array(function[i_l]) == ['+',i]).all(axis=1))[0]
+                                                    #raw_input()
+                                                    found = True
+                                                else:
+                                                    #print 'skipping', i
+                                                    self.box_levels.append([0, -1])
+                                                    found = True
                             if not found:
                                 self.box_levels.append([0, -1])
+
+                        total_size = surface_area_old(self.tree_boxes, levels[0])
+                        levels = self.levels
+                        for level in levels:
+                            sa = surface_area_old(self.tree_boxes, levels[level])
+                            sa_co = sa/total_size
+                            if sa_co != 1.0:
+                                    self.G.remove_nodes_from(levels[level])
+                            else:
+                                nr_levels_covered = level
+                        levels = {k: levels[k] for k in range(0,nr_levels_covered + 1)}
+                        # prune levels, speedup + performance 
+                        levels_tmp = {k:v for k,v in levels.iteritems() if k<prune_tree_levels}
+                        levels_gone = {k:v for k,v in levels.iteritems() if k>=prune_tree_levels}
+                        print levels_tmp
+                        print 'removing: ', levels_gone
+                        self.levels = levels_tmp
+                        raw_input()
                         #print np.array(self.box_levels).shape
                         self.box_levels.extend(temp)
                         #print np.array(self.box_levels).shape
