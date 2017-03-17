@@ -25,7 +25,7 @@ for lvl in range(iep.shape[0]):
            'cow', 'diningtable', 'dog', 'horse',
            'motorbike', 'person', 'pottedplant',
             'sheep', 'sofa', 'train', 'tvmonitor']):
-		pp = PdfPages('/var/node436/local/tstahl/vis_iep/%s_%s_%s.pdf'%(248,lvl,class_))
+#		pp = PdfPages('/var/node436/local/tstahl/vis_iep/%s_%s_%s.pdf'%(248,lvl,class_))
 		plt.imshow(im)
 		plt.axis('off')
 		ax = plt.gca()
@@ -41,6 +41,7 @@ for lvl in range(iep.shape[0]):
 		ax.set_title('(r)best Patch: %s, (g)best IEP Patch: %s\n IEP Level: %s'%(box_,iep_box_,lvl_pred))
 
 		plt.title('Error per level')
-		pp.savefig()
+#		pp.savefig()
+		plt.savefig('/var/node436/local/tstahl/vis_iep/%s_%s_%s.pdf'%(248,lvl,class_), bbox_inches='tight')
 		plt.clf()
 pp.close()
