@@ -40,9 +40,9 @@ class Output:
         self.upd_path = '/var/node436/local/tstahl/plos/upd_%s.png'
         self.upd_path_new = '/var/node436/local/tstahl/plos/upd_%s_new.png'
         if self.mode == 'dennis':
-            self.train_mat_path = '/var/scratch/spintea/Repositories/ms-caffe/data/selective_search_data/voc_2007_train_toby.mat'
+            self.train_mat_path = '/var/scratch/spintea/Repositories/ms-caffe/data/selective_search_data/voc_2007_train_toby_halfoverlap.mat'
             #self.train_mat_path = '/var/scratch/spintea/Repositories/ms-caffe/data/selective_search_data/voc_2007_train_1D.mat'
-            self.test_mat_path = '/var/scratch/spintea/Repositories/ms-caffe/data/selective_search_data/voc_2007_test_toby.mat'
+            self.test_mat_path = '/var/scratch/spintea/Repositories/ms-caffe/data/selective_search_data/voc_2007_test_toby_halfoverlap.mat'
             #self.test_mat_path = '/var/scratch/spintea/Repositories/ms-caffe/data/selective_search_data/voc_2007_test_1D.mat'
         elif self.mode.startswith('mscoco'):
             self.train_mat_path = '/var/scratch/spintea/Repositories/ms-caffe/data/selective_search_data/mscoco_train_toby%s_%s.mat'
@@ -254,8 +254,8 @@ class Output:
            savemat(self.train_mat_path%(from_,to_), train_mat)
            print self.test_mat_path%(from_,to_)
            savemat(self.test_mat_path%(from_,to_), test_mat)
-        #if train_mat != []:
-            #savemat(self.train_mat_path%(dataset,level_size), train_mat)
-        #if test_mat != []:
-            #savemat(self.test_mat_path%(dataset,level_size), test_mat)
+        if train_mat != []:
+            savemat(self.train_mat_path%(dataset,level_size), train_mat)
+        if test_mat != []:
+            savemat(self.test_mat_path%(dataset,level_size), test_mat)
         print 'saved to ', self.test_mat_path%(from_,to_)
