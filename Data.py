@@ -165,7 +165,7 @@ class Data:
                                 
                         #print 'starting getting gt data'
                         #this is just for create_mats.py
-                    if load.mode == 'mscoco' or load.mode == 'trancos'  or load.mode == 'gt':
+                    if load.mode == 'mscoco' or load.mode == 'trancos'  or load.mode == 'gt' or load.mode == 'dennis':
                         learner = IEP.IEP(1, 'learning')
                         _,function = learner.get_iep_levels(self, {})
                         flevels = []
