@@ -27,14 +27,20 @@ for i,img_nr in enumerate(test):
 	error1 += np.abs(y[1:]-1)
 	error_mean += np.abs(y[1:]-avg)
 	rmse += np.sqrt(y[1:]**2)
+
 	nz_0[np.where(y[1:]>0)[0]] += y[np.where(y[1:]>0)[0]]
 	nz_1[np.where(y[1:]>0)[0]] += np.abs(y[np.where(y[1:]>0)[0]] - 1)
 	nz_mean[np.where(y[1:]>0)[0]] += np.abs(y[np.where(y[1:]>0)[0]] - avg[np.where(y[1:]>0)[0]])
 
 	nz_occurances[np.where(y[1:]>0)[0]] += 1
 	if i < 8:
+
 		print nz_occurances
 		print y, np.where(y[1:]>0)[0]
+
+		print nz_0
+		print nz_1
+		raw_input()
 
 
 print np.mean(error0/len(test))
