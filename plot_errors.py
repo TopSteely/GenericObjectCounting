@@ -32,7 +32,7 @@ ax.bar(x+0.3, scores[methods[4]],width=0.15,color='c',align='center', label = me
 ax.bar(x+0.45, scores[methods[5]],width=0.15,color='y',align='center', label = methods[5])
 
 
-plt.legend(loc=3)
+plt.legend(loc=6)
 plt.title('Error per level')
 plt.ylabel('mAE')
 plt.xlabel('Levels')
