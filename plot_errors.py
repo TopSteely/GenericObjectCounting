@@ -3,6 +3,7 @@ matplotlib.use('agg')
 import pickle
 import sys
 import matplotlib.pyplot as plt
+import numpy as np
 
 methods = ['counting','full_image','gt','grid','avg','avg_level']#trancos,mscoco,full image,'gt','grid','counting','avg','avg_level'
 

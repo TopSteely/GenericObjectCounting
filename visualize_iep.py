@@ -5,6 +5,7 @@ import sys
 import matplotlib.pyplot as plt
 from scipy.misc import imread
 from matplotlib.patches import Rectangle
+import Input
 
 load_dennis = Input.Input('dennis','sheep',20)
 for img_nr in load_dennis.test_numbers:
