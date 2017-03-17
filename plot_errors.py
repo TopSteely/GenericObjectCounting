@@ -12,11 +12,15 @@ scores = {}
 for method in methods:
     with open('/var/scratch/spintea/Repositories/ms-caffe/output/visualization/error_per_level_%s.pickle'%(method),'rb') as handle:
         error_per_level = pickle.load(handle)
-        scores[method] = error_per_level
+        if len(error_per_level) < 9:
+        	scores[method] = np.concatenate((error_per_level,np.zeros(9-len(error_per_level))))
+        else:
+        	scores[method] = error_per_level
 
 print scores
 
 x = np.arange(len(scores['counting']))
+print x
 
 plt.figure()
 ax = plt.gca()
