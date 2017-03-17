@@ -6,7 +6,7 @@ train = load_dennis.coco_train_set.getImgIds()
 sum_labels = np.zeros(80)
 print len(train)
 for i,img_nr in enumerate(train):
-	sum_labels += load_dennis.get_all_labels(img_nr, 'train')
+	sum_labels += load_dennis.get_all_labels(img_nr, 'train')[1:]
 avg = sum_labels/len(train)
 
 test = load_dennis.coco_val_set.getImgIds()
@@ -17,7 +17,7 @@ error_mean = np.zeros(80)
 print error_mean
 
 for i,img_nr in enumerate(test):
-	y = load_dennis.get_all_labels(img_nr, 'test')
+	y = load_dennis.get_all_labels(img_nr, 'test')[1:]
 	error0 = np.abs(y)
 	error1 = np.abs(y-1)
 	error_mean = np.abs(y-avg)
