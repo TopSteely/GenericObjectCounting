@@ -43,10 +43,11 @@ scores = {}
 plt.clf()
 for method in methods:
     with open('/var/scratch/spintea/Repositories/ms-caffe/output/visualization/error_per_object_%s.pickle'%(method),'rb') as handle:
-        if len(error_per_level) < 5:
-        	scores[method] = np.concatenate((error_per_level,np.zeros(9-len(error_per_level))))
+    	error_per_object = pickle.load(handle)
+        if len(error_per_object) < 5:
+        	scores[method] = np.concatenate((error_per_object,np.zeros(9-len(error_per_object))))
         else:
-        	scores[method] = error_per_level
+        	scores[method] = error_per_object
 
 print scores
 
