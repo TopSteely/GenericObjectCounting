@@ -30,7 +30,11 @@ for i,img_nr in enumerate(test):
 	nz_0[np.where(y[1:]>0)[0]] += y[np.where(y[1:]>0)[0]]
 	nz_1[np.where(y[1:]>0)[0]] += np.abs(y[np.where(y[1:]>0)[0]] - 1)
 	nz_mean[np.where(y[1:]>0)[0]] += np.abs(y[np.where(y[1:]>0)[0]] - avg[np.where(y[1:]>0)[0]])
+
 	nz_occurances[np.where(y[1:]>0)[0]] += 1
+	if i < 8:
+		print nz_occurances
+		print y, np.where(y[1:]>0)[0]
 
 
 print np.mean(error0/len(test))

@@ -18,7 +18,8 @@ print scores
 
 x = np.arange(len(scores['counting']))
 
-ax = plt.subplot(111)
+plt.figure()
+ax = plt.gca()
 ax.bar(x-0.4, scores[methods[0]],width=0.2,color='r',align='center')
 ax.bar(x-0.2, scores[methods[1]],width=0.2,color='b',align='center')
 ax.bar(x, scores[methods[2]],width=0.2,color='g',align='center')
