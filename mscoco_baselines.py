@@ -20,6 +20,7 @@ nz_0 = np.zeros(80)
 nz_1 = np.zeros(80)
 nz_mean = np.zeros(80)
 nz_occurances = np.zeros(80)
+rmse_nz = np.zeros(80)
 
 for i,img_nr in enumerate(test):
 	y = load_dennis.get_all_labels(img_nr, 'test')[1:]
