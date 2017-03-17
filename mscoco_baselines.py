@@ -18,9 +18,9 @@ error_mean = np.zeros(80)
 
 for i,img_nr in enumerate(test):
 	y = load_dennis.get_all_labels(img_nr, 'test')
-	error0 = np.abs(y[1:])
-	error1 = np.abs(y[1:]-1)
-	error_mean = np.abs(y[1:]-avg)
+	error0 += np.abs(y[1:])
+	error1 += np.abs(y[1:]-1)
+	error_mean += np.abs(y[1:]-avg)
 
 print np.mean(error0)
 print np.mean(error1)
