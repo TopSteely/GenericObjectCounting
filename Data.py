@@ -90,7 +90,6 @@ class Data:
                         #prune tree to only have levels which fully cover the image, tested
                         if True:
                             for level in range(1,len(levels)): # kkep level 0
-                                print level
                                 for a_level_box in levels[level]:
                                     overlap_half = False
                                     for b_level_box in levels[level]:
@@ -106,7 +105,6 @@ class Data:
                             for level in levels:
                                 sa = surface_area_old(self.tree_boxes, levels[level])
                                 sa_co = sa/total_size
-                                print sa_co
                                 if sa_co != 1.0:
                                         self.G.remove_nodes_from(levels[level])
                                 else:
@@ -115,7 +113,6 @@ class Data:
                             # prune levels, speedup + performance 
                             levels_tmp = {k:v for k,v in levels.iteritems() if k<prune_tree_levels}
                             levels_gone = {k:v for k,v in levels.iteritems() if k>=prune_tree_levels}
-                        print len(levels_tmp)
                         if load.mode != 'gt' and load.mode != 'sum':
                             self.levels = levels_tmp
                             #prune tree as well, for patches training
