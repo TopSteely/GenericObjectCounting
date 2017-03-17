@@ -185,7 +185,7 @@ class Data:
                                     overlap_half = False
                                     for i_l,fl in enumerate(flevels):
                                         if i in fl:
-                                            for ii in self.levels[i_f]:
+                                            for ii in self.levels[i_l]:
                                                 # first see if it overlaps with any >0.5
                                                 if get_overlap_ratio(self.boxes[i], self.boxes[i_l])>0.5:
                                                     overlap_half = True
