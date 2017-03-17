@@ -89,7 +89,7 @@ class Data:
                             self.boxes = self.tree_boxes
                         #prune tree to only have levels which fully cover the image, tested
                         if True:
-                            for level in levels[1:]: # kkep level 0
+                            for level in range(1,len(levels)): # kkep level 0
                                 for a_level_box in levels[level]:
                                     overlap_half = False
                                     for b_level_box in levels[level]:
