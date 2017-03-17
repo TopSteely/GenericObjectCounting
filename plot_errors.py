@@ -24,12 +24,12 @@ print x
 
 plt.figure()
 ax = plt.gca()
-ax.bar(x-0.4, scores[methods[0]],width=0.2,color='r',align='center', label = methods[0])
-ax.bar(x-0.2, scores[methods[1]],width=0.2,color='b',align='center', label = methods[1])
-ax.bar(x, scores[methods[2]],width=0.2,color='g',align='center', label = methods[2])
-ax.bar(x+0.2, scores[methods[3]],width=0.2,color='m',align='center', label = methods[3])
-ax.bar(x+0.4, scores[methods[4]],width=0.2,color='c',align='center', label = methods[4])
-ax.bar(x+0.6, scores[methods[5]],width=0.2,color='y',align='center', label = methods[5])
+ax.bar(x-0.3, scores[methods[0]],width=0.15,color='r',align='center', label = methods[0])
+ax.bar(x-0.15, scores[methods[1]],width=0.15,color='b',align='center', label = methods[1])
+ax.bar(x, scores[methods[2]],width=0.15,color='g',align='center', label = methods[2])
+ax.bar(x+0.15, scores[methods[3]],width=0.15,color='m',align='center', label = methods[3])
+ax.bar(x+0.3, scores[methods[4]],width=0.15,color='c',align='center', label = methods[4])
+ax.bar(x+0.45, scores[methods[5]],width=0.15,color='y',align='center', label = methods[5])
 
 
 plt.legend()
@@ -51,12 +51,12 @@ for method in methods:
 x = np.arange(len(scores['counting']))
 
 ax = plt.subplot(111)
-ax.bar(x-0.4, scores[methods[0]],width=0.2,color='r',align='center', label = methods[0])
-ax.bar(x-0.2, scores[methods[1]],width=0.2,color='b',align='center', label = methods[1])
-ax.bar(x, scores[methods[2]],width=0.2,color='g',align='center', label = methods[2])
-ax.bar(x+0.2, scores[methods[3]],width=0.2,color='m',align='center', label = methods[3])
-ax.bar(x+0.4, scores[methods[4]],width=0.2,color='c',align='center', label = methods[4])
-ax.bar(x+0.6, scores[methods[5]],width=0.2,color='y',align='center', label = methods[5])
+ax.bar(x-0.3, scores[methods[0]],width=0.15,color='r',align='center', label = methods[0])
+ax.bar(x-0.15, scores[methods[1]],width=0.15,color='b',align='center', label = methods[1])
+ax.bar(x, scores[methods[2]],width=0.15,color='g',align='center', label = methods[2])
+ax.bar(x+0.15, scores[methods[3]],width=0.15,color='m',align='center', label = methods[3])
+ax.bar(x+0.3, scores[methods[4]],width=0.15,color='c',align='center', label = methods[4])
+ax.bar(x+0.45, scores[methods[5]],width=0.15,color='y',align='center', label = methods[5])
 
 plt.legend()
 ax = plt.gca()
