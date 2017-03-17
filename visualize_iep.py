@@ -5,6 +5,7 @@ import sys
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
 from scipy.misc import imread
+from matplotlib.patches import Rectangle
 
 with open('/var/scratch/spintea/Repositories/ms-caffe/output/visualization/max_box_pred248.0.pickle','rb') as handle:
 	max_box = pickle.load(handle)
