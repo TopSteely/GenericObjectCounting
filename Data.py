@@ -184,6 +184,7 @@ class Data:
                                 if True:
                                     overlap_half = False
                                     for i_l,fl in enumerate(flevels):
+                                        print fl, self.levels[i_l]
                                         if i in fl:
                                             for ii in self.levels[i_l]:
                                                 # first see if it overlaps with any >0.5
