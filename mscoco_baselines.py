@@ -7,7 +7,6 @@ sum_labels = np.zeros(80)
 print len(train)
 for i,img_nr in enumerate(train):
 	lab = load_dennis.get_all_labels(img_nr, 'train')
-	print lab
 	sum_labels += lab[1:]
 avg = sum_labels/len(train)
 print sum_labels

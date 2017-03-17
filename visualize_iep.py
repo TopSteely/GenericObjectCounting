@@ -29,12 +29,12 @@ for lvl in range(iep.shape[0]):
 		plt.imshow(im)
 		plt.axis('off')
 		ax = plt.gca()
-		coord_iep = max_box[lvl,i_c,0:4]
-		coord_iep_ = iep_box[lvl,i_c,0:4]
+		coord_iep = max_box[i_c,lvl,0:4]
+		coord_iep_ = iep_box[i_c,lvl,0:4]
 		lvl_pred = iep[lvl,i_c]
 
-		box_ = max_box[lvl,i_c,4]
-		iep_box_ = iep_box[lvl,i_c,4]
+		box_ = max_box[i_c,lvl,4]
+		iep_box_ = iep_box[i_c,lvl,4]
 
 		ax.add_patch(Rectangle((int(coord_iep[0]), int(coord_iep[1])), int(coord_iep[2] - coord_iep[0]), int(coord_iep[3] - coord_iep[1]), edgecolor='red', facecolor='none'))
 		ax.add_patch(Rectangle((int(coord_iep_[0]), int(coord_iep_[1])), int(coord_iep_[2] - coord_iep_[0]), int(coord_iep_[3] - coord_iep_[1]), edgecolor='green', facecolor='none'))
