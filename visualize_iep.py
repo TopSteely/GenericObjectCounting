@@ -40,8 +40,7 @@ for lvl in range(1,iep.shape[0]):
 		ax.add_patch(Rectangle((int(coord_iep_[0]), int(coord_iep_[1])), int(coord_iep_[2] - coord_iep_[0]), int(coord_iep_[3] - coord_iep_[1]), edgecolor='green', facecolor='none'))
 		ax.set_title('(r)best Patch: %s, (g)best IEP Patch: %s\n IEP Level: %s'%(box_,iep_box_,lvl_pred))
 
-		plt.title('Error per level')
+		#plt.title('Error per level')
 #		pp.savefig()
 		plt.savefig('/var/node436/local/tstahl/vis_iep/%s_%s_%s.pdf'%(248,lvl,class_))#, bbox_inches='tight'
 		plt.clf()
-pp.close()
