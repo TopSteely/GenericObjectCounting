@@ -48,6 +48,8 @@ for method in methods:
         else:
         	scores[method] = error_per_level
 
+print scores
+
 x = np.arange(len(scores['counting']))
 
 ax = plt.subplot(111)
