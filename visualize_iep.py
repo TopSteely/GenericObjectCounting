@@ -30,7 +30,9 @@ for lvl in range(1,iep.shape[0]):
 		plt.axis('off')
 		ax = plt.gca()
 		coord_iep = max_box[i_c,lvl,0:4]
+		print coord_iep
 		coord_iep_ = iep_box[i_c,lvl,0:4]
+		print coord_iep_
 		lvl_pred = iep[lvl,i_c]
 
 		box_ = max_box[i_c,lvl,4]
