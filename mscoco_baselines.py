@@ -19,6 +19,7 @@ rmse = np.zeros(80)
 nz_0 = np.zeros(80)
 nz_1 = np.zeros(80)
 nz_mean = np.zeros(80)
+nz_occurances = np.zeros(80)
 
 for i,img_nr in enumerate(test):
 	y = load_dennis.get_all_labels(img_nr, 'test')
@@ -29,14 +30,14 @@ for i,img_nr in enumerate(test):
 	nz_0[np.where(y[1:]>0)[0]] += y[np.where(y[1:]>0)[0]]
 	nz_1[np.where(y[1:]>0)[0]] += np.abs(y[np.where(y[1:]>0)[0]] - 1)
 	nz_mean[np.where(y[1:]>0)[0]] += np.abs(y[np.where(y[1:]>0)[0]] - avg[np.where(y[1:]>0)[0]])
+	nz_occurances[np.where(y[1:]>0)[0]] += 1
 
 
 print np.mean(error0/len(test))
 print np.mean(error1/len(test))
 print np.mean(error_mean/len(test))
 
-print np.mean(rmse/len(test))
-print np.mean(nz_0/len(test))
-print np.mean(nz_1/len(test))
+print np.mean(nz_0/nz_occurances)
+print np.mean(nz_1/nz_occurances)
 
-print np.mean(nz_mean/len(test))
+print np.mean(nz_mean/nz_occurances)
