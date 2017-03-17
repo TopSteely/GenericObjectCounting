@@ -22,6 +22,7 @@ for i,img_nr in enumerate(test):
 	error1 += np.abs(y[1:]-1)
 	error_mean += np.abs(y[1:]-avg)
 
-print np.mean(error0)
-print np.mean(error1)
-print np.mean(error_mean)
+
+print np.mean(error0/len(test))
+print np.mean(error1/len(test))
+print np.mean(error_mean/len(test))
