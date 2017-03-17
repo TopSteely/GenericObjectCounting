@@ -24,12 +24,12 @@ print x
 
 plt.figure()
 ax = plt.gca()
-ax.bar(x-0.4, scores[methods[0]],width=0.2,color='r',align='center')
-ax.bar(x-0.2, scores[methods[1]],width=0.2,color='b',align='center')
-ax.bar(x, scores[methods[2]],width=0.2,color='g',align='center')
-ax.bar(x+0.2, scores[methods[3]],width=0.2,color='m',align='center')
-ax.bar(x+0.4, scores[methods[4]],width=0.2,color='c',align='center')
-ax.bar(x+0.6, scores[methods[5]],width=0.2,color='y',align='center')
+ax.bar(x-0.4, scores[methods[0]],width=0.2,color='r',align='center', label = methods[0])
+ax.bar(x-0.2, scores[methods[1]],width=0.2,color='b',align='center', label = methods[1])
+ax.bar(x, scores[methods[2]],width=0.2,color='g',align='center', label = methods[2])
+ax.bar(x+0.2, scores[methods[3]],width=0.2,color='m',align='center', label = methods[3])
+ax.bar(x+0.4, scores[methods[4]],width=0.2,color='c',align='center', label = methods[4])
+ax.bar(x+0.6, scores[methods[5]],width=0.2,color='y',align='center', label = methods[5])
 
 
 plt.legend()
@@ -38,20 +38,25 @@ plt.ylabel('mAE')
 plt.xlabel('Levels')
 plt.savefig('/var/node436/local/tstahl/vis_iep/error_per_level.pdf')
 
+scores = {}
+
 plt.clf()
 for method in methods:
     with open('/var/scratch/spintea/Repositories/ms-caffe/output/visualization/error_per_object_%s.pickle'%(method),'rb') as handle:
-        scores['method'] = error_per_level
+        if len(error_per_level) < 5:
+        	scores[method] = np.concatenate((error_per_level,np.zeros(9-len(error_per_level))))
+        else:
+        	scores[method] = error_per_level
 
 x = np.arange(len(scores['counting']))
 
 ax = plt.subplot(111)
-ax.bar(x-0.4, scores[methods[0]],width=0.2,color='r',align='center')
-ax.bar(x-0.2, scores[methods[1]],width=0.2,color='b',align='center')
-ax.bar(x, scores[methods[2]],width=0.2,color='g',align='center')
-ax.bar(x+0.2, scores[methods[3]],width=0.2,color='m',align='center')
-ax.bar(x+0.4, scores[methods[4]],width=0.2,color='c',align='center')
-ax.bar(x+0.6, scores[methods[5]],width=0.2,color='y',align='center')
+ax.bar(x-0.4, scores[methods[0]],width=0.2,color='r',align='center', label = methods[0])
+ax.bar(x-0.2, scores[methods[1]],width=0.2,color='b',align='center', label = methods[1])
+ax.bar(x, scores[methods[2]],width=0.2,color='g',align='center', label = methods[2])
+ax.bar(x+0.2, scores[methods[3]],width=0.2,color='m',align='center', label = methods[3])
+ax.bar(x+0.4, scores[methods[4]],width=0.2,color='c',align='center', label = methods[4])
+ax.bar(x+0.6, scores[methods[5]],width=0.2,color='y',align='center', label = methods[5])
 
 plt.legend()
 ax = plt.gca()
