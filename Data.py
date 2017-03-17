@@ -90,12 +90,13 @@ class Data:
                         #prune tree to only have levels which fully cover the image, tested
                         if True:
                             for level in range(1,len(levels)): # kkep level 0
+                                print level
                                 for a_level_box in levels[level]:
                                     overlap_half = False
                                     for b_level_box in levels[level]:
                                         if a_level_box == b_level_box:
                                             continue
-                                        if get_overlap_ratio(a_level_box, b_level_box)>0.5:
+                                        if get_overlap_ratio(self.tree_boxes[a_level_box], self.tree_boxes[b_level_box])>0.5:
                                             overlap_half = True
                                     if not overlap_half:
                                         levels[level].remove(a_level_box)
