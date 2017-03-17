@@ -54,13 +54,8 @@ def main():
         'not getting mscoc train'
     elif dataset == 'trancos':
         train = range(1,404)
-<<<<<<< HEAD
-    from_ = 33000
-    to_ = 36000
-=======
     from_ = 0
     to_ = -1
->>>>>>> edb34d8fd8e2ad45bb8076ed4a521ee3c01f9b93
     if dataset != 'mscoco':
         for i,img_nr in enumerate(train[from_:to_]):
             print i, img_nr
