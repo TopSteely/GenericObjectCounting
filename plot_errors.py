@@ -11,9 +11,11 @@ scores = {}
 for method in methods:
     with open('/var/scratch/spintea/Repositories/ms-caffe/output/visualization/error_per_level_%s.pickle'%(method),'rb') as handle:
         error_per_level = pickle.load(handle)
-        scores['method'] = error_per_level
+        scores[method] = error_per_level
 
 print scores
+
+x = range(len(scores['counting']))
 
 ax = plt.subplot(111)
 ax.bar(x-0.2, scores[methods[0]],width=0.2,color='b',align='center')
