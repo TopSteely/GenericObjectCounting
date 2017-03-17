@@ -16,15 +16,27 @@ error0 = np.zeros(80)
 error1 = np.zeros(80)
 error_mean = np.zeros(80)
 rmse = np.zeros(80)
+nz_0 = np.zeros(80)
+nz_1 = np.zeros(80)
+nz_mean = np.zeros(80)
 
 for i,img_nr in enumerate(test):
 	y = load_dennis.get_all_labels(img_nr, 'test')
 	error0 += np.abs(y[1:])
 	error1 += np.abs(y[1:]-1)
 	error_mean += np.abs(y[1:]-avg)
-	#rmse += np.sqrt(y[])
+	rmse += np.sqrt(y[1:]**2)
+	nz_0[np.where(y>0)[0]] += y[np.where(y>0)[0]]
+	nz_1 += [np.where(y>0)[0]] += np.abs(y[np.where(y>0)[0]] - 1)
+	nz_mean += [np.where(y>0)[0]] += np.abs(y[np.where(y>0)[0]] - avg[np.where(y>0)[0]])
 
 
 print np.mean(error0/len(test))
 print np.mean(error1/len(test))
 print np.mean(error_mean/len(test))
+
+print np.mean(rmse/len(test))
+print np.mean(nz_0/len(test))
+print np.mean(nz_1/len(test))
+
+print np.mean(nz_mean/len(test))
