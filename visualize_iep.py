@@ -19,7 +19,7 @@ with open('/var/scratch/spintea/Repositories/ms-caffe/output/visualization/iep24
 print max_box.shape, iep_box.shape,iep.shape
 
 im = imread('/var/node436/local/tstahl/Images/000248.jpg')
-for lvl in range(iep.shape[0]):
+for lvl in range(1,iep.shape[0]):
 	for i_c, class_ in enumerate(['aeroplane', 'bicycle', 'bird', 'boat',
            'bottle', 'bus', 'car', 'cat', 'chair',
            'cow', 'diningtable', 'dog', 'horse',
@@ -42,6 +42,6 @@ for lvl in range(iep.shape[0]):
 
 		plt.title('Error per level')
 #		pp.savefig()
-		plt.savefig('/var/node436/local/tstahl/vis_iep/%s_%s_%s.pdf'%(248,lvl,class_), bbox_inches='tight')
+		plt.savefig('/var/node436/local/tstahl/vis_iep/%s_%s_%s.pdf'%(248,lvl,class_))#, bbox_inches='tight'
 		plt.clf()
 pp.close()
