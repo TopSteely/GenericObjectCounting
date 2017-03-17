@@ -11,31 +11,31 @@ scores = {}
 for method in methods:
     with open('/var/scratch/spintea/Repositories/ms-caffe/output/visualization/error_per_level_%s.pickle'%(method),'rb') as handle:
         error_per_level = pickle.load(handle)
-        plt.plot(error_per_level,label=method)
         scores['method'] = error_per_level
-y = [4, 9, 2]
-z=[1,2,3]
-k=[11,12,13]
+
+print scores
 
 ax = plt.subplot(111)
-ax.bar(x-0.2, y,width=0.2,color='b',align='center')
-ax.bar(x, z,width=0.2,color='g',align='center')
-ax.bar(x+0.2, k,width=0.2,color='r',align='center')
-ax.xaxis_date()
-
-plt.show()
+ax.bar(x-0.2, scores[methods[0]],width=0.2,color='b',align='center')
+ax.bar(x, scores[methods[1]],width=0.2,color='g',align='center')
+ax.bar(x+0.2, scores[methods[2]],width=0.2,color='r',align='center')
 
 plt.legend()
 plt.title('Error per level')
 plt.ylabel('mAE')
 plt.xlabel('Levels')
-plt.savefig('/var/scratch/spintea/Repositories/ms-caffe/output/visualization/error_per_level.pdf')
+plt.savefig('/var/node436/local/tstahl/vis_iep/error_per_level.pdf')
 
 plt.clf()
 for method in methods:
     with open('/var/scratch/spintea/Repositories/ms-caffe/output/visualization/error_per_object_%s.pickle'%(method),'rb') as handle:
-        error_per_objects = pickle.load(handle)
-        plt.plot(error_per_objects,label=method)
+        scores['method'] = error_per_level
+
+ax = plt.subplot(111)
+ax.bar(x-0.2, scores[methods[0]],width=0.2,color='b',align='center')
+ax.bar(x, scores[methods[1]],width=0.2,color='g',align='center')
+ax.bar(x+0.2, scores[methods[2]],width=0.2,color='r',align='center')
+
 plt.legend()
 ax = plt.gca()
 labels = [item.get_text() for item in ax.get_xticklabels()]
@@ -43,4 +43,4 @@ labels[-1] = '4+'
 plt.title('Error per objects')
 plt.ylabel('mAE')
 plt.xlabel('# of objects')
-plt.savefig('/var/scratch/spintea/Repositories/ms-caffe/output/visualization/error_per_objects.pdf')
+plt.savefig('/var/node436/local/tstahl/vis_iep/error_per_objects.pdf')
