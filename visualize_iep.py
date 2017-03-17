@@ -7,19 +7,22 @@ from matplotlib.backends.backend_pdf import PdfPages
 from scipy.misc import imread
 from matplotlib.patches import Rectangle
 
-with open('/var/scratch/spintea/Repositories/ms-caffe/output/visualization/max_box_pred%s.pickle'%(format(45, "06d")),'rb') as handle:
+img_nr = 71
+
+with open('/var/scratch/spintea/Repositories/ms-caffe/output/visualization/max_box_pred%s.pickle'%(format(img_nr, "06d")),'rb') as handle:
 	max_box = pickle.load(handle)
 
-with open('/var/scratch/spintea/Repositories/ms-caffe/output/visualization/max_iep_box_pred%s.pickle'%(format(45, "06d")),'rb') as handle:
+with open('/var/scratch/spintea/Repositories/ms-caffe/output/visualization/max_iep_box_pred%s.pickle'%(format(img_nr, "06d")),'rb') as handle:
 	iep_box = pickle.load(handle)
 
-with open('/var/scratch/spintea/Repositories/ms-caffe/output/visualization/iep%s.pickle'%(format(45, "06d")),'rb') as handle:
+with open('/var/scratch/spintea/Repositories/ms-caffe/output/visualization/iep%s.pickle'%(format(img_nr, "06d")),'rb') as handle:
 	iep = pickle.load(handle)
 
 print max_box.shape, iep_box.shape,iep.shape
 
-im = imread('/var/node436/local/tstahl/Images/%s.jpg'%(format(45, "06d")))
+im = imread('/var/node436/local/tstahl/Images/%s.jpg'%(format(img_nr, "06d")))
 for lvl in range(1,iep.shape[0]):
+	print lvl
 	for i_c, class_ in enumerate(['aeroplane', 'bicycle', 'bird', 'boat',
            'bottle', 'bus', 'car', 'cat', 'chair',
            'cow', 'diningtable', 'dog', 'horse',
@@ -44,5 +47,5 @@ for lvl in range(1,iep.shape[0]):
 
 		#plt.title('Error per level')
 #		pp.savefig()
-		plt.savefig('/var/node436/local/tstahl/vis_iep/%s_%s_%s.pdf'%(248,lvl,class_))#, bbox_inches='tight'
+		plt.savefig('/var/node436/local/tstahl/vis_iep/%s_%s_%s.pdf'%(format(img_nr, "06d"),lvl,class_))#, bbox_inches='tight'
 		plt.clf()
