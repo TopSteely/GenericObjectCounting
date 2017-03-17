@@ -88,11 +88,24 @@ class Data:
                         if load.mode == 'dennis' or load.mode == 'level':
                             self.boxes = self.tree_boxes
                         #prune tree to only have levels which fully cover the image, tested
+                        if True:
+                            for level in levels[1:]: # kkep level 0
+                                for a_level_box in levels[level]:
+                                    overlap_half = False
+                                    for b_level_box in levels[level]:
+                                        if a_level_box == b_level_box:
+                                            continue
+                                        if get_overlap_ratio(a_level_box, b_level_box)>0.5:
+                                            overlap_half = True
+                                    if not overlap_half:
+                                        levels[level].remove(a_level_box)
+
                         if load.mode != 'gt' and load.mode != 'sum':
                             total_size = surface_area_old(self.tree_boxes, levels[0])
                             for level in levels:
                                 sa = surface_area_old(self.tree_boxes, levels[level])
                                 sa_co = sa/total_size
+                                print sa_co
                                 if sa_co != 1.0:
                                         self.G.remove_nodes_from(levels[level])
                                 else:
@@ -101,6 +114,7 @@ class Data:
                             # prune levels, speedup + performance 
                             levels_tmp = {k:v for k,v in levels.iteritems() if k<prune_tree_levels}
                             levels_gone = {k:v for k,v in levels.iteritems() if k>=prune_tree_levels}
+                        print len(levels_tmp)
                         if load.mode != 'gt' and load.mode != 'sum':
                             self.levels = levels_tmp
                             #prune tree as well, for patches training
@@ -180,18 +194,6 @@ class Data:
                         for i in range(len(self.boxes)):
                             found = False
                             overlap_half = True
-                            if i != 0:
-                                if True:
-                                    overlap_half = False
-                                    for i_l,fl in enumerate(flevels):
-                                        print fl, self.levels[i_l]
-                                        if i in fl:
-                                            for ii in self.levels[i_l]:
-                                                # first see if it overlaps with any >0.5
-                                                if get_overlap_ratio(self.boxes[i], self.boxes[i_l])>0.5:
-                                                    overlap_half = True
-                                            if not overlap_half:
-                                                self.levels[i_l].remove(i)
                             if overlap_half:
                                 for i_l,fl in enumerate(flevels):
                                     if i in fl:
@@ -237,24 +239,6 @@ class Data:
                                                     found = True
                             if not found:
                                 self.box_levels.append([0, -1])
-
-                        total_size = surface_area_old(self.tree_boxes, levels[0])
-                        levels = self.levels
-                        for level in levels:
-                            sa = surface_area_old(self.tree_boxes, levels[level])
-                            sa_co = sa/total_size
-                            if sa_co != 1.0:
-                                    self.G.remove_nodes_from(levels[level])
-                            else:
-                                nr_levels_covered = level
-                        levels = {k: levels[k] for k in range(0,nr_levels_covered + 1)}
-                        # prune levels, speedup + performance 
-                        levels_tmp = {k:v for k,v in levels.iteritems() if k<prune_tree_levels}
-                        levels_gone = {k:v for k,v in levels.iteritems() if k>=prune_tree_levels}
-                        print levels_tmp
-                        print 'removing: ', levels_gone
-                        self.levels = levels_tmp
-                        raw_input()
                         #print np.array(self.box_levels).shape
                         self.box_levels.extend(temp)
                         #print np.array(self.box_levels).shape
