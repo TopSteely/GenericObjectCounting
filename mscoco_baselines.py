@@ -26,7 +26,8 @@ for i,img_nr in enumerate(test):
 	error0 += np.abs(y)
 	error1 += np.abs(y-1)
 	error_mean += np.abs(y-avg)
-	rmse += np.sqrt(y**2)
+	rmse += y**2
+	rmse_nz[np.where(y>0)[0]] += y[np.where(y>0)[0]]**2
 
 	nz_0[np.where(y>0)[0]] += y[np.where(y>0)[0]]
 	nz_1[np.where(y>0)[0]] += np.abs(y[np.where(y>0)[0]] - 1)
@@ -38,6 +39,9 @@ for i,img_nr in enumerate(test):
 print np.mean(error0/len(test))
 print np.mean(error1/len(test))
 print np.mean(error_mean/len(test))
+
+print 'mRMSE', np.mean(np.sqrt(rmse/len(test)))
+print np.mean(np.sqrt(rmse_nz/nz_occurances))
 
 print np.mean(nz_0/nz_occurances)
 print np.mean(nz_1/nz_occurances)
