@@ -27,8 +27,8 @@ for i,img_nr in enumerate(test):
 	error_mean += np.abs(y[1:]-avg)
 	rmse += np.sqrt(y[1:]**2)
 	nz_0[np.where(y>0)[0]] += y[np.where(y>0)[0]]
-	nz_1 += [np.where(y>0)[0]] += np.abs(y[np.where(y>0)[0]] - 1)
-	nz_mean += [np.where(y>0)[0]] += np.abs(y[np.where(y>0)[0]] - avg[np.where(y>0)[0]])
+	nz_1[np.where(y>0)[0]] += np.abs(y[np.where(y>0)[0]] - 1)
+	nz_mean[np.where(y>0)[0]] += np.abs(y[np.where(y>0)[0]] - avg[np.where(y>0)[0]])
 
 
 print np.mean(error0/len(test))
