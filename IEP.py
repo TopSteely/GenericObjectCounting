@@ -1,3 +1,8 @@
+import matplotlib
+matplotlib.use('agg')
+import matplotlib.pyplot as plt
+from scipy.misc import imread
+
 import itertools
 import networkx as nx
 from utils import get_set_intersection
@@ -76,7 +81,7 @@ class IEP:
 
             # plot images as nodes
             if True:
-                img=mpimg.imread('/var/node436/local/tstahl/Images/%s.jpg'%(Data.img_nr))
+                img=imread('/var/node436/local/tstahl/Images/%s.jpg'%(Data.img_nr))
                 pos=nx.spring_layout(overlaps)
                 nx.draw(overlaps,pos)
 
@@ -96,6 +101,7 @@ class IEP:
                     a.set_aspect('equal')
                     a.axis('off')
                 plt.savefig('/var/node436/local/tstahl_%s_%s.png'%(Data.img_nr, level)) 
+                plt.clf()
                 print 'saved ', Data.img_nr, level
 
 
