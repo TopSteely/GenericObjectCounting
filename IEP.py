@@ -92,6 +92,7 @@ class IEP:
             # 1. len(base) is nondecreasing.
             # 2. (base + cnbrs) is sorted with respect to the iteration order of G.
             # 3. cnbrs is a set of common neighbors of nodes in base.
+            intersections = 0
             while queue:
                 base, cnbrs = map(list, queue.popleft())
                 if len(base) > length:
@@ -112,7 +113,6 @@ class IEP:
                             edges = overlaps.edges()
                             #print base, u in base, v in base, u in base and v in base
                             colors = ['y' if (u in base and v in base) else 'b' for u,v in edges]
-                            print colors
                             nx.draw(overlaps,pos,edge_color=colors)
 
                             # add images on edges
@@ -138,7 +138,8 @@ class IEP:
                             newax.axis('off')
 
 
-                            plt.savefig('/var/node436/local/tstahl/graph_%s_%s.png'%(Data.img_nr, level)) 
+                            plt.savefig('/var/node436/local/tstahl/graph_%s_%s_%s.png'%(Data.img_nr, level, intersections)) 
+                            intersections += 1
                             plt.clf()
                             print 'saved ', Data.img_nr, level
 
