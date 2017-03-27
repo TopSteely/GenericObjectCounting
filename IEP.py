@@ -108,7 +108,7 @@ class IEP:
 
                         # plot images as nodes
                         if True:
-                            if level > 3 and len(base) > 4:
+                            if level > 2 and len(base) > 4:
                                 img=imread('/var/node436/local/tstahl/Images/%s.jpg'%(format(Data.img_nr, "06d")))
                                 pos=nx.circular_layout(overlaps)
                                 edges = overlaps.edges()
