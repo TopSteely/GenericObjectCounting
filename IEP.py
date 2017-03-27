@@ -72,6 +72,35 @@ class IEP:
             length = 1
             index = {}
             nbrs = {}
+
+
+            # plot images as nodes
+            if True:
+                img=mpimg.imread('/var/node436/local/tstahl/Images/%s.jpg'%(Data.img_nr))
+                pos=nx.spring_layout(overlaps)
+                nx.draw(overlaps,pos)
+
+                # add images on edges
+                ax=plt.gca()
+                fig=plt.gcf()
+                trans = ax.transData.transform
+                trans2 = fig.transFigure.inverted().transform
+                imsize = 0.2 # this is the image size
+                for n in overlaps.nodes():
+                    (x,y) = pos[n]
+                    xx,yy = trans((x,y)) # figure coordinates
+                    xa,ya = trans2((xx,yy)) # axes coordinates
+                    img_node =  img[coords[n][1]:coords[n][3], coords[n][0]:coords[n][2]]
+                    a = plt.axes([xa-imsize/2.0,ya-imsize/2.0, imsize, imsize ])
+                    a.imshow(img_node)
+                    a.set_aspect('equal')
+                    a.axis('off')
+                plt.savefig('/var/node436/local/tstahl_%s_%s.png'%(Data.img_nr, level)) 
+                print 'saved ', Data.img_nr, level
+
+
+
+
             for u in overlaps:
                 index[u] = len(index)
                 # Neighbors of u that appear after u in the iteration order of G.
