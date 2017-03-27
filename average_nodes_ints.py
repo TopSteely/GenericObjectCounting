@@ -89,9 +89,9 @@ def main():
                 nodes[llvl] += len(img_data.levels[llvl])
                 occurances[llvl] += 1
     plt.figure()
-    plt.plot(nodes/occurances, 'ro',label='Object proposals')
-    plt.plot(intersections/occurances, 'bo',label='Intersections')
-    plt.plot(occurances/occurances[0], 'bo',label='Occurance')
+    plt.plot(nodes/occurances, '-ro',label='mean Object proposals')
+    plt.plot(intersections/occurances, '-bo',label='mean Intersections')
+    plt.plot(occurances/occurances[0], '-go',label='Occurance')
     plt.xlabel('Image division depth')
     #plt.ylim([-1,max(max(preds,y))+1])
     #plt.xlim([-1,len(preds)+1])
