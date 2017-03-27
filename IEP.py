@@ -79,32 +79,6 @@ class IEP:
             nbrs = {}
 
 
-            # plot images as nodes
-            if True:
-                img=imread('/var/node436/local/tstahl/Images/%s.jpg'%(format(Data.img_nr, "06d")))
-                pos=nx.spring_layout(overlaps)
-                nx.draw(overlaps,pos)
-
-                # add images on edges
-                ax=plt.gca()
-                fig=plt.gcf()
-                trans = ax.transData.transform
-                trans2 = fig.transFigure.inverted().transform
-                imsize = 0.2 # this is the image size
-                for n in overlaps.nodes():
-                    (x,y) = pos[n]
-                    xx,yy = trans((x,y)) # figure coordinates
-                    xa,ya = trans2((xx,yy)) # axes coordinates
-                    img_node =  img[coords[n][1]:coords[n][3], coords[n][0]:coords[n][2]]
-                    a = plt.axes([xa-imsize/2.0,ya-imsize/2.0, imsize, imsize ])
-                    a.imshow(img_node)
-                    a.set_aspect('equal')
-                    a.axis('off')
-                plt.savefig('/var/node436/local/tstahl_%s_%s.png'%(Data.img_nr, level)) 
-                plt.clf()
-                print 'saved ', Data.img_nr, level
-
-
 
 
             for u in overlaps:
@@ -128,11 +102,50 @@ class IEP:
                        I = get_intersection(coords[c], I)
                 if I != [] and I[1] != I[3] and I[0]!=I[2]:
                       if I in coords.tolist():
-                         ind = coords.tolist().index(I)
-                         if ind >= len(X):
-                             print 'index bigger than X'
-                             exit()
-                         if len(base)%2==1:
+                        ind = coords.tolist().index(I)
+
+
+                        # plot images as nodes
+                        if True:
+                            img=imread('/var/node436/local/tstahl/Images/%s.jpg'%(format(Data.img_nr, "06d")))
+                            pos=nx.circular_layout(overlaps)
+                            edges = overlaps.edges()
+                            print base, u in base, v in base, u in base and v in base
+                            colors = ['y' if (u in base and v in base) else 'b' for u,v in edges]
+                            nx.draw(overlaps,pos,edge_color=colors)
+
+                            # add images on edges
+                            ax=plt.gca()
+                            fig=plt.gcf()
+                            trans = ax.transData.transform
+                            trans2 = fig.transFigure.inverted().transform
+                            imsize = 0.2 # this is the image size
+                            for n in overlaps.nodes():
+                                (x,y) = pos[n]
+                                xx,yy = trans((x,y)) # figure coordinates
+                                xa,ya = trans2((xx,yy)) # axes coordinates
+                                img_node =  img[coords[n][1]:coords[n][3], coords[n][0]:coords[n][2]]
+                                a = plt.axes([xa-imsize/2.0,ya-imsize/2.0, imsize, imsize ])
+                                a.imshow(img_node)
+                                a.set_aspect('equal')
+                                a.axis('off')
+                            
+
+                            img_inter = img[coords[ind][1]:coords[ind][3], coords[ind][0]:coords[ind][2]]
+                            newax = fig.add_axes([0.8, 0.8, 0.2, 0.2], anchor='NE', zorder=-1)
+                            newax.imshow(img_inter)
+                            newax.axis('off')
+
+
+                            plt.savefig('/var/node436/local/tstahl/graph_%s_%s.png'%(Data.img_nr, level)) 
+                            plt.clf()
+                            print 'saved ', Data.img_nr, level
+
+#-------------------------------------------------
+                        if ind >= len(X):
+                            print 'index bigger than X'
+                            exit()
+                        if len(base)%2==1:
                             #print '+', X[ind]
                             if clip:
                                 iep += max(0,np.dot(self.w,X[ind]))
@@ -141,7 +154,7 @@ class IEP:
                             else:
                                 iep += np.dot(self.w,X[ind])
                                 function.append(['+',ind])
-                         elif len(base)%2==0:
+                        elif len(base)%2==0:
                             #print '-', X[ind]
                             if clip:
                                 iep -=  max(0,np.dot(self.w,X[ind]))
