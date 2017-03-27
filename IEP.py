@@ -110,8 +110,9 @@ class IEP:
                             img=imread('/var/node436/local/tstahl/Images/%s.jpg'%(format(Data.img_nr, "06d")))
                             pos=nx.circular_layout(overlaps)
                             edges = overlaps.edges()
-                            print base, u in base, v in base, u in base and v in base
+                            #print base, u in base, v in base, u in base and v in base
                             colors = ['y' if (u in base and v in base) else 'b' for u,v in edges]
+                            print colors
                             nx.draw(overlaps,pos,edge_color=colors)
 
                             # add images on edges
