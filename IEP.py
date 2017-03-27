@@ -81,7 +81,7 @@ class IEP:
 
             # plot images as nodes
             if True:
-                img=imread('/var/node436/local/tstahl/Images/%s.jpg'%(Data.img_nr))
+                img=imread('/var/node436/local/tstahl/Images/%s.jpg'%(format(Data.img_nr, "06d")))
                 pos=nx.spring_layout(overlaps)
                 nx.draw(overlaps,pos)
 
