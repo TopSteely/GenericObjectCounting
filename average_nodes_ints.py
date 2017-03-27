@@ -52,7 +52,7 @@ def main():
     if dataset == 'dennis' or dataset == 'grid' or dataset == 'gt' or dataset == 'sum'or dataset == 'level':
         train = load_dennis.training_numbers
     from_ = 0
-    to_ = -1
+    to_ = 30
     if dataset != 'mscoco':
         for i,img_nr in enumerate(train[from_:to_]):
             print i, img_nr
@@ -65,7 +65,7 @@ def main():
                 nodes[llvl] += len(img_data.levels[llvl])
                 occurances[llvl] += 1
         if dataset == 'dennis' or dataset == 'grid' or dataset == 'gt' or dataset == 'sum'or dataset == 'level':
-            for i,img_nr in enumerate(load_dennis.val_numbers):
+            for i,img_nr in enumerate(load_dennis.val_numbers[from_:to_]):
                 print img_nr
                 img_data = Data.Data(load_dennis, img_nr, level_size, None)
                 for llvl in img_data.levels:
@@ -91,6 +91,7 @@ def main():
     plt.figure()
     plt.plot(nodes/occurances, 'ro',label='Object proposals')
     plt.plot(intersections/occurances, 'bo',label='Intersections')
+    plt.plot(occurances/occurances[0], 'bo',label='Occurance')
     plt.xlabel('Image division depth')
     #plt.ylim([-1,max(max(preds,y))+1])
     #plt.xlim([-1,len(preds)+1])
