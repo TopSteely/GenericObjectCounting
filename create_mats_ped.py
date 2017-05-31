@@ -102,6 +102,9 @@ def main():
                             train_mat['boxes'].append(img_data.boxes)
                             train_mat['functions'].append(img_data.box_levels)
                             train_mat['labels'].append(len(mat['fgt']['frame'][0][0][0][frame-1][0][0][0]))
+                            print len(mat['fgt']['frame'][0][0][0][frame-1][0][0][0])
+                            print train_mat
+                            raw_input()
         if dataset == 'trancos':
             for i,img_nr in enumerate(range(1,421)):
                 img_data = Data.Data(load_dennis, img_nr, level_size, None,2)
@@ -145,7 +148,7 @@ def main():
                 if dataset != 'sum':
                     train_mat['functions'].append(img_data.box_levels)
                     assert len(img_data.box_levels ) == len(img_data.boxes)
-        output_dennis.save_mat(train_mat,[], dataset, from_,to_)
+        output_dennis.save_mat(train_mat,[], dataset, from_,to_, level_size)
     test_mat['image'] = []
     test_mat['boxes'] = []
     test_mat['labels'] = []
