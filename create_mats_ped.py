@@ -201,7 +201,7 @@ def main():
                 img_data = Data.Data(load_dennis, img_nr, level_size, None, frame)
                 train_mat['boxes'].append(img_data.boxes)
                 train_mat['functions'].append(img_data.box_levels)
-                train_mat['labels'].append(len(mat['fgt']['frame'][0][0][0][frame][0][0][0]))
+                train_mat['labels'].append(len(mat['fgt']['frame'][0][0][0][frame-1][0][0][0]))
     output_dennis.save_mat(train_mat,test_mat, dataset, from_,to_, level_size)
     print missing
     
