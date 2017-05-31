@@ -44,7 +44,7 @@ class Data:
                 if self.boxes != [] and prune_tree_levels > 1:
                     if load.mode == 'dennis':
                         self.X = load.get_features(img_nr)
-                    elif load.mode == 'mscoco' or load.mode == 'trancos'  or load.mode == 'gt'  or load.mode == 'level':
+                    elif load.mode == 'mscoco' or load.mode == 'trancos'  or load.mode == 'gt'  or load.mode == 'level' or load.mode == 'pedestrians':
                         self.X = np.zeros((15000,num_features))
                     self.num_features = num_features
                     if gt:
