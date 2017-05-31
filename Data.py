@@ -333,4 +333,4 @@ def get_level_functions(levels,coords, tree_size):
             queue.append((chain(base, [u]),
                           filter(nbrs[u].__contains__,
                                  islice(cnbrs, i + 1, None))))
-  return level_functions                
+  return level_functions  

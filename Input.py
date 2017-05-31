@@ -43,6 +43,9 @@ class Input:
         elif self.mode == 'blob':
             self.training_numbers = [1,2,3,5,6,7]
             self.val_numbers = [4,8]
+        elif self.mode == 'pedestrians':
+            self.coord_path = '/var/node436/local/tstahl/ucsdpeds1/SS_Boxes/%s_%s.txt'
+
         else:
             if self.mode == 'pascal':
                 self.coord_path =  '/var/node436/local/tstahl/new_Resnet_features/2nd/coords/1-%s.csv'
@@ -253,6 +256,14 @@ class Input:
             print self.coord_path%(t_set,format(img_nr, "06d"))
             if os.path.isfile(self.coord_path%(t_set,format(img_nr, "06d"))):
                 ret = np.loadtxt(self.coord_path%(t_set,format(img_nr, "06d")), delimiter=',')
+                if isinstance(ret[0], np.float64):
+                    return np.array([ret])
+                else:
+                    return ret
+        elif self.mode == 'pedestrians':
+            print self.coord_path%(format(img_nr, "06d"),t_set)
+            if os.path.isfile(self.coord_path%(format(img_nr, "06d"),t_set)):
+                ret = np.loadtxt(self.coord_path%(format(img_nr, "06d"),t_set), delimiter=',')
                 if isinstance(ret[0], np.float64):
                     return np.array([ret])
                 else:
