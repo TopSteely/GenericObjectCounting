@@ -250,8 +250,8 @@ class Output:
         plt.savefig(self.upd_path_new%(self.category))
 
     def save_mat(self,train_mat,test_mat, dataset,from_,to_,level_size='all'):
-        #print self.train_mat_path%(dataset,level_size)#, self.test_mat_path%(dataset,level_size)
-        #raw_input()
+        print self.train_mat_path%(dataset,level_size), self.test_mat_path%(dataset,level_size)
+        raw_input()
         if dataset == 'mscoco':
 #           print 
            savemat(self.train_mat_path%(from_,to_), train_mat)
@@ -259,6 +259,9 @@ class Output:
            savemat(self.test_mat_path%(from_,to_), test_mat)
         if train_mat != []:
             savemat(self.train_mat_path%(dataset,level_size), train_mat)
+            print 'saved train'
         if test_mat != []:
             savemat(self.test_mat_path%(dataset,level_size), test_mat)
+            print 'saved test'
+        raw_input()
         print 'saved to ', self.test_mat_path%(from_,to_)
