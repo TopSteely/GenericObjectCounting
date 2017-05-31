@@ -200,7 +200,7 @@ def main():
             for frame in range(1,201):
                 #files_in_fold = glob.glob('/var/node436/local/tstahl/ucsdpeds1/video/train/vidf1_33_%s.y/*'%(format(img_nr, "03d")))
                 #train_mat['image'].extend(files_in_fold)
-                test_mat['image'].append('/var/node436/local/tstahl/ucsdpeds1/video/train/vidf1_33_%s.y/vidf1_33_%s_f%s.png'%(format(img_nr, "03d"),format(img_nr, "03d"),format(frame, "03d")))
+                test_mat['image'].append('/var/node436/local/tstahl/ucsdpeds1/video/test/vidf1_33_%s.y/vidf1_33_%s_f%s.png'%(format(img_nr, "03d"),format(img_nr, "03d"),format(frame, "03d")))
                 img_data = Data.Data(load_dennis, img_nr, level_size, None, frame)
                 test_mat['boxes'].append(img_data.boxes)
                 test_mat['functions'].append(img_data.box_levels)
