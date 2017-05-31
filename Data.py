@@ -27,7 +27,7 @@ class Data:
                 #print len(self.box_levels)
                 #raw_input()
         else:
-            if load.mode == 'trancos':
+            if load.mode == 'trancos' or load.mode == 'pedestrians':
                 self.boxes = load.get_coords(img_nr,t_set)
                 print t_set, self.boxes
             else:
@@ -66,7 +66,7 @@ class Data:
                         if load.mode == 'dennis'  or load.mode == 'level':
                             self.tree_boxes = load.get_coords_tree(img_nr)
                             self.tree_boxes,self.X = sort_boxes(self.tree_boxes, self.X)
-                        elif load.mode == 'mscoco' or load.mode == 'trancos':
+                        elif load.mode == 'mscoco' or load.mode == 'trancos' or load.mode == 'pedestrians':
                             self.boxes = sort_boxes_only(self.boxes)
                             self.tree_boxes = np.array(self.boxes)
 
@@ -81,7 +81,7 @@ class Data:
                         #self.G, levels = create_tree_as_extracted(self.tree_boxes)
                         if load.mode == 'dennis' or load.mode == 'level':
                             self.G, levels = create_tree(self.tree_boxes)
-                        elif load.mode == 'mscoco' or load.mode == 'trancos':
+                        elif load.mode == 'mscoco' or load.mode == 'trancos' or load.mode == 'pedestrians':
                             self.G, levels = create_tree(self.boxes)
                         #print "tree", (time.time() - start)
                         start = time.time()
