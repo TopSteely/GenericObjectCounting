@@ -29,7 +29,7 @@ class Data:
         else:
             if load.mode == 'trancos' or load.mode == 'pedestrians':
                 self.boxes = load.get_coords(img_nr,t_set)
-                print t_set, self.boxes
+                #print t_set, self.boxes
             else:
                 self.boxes = load.get_coords(img_nr)
             if True:
@@ -177,7 +177,7 @@ class Data:
                                 
                         #print 'starting getting gt data'
                         #this is just for create_mats.py
-                    if load.mode == 'mscoco' or load.mode == 'trancos'  or load.mode == 'gt' or load.mode == 'dennis':
+                    if load.mode == 'mscoco' or load.mode == 'trancos'  or load.mode == 'gt' or load.mode == 'dennis' or load.mode == 'pedestrians':
                         learner = IEP.IEP(1, 'learning')
                         _,function = learner.get_iep_levels(self, {})
                         self.inters_size = []
