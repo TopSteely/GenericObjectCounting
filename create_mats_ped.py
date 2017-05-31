@@ -103,7 +103,7 @@ def main():
                             train_mat['functions'].append(img_data.box_levels)
                             train_mat['labels'].append(len(mat['fgt']['frame'][0][0][0][frame-1][0][0][0]))
                             print len(mat['fgt']['frame'][0][0][0][frame-1][0][0][0])
-                            print train_mat
+                            print img_data.box_levels
                             raw_input()
         if dataset == 'trancos':
             for i,img_nr in enumerate(range(1,421)):
