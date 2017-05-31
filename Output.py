@@ -47,6 +47,9 @@ class Output:
         elif self.mode.startswith('mscoco'):
             self.train_mat_path = '/var/scratch/spintea/Repositories/ms-caffe/data/selective_search_data/mscoco_train_toby%s_%s.mat'
             self.test_mat_path = '/var/scratch/spintea/Repositories/ms-caffe/data/selective_search_data/mscoco_test_toby%s_%s.mat'
+        elif self.mode == 'pedestrians':
+            self.train_mat_path = '/var/scratch/spintea/Repositories/ms-caffe/data/selective_search_data/peds_train_toby%s_%s.mat'
+            self.test_mat_path = '/var/scratch/spintea/Repositories/ms-caffe/data/selective_search_data/peds_test_toby%s_%s.mat'
         else:
             self.train_mat_path = '/var/scratch/spintea/Repositories/ms-caffe/data/selective_search_data/voc_2007_train_%s_%s.mat'
             self.test_mat_path = '/var/scratch/spintea/Repositories/ms-caffe/data/selective_search_data/voc_2007_test_%s_%s.mat'

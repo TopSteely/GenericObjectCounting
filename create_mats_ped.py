@@ -95,7 +95,7 @@ def main():
                             #train_mat['overlaps'].append(img_data.gt_overlaps)
                             assert len(img_data.box_levels ) == len(img_data.boxes)
             else:
-                mat = scipy.io.loadmat('vidf1_33_%s_frame_full.mat'%(format(img_nr, "03d")))
+                mat = scipy.io.loadmat('/var/node436/local/tstahl/ucsdpeds1/gt/vidf1_33_%s_frame_full.mat'%(format(img_nr, "03d")))
                 for frame in range(1,201):
                             train_mat['image'].append('/var/node436/local/tstahl/ucsdpeds1/video/train/vidf1_33_%s.y/vidf1_33_%s_f%s.png'%(format(img_nr, "03d"),format(img_nr, "03d"),format(frame, "03d")))
                             img_data = Data.Data(load_dennis, img_nr, level_size, frame)
@@ -193,7 +193,7 @@ def main():
                         assert len(img_data.box_levels ) == len(img_data.boxes)
                 #test_mat['overlaps'].append(img_data.gt_overlaps)
         else:
-            mat = scipy.io.loadmat('vidf1_33_%s_frame_full.mat'%(format(img_nr, "03d")))
+            mat = scipy.io.loadmat('/var/node436/local/tstahl/ucsdpeds1/gt/vidf1_33_%s_frame_full.mat'%(format(img_nr, "03d")))
             for frame in range(1,201):
                 #files_in_fold = glob.glob('/var/node436/local/tstahl/ucsdpeds1/video/train/vidf1_33_%s.y/*'%(format(img_nr, "03d")))
                 #train_mat['image'].extend(files_in_fold)
