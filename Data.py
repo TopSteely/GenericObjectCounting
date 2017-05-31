@@ -12,7 +12,7 @@ class Data:
     def __init__(self, load, img_nr, prune_tree_levels, scaler, t_set=0,num_features=4096, overlap_gt=False, grid=False, gt=False):
         self.img_nr = img_nr
         
-        if load.mode != 'mscoco' and load.mode != 'trancos' and load.mode != 'grid':
+        if load.mode != 'mscoco' and load.mode != 'trancos' and load.mode != 'grid' and load.mode != 'pedestrians':
             self.y = load.get_label(img_nr)
         if load.mode == 'grid' or grid:
             if grid:
