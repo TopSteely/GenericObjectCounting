@@ -119,7 +119,7 @@ class Data:
                             for trash_level in levels_gone.values():
                                 self.G.remove_nodes_from(trash_level)
 
-                        if load.mode == 'mscoco' or load.mode == 'trancos' or load.mode == 'gt':
+                        if load.mode == 'mscoco' or load.mode == 'trancos' or load.mode == 'gt' or load.mode == 'pedestrians':
                             intersection_coords = []
                 #            for patch in self.G.nodes():
                 #                intersection_coords.append(self.boxes[patch])

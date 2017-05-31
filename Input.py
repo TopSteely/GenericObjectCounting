@@ -261,7 +261,7 @@ class Input:
                 else:
                     return ret
         elif self.mode == 'pedestrians':
-            print self.coord_path%(format(img_nr, "06d"),t_set)
+            print self.coord_path%(format(img_nr, "03d"),format(t_set, "03d"))
             if os.path.isfile(self.coord_path%(format(img_nr, "03d"),format(t_set, "03d"))):
                 ret = np.loadtxt(self.coord_path%(format(img_nr, "03d"),format(t_set, "03d")), delimiter=',')
                 if isinstance(ret[0], np.float64):
