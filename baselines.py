@@ -34,7 +34,9 @@ def main():
 
     eta = math.pow(10,-4)
 
-    load_dennis = Input.Input('mscoco',category,20)
+    dataset = 'mscoco'
+
+    load_dennis = Input.Input(dataset,category,20)
     sum_labels = np.zeros(21)
 
     if dataset == 'mscoco':
