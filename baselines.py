@@ -45,9 +45,13 @@ def main():
     else:
         train = load_dennis.training_numbers[0:1]
 
+    print len(train)
     for i,img_nr in enumerate(train):
         #img_data = Data.Data(load_dennis, img_nr, 20, None)
         labels = load_dennis.get_all_labels(img_nr, 'train')
+        print len(labels)
+        print labels
+        raw_input()
         sum_labels += labels
     mean_labels = sum_labels/len(train)
     mean_mean_labels = np.mean(mean_labels)
@@ -65,7 +69,8 @@ def main():
     if dataset == 'mscoco':
         test = load_dennis.coco_val_set.getImgIds()
     else:
-        test = load_dennis.val_numbers[0:155]
+        test = load_dennis.val_numbers
+    print len(test)
     for i,img_nr in enumerate(test):
         #img_data = Data.Data(load_dennis, img_nr, 20, None)
         labels = load_dennis.get_all_labels(img_nr, 'test')
