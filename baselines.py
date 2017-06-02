@@ -37,7 +37,13 @@ def main():
     load_dennis = Input.Input('mscoco',category,20)
     sum_labels = np.zeros(21)
 
-    for i,img_nr in enumerate(load_dennis.training_numbers[0:1]):
+    if dataset == 'mscoco':
+        train = load_dennis.coco_train_set.getImgIds()
+        train = train[0:5]
+    else:
+        train = load_dennis.training_numbers[0:1]
+
+    for i,img_nr in enumerate(train):
         #img_data = Data.Data(load_dennis, img_nr, 20, None)
         labels = load_dennis.get_all_labels(img_nr, 'train')
         sum_labels += labels
@@ -54,7 +60,11 @@ def main():
     error_mean_nn = np.zeros(21)
     error_mean_mean_nn = np.zeros(21)
     occurances = np.zeros(21)
-    for i,img_nr in enumerate(load_dennis.val_numbers[0:155]):
+    if dataset == 'mscoco':
+        test = load_dennis.coco_val_set.getImgIds()
+    else:
+        test = load_dennis.val_numbers[0:155]
+    for i,img_nr in enumerate(test):
         #img_data = Data.Data(load_dennis, img_nr, 20, None)
         labels = load_dennis.get_all_labels(img_nr, 'test')
         classes = np.where(labels>0)[0]
