@@ -37,7 +37,7 @@ def main():
     dataset = 'mscoco'
 
     load_dennis = Input.Input(dataset,category,20)
-    sum_labels = np.zeros(21)
+    sum_labels = np.zeros(81)
 
     if dataset == 'mscoco':
         train = load_dennis.coco_train_set.getImgIds()
@@ -53,15 +53,15 @@ def main():
     mean_mean_labels = np.mean(mean_labels)
 
 
-    error_0 = np.zeros(21)
-    error_1 = np.zeros(21)
-    error_mean = np.zeros(21)
-    error_mean_mean = np.zeros(21)
-    error_0_nn = np.zeros(21)
-    error_1_nn = np.zeros(21)
-    error_mean_nn = np.zeros(21)
-    error_mean_mean_nn = np.zeros(21)
-    occurances = np.zeros(21)
+    error_0 = np.zeros(81)
+    error_1 = np.zeros(81)
+    error_mean = np.zeros(81)
+    error_mean_mean = np.zeros(81)
+    error_0_nn = np.zeros(81)
+    error_1_nn = np.zeros(81)
+    error_mean_nn = np.zeros(81)
+    error_mean_mean_nn = np.zeros(81)
+    occurances = np.zeros(81)
     if dataset == 'mscoco':
         test = load_dennis.coco_val_set.getImgIds()
     else:
