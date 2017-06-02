@@ -150,7 +150,7 @@ def main():
                 if dataset != 'sum':
                     train_mat['functions'].append(img_data.box_levels)
                     assert len(img_data.box_levels ) == len(img_data.boxes)
-        output_dennis.save_mat(train_mat,[], dataset, from_,to_, level_size)
+        #output_dennis.save_mat(train_mat,[], dataset, from_,to_, level_size)
     test_mat['image'] = []
     test_mat['boxes'] = []
     test_mat['labels'] = []
@@ -166,6 +166,8 @@ def main():
         test = range(1,422)
 
     missing = []
+    error_0 = 0
+    num = 0
     for i,img_nr in enumerate(test[from_:]):
         print i,img_nr
         if dataset != 'pedestrians':
@@ -207,8 +209,11 @@ def main():
                 test_mat['boxes'].append(img_data.boxes)
                 test_mat['functions'].append(img_data.box_levels)
                 test_mat['labels'].append(len(mat['fgt']['frame'][0][0][0][frame-1][0][0][0]))
-    output_dennis.save_mat(train_mat,test_mat, dataset, from_,to_, level_size)
-    print missing
+                error_0 += len(mat['fgt']['frame'][0][0][0][frame-1][0][0][0])
+                num += 1
+    print 'error 0: ', error_0/num
+    #output_dennis.save_mat(train_mat,test_mat, dataset, from_,to_, level_size)
+    #print missing
     
 if __name__ == "__main__":
     main()
