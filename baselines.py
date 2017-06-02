@@ -41,7 +41,7 @@ def main():
 
     if dataset == 'mscoco':
         train = load_dennis.coco_train_set.getImgIds()
-        train = train[0:5]
+        #train = train[0:5]
     else:
         train = load_dennis.training_numbers[0:1]
 
@@ -82,6 +82,7 @@ def main():
         error_mean += np.abs(labels - mean_labels)
         error_mean_mean += np.abs(labels - mean_mean_labels)
     print 'error baseline 0: ', np.mean(error_0[1:]/len(test)), np.mean(error_0_nn[1:]/occurances[1:])
+    print 'mRMSE 0', np.mean(np.sqrt(error_0[1:]/len(test)))
     print 'error baseline 1: ', np.mean(error_1[1:]/len(test)), np.mean(error_1_nn[1:]/occurances[1:])
     print error_1_nn
     print occurances
