@@ -38,7 +38,7 @@ def main():
     sum_labels = np.zeros(21)
 
     for i,img_nr in enumerate(load_dennis.training_numbers[0:1]):
-        img_data = Data.Data(load_dennis, img_nr, 20, None)
+        #img_data = Data.Data(load_dennis, img_nr, 20, None)
         labels = load_dennis.get_all_labels(img_nr, 'train')
         sum_labels += labels
     mean_labels = sum_labels/len(load_dennis.training_numbers)
@@ -55,7 +55,7 @@ def main():
     error_mean_mean_nn = np.zeros(21)
     occurances = np.zeros(21)
     for i,img_nr in enumerate(load_dennis.val_numbers[0:155]):
-        img_data = Data.Data(load_dennis, img_nr, 20, None)
+        #img_data = Data.Data(load_dennis, img_nr, 20, None)
         labels = load_dennis.get_all_labels(img_nr, 'test')
         classes = np.where(labels>0)[0]
         error_0_nn[classes] += np.abs(labels[classes])
