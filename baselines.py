@@ -34,7 +34,7 @@ def main():
 
     eta = math.pow(10,-4)
 
-    load_dennis = Input.Input('dennis',category,20)
+    load_dennis = Input.Input('mscoco',category,20)
     sum_labels = np.zeros(21)
 
     for i,img_nr in enumerate(load_dennis.training_numbers[0:1]):
