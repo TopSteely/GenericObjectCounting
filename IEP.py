@@ -97,7 +97,7 @@ class IEP:
                 base, cnbrs = map(list, queue.popleft())
                 if len(base) > length:
                     length = len(base)
-                I = [0,0,1000,1000]
+                I = [0,0,3000,3000]
                 for c in base:
                     if I != []:
                        I = get_intersection(coords[c], I)
@@ -239,7 +239,7 @@ class IEP:
                     continue
                 if len(base) > length:
                     length = len(base)
-                I = [0,0,1000,1000]
+                I = [0,0,3000,3000]
                 for c in base:
                     if I != []:
                        I = get_intersection(Data.boxes[c], I)
