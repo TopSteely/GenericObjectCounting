@@ -344,7 +344,7 @@ def surface_area(boxes, boxes_level):
     # 3. cnbrs is a set of common neighbors of nodes in base.
     while queue:
         base, cnbrs = map(list, queue.popleft())
-        I = [0,0,1000,1000]
+        I = [0,0,3000,3000]
         for c in base:
             I = get_intersection(boxes[c], I)
         if len(base)%2==1:
@@ -397,7 +397,7 @@ def surface_area_old(boxes, boxes_level):
     # 3. cnbrs is a set of common neighbors of nodes in base.
     while queue:
         base, cnbrs = map(list, queue.popleft())
-        I = [0,0,1000,1000]
+        I = [0,0,3000,3000]
         for c in base:
             I = get_intersection(boxes[c], I)
         if len(base)%2==1:
@@ -450,7 +450,7 @@ def extract_coords(level_numbers, boxes):
         base, cnbrs = map(list, queue.popleft())
         if len(base) > length:
             length = len(base)
-        I = [0,0,1100,1100]
+        I = [0,0,3000,3000]
         for c in base:
             if I != []:
                I = get_intersection(boxes[c], I)
@@ -504,7 +504,7 @@ def extract_coords_missing(level_numbers, boxes):
         base, cnbrs = map(list, queue.popleft())
         if len(base) > length:
             length = len(base)
-        I = [0,0,1000,1000]
+        I = [0,0,3000,3000]
         for c in base:
             if I != []:
                I = get_intersection(boxes[c], I)
