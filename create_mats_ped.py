@@ -23,7 +23,7 @@ def main():
 
     pred_mode = 'abs'
 
-    dataset = 'pedestrians'#'dennis'
+    dataset = 'CARPK'#'dennis'
 
     debug = False
 
@@ -61,7 +61,7 @@ def main():
         test = [0,1,2,3,4,5,6,13,14,15,16,17,18,19]
     from_ = 0
     to_ = -1
-    if dataset != 'mscoco':
+    if dataset == 'mscoco':
         for i,img_nr in enumerate(train[from_:]):
             print i, img_nr
             if dataset != 'pedestrians':
@@ -151,6 +151,26 @@ def main():
                     train_mat['functions'].append(img_data.box_levels)
                     assert len(img_data.box_levels ) == len(img_data.boxes)
         #output_dennis.save_mat(train_mat,[], dataset, from_,to_, level_size)
+    else:
+        with open('/var/node436/local/tstahl/datasets/%s_devkit/data/ImageSets/train.txt'%(dataset)) as f:
+            content = f.readlines()
+        # you may also want to remove whitespace characters like `\n` at the end of each line
+        content = [x.strip() for x in content]
+        for im in content:
+            print im
+            if dataset == 'PUCPR+':
+                train_mat['image'].append('/var/node436/local/tstahl/datasets/%s_devkit/data/Images/%s.jpg'%(dataset,im))
+            elif dataset == 'CARPK':
+                train_mat['image'].append('/var/node436/local/tstahl/datasets/%s_devkit/data/Images/%s.png'%(dataset,im))
+            img_data = Data.Data(load_dennis, im, level_size, None, frame)
+            train_mat['boxes'].append(img_data.boxes)
+            train_mat['functions'].append(img_data.box_levels)
+            with open('/var/node436/local/tstahl/datasets/%s_devkit/data/Annotations/%s.txt'%(dataset,im)) as f:
+                annotations = f.readlines()
+            train_mat['labels'].append(len(annotations))
+            print 'labels', len(annotations)
+        savemat('/var/scratch/spintea/Repositories/ms-caffe/data/selective_search_data/%s_train.mat'%(dataset),train_mat)
+
     test_mat['image'] = []
     test_mat['boxes'] = []
     test_mat['labels'] = []
@@ -168,52 +188,70 @@ def main():
     missing = []
     error_0 = 0
     num = 0
-    for i,img_nr in enumerate(test[from_:]):
-        print i,img_nr
-        if dataset != 'pedestrians':
-            if dataset == 'trancos':
-                img_data = Data.Data(load_dennis, img_nr, 20, None, 3)
+    if dataset == 'CARPK' or dataset == 'PUCPR+':
+        with open('/var/node436/local/tstahl/datasets/%s_devkit/data/ImageSets/test.txt'%(dataset)) as f:
+            content = f.readlines()
+        # you may also want to remove whitespace characters like `\n` at the end of each line
+        content = [x.strip() for x in content]
+        for im in content:
+            if dataset == 'PUCPR+':
+                test_mat['image'].append('/var/node436/local/tstahl/datasets/%s_devkit/data/Images/%s.jpg'%(dataset,im))
+            elif dataset == 'CARPK':
+                test_mat['image'].append('/var/node436/local/tstahl/datasets/%s_devkit/data/Images/%s.png'%(dataset,im))
+            img_data = Data.Data(load_dennis, im, level_size, None, frame)
+            test_mat['boxes'].append(img_data.boxes)
+            test_mat['functions'].append(img_data.box_levels)
+            with open('/var/node436/local/tstahl/datasets/%s_devkit/data/Annotations/%s.txt'%(dataset,im)) as f:
+                annotations = f.readlines()
+            test_mat['labels'].append(len(annotations))
+        savemat('/var/scratch/spintea/Repositories/ms-caffe/data/selective_search_data/%s_test.mat'%(dataset),test_mat)
+    else:
+        for i,img_nr in enumerate(test[from_:]):
+            print i,img_nr
+            if dataset != 'pedestrians':
+                if dataset == 'trancos':
+                    img_data = Data.Data(load_dennis, img_nr, 20, None, 3)
+                else:
+                    img_data = Data.Data(load_dennis, img_nr, level_size, None)
+                if img_data.boxes == []:
+                    missing.append(img_nr)
+                if img_data.box_levels != []:
+                    if dataset == 'dennis' or dataset == 'grid' or dataset == 'gt' or dataset == 'sum'or dataset == 'level':
+                        test_mat['image'].append('/var/scratch/spintea/Repositories/ms-caffe/data/VOCdevkit2007/VOC2007/JPEGImages/%s.jpg'%(format(img_nr, "06d")))
+                    elif dataset == 'mscoco':
+                        test_mat['image'].append('/var/node436/local/tstahl/mscoco/train2014/%s.jpg'%(format(img_nr, "012d")))
+                    elif dataset == 'trancos':
+                        test_mat['image'].append('/var/node436/local/tstahl/TRANCOS_v3/3-%s.jpg'%(format(img_nr, "06d")))
+                    if level_size == 1:
+                            img_data.boxes = [img_data.boxes[0]]
+                            img_data.box_levels = [np.array([1,0])]
+                    #print img_data.boxes
+                    #print img_data.box_levels
+                    if dataset != 'pedestrians':
+                        test_mat['boxes'].append(img_data.boxes)
+                        if dataset == 'trancos':
+                            test_mat['labels'].append([load_dennis.get_all_labels(img_nr, 3)])
+                        else:
+                            test_mat['labels'].append([load_dennis.get_all_labels(img_nr, 'test')])
+                        if dataset != 'sum':
+                            test_mat['functions'].append(img_data.box_levels)
+                            assert len(img_data.box_levels ) == len(img_data.boxes)
+                    #test_mat['overlaps'].append(img_data.gt_overlaps)
             else:
-                img_data = Data.Data(load_dennis, img_nr, level_size, None)
-            if img_data.boxes == []:
-                missing.append(img_nr)
-            if img_data.box_levels != []:
-                if dataset == 'dennis' or dataset == 'grid' or dataset == 'gt' or dataset == 'sum'or dataset == 'level':
-                    test_mat['image'].append('/var/scratch/spintea/Repositories/ms-caffe/data/VOCdevkit2007/VOC2007/JPEGImages/%s.jpg'%(format(img_nr, "06d")))
-                elif dataset == 'mscoco':
-                    test_mat['image'].append('/var/node436/local/tstahl/mscoco/train2014/%s.jpg'%(format(img_nr, "012d")))
-                elif dataset == 'trancos':
-                    test_mat['image'].append('/var/node436/local/tstahl/TRANCOS_v3/3-%s.jpg'%(format(img_nr, "06d")))
-                if level_size == 1:
-                        img_data.boxes = [img_data.boxes[0]]
-                        img_data.box_levels = [np.array([1,0])]
-                #print img_data.boxes
-                #print img_data.box_levels
-                if dataset != 'pedestrians':
+                mat = scipy.io.loadmat('/var/node436/local/tstahl/ucsdpeds1/gt/vidf1_33_%s_frame_full.mat'%(format(img_nr, "03d")))
+                for frame in range(1,201):
+                    #files_in_fold = glob.glob('/var/node436/local/tstahl/ucsdpeds1/video/train/vidf1_33_%s.y/*'%(format(img_nr, "03d")))
+                    #train_mat['image'].extend(files_in_fold)
+                    test_mat['image'].append('/var/node436/local/tstahl/ucsdpeds1/video/test/vidf1_33_%s.y/vidf1_33_%s_f%s.png'%(format(img_nr, "03d"),format(img_nr, "03d"),format(frame, "03d")))
+                    img_data = Data.Data(load_dennis, img_nr, level_size, None, frame)
                     test_mat['boxes'].append(img_data.boxes)
-                    if dataset == 'trancos':
-                        test_mat['labels'].append([load_dennis.get_all_labels(img_nr, 3)])
-                    else:
-                        test_mat['labels'].append([load_dennis.get_all_labels(img_nr, 'test')])
-                    if dataset != 'sum':
-                        test_mat['functions'].append(img_data.box_levels)
-                        assert len(img_data.box_levels ) == len(img_data.boxes)
-                #test_mat['overlaps'].append(img_data.gt_overlaps)
-        else:
-            mat = scipy.io.loadmat('/var/node436/local/tstahl/ucsdpeds1/gt/vidf1_33_%s_frame_full.mat'%(format(img_nr, "03d")))
-            for frame in range(1,201):
-                #files_in_fold = glob.glob('/var/node436/local/tstahl/ucsdpeds1/video/train/vidf1_33_%s.y/*'%(format(img_nr, "03d")))
-                #train_mat['image'].extend(files_in_fold)
-                test_mat['image'].append('/var/node436/local/tstahl/ucsdpeds1/video/test/vidf1_33_%s.y/vidf1_33_%s_f%s.png'%(format(img_nr, "03d"),format(img_nr, "03d"),format(frame, "03d")))
-                img_data = Data.Data(load_dennis, img_nr, level_size, None, frame)
-                test_mat['boxes'].append(img_data.boxes)
-                test_mat['functions'].append(img_data.box_levels)
-                test_mat['labels'].append(len(mat['fgt']['frame'][0][0][0][frame-1][0][0][0]))
-                error_0 += len(mat['fgt']['frame'][0][0][0][frame-1][0][0][0])
-                num += 1
-    print 'error 0: ', error_0/num
-    #output_dennis.save_mat(train_mat,test_mat, dataset, from_,to_, level_size)
-    #print missing
+                    test_mat['functions'].append(img_data.box_levels)
+                    test_mat['labels'].append(len(mat['fgt']['frame'][0][0][0][frame-1][0][0][0]))
+                    error_0 += len(mat['fgt']['frame'][0][0][0][frame-1][0][0][0])
+                    num += 1
+        print 'error 0: ', error_0/num
+        #output_dennis.save_mat(train_mat,test_mat, dataset, from_,to_, level_size)
+        #print missing
     
 if __name__ == "__main__":
     main()
