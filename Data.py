@@ -27,7 +27,7 @@ class Data:
                 #print len(self.box_levels)
                 #raw_input()
         else:
-            if load.mode == 'trancos' or load.mode == 'pedestrians':
+            if load.mode == 'trancos' or load.mode == 'pedestrians' or load.mode == 'CARPK' or load.mode == 'PUCPR+':
                 self.boxes = load.get_coords(img_nr,t_set)
                 #print t_set, self.boxes
             else:
@@ -44,7 +44,7 @@ class Data:
                 if self.boxes != [] and prune_tree_levels > 1:
                     if load.mode == 'dennis':
                         self.X = load.get_features(img_nr)
-                    elif load.mode == 'mscoco' or load.mode == 'trancos'  or load.mode == 'gt'  or load.mode == 'level' or load.mode == 'pedestrians':
+                    elif load.mode == 'mscoco' or load.mode == 'trancos'  or load.mode == 'gt'  or load.mode == 'level' or load.mode == 'pedestrians' or load.mode == 'CARPK' or load.mode == 'PUCPR+':
                         self.X = np.zeros((15000,num_features))
                     self.num_features = num_features
                     if gt:
@@ -66,7 +66,7 @@ class Data:
                         if load.mode == 'dennis'  or load.mode == 'level':
                             self.tree_boxes = load.get_coords_tree(img_nr)
                             self.tree_boxes,self.X = sort_boxes(self.tree_boxes, self.X)
-                        elif load.mode == 'mscoco' or load.mode == 'trancos' or load.mode == 'pedestrians':
+                        elif load.mode == 'mscoco' or load.mode == 'trancos' or load.mode == 'pedestrians' or load.mode == 'CARPK' or load.mode == 'PUCPR+':
                             self.boxes = sort_boxes_only(self.boxes)
                             self.tree_boxes = np.array(self.boxes)
 
@@ -81,7 +81,7 @@ class Data:
                         #self.G, levels = create_tree_as_extracted(self.tree_boxes)
                         if load.mode == 'dennis' or load.mode == 'level':
                             self.G, levels = create_tree(self.tree_boxes)
-                        elif load.mode == 'mscoco' or load.mode == 'trancos' or load.mode == 'pedestrians':
+                        elif load.mode == 'mscoco' or load.mode == 'trancos' or load.mode == 'pedestrians' or load.mode == 'CARPK' or load.mode == 'PUCPR+':
                             self.G, levels = create_tree(self.boxes)
                         #print "tree", (time.time() - start)
                         start = time.time()
@@ -119,7 +119,7 @@ class Data:
                             for trash_level in levels_gone.values():
                                 self.G.remove_nodes_from(trash_level)
 
-                        if load.mode == 'mscoco' or load.mode == 'trancos' or load.mode == 'gt' or load.mode == 'pedestrians':
+                        if load.mode == 'mscoco' or load.mode == 'trancos' or load.mode == 'gt' or load.mode == 'pedestrians' or load.mode == 'CARPK' or load.mode == 'PUCPR+':
                             intersection_coords = []
                 #            for patch in self.G.nodes():
                 #                intersection_coords.append(self.boxes[patch])
@@ -177,7 +177,7 @@ class Data:
                                 
                         #print 'starting getting gt data'
                         #this is just for create_mats.py
-                    if load.mode == 'mscoco' or load.mode == 'trancos'  or load.mode == 'gt' or load.mode == 'dennis' or load.mode == 'pedestrians':
+                    if load.mode == 'mscoco' or load.mode == 'trancos'  or load.mode == 'gt' or load.mode == 'dennis' or load.mode == 'pedestrians' or load.mode == 'CARPK' or load.mode == 'PUCPR+':
                         learner = IEP.IEP(1, 'learning')
                         _,function = learner.get_iep_levels(self, {})
                         self.inters_size = []

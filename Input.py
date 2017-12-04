@@ -45,6 +45,10 @@ class Input:
             self.val_numbers = [4,8]
         elif self.mode == 'pedestrians':
             self.coord_path = '/var/node436/local/tstahl/ucsdpeds1/SS_Boxes/%s_%s.txt'
+        elif self.mode == 'CARPK':
+            self.coord_path = '/var/node436/local/tstahl/SS_Boxes/%s.png.txt'
+        elif self.mode == 'PUCPR+':
+            self.coord_path = '/var/node436/local/tstahl/SS_Boxes/%s.jpg.txt'
 
         else:
             if self.mode == 'pascal':
@@ -264,6 +268,15 @@ class Input:
             print self.coord_path%(format(img_nr, "03d"),format(t_set, "03d"))
             if os.path.isfile(self.coord_path%(format(img_nr, "03d"),format(t_set, "03d"))):
                 ret = np.loadtxt(self.coord_path%(format(img_nr, "03d"),format(t_set, "03d")), delimiter=',')
+                if isinstance(ret[0], np.float64):
+                    return np.array([ret])
+                else:
+                    return ret
+        elif self.mode  == 'CARPK' or self.mode == 'PUCPR+':
+            print "coord_path", self.coord_path%(img_nr)
+            if os.path.isfile(self.coord_path%(img_nr)):
+                ret = np.loadtxt(self.coord_path%(img_nr), delimiter=',')
+                print ret
                 if isinstance(ret[0], np.float64):
                     return np.array([ret])
                 else:

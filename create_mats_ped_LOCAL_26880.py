@@ -162,7 +162,7 @@ def main():
                 train_mat['image'].append('/var/node436/local/tstahl/datasets/%s_devkit/data/Images/%s.jpg'%(dataset,im))
             elif dataset == 'CARPK':
                 train_mat['image'].append('/var/node436/local/tstahl/datasets/%s_devkit/data/Images/%s.png'%(dataset,im))
-            img_data = Data.Data(load_dennis, im, level_size, None)
+            img_data = Data.Data(load_dennis, im, level_size, None, frame)
             train_mat['boxes'].append(img_data.boxes)
             train_mat['functions'].append(img_data.box_levels)
             with open('/var/node436/local/tstahl/datasets/%s_devkit/data/Annotations/%s.txt'%(dataset,im)) as f:
@@ -198,7 +198,7 @@ def main():
                 test_mat['image'].append('/var/node436/local/tstahl/datasets/%s_devkit/data/Images/%s.jpg'%(dataset,im))
             elif dataset == 'CARPK':
                 test_mat['image'].append('/var/node436/local/tstahl/datasets/%s_devkit/data/Images/%s.png'%(dataset,im))
-            img_data = Data.Data(load_dennis, im, level_size, None)
+            img_data = Data.Data(load_dennis, im, level_size, None, frame)
             test_mat['boxes'].append(img_data.boxes)
             test_mat['functions'].append(img_data.box_levels)
             with open('/var/node436/local/tstahl/datasets/%s_devkit/data/Annotations/%s.txt'%(dataset,im)) as f:
@@ -231,27 +231,4 @@ def main():
                         test_mat['boxes'].append(img_data.boxes)
                         if dataset == 'trancos':
                             test_mat['labels'].append([load_dennis.get_all_labels(img_nr, 3)])
-                        else:
-                            test_mat['labels'].append([load_dennis.get_all_labels(img_nr, 'test')])
-                        if dataset != 'sum':
-                            test_mat['functions'].append(img_data.box_levels)
-                            assert len(img_data.box_levels ) == len(img_data.boxes)
-                    #test_mat['overlaps'].append(img_data.gt_overlaps)
-            else:
-                mat = scipy.io.loadmat('/var/node436/local/tstahl/ucsdpeds1/gt/vidf1_33_%s_frame_full.mat'%(format(img_nr, "03d")))
-                for frame in range(1,201):
-                    #files_in_fold = glob.glob('/var/node436/local/tstahl/ucsdpeds1/video/train/vidf1_33_%s.y/*'%(format(img_nr, "03d")))
-                    #train_mat['image'].extend(files_in_fold)
-                    test_mat['image'].append('/var/node436/local/tstahl/ucsdpeds1/video/test/vidf1_33_%s.y/vidf1_33_%s_f%s.png'%(format(img_nr, "03d"),format(img_nr, "03d"),format(frame, "03d")))
-                    img_data = Data.Data(load_dennis, img_nr, level_size, None, frame)
-                    test_mat['boxes'].append(img_data.boxes)
-                    test_mat['functions'].append(img_data.box_levels)
-                    test_mat['labels'].append(len(mat['fgt']['frame'][0][0][0][frame-1][0][0][0]))
-                    error_0 += len(mat['fgt']['frame'][0][0][0][frame-1][0][0][0])
-                    num += 1
-        print 'error 0: ', error_0/num
-        #output_dennis.save_mat(train_mat,test_mat, dataset, from_,to_, level_size)
-        #print missing
-    
-if __name__ == "__main__":
-    main()
+              

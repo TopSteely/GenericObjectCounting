@@ -162,7 +162,7 @@ def main():
                 train_mat['image'].append('/var/node436/local/tstahl/datasets/%s_devkit/data/Images/%s.jpg'%(dataset,im))
             elif dataset == 'CARPK':
                 train_mat['image'].append('/var/node436/local/tstahl/datasets/%s_devkit/data/Images/%s.png'%(dataset,im))
-            img_data = Data.Data(load_dennis, im, level_size, None)
+            img_data = Data.Data(load_dennis, im, level_size, None, frame)
             train_mat['boxes'].append(img_data.boxes)
             train_mat['functions'].append(img_data.box_levels)
             with open('/var/node436/local/tstahl/datasets/%s_devkit/data/Annotations/%s.txt'%(dataset,im)) as f:
@@ -198,7 +198,7 @@ def main():
                 test_mat['image'].append('/var/node436/local/tstahl/datasets/%s_devkit/data/Images/%s.jpg'%(dataset,im))
             elif dataset == 'CARPK':
                 test_mat['image'].append('/var/node436/local/tstahl/datasets/%s_devkit/data/Images/%s.png'%(dataset,im))
-            img_data = Data.Data(load_dennis, im, level_size, None)
+            img_data = Data.Data(load_dennis, im, level_size, None, frame)
             test_mat['boxes'].append(img_data.boxes)
             test_mat['functions'].append(img_data.box_levels)
             with open('/var/node436/local/tstahl/datasets/%s_devkit/data/Annotations/%s.txt'%(dataset,im)) as f:
@@ -231,6 +231,9 @@ def main():
                         test_mat['boxes'].append(img_data.boxes)
                         if dataset == 'trancos':
                             test_mat['labels'].append([load_dennis.get_all_labels(img_nr, 3)])
+<<<<<<< HEAD
+              
+=======
                         else:
                             test_mat['labels'].append([load_dennis.get_all_labels(img_nr, 'test')])
                         if dataset != 'sum':
@@ -255,3 +258,4 @@ def main():
     
 if __name__ == "__main__":
     main()
+>>>>>>> a31e52bd6fae14e0428c88d26d0116b8f68ef157
