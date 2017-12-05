@@ -12,6 +12,7 @@ import time
 import random
 import glob
 import scipy.io
+from scipy.io import savemat
 
 def main():
 #    if len(sys.argv) != 2:
